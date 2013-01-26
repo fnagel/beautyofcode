@@ -110,7 +110,7 @@ class boc_standalone {
 			if ($this->conf['jQueryNoConflict']) {
 				$jsCode	.= $jQvar.'.noConflict();'."\n";
 			}
-			$jsCode 	.= $jQvar.'(document).ready(function(){'."\n";
+			$jsCode 	.= $jQvar.$this->conf['jQueryOnReadyCallback']."\n";
 			$jsCode 	.= $jsCodeSh;
 			$jsCode 	.= '});'."\n";
 		} else {

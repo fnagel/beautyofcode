@@ -37,6 +37,9 @@ plugin.tx_beautyofcode_pi1 {
 		# cat=beautyofcode/file/050; type=boolean; label=Global jQuery noConflict: If set to true all embedded jQuery Java-Script code will be wrapped in jQuery's noConflict() function. See documentation for more information.
 	jQueryNoConflict = 0
 
+		# cat=beautyofcode//9; type=string; label=onReady Callback Signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
+	jQueryOnReadyCallback = (document).ready(function(){
+
 
 
 	## OTHERS

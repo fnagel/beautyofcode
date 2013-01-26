@@ -84,7 +84,7 @@ class boc_jquery {
 		if ($this->conf['jQueryNoConflict']) {
 			$jsCode												.= $jQvar.'.noConflict();'."\n";
 		}
-		$jsCode 												.= $jQvar.'(document).ready(function(){'."\n";
+		$jsCode 												.= $jQvar.$this->conf['jQueryOnReadyCallback']."\n";
 		$jsCode 												.= "\t".$jQvar.'.beautyOfCode.init({'."\n";
 		if (!empty($this->conf['jquery.']['baseUrl'])) $jsCode 	.= "\t\t".'baseUrl: "'.t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['baseUrl'])).'",'."\n";
 		if (!empty($this->conf['jquery.']['scripts'])) $jsCode 	.= "\t\t".'scripts: "'.trim($this->conf['jquery.']['scripts']).'",'."\n";

@@ -25,6 +25,7 @@ plugin.tx_beautyofcode_pi1 {
 
 	templateFile = {$plugin.tx_beautyofcode_pi1.templateFile}
 	jQueryNoConflict = {$plugin.tx_beautyofcode_pi1.jQueryNoConflict}
+	jQueryOnReadyCallback = {$plugin.tx_beautyofcode_pi1.jQueryOnReadyCallback}
 
 	showLabel = {$plugin.tx_beautyofcode_pi1.showLabel}
 	theme = {$plugin.tx_beautyofcode_pi1.theme}

@@ -1,0 +1,2 @@
+	# cat=basic; type=boolean; label=LLL:EXT:beautyofcode/locallang_db.xml:enable_t3editor
+enable_t3editor = 1

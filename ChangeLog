@@ -1,9 +1,6 @@
-2013-01-xx Felix Nagel  <info@felixnagel.com>
-
-	0.9.0 released (no changes required)
-	
 2013-01-26 Felix Nagel  <info@felixnagel.com>
 
+	1.0.0 released (you need to clear all caches)
 	* added: add possibility to change the on ready callback signature of jQuery, thx to Thomas Juhnke, see http://forge.typo3.org/issues/44762
 
 2012-11-26 Felix Nagel  <info@felixnagel.com>

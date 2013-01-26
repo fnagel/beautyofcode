@@ -30,24 +30,31 @@
 											<numIndex index="1">plain</numIndex>
 										</numIndex>
 									</items>
-									<itemsProcFunc>tx_beautyofcode_addFields->getConfiguredLangauges</itemsProcFunc> 
+									<itemsProcFunc>tx_beautyofcode_addFields->getConfiguredLangauges</itemsProcFunc>
 							</config>
 						</TCEforms>
-					</cLang>		
+					</cLang>
 					<cCode>
 						<TCEforms>
 							<exclude>1</exclude>
 							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:code</label>
 							<config type="array">
-								<type>user</type>
-								<userFunc>tx_beautyofcode_TCAform->drawCodeText</userFunc>
+								<type>text</type>
+								<rows>20</rows>
+								<cols>48</cols>
+								<wizards type="array">
+									<t3editor type="array">
+										<type>userFunc</type>
+										<userFunc>EXT:beautyofcode/lib/class.tx_beautyofcode_t3editor.php:tx_beautyofcode_tceforms_wizard->main</userFunc>
+									</t3editor>
+								</wizards>
 								<noTableWrapping>0</noTableWrapping>
 							</config>
 						</TCEforms>
 					</cCode>
 				</el>
 			</ROOT>
-		</sDEF>  
+		</sDEF>
 		<sOPTIONS>
 			<ROOT>
 				<TCEforms>
@@ -87,7 +94,7 @@
 									</items>
 							</config>
 						</TCEforms>
-					</cCollapse>	
+					</cCollapse>
 					<cGutter>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:gutter</label>
@@ -109,7 +116,7 @@
 									</items>
 							</config>
 						</TCEforms>
-					</cGutter>	
+					</cGutter>
 					<cToolbar>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:toolbar</label>
@@ -131,10 +138,10 @@
 									</items>
 							</config>
 						</TCEforms>
-					</cToolbar>		
+					</cToolbar>
 				</el>
 			</ROOT>
-		</sOPTIONS>  
+		</sOPTIONS>
 	</sheets>
 </T3DataStructure>
 

@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2005 Felix Nagel (info@felixnagel.com)
+*  (c) 2010-2012 Felix Nagel (info@felixnagel.com)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is

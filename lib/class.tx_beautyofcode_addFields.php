@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2005 Felix Nagel (info@felixnagel.com)
+*  (c) 2010-2012 Felix Nagel (info@felixnagel.com)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,10 +21,10 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-	
+
 /**
  * Function to add select options dynamically (loaded out of TS)
- * 
+ *
  * @author	Felix Nagel <info@felixnagel.com>
  * @package	TYPO3
  * @subpackage	tx_beautyofcode
@@ -32,7 +32,7 @@
 class tx_beautyofcode_addFields {
 
 	/**
-	 * This function is called from the flexform and 
+	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
 	 * @param	array	flexform data
@@ -40,10 +40,10 @@ class tx_beautyofcode_addFields {
 	 */
 	public function getConfiguredLangauges ($config) {
 		static $cachedFields = 0;
-	
-		if ($cachedFields != 0) {	
+
+		if ($cachedFields != 0) {
 			$config['items'] = $cachedFields;
-		} else {		
+		} else {
 			$configArray = $this->getConfig($config);
 
 			// make brushes list to flexform selectbox item array
@@ -62,7 +62,7 @@ class tx_beautyofcode_addFields {
 				sort($brushesArray);
 				// get label and css selector
 				$i = 0;
-				for ($x = 0; $x < count($brushesArray); $x++) { 
+				for ($x = 0; $x < count($brushesArray); $x++) {
 					// Plain is defined as default in flexform, so we dont add it again
 					if (trim($brushesArray[$x]) != "Plain") {
 						$optionList[$i] = $this->getFieldValues(trim($brushesArray[$x]));
@@ -73,10 +73,10 @@ class tx_beautyofcode_addFields {
 			$config['items'] = array_merge($config['items'],$optionList);
 		}
 		$cachedFields = $config['items'];
-		
+
 		return $config;
 	}
-	
+
 	/**
 	 * Solves the key delivered by TS to the CSS and JS key
 	 *
@@ -86,103 +86,103 @@ class tx_beautyofcode_addFields {
 	public function getFieldValues($key) {
 		$css = "";
 		$label = "";
-		switch ($key) {	
-			case "AS3": 
+		switch ($key) {
+			case "AS3":
 				$css = "actionscript3";
 				$label = "Actionscript 3";
-			break;			
+			break;
 			case "Bash":
 				$css = "bash";
 				$label = "Bash / Shell";
 			break;
-			case "ColdFusion": 
+			case "ColdFusion":
 				$css = "coldfusion";
 				$label = "ColdFusion";
 			break;
-			case "Cpp": 
+			case "Cpp":
 				$css = "cpp";
 				$label = "C / C++";
 			break;
-			case "CSharp": 
+			case "CSharp":
 				$css = "csharp";
 				$label = "C#";
 			break;
-			case "Css": 
+			case "Css":
 				$css = "css";
 				$label = "CSS";
 			break;
-			case "Delphi": 
+			case "Delphi":
 				$css = "delphi";
 				$label = "Delphi / Pas / Pascal";
 			break;
-			case "Diff": 
+			case "Diff":
 				$css = "diff";
 				$label = "Diff / Patch";
 			break;
-			case "Erlang": 
+			case "Erlang":
 				$css = "erlang";
 				$label = "Erlang";
 			break;
-			case "Groovy": 
+			case "Groovy":
 				$css = "groovy";
 				$label = "Groovy";
 			break;
-			case "Java": 
+			case "Java":
 				$css = "java";
 				$label = "Java";
 			break;
-			case "JavaFX": 
+			case "JavaFX":
 				$css = "javafx";
 				$label = "Java FX";
 			break;
-			case "JScript": 
+			case "JScript":
 				$css = "javascript";
 				$label = "Java-Script";
 			break;
-			case "Perl": 
+			case "Perl":
 				$css = "perl";
 				$label = "Perl";
 			break;
-			case "Php": 
+			case "Php":
 				$css = "php";
 				$label = "PHP";
 			break;
-			case "PowerShell": 
+			case "PowerShell":
 				$css = "powershell";
 				$label = "Power-Shell";
 			break;
-			case "Python": 
+			case "Python":
 				$css = "python";
 				$label = "Python";
 			break;
-			case "Ruby": 
+			case "Ruby":
 				$css = "ruby";
 				$label = "Ruby on Rails";
 			break;
-			case "Scala": 
+			case "Scala":
 				$css = "scala";
 				$label = "Scala";
 			break;
-			case "Sql": 
+			case "Sql":
 				$css = "sql";
 				$label = "SQL / MySQL";
 			break;
-			case "Typoscript": 
+			case "Typoscript":
 				$css = "typoscript";
 				$label = "Typoscript";
 			break;
-			case "Vb": 
+			case "Vb":
 				$css = "vbnet";
 				$label = "Virtual Basic / .Net";
 			break;
-			case "Xml": 
+			case "Xml":
 				$css = "xml";
 				$label = "XML / XSLT / XHTML / HTML";
 			break;
-		}				
+		}
 		return array(0 => $label, 1 => $css);
 	}
-	
+
 	/**
 	 * Generates TS Config pf the plugin
 	 *
@@ -192,10 +192,11 @@ class tx_beautyofcode_addFields {
 	public function getConfig($config) {
 
 		// import t3lib_page class if not already done (this should be a problem of TYPO3 4.2.x only)
+		// TODO remove this sometime
 		if (!class_exists('t3lib_pageSelect', FALSE)) {
-			t3lib_div::requireOnce(PATH_t3lib."class.t3lib_page.php");   
+			t3lib_div::requireOnce(PATH_t3lib."class.t3lib_page.php");
 		}
-		
+
 		// Initialize the page selector
 		$sysPage = t3lib_div::makeInstance('t3lib_pageSelect');
 		$sysPage->init(true);
@@ -215,8 +216,8 @@ class tx_beautyofcode_addFields {
 
 		// Generate TS config
 		$template->generateConfig();
-		
-		return $template->setup['plugin.']['tx_beautyofcode_pi1.'];	
+
+		return $template->setup['plugin.']['tx_beautyofcode_pi1.'];
 	}
 }
 

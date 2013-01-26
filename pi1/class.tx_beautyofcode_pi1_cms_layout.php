@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Felix Nagel (info@felixnagel.com)
+*  (c) 2010-2012 Felix Nagel (info@felixnagel.com)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -43,20 +43,14 @@ class tx_beautyofcode_cms_layout {
 			$data = t3lib_div::xml2array($params['row']['pi_flexform']);
 			$uid = $params['row']['uid'];
 			if (is_array($data)) {
-				$code = $data['data']['sDEF']['lDEF']['cCode']['vDEF'];				
-				$result = "<strong>" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLabel']['vDEF']) . "</strong>";
+				$code = $data['data']['sDEF']['lDEF']['cCode']['vDEF'];
+				if (strlen(trim($data['data']['sDEF']['lDEF']['cLabel']['vDEF'])) > 0) {
+					$result = "<strong>" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLabel']['vDEF']) . "</strong>";
+				} else {
+					$result = "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:cms_layout.no_label') . "</em>";
+				}
 				$result .= "<br /><br /><strong>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:code') . "</strong> (" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLang']['vDEF']) . ")<br />";
-				if (strlen($code)>0) {					
-					// textarea is scrolled to bottom, why? Don't know.
-					// $result .= '<textarea style="height: 150px; width: 100%;">' . t3lib_div::formatForTextarea($code) . "</textarea>";
-					
-					// this causes a ugly scroll down, scroll up effect
-					// $result .= '<textarea id="ta' . $uid . '" style="height: 150px; width: 100%; cursor: pointer;" readonly="readonly">' . t3lib_div::formatForTextarea($code) . "</textarea>";
-					// $result .= 	'<script type="text/javascript">' .
-								// 'var ta' . $uid . ' = document.getElementById("ta' . $uid . '");' .
-								// 'window.setTimeout( function() { ta' . $uid . '.scrollTop = 0; }, 500 );' .
-								// '</script>';
-								
+				if (strlen($code)>0) {
 					// calculate height
 					$proxyLines = sizeof(preg_split("/(\n)/", $code));
 					$taHeight = ($proxyLines >= 15) ? "150px" : ($proxyLines * 20 + 5) . "px";
@@ -67,14 +61,14 @@ class tx_beautyofcode_cms_layout {
 								'var ta_hidden' . $params['row']['uid'] . ' = document.getElementById("ta_hidden' . $uid . '");' .
 								'var ta' . $uid . ' = document.getElementById("ta' . $uid . '");' .
 								'window.setTimeout(function() { ta' . $uid . '.value = ta_hidden' . $uid . '.value; }, 500);' .
-								'</script>';								
+								'</script>';
 				} else {
 					$result .= "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:cms_layout.no_code') . "</em>";
 				}
 			}
 		}
 		return $result;
-	}	
+	}
 }
 
 

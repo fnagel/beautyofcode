@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Felix Nagel (info@felixnagel.com)
+*  (c) 2010-2012 Felix Nagel (info@felixnagel.com)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -34,25 +34,25 @@ class boc_jquery {
 	var $scriptRelPath = 'lib/class.tx_beautyofcode_jquery.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'beautyofcode';	// The extension key.
 	var $pi_checkCHash = true;
-		
+
 	/**
 	 * The main method of the PlugIn
 	 *
 	 * @param	string		$content: The PlugIn content
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
-	 */	 
+	 */
 	function main($content,$conf) {
 		$this->conf = $conf;
 		t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_div.php'));
 		$this->boc_div = t3lib_div::makeInstance('tx_boc_div');
 	}
-	
+
 	/**
 	 * Function set header data (JS files and JS HTML)
 	 */
 	public function setHeaderData() {
-		// please note only the jquery core js is included by t3jquery. 
+		// please note only the jquery core js is included by t3jquery.
 		// All other components added manually cause of more flexibility
 		if (T3JQUERY === true) {
 			// add jQuery core by t3jquery extension
@@ -63,22 +63,22 @@ class boc_jquery {
 				$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . "_jquery", $GLOBALS['TSFE']->tmpl->getFileName("EXT:beautyofcode/res/jquery/jquery-1.3.2.min.js"));
 			}
 		}
-		
+
 		// add jquery.beautyOfCode.js
 		$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . "_boc", $this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['scriptUrl'])));
-			
+
 		// get defaults
 		$defaults = $this->getDefaults();
-		
+
 		// choose jQuery function selector
 		$jQvar = ($this->conf['jQueryNoConflict']) ? "jQuery" : "$";
-		
+
 		// additional selector? (not supported by JS yet)
 		$jQuerySelector = (strlen(trim($this->conf['jQuerySelector']))>0) ? trim($this->conf['jQuerySelector']) . ' ' : false;
-		
+
 		// get language strings
 		$language = $this->getLanguageStrings();
-		
+
 		$jsCode = "\n";
 		// add noConflict jQuery code
 		if ($this->conf['jQueryNoConflict']) {
@@ -101,7 +101,7 @@ class boc_jquery {
 		$jsCode 												.= "\t\t".'brushes: ["Plain"'.$this->getBrushes().']'."\n";
 		$jsCode 												.= "\t".'});'."\n";
 		$jsCode 												.= '});'."\n";
-		
+
 		// add hook to add custom JS in header
 		if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData']) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData'] as $_funcRef) {
@@ -110,11 +110,11 @@ class boc_jquery {
 				}
 			}
 		}
-				
+
 		// add js init
 		$GLOBALS['TSFE']->getPageRenderer()->addJsInlineCode($this->extKey, $jsCode);
 	}
-	
+
 	/**
 	 * Function to set HTML code
 	 *
@@ -123,19 +123,19 @@ class boc_jquery {
 	public function getHTMLContent() {
 		$HTML = array();
 		// make html
-		$lang = ($this->values['lang']) ? $this->values['lang'] : "plain";	
+		$lang = ($this->values['lang']) ? $this->values['lang'] : "plain";
 		$HTML['code'] = '';
 		$HTML['code'] .= "\n".'<pre class="code"><code class="'.$lang.$this->getCssConfig().'">'."\n";
 		$HTML['code'] .= htmlspecialchars($this->values['code'])."\n";
-		$HTML['code'] .= '</code></pre>'."\n";		
+		$HTML['code'] .= '</code></pre>'."\n";
 		// make label
 		$HTML['label'] = ($this->conf['showLabel'] && trim($this->values['label']) != "") ? trim($this->values['label']) : "";
-		
+
 		return $HTML;
 	}
-		
+
 	/**
-	 * Function to solve CSSconfiguration which overwrites TS configuration 
+	 * Function to solve CSSconfiguration which overwrites TS configuration
 	 *
 	 * @return	string  space seperated CSS classes
 	 */
@@ -144,7 +144,7 @@ class boc_jquery {
 		if (is_array($this->values['css'])) {
 			// built brushes string
 			$string = '';
-			foreach($this->values['css'] AS $config => $configValue) { 
+			foreach($this->values['css'] AS $config => $configValue) {
 				if ($configValue != "" && $configValue != "auto") {
 					// highlight range
 					if ($config == "highlight") {
@@ -155,12 +155,12 @@ class boc_jquery {
 					}
 				}
 			}
-		}		
+		}
 		return $string;
 	}
-	
+
 	/**
-	 * Function to solve brushes 
+	 * Function to solve brushes
 	 *
 	 * @return	string  comma seperated list of the brushes with double quotes
 	 */
@@ -169,31 +169,31 @@ class boc_jquery {
 		$temp = '';
 		if (strlen($this->conf['brushes'])>0) {
 			$brushesArray = t3lib_div::trimExplode(",", $this->conf['brushes'], true);
-			foreach($brushesArray AS $brush) { 
-				$temp .= ',"'.$brush.'"';			
+			foreach($brushesArray AS $brush) {
+				$temp .= ',"'.$brush.'"';
 			}
 		}
 		return $temp;
 	}
-	
+
 	/**
-	 * Function to solve defaults 
+	 * Function to solve defaults
 	 *
 	 * @return	string  comma seperated list list of the brushes with double quotes with no ending ,
 	 */
 	public function getDefaults() {
 		$temp = '';
 		if (is_array($this->conf['defaults.'])>0) {
-			foreach($this->conf['defaults.'] AS $key => $value) { 
+			foreach($this->conf['defaults.'] AS $key => $value) {
 				$temp .= '"'.$key.'": '.$value.',';
-			} 
+			}
 			$temp = substr($temp, 0, -1);
-		}		
+		}
 		return $temp;
 	}
-	
+
 	/**
-	 * Function to solve language strings 
+	 * Function to solve language strings
 	 *
 	 * @return	string  object with language strings
 	 */
@@ -201,11 +201,11 @@ class boc_jquery {
 		$temp = '';
 		if (is_array($this->conf['config.']['strings.'])>0) {
 			$temp .= "\n\t\t\t".'strings: {'."\n";
-			foreach($this->conf['config.']['strings.'] AS $key => $value) { 
+			foreach($this->conf['config.']['strings.'] AS $key => $value) {
 				$temp .= "\t\t\t\t".trim($key).': "'.trim($value).'",'."\n";
-			} 
+			}
 			$temp .= "\t\t\t".'}'."\n";
-		}		
+		}
 		return $temp;
 	}
 }

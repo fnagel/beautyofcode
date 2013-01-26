@@ -1,29 +1,43 @@
+2012-11-xx Felix Nagel  <info@felixnagel.com>
+
+	0.9.0 released (no changes required)
+	
+2012-11-26 Felix Nagel  <info@felixnagel.com>
+
+	* improved: t3editor integration in BE, now code language aware (at least for PHP, CSS, JS, TS, XML)
+	* removed: old t3editor integration files (EXT:typoscript_code)
+	* improved: BE layout title
+	* fixed: CGL
+	* added: inline TODO comments
+	* removed: outdated documentation pdf
+	* fixed: copyright year
+
 2012-09-06 Felix Nagel  <info@felixnagel.com>
 
-	* 0.8.4 released (no changes required)
+	0.8.4 released (no changes required)
 	* changed: tested with TYPO3 6.0.0 beta1
 	* removed: deprecated functions
 	* changed: extension state set to stable
-	
+
 2012-08-25 Felix Nagel  <info@felixnagel.com>
 	* changed: files and inline code is now added using pageRenderer functions
 	* changed: TYPO3 4.3 is now minimal requirement
-	
+
 2011-05-30 	Felix Nagel  <info@felixnagel.com>
-	* 0.8.3 released (no changes required)
+	0.8.3 released (no changes required)
 	* fixed: re-enabled t3editor in BE for TYPO 4.5.x, thx to EXT:typoscript_code
-	
+
 2011-05-26 	Felix Nagel  <info@felixnagel.com>
-	* 0.8.2 released (no changes required)
+	0.8.2 released (no changes required)
 	* added: API documentation (EXT:boc_apiexample)
 	* fixed: small issue when using API
-	
+
 2011-03-13 	Felix Nagel  <info@felixnagel.com>
-	* 0.8.1 released (no changes required)
+	0.8.1 released (no changes required)
 	* fixed: disabled t3editor in BE for TYPO 4.5
-	
+
 2011-01-14 	Felix Nagel  <info@felixnagel.com>
-	* 0.8 released (no changes required)
+	0.8 released (no changes required)
 	* added: API
 	* improved: BE preview
 
@@ -32,41 +46,41 @@
 	* fixed: missing parameter class instance (errors in sys log)
 	* removed: REAMDE.txt
 	* updated: documentation
-	
+
 2010-12-26 	Felix Nagel  <info@felixnagel.com>
 	* added: t3editor syntax highlighting in BE
 	* fixed: small locallang issue (German)
 	* updated: documentation
 
 2010-11-25  Felix Nagel  <info@felixnagel.com>
-	* 0.7.1 released (no changes required)
+	0.7.1 released (no changes required)
 	* added: Typoscript brush for v3
 	* fixed: jQueryNoConflict has no effect, thx to Jürgen Furrer
 	* updated: documentation
-	
+
 2010-11-06  Felix Nagel  <info@felixnagel.com>
-	* 0.7.0 released (big one, changes required)
+	0.7.0 released (big one, changes required)
 	* added: non-jquery support
 	* removed: extension manager settings
 	* added: options fpr standalone version
 	* updated: SyntaxHighlighter to v3
 	* updated: documentation
 	* added: default CSS code
-	
+
 2010-11-05  Felix Nagel  <info@felixnagel.com>
-	* 0.6.3 released (no changes required)
+	0.6.3 released (no changes required)
 	* fixed: changlog and upload comment
-	
+
 2010-11-05  Felix Nagel  <info@felixnagel.com>
-	* 0.6.2 released (no changes required)
+	0.6.2 released (no changes required)
 	* fixed: error in constant editor (tenmplate file path)
-	* fixed: TS config defaults does not work	
-	
+	* fixed: TS config defaults does not work
+
 2010-10-05  Felix Nagel  <info@felixnagel.com>
 	* fixed: defaults.tab-size constant is not used
-	
+
 2010-10-05  Felix Nagel  <info@felixnagel.com>
-	* 0.6.1 released (no changes required except you're using XCLASS)
+	0.6.1 released (no changes required except you're using XCLASS)
 	* added: hooks to add custom JS and template marker
 	* changed: updated screenshots in doc
 	* added: Doc FAQ: error solution
@@ -74,16 +88,16 @@
 	* fixed: missing config templateFile var in doc
 
 2010-09-03  Felix Nagel  <info@felixnagel.com>
-	* 0.6.0 released (small changes required)
+	0.6.0 released (small changes required)
 	* added: it's now possible to use HTML templates
 	* changed: label.show renamed to showLabel
-	* changed: TYPO3 API instead of homemade functions 
+	* changed: TYPO3 API instead of homemade functions
 	* fixed: errors in changelog
 	* removed: config "label.wrap" and "wrap" as its not longer needed
 	* added: upgrade guide in documentation
 
 2010-08-11  Felix Nagel  <info@felixnagel.com>
-	* 0.5 released (no changes required)
+	0.5 released (no changes required)
 	* added: forge account http://forge.typo3.org/projects/extension-beautyofcode
 	* added: configurable language strings
 	* added: jQuery selector TS option to improve FE performance
@@ -93,7 +107,7 @@
 	* changed: updated to lastest beautyOfCode script (slightly modified to support language strings)
 	* changed: improved HTML output
 	* removed: unnecessary pi_loadLL() (we dont need a language file in FE) which caused error in TYPO3 4.2.x
-	
+
 2010-08-09  Felix Nagel  <info@felixnagel.com>
 
 	* fixed: english language strings in pi1 (thx to Kai Vogel)
@@ -102,13 +116,13 @@
 
 2010-07-09  Felix Nagel  <info@felixnagel.com>
 
-	* 0.4.1 released (no changes required)
+	0.4.1 released (no changes required)
 	* added: line highlight range
 	* fixed: forgotten debug (wrong file in 0.4.0 TER release)
 
 2010-07-08  Felix Nagel  <info@felixnagel.com>
 
-	* 0.4.0 released (no changes required)
+	0.4.0 released (no changes required)
 	* DO NOT USE THIS VERSION
 	* changed: updated manual
 
@@ -123,7 +137,7 @@
 
 2010-06-25  Felix Nagel  <info@felixnagel.com>
 
-	* 0.3.2 released (no changes required)
+	0.3.2 released (no changes required)
 
 2010-06-24  Felix Nagel  <info@felixnagel.com>
 
@@ -131,20 +145,20 @@
 
 2010-06-23  Felix Nagel  <info@felixnagel.com>
 
-	* 0.3.1 released (no changes required)
+	0.3.1 released (no changes required)
 	* added: possibility to change Extension Manager config via TS
 	* added: new version of beautyof code jQuery Plugin
 	* fixed: noConflict prob cause of: http://bitbucket.org/larscorneliussen/beautyofcode/changeset/94696f6dd85a, thx to Pascal
 	* fixed: small typos
 	* fixed: empty label tag
-	* changed: TYPO3 API instead of homemade functions 
+	* changed: TYPO3 API instead of homemade functions
 	* fixed: PHP warning cause of wrong usage of strlen
 	* fixed: PHP warning cause of missing substr parameter
 	* added: syslog notice
 
 2010-04-20  Felix Nagel  <info@felixnagel.com>
 
-	* 0.3.0 released (no changes required)
+	0.3.0 released (no changes required)
 	* added: CSS configuration to overwrite TS in single FCE
 	* added: tested with jQuery 1.4.x
 	* added: some documentation
@@ -159,13 +173,13 @@
 
 2010-03-07  Felix Nagel  <info@felixnagel.com>
 
-	* 0.2.1 released
+	0.2.1 released
 	* fixed: t3jquery support finally works completely; again big thank to J. Furrer
 	* added: XCLASS in addFields class
 
 2010-03-06  Felix Nagel  <info@felixnagel.com>
 
-	* 0.2.0 released
+	0.2.0 released
 	* added: jQuery noConflict for use with other JS frameworks; thanks to J. Furrer
 	* added: option to choose if jQuery should be added
 	* added: some documentation in sourcecode
@@ -178,17 +192,17 @@
 
 2010-02-07  Felix Nagel  <info@felixnagel.com>
 
-	* 0.1.3 released
+	0.1.3 released
 	* added: caching flexform select options when using multiple fce's
 
 2010-02-07  Felix Nagel  <info@felixnagel.com>
 
-	* 0.1.2 released
+	0.1.2 released
 	* fixed: render problem in manual
 
 2010-02-06  Felix Nagel  <info@felixnagel.com>
 
-	* 0.1.1 released
+	0.1.1 released
 	* fixed: actionsscript code is working now
 	* added: documentation
 	* added: Typoscript brush
@@ -196,5 +210,5 @@
 
 2010-01-29  Felix Nagel  <info@felixnagel.com>
 
-	* 0.1.0 released
+	0.1.0 released
 	* Initial release, documentation in work (really!)

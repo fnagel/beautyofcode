@@ -2,7 +2,7 @@
 /***************************************************************
 *  Copyright notice
 *
-*  (c) 2010 Felix Nagel (info@felixnagel.com)
+*  (c) 2010-2012 Felix Nagel (info@felixnagel.com)
 *  All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -31,12 +31,12 @@
  */
 class tx_boc_div {
 	var $prefixId      = 'tx_beautyofcode_pi1';		// Same as class name
-	var $scriptRelPath = 'lib/class.tx_beautyofcode_div.php';	// Path to this script relative to the extension dir.
+	var $scriptRelPath = 'lib/class.tx_beautyofcode_base.php';	// Path to this script relative to the extension dir.
 	var $extKey        = 'beautyofcode';	// The extension key.
 	var $pi_checkCHash = true;
-	
+
 	/**
-	 * Function to solve path with FILE: and EXT: 
+	 * Function to solve path with FILE: and EXT:
 	 *
 	 * @param	string	path to directory
 	 * @return	string
@@ -49,18 +49,18 @@ class tx_boc_div {
 				return substr($extPath,strlen(PATH_site)).$script;
 			}
 		} elseif (t3lib_div::isFirstPartOfStr($dir, 'FILE:')) {
-				return substr($dir,5);					
+				return substr($dir,5);
 		} else {
 			return $dir;
-		}	
-	}	
-	
-	
+		}
+	}
+
+
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_div.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_div.php']);
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_base.php'])	{
+	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_d.php']);
 }
 
 ?>

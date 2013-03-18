@@ -1,3 +1,8 @@
+2013-03-11 Felix Nagel  <info@felixnagel.com>
+
+	1.0.1 released (no changes required)
+	* fixed: requirements as needed for planned TYPO3 TER cleanup
+	
 2013-01-26 Felix Nagel  <info@felixnagel.com>
 
 	1.0.0 released (you need to clear all caches)

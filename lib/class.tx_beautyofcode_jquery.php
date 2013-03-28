@@ -59,7 +59,7 @@ class boc_jquery {
 			tx_t3jquery::addJqJS();
 		} else {
 			// add jQuery core manually if defined
-			if ($this->conf['jquery']['addjQuery'] > 0) {
+			if ($this->conf['jquery.']['addjQuery'] > 0) {
 				$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . "_jquery", $GLOBALS['TSFE']->tmpl->getFileName("EXT:beautyofcode/res/jquery/jquery-1.3.2.min.js"));
 			}
 		}

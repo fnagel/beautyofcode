@@ -1,3 +1,8 @@
+2013-03-28 Felix Nagel  <info@felixnagel.com>
+
+	1.0.2 released (no changes required)
+	* fixed: issue with adding jQuery file to the document, see #46755, thx to Jochen Fröhlich
+	
 2013-03-11 Felix Nagel  <info@felixnagel.com>
 
 	1.0.1 released (no changes required)

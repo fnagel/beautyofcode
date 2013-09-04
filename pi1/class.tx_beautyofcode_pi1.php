@@ -50,7 +50,7 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 * @return	The content that is displayed on the website
 	 */
 
-	function main($content,$conf) {
+	function main($content, $conf) {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		// init vars
@@ -63,60 +63,57 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 		$this->getTemplateFile();
 
 		// proceed if no error is saved
-		if (!$this->error) {
-			// parse XML data into php array
-			$this->pi_initPIflexForm();
+		if ($this->error) {
+			return '<div style="text-align: left; text-size: 12px; color: red; margin: 10px; padding: 10px; background: white; border: 3px solid red;"><strong>Beauty of Code Extension Error</strong><br /><p><em>PID: '.$this->cObj->data['pid'].'</em><br /><em>UID: '.$this->cObj->data['uid'].'</em></p><p>'.implode("<br />", $this->error).'</p></div>';
+		}
+		
+		// parse XML data into php array
+		$this->pi_initPIflexForm();
 
-			// use Syntax Highlighter v2 (jQuery 'beautyOfCode' driven) or v3 (standalone)
-			if ($this->conf['version'] == 'jquery') {
-				t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_jquery.php'));
-				$this->boc = t3lib_div::makeInstance('boc_jquery');
-			} else {
-				t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_standalone.php'));
-				$this->boc = t3lib_div::makeInstance('boc_standalone');
-			}
-
-			// init need version class
-			$this->boc->main($content,$conf);
-
-
-			// get configs (API or Flexform)
-			if (is_array($this->values)) {
-				$this->boc->values = $this->values;
-			} else {
-				// copy flexform values into our boc instance
-				$this->boc->values = $this->getflexFormValue();
-			}
-
-			// set Header data
-			$this->boc->setHeaderData();
-
-			//create preview
-			$this->makePreview();
-
-			// get HTML
-			$content = $this->getHTML();
+		// use Syntax Highlighter v2 (jQuery 'beautyOfCode' driven) or v3 (standalone)
+		if ($this->conf['version'] == 'jquery') {
+			t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_jquery.php'));
+			$this->boc = t3lib_div::makeInstance('boc_jquery');
 		} else {
-			$content = '<div style="text-align: left; text-size: 12px; color: red; margin: 10px; padding: 10px; background: white; border: 3px solid red;"><strong>Beauty of Code Extension Error</strong><br /><p><em>PID: '.$this->cObj->data['pid'].'</em><br /><em>UID: '.$this->cObj->data['uid'].'</em></p><p>'.implode("<br />", $this->error).'</p></div>';
+			t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_standalone.php'));
+			$this->boc = t3lib_div::makeInstance('boc_standalone');
 		}
 
-		return $content;
+		// init need version class
+		$this->boc->main($content, $conf);
+
+		// get configs (API or Flexform)
+		if (is_array($this->values)) {
+			$this->boc->values = $this->values;
+		} else {
+			// copy flexform values into our boc instance
+			$this->boc->values = $this->getflexFormValue();
+		}
+
+		// set Header data
+		$this->boc->setHeaderData();
+
+		//create preview
+		$this->makePreview();
+		
+		return $this->getHTML();
 	}
 
 	/**
 	 * Function to get get flexform values
 	 *
-	 * @return	array contains flex form valuees
+	 * @return	array containing flex form valuees
 	 */
 	public function getflexFormValue() {
 		$temp = array();
+		$temp['css'] = array();
+		
 		// get flexform values
 		$piFlexForm = $this->cObj->data['pi_flexform'];
 		$temp['label'] = $this->pi_getFFvalue($piFlexForm, 'cLabel', 'sDEF');
 		$temp['lang'] = $this->pi_getFFvalue($piFlexForm, 'cLang', 'sDEF');
 		$temp['code'] = $this->pi_getFFvalue($piFlexForm, 'cCode', 'sDEF');
 
-		$temp['css'] = array();
 		$temp['css']['highlight'] = $this->pi_getFFvalue($piFlexForm, 'cHighlight', 'sOPTIONS');
 		$temp['css']['gutter'] = $this->pi_getFFvalue($piFlexForm, 'cGutter', 'sOPTIONS');
 		$temp['css']['toolbar'] = $this->pi_getFFvalue($piFlexForm, 'cToolbar', 'sOPTIONS');
@@ -187,13 +184,16 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 		// Get the template
 		$templateFile = (strlen(trim($this->conf['templateFile']))>0) ? trim($this->conf['templateFile']) : "EXT:beautyofcode/res/template.html";
 		$this->templateHtml = $this->cObj->fileResource($templateFile);
-		if (!$this->templateHtml) $this->handleError('Error while fetching the template file: <em>'.$templateFile.'</em>');
+		
+		if (!$this->templateHtml) {
+			$this->handleError('Error while fetching the template file: <em>'.$templateFile.'</em>');
+		}
 	}
 
 	/**
 	 * Function to check if static template is included
 	 *
-	 * @return	string or boolean
+	 * @return	void
 	 */
 	public function checkForStaticTempl() {
 		if (is_array($this->conf)
@@ -218,7 +218,9 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 */
 	public function handleError($msg) {
 		// prepare FE output
-		if ($this->error === false) $this->error = array();
+		if ($this->error === FALSE) {		
+			$this->error = array();
+		}
 		$this->error[] = $msg . "<br />";
 
 		t3lib_div::sysLog($msg, $this->extKey, 3); // error

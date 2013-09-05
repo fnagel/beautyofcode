@@ -1,6 +1,6 @@
 2013-09-05 Felix Nagel  <info@felixnagel.com>
 
-1.0.3 released (no changes required)
+	1.0.3 released (no changes required)
 	* fixed: label subpart rendering, see #51541, thx to Tommy Juhnke
 	* improved: general coding style and CGL 
 

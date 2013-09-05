@@ -150,14 +150,14 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 		$templateMain = $this->cObj->getSubpart($this->templateHtml, '###TEMPLATE_MAIN###');
 
 		// only generate label when set
-		if ($label != "") {
+		if ($HTML['label'] != "") {
 			// Extract subparts from the label template
 			$templateLabel = $this->cObj->getSubpart($this->templateHtml, '###TEMPLATE_LABEL###');
 
 			// fill label marker array
-			$markerArrayLabel['###LABEL###'] = $label;
+			$markerArrayLabel['###LABEL###'] = $HTML['label'];
 			// replace markers in the label template
-			$label = $this->cObj->substituteMarkerArray($templateLabel, $markerArrayLabel);
+			$HTML['label'] = $this->cObj->substituteMarkerArray($templateLabel, $markerArrayLabel);
 		}
 
 		// fill main marker array

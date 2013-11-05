@@ -1,4 +1,6 @@
 <?php
+namespace FNagel\Beautyofcode\Service;
+
 /***************************************************************
  * Copyright notice
  *
@@ -29,7 +31,7 @@
  * @package	TYPO3
  * @subpackage	tx_beautyofcode
  */
-class tx_beautyofcode_addFields {
+class FlexformService {
 
 	/**
 	 * This function is called from the flexform and
@@ -38,7 +40,7 @@ class tx_beautyofcode_addFields {
 	 * @param	array	flexform data
 	 * @return	array
 	 */
-	public function getConfiguredLangauges ($config) {
+	public function getConfiguredLanguages($config) {
 		static $cachedFields = 0;
 
 		if ($cachedFields != 0) {
@@ -83,7 +85,7 @@ class tx_beautyofcode_addFields {
 	 * @param	string	language key
 	 * @return	array
 	 */
-	public function getFieldValues($key) {
+	protected function getFieldValues($key) {
 		$css = "";
 		$label = "";
 		switch ($key) {
@@ -184,25 +186,19 @@ class tx_beautyofcode_addFields {
 	}
 
 	/**
-	 * Generates TS Config pf the plugin
+	 * Generates TS Config of the plugin
 	 *
 	 * @param	array	config
 	 * @return	array
 	 */
-	public function getConfig($config) {
-
-		// import t3lib_page class if not already done (this should be a problem of TYPO3 4.2.x only)
-		// TODO remove this sometime
-		if (!class_exists('t3lib_pageSelect', FALSE)) {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(PATH_t3lib."class.t3lib_page.php");
-		}
+	protected function getConfig($config) {
 
 		// Initialize the page selector
-		$sysPage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_pageSelect');
+		$sysPage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
 		$sysPage->init(true);
 
 		// Initialize the TS template
-		$template = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_TStemplate');
+		$template = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
 		$template->init();
 
 		// Avoid an error

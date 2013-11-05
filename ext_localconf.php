@@ -11,9 +11,6 @@ if (!defined ('TYPO3_MODE')) {
 	1
 );
 
-$dynamicTCEFormFields = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Utility/class.tx_beautyofcode_addFields.php';
-include_once($dynamicTCEFormFields);
-
 // BE preview
 $backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHook.php:FNagel\Beautyofcode\Hooks\PageLayoutViewHook->getExtensionSummary';
 $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_pi1'][] = $backendPreviewHook;

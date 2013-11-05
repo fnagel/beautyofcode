@@ -24,13 +24,13 @@
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
 							<config>
 								<type>select</type>
-									<items>
-										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
-											<numIndex index="1">plain</numIndex>
-										</numIndex>
-									</items>
-									<itemsProcFunc>tx_beautyofcode_addFields->getConfiguredLangauges</itemsProcFunc>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
+										<numIndex index="1">plain</numIndex>
+									</numIndex>
+								</items>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Service/FlexformService.php:FNagel\Beautyofcode\Service\FlexformService->getConfiguredLanguages</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</cLang>

@@ -44,8 +44,7 @@ class boc_standalone {
 	 */
 	function main($content, $conf) {
 		$this->conf = $conf;
-		\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Utility/class.tx_beautyofcode_div.php'));
-		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_boc_div');
+		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('FNagel\\Beautyofcode\\Utility\\GeneralUtility');
 	}
 
 	/**

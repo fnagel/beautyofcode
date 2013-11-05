@@ -1,4 +1,6 @@
 <?php
+namespace FNagel\Beautyofcode\Utility;
+
 /***************************************************************
  * Copyright notice
  *
@@ -23,17 +25,13 @@
  ***************************************************************/
 
 /**
- * Plugin 'Sourcecode (beautyOfCode)' for the 'beautyofcode' extension.
+ * Utility class for beautyofcode
  *
  * @author	Felix Nagel <info@felixnagel.com>
  * @package	TYPO3
  * @subpackage	tx_beautyofcode
  */
-class tx_boc_div {
-	var $prefixId = 'tx_beautyofcode_pi1';		// Same as class name
-	var $scriptRelPath = 'lib/class.tx_beautyofcode_base.php';	// Path to this script relative to the extension dir.
-	var $extKey = 'beautyofcode';	// The extension key.
-	var $pi_checkCHash = TRUE;
+class GeneralUtility {
 
 	/**
 	 * Function to solve path with FILE: and EXT:

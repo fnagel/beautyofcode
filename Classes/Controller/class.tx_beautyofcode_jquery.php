@@ -44,9 +44,7 @@ class boc_jquery {
 	 */
 	function main($content,$conf) {
 		$this->conf = $conf;
-		$libraryPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Utility/class.tx_beautyofcode_div.php');
-		\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($libraryPath);
-		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_boc_div');
+		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('FNagel\\Beautyofcode\\Utility\\GeneralUtility');
 	}
 
 	/**

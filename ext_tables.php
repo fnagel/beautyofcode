@@ -28,7 +28,7 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi
 );
 
 if (TYPO3_MODE == 'BE') {
-	$wizardIcon = 'EXT:beautyofcode/Classes/Service/NewContentElementWizardService.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_beautyofcode_pi1_wizicon'] = $wizardIcon;
+	$newContentElementWizardItem = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Service/NewContentElementWizardService.php';
+	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['FNagel\\Beautyofcode\\Service\\NewContentElementWizardService'] = $newContentElementWizardItem;
 }
 ?>

@@ -45,7 +45,7 @@
 								<wizards type="array">
 									<t3editor type="array">
 										<type>userFunc</type>
-										<userFunc>EXT:beautyofcode/Classes/Utility/class.tx_beautyofcode_t3editor.php:tx_beautyofcode_tceforms_wizard->main</userFunc>
+										<userFunc>EXT:beautyofcode/Classes/Service/FlexformT3EditorWizardService.php:FNagel\Beautyofcode\Service\FlexformT3EditorWizardService->main</userFunc>
 									</t3editor>
 								</wizards>
 								<noTableWrapping>0</noTableWrapping>

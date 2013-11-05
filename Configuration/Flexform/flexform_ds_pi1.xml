@@ -4,13 +4,13 @@
 		<sDEF>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:beautyofcode/pi1/locallang_db.xml:extlabel</sheetTitle>
+					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
 					<cLabel>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:label</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
 							<config>
 								<type>input</type>
 								<size>50</size>
@@ -21,12 +21,12 @@
 					</cLabel>
 					<cLang>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:lang</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
 							<config>
 								<type>select</type>
 									<items>
 										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:plain</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
 											<numIndex index="1">plain</numIndex>
 										</numIndex>
 									</items>
@@ -37,7 +37,7 @@
 					<cCode>
 						<TCEforms>
 							<exclude>1</exclude>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:code</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code</label>
 							<config type="array">
 								<type>text</type>
 								<rows>20</rows>
@@ -58,13 +58,13 @@
 		<sOPTIONS>
 			<ROOT>
 				<TCEforms>
-					<sheetTitle>LLL:EXT:beautyofcode/pi1/locallang_db.xml:extlabel.options</sheetTitle>
+					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel.options</sheetTitle>
 				</TCEforms>
 				<type>array</type>
 				<el>
 					<cHighlight>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:highlight</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
 							<config>
 								<type>input</type>
 								<size>50</size>
@@ -75,20 +75,20 @@
 					</cHighlight>
 					<cCollapse>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:collapse</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
 							<config>
 								<type>select</type>
 									<items>
 										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:auto</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
 											<numIndex index="1">auto</numIndex>
 										</numIndex>
 										<numIndex index="1">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:yes</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
 											<numIndex index="1">1</numIndex>
 										</numIndex>
 										<numIndex index="2">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:no</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
 											<numIndex index="1">0</numIndex>
 										</numIndex>
 									</items>
@@ -97,20 +97,20 @@
 					</cCollapse>
 					<cGutter>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:gutter</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
 							<config>
 								<type>select</type>
 									<items>
 										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:auto</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
 											<numIndex index="1">auto</numIndex>
 										</numIndex>
 										<numIndex index="1">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:yes</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
 											<numIndex index="1">1</numIndex>
 										</numIndex>
 										<numIndex index="2">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:no</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
 											<numIndex index="1">0</numIndex>
 										</numIndex>
 									</items>
@@ -119,20 +119,20 @@
 					</cGutter>
 					<cToolbar>
 						<TCEforms>
-							<label>LLL:EXT:beautyofcode/pi1/locallang_db.xml:toolbar</label>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:toolbar</label>
 							<config>
 								<type>select</type>
 									<items>
 										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:auto</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
 											<numIndex index="1">auto</numIndex>
 										</numIndex>
 										<numIndex index="1">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:yes</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
 											<numIndex index="1">1</numIndex>
 										</numIndex>
 										<numIndex index="2">
-											<numIndex index="0">LLL:EXT:beautyofcode/pi1/locallang_db.xml:no</numIndex>
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
 											<numIndex index="1">0</numIndex>
 										</numIndex>
 									</items>

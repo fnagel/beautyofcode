@@ -47,9 +47,9 @@ class tx_beautyofcode_cms_layout {
 				if (strlen(trim($data['data']['sDEF']['lDEF']['cLabel']['vDEF'])) > 0) {
 					$result = "<strong>" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLabel']['vDEF']) . "</strong>";
 				} else {
-					$result = "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:cms_layout.no_label') . "</em>";
+					$result = "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_label') . "</em>";
 				}
-				$result .= "<br /><br /><strong>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:code') . "</strong> (" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLang']['vDEF']) . ")<br />";
+				$result .= "<br /><br /><strong>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code') . "</strong> (" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLang']['vDEF']) . ")<br />";
 				if (strlen($code) > 0) {
 					// calculate height
 					$proxyLines = sizeof(preg_split("/(\n)/", $code));
@@ -63,7 +63,7 @@ class tx_beautyofcode_cms_layout {
 								'window.setTimeout(function() { ta' . $uid . '.value = ta_hidden' . $uid . '.value; }, 500);' .
 								'</script>';
 				} else {
-					$result .= "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:cms_layout.no_code') . "</em>";
+					$result .= "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_code') . "</em>";
 				}
 			}
 		}

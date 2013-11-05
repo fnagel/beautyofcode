@@ -28,7 +28,7 @@ $TCA['tt_content']['types']['list']['subtypes_addlist'][$_EXTKEY . '_pi1'] = 'pi
 );
 
 if (TYPO3_MODE == 'BE') {
-	$wizardIcon = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Utility/class.tx_beautyofcode_pi1_wizicon.php';
+	$wizardIcon = 'EXT:beautyofcode/Classes/Service/NewContentElementWizardService.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['tx_beautyofcode_pi1_wizicon'] = $wizardIcon;
 }
 ?>

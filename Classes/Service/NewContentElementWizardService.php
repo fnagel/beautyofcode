@@ -45,7 +45,7 @@ class NewContentElementWizardService {
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_beautyofcode_pi1'] = array(
-			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
+			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
 			'title' => $LANG->getLLL('tt_content.list_type_pi1', $LL),
 			'description' => $LANG->getLLL('wiz_description', $LL),
 			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_pi1'

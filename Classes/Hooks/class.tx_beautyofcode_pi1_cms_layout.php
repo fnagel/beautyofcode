@@ -40,7 +40,7 @@ class tx_beautyofcode_cms_layout {
 	*/
 	function getExtensionSummary($params, &$pObj) {
 		if ($params['row']['list_type'] == 'beautyofcode_pi1') {
-			$data = t3lib_div::xml2array($params['row']['pi_flexform']);
+			$data = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
 			$uid = $params['row']['uid'];
 			if (is_array($data)) {
 				$code = $data['data']['sDEF']['lDEF']['cCode']['vDEF'];
@@ -50,7 +50,7 @@ class tx_beautyofcode_cms_layout {
 					$result = "<em>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:cms_layout.no_label') . "</em>";
 				}
 				$result .= "<br /><br /><strong>" . $GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/pi1/locallang_db.xml:code') . "</strong> (" . htmlspecialchars($data['data']['sDEF']['lDEF']['cLang']['vDEF']) . ")<br />";
-				if (strlen($code)>0) {
+				if (strlen($code) > 0) {
 					// calculate height
 					$proxyLines = sizeof(preg_split("/(\n)/", $code));
 					$taHeight = ($proxyLines >= 15) ? "150px" : ($proxyLines * 20 + 5) . "px";
@@ -71,8 +71,7 @@ class tx_beautyofcode_cms_layout {
 	}
 }
 
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php']);
 }
 ?>

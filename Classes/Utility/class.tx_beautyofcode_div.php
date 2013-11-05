@@ -30,10 +30,10 @@
  * @subpackage	tx_beautyofcode
  */
 class tx_boc_div {
-	var $prefixId      = 'tx_beautyofcode_pi1';		// Same as class name
+	var $prefixId = 'tx_beautyofcode_pi1';		// Same as class name
 	var $scriptRelPath = 'lib/class.tx_beautyofcode_base.php';	// Path to this script relative to the extension dir.
-	var $extKey        = 'beautyofcode';	// The extension key.
-	var $pi_checkCHash = true;
+	var $extKey = 'beautyofcode';	// The extension key.
+	var $pi_checkCHash = TRUE;
 
 	/**
 	 * Function to solve path with FILE: and EXT:
@@ -42,25 +42,22 @@ class tx_boc_div {
 	 * @return	string
 	 */
 	public function makeAbsolutePath($dir) {
-		if (t3lib_div::isFirstPartOfStr($dir, 'EXT:'))	{
-			list($extKey,$script)=explode('/',substr($dir,4),2);
-			if ($extKey && t3lib_extMgm::isLoaded($extKey))	{
-				$extPath=t3lib_extMgm::extPath($extKey);
-				return substr($extPath,strlen(PATH_site)).$script;
+		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:'))	{
+			list($extKey, $script) = explode('/', substr($dir, 4), 2);
+			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
+				$extPath=\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
+				return substr($extPath, strlen(PATH_site)) . $script;
 			}
-		} elseif (t3lib_div::isFirstPartOfStr($dir, 'FILE:')) {
-				return substr($dir,5);
+		} elseif (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:')) {
+				return substr($dir, 5);
 		} else {
 			return $dir;
 		}
 	}
-
-
 }
 
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_base.php'])	{
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_d.php']);
 }
-
 ?>

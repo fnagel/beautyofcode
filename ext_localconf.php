@@ -1,9 +1,20 @@
 <?php
-if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
+if (!defined ('TYPO3_MODE')) {
+	die ('Access denied.');
+}
 
-t3lib_extMgm::addPItoST43($_EXTKEY,'pi1/class.tx_beautyofcode_pi1.php','_pi1','list_type',1);
-include_once(t3lib_extMgm::extPath($_EXTKEY).'lib/class.tx_beautyofcode_addFields.php');
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
+	$_EXTKEY,
+	'Classes/Controller/class.tx_beautyofcode_pi1.php',
+	'_pi1',
+	'list_type',
+	1
+);
+
+$dynamicTCEFormFields = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Utility/class.tx_beautyofcode_addFields.php';
+include_once($dynamicTCEFormFields);
 
 // BE preview
-$TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_pi1'][] = 'EXT:beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php:tx_beautyofcode_cms_layout->getExtensionSummary';
+$backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/class.tx_beautyofcode_pi1_cms_layout.php:tx_beautyofcode_cms_layout->getExtensionSummary'
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_pi1'][] = $backendPreviewHook;
 ?>

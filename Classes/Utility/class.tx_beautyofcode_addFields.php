@@ -48,14 +48,14 @@ class tx_beautyofcode_addFields {
 
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
-			if (strlen($configArray['brushes'])>0) {
+			if (strlen($configArray['brushes']) > 0) {
 				$brushesArray = explode(',', $configArray['brushes']);
 				// make unique
-				foreach ($brushesArray as &$value){
+				foreach ($brushesArray as &$value) {
 					$value = serialize(trim($value));
 				}
 				$brushesArray = array_unique($brushesArray);
-				foreach ($brushesArray as &$value){
+				foreach ($brushesArray as &$value) {
 					$value = unserialize($value);
 				}
 				// sort a-z
@@ -70,7 +70,7 @@ class tx_beautyofcode_addFields {
 					}
 				}
 			}
-			$config['items'] = array_merge($config['items'],$optionList);
+			$config['items'] = array_merge($config['items'], $optionList);
 		}
 		$cachedFields = $config['items'];
 
@@ -194,15 +194,15 @@ class tx_beautyofcode_addFields {
 		// import t3lib_page class if not already done (this should be a problem of TYPO3 4.2.x only)
 		// TODO remove this sometime
 		if (!class_exists('t3lib_pageSelect', FALSE)) {
-			t3lib_div::requireOnce(PATH_t3lib."class.t3lib_page.php");
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(PATH_t3lib."class.t3lib_page.php");
 		}
 
 		// Initialize the page selector
-		$sysPage = t3lib_div::makeInstance('t3lib_pageSelect');
+		$sysPage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_pageSelect');
 		$sysPage->init(true);
 
 		// Initialize the TS template
-		$template = t3lib_div::makeInstance('t3lib_TStemplate');
+		$template = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('t3lib_TStemplate');
 		$template->init();
 
 		// Avoid an error
@@ -222,7 +222,7 @@ class tx_beautyofcode_addFields {
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_addFields.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_addFields.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_addFields.php']);
 }
 ?>

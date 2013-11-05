@@ -30,10 +30,10 @@
  * @subpackage	tx_beautyofcode
  */
 class boc_jquery {
-	var $prefixId      = 'tx_beautyofcode_pi1';		// Same as class name
-	var $scriptRelPath = 'lib/class.tx_beautyofcode_jquery.php';	// Path to this script relative to the extension dir.
-	var $extKey        = 'beautyofcode';	// The extension key.
-	var $pi_checkCHash = true;
+	var $prefixId  = 'tx_beautyofcode_pi1';		// Same as class name
+	var $scriptRelPath = 'Classes/Controller/class.tx_beautyofcode_jquery.php';	// Path to this script relative to the extension dir.
+	var $extKey = 'beautyofcode';	// The extension key.
+	var $pi_checkCHash = TRUE;
 
 	/**
 	 * The main method of the PlugIn
@@ -44,8 +44,9 @@ class boc_jquery {
 	 */
 	function main($content,$conf) {
 		$this->conf = $conf;
-		t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_div.php'));
-		$this->boc_div = t3lib_div::makeInstance('tx_boc_div');
+		$libraryPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Utility/class.tx_beautyofcode_div.php');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($libraryPath);
+		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_boc_div');
 	}
 
 	/**
@@ -54,18 +55,24 @@ class boc_jquery {
 	public function setHeaderData() {
 		// please note only the jquery core js is included by t3jquery.
 		// All other components added manually cause of more flexibility
-		if (T3JQUERY === true) {
+		if (T3JQUERY === TRUE) {
 			// add jQuery core by t3jquery extension
 			tx_t3jquery::addJqJS();
 		} else {
 			// add jQuery core manually if defined
 			if ($this->conf['jquery.']['addjQuery'] > 0) {
-				$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . "_jquery", $GLOBALS['TSFE']->tmpl->getFileName("EXT:beautyofcode/res/jquery/jquery-1.3.2.min.js"));
+				$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary(
+					$this->prefixId . "_jquery",
+					$GLOBALS['TSFE']->tmpl->getFileName("EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js")
+				);
 			}
 		}
 
 		// add jquery.beautyOfCode.js
-		$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . "_boc", $this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['scriptUrl'])));
+		$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary(
+			$this->prefixId . "_boc",
+			$this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['scriptUrl']))
+		);
 
 		// get defaults
 		$defaults = $this->getDefaults();
@@ -74,7 +81,7 @@ class boc_jquery {
 		$jQvar = ($this->conf['jQueryNoConflict']) ? "jQuery" : "$";
 
 		// additional selector? (not supported by JS yet)
-		$jQuerySelector = (strlen(trim($this->conf['jQuerySelector']))>0) ? trim($this->conf['jQuerySelector']) . ' ' : false;
+		$jQuerySelector = (strlen(trim($this->conf['jQuerySelector'])) > 0) ? trim($this->conf['jQuerySelector']) . ' ' : FALSE;
 
 		// get language strings
 		$language = $this->getLanguageStrings();
@@ -82,31 +89,31 @@ class boc_jquery {
 		$jsCode = "\n";
 		// add noConflict jQuery code
 		if ($this->conf['jQueryNoConflict']) {
-			$jsCode												.= $jQvar.'.noConflict();'."\n";
+			$jsCode .= $jQvar.'.noConflict();'."\n";
 		}
-		$jsCode 												.= $jQvar.$this->conf['jQueryOnReadyCallback']."\n";
-		$jsCode 												.= "\t".$jQvar.'.beautyOfCode.init({'."\n";
-		if (!empty($this->conf['jquery.']['baseUrl'])) $jsCode 	.= "\t\t".'baseUrl: "'.t3lib_div::getIndpEnv('TYPO3_SITE_URL').$this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['baseUrl'])).'",'."\n";
-		if (!empty($this->conf['jquery.']['scripts'])) $jsCode 	.= "\t\t".'scripts: "'.trim($this->conf['jquery.']['scripts']).'",'."\n";
-		if (!empty($this->conf['jquery.']['styles'])) $jsCode 	.= "\t\t".'styles: "'.trim($this->conf['jquery.']['styles']).'",'."\n";
-		if (strlen(trim($this->conf['theme']))> 0) $jsCode 		.= "\t\t".'theme: "'.trim($this->conf['theme']).'",'."\n";
-		if (!empty($defaults)) $jsCode 							.= "\t\t".'defaults: {'.$defaults.'},'."\n";
-		if ($language) $jsCode 									.= "\t\t".'config: { '.$language."\n\t\t },\n";
+		$jsCode .= $jQvar . $this->conf['jQueryOnReadyCallback'] . "\n";
+		$jsCode .= "\t" . $jQvar . '.beautyOfCode.init({' . "\n";
+		if (!empty($this->conf['jquery.']['baseUrl'])) $jsCode .= "\t\t" . 'baseUrl: "' . \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('TYPO3_SITE_URL') . $this->boc_div->makeAbsolutePath(trim($this->conf['jquery.']['baseUrl'])) . '",' . "\n";
+		if (!empty($this->conf['jquery.']['scripts'])) $jsCode .= "\t\t" . 'scripts: "' . trim($this->conf['jquery.']['scripts']) . '",' . "\n";
+		if (!empty($this->conf['jquery.']['styles'])) $jsCode .= "\t\t".'styles: "'.trim($this->conf['jquery.']['styles']).'",'."\n";
+		if (strlen(trim($this->conf['theme']))> 0) $jsCode .= "\t\t" . 'theme: "' . trim($this->conf['theme']) . '",' . "\n";
+		if (!empty($defaults)) $jsCode .= "\t\t" . 'defaults: {' . $defaults . '},' . "\n";
+		if ($language) $jsCode .= "\t\t".'config: { ' . $language . "\n\t\t },\n";
 		// add a custom jQuery selector
 		if ($jQuerySelector) {
-			$jsCode 											.= "\t\t".'ready: function() {'."\n";
-			$jsCode 											.= "\t\t\t".$jQvar.'("'.trim($this->conf['jQuery.']['selector']).' pre.code:has(code[class])").beautifyCode();'."\n";
-			$jsCode 											.= "\t\t".'},'."\n";
+			$jsCode .= "\t\t" . 'ready: function() {' . "\n";
+			$jsCode .= "\t\t\t" . $jQvar . '("'. trim($this->conf['jQuery.']['selector']) . ' pre.code:has(code[class])").beautifyCode();' . "\n";
+			$jsCode .= "\t\t" . '},' . "\n";
 		}
-		$jsCode 												.= "\t\t".'brushes: ["Plain"'.$this->getBrushes().']'."\n";
-		$jsCode 												.= "\t".'});'."\n";
-		$jsCode 												.= '});'."\n";
+		$jsCode .= "\t\t" . 'brushes: ["Plain"'. $this->getBrushes() .']' . "\n";
+		$jsCode .= "\t" . '});' . "\n";
+		$jsCode .= '});' . "\n";
 
 		// add hook to add custom JS in header
 		if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData']) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData'] as $_funcRef) {
 				if ($_funcRef) {
-					t3lib_div::callUserFunction($_funcRef, $jsCode, $this);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($_funcRef, $jsCode, $this);
 				}
 			}
 		}
@@ -125,9 +132,9 @@ class boc_jquery {
 		// make html
 		$lang = ($this->values['lang']) ? $this->values['lang'] : "plain";
 		$HTML['code'] = '';
-		$HTML['code'] .= "\n".'<pre class="code"><code class="'.$lang.$this->getCssConfig().'">'."\n";
-		$HTML['code'] .= htmlspecialchars($this->values['code'])."\n";
-		$HTML['code'] .= '</code></pre>'."\n";
+		$HTML['code'] .= "\n" . '<pre class="code"><code class="' . $lang . $this->getCssConfig() . '">' . "\n";
+		$HTML['code'] .= htmlspecialchars($this->values['code']) . "\n";
+		$HTML['code'] .= '</code></pre>' . "\n";
 		// make label
 		$HTML['label'] = ($this->conf['showLabel'] && trim($this->values['label']) != "") ? trim($this->values['label']) : "";
 
@@ -148,10 +155,10 @@ class boc_jquery {
 				if ($configValue != "" && $configValue != "auto") {
 					// highlight range
 					if ($config == "highlight") {
-						$string .= " boc-highlight[".t3lib_div::expandList($configValue)."]";
+						$string .= " boc-highlight[" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]";
 					} else {
-						if ($configValue) $string .= " boc-".$config;
-						else $string .= " boc-no-".$config;
+						if ($configValue) $string .= " boc-" . $config;
+						else $string .= " boc-no-" . $config;
 					}
 				}
 			}
@@ -167,10 +174,10 @@ class boc_jquery {
 	public function getBrushes() {
 		// built brushes string
 		$temp = '';
-		if (strlen($this->conf['brushes'])>0) {
-			$brushesArray = t3lib_div::trimExplode(",", $this->conf['brushes'], true);
-			foreach($brushesArray AS $brush) {
-				$temp .= ',"'.$brush.'"';
+		if (strlen($this->conf['brushes']) > 0) {
+			$brushesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(",", $this->conf['brushes'], TRUE);
+			foreach ($brushesArray as $brush) {
+				$temp .= ',"' . $brush . '"';
 			}
 		}
 		return $temp;
@@ -183,9 +190,9 @@ class boc_jquery {
 	 */
 	public function getDefaults() {
 		$temp = '';
-		if (is_array($this->conf['defaults.'])>0) {
-			foreach($this->conf['defaults.'] AS $key => $value) {
-				$temp .= '"'.$key.'": '.$value.',';
+		if (is_array($this->conf['defaults.']) > 0) {
+			foreach ($this->conf['defaults.'] as $key => $value) {
+				$temp .= '"' . $key . '": ' . $value . ',';
 			}
 			$temp = substr($temp, 0, -1);
 		}
@@ -199,12 +206,12 @@ class boc_jquery {
 	 */
 	public function getLanguageStrings() {
 		$temp = '';
-		if (is_array($this->conf['config.']['strings.'])>0) {
-			$temp .= "\n\t\t\t".'strings: {'."\n";
-			foreach($this->conf['config.']['strings.'] AS $key => $value) {
-				$temp .= "\t\t\t\t".trim($key).': "'.trim($value).'",'."\n";
+		if (is_array($this->conf['config.']['strings.']) > 0) {
+			$temp .= "\n\t\t\t" . 'strings: {' . "\n";
+			foreach ($this->conf['config.']['strings.'] as $key => $value) {
+				$temp .= "\t\t\t\t" . trim($key) . ': "' . trim($value) . '",' . "\n";
 			}
-			$temp .= "\t\t\t".'}'."\n";
+			$temp .= "\t\t\t" . '}' . "\n";
 		}
 		return $temp;
 	}

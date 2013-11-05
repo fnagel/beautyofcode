@@ -37,9 +37,9 @@ class tx_beautyofcode_tceforms_wizard {
 	public function main($parameters, $pObj) {
 		// check if t3editor should be loaded at all
 		$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode']);
-		if ($extensionConfiguration['enable_t3editor'] && t3lib_extMgm::isLoaded('t3editor')) {
-			t3lib_div::requireOnce(t3lib_extMgm::extPath('t3editor', 'classes/class.tx_t3editor.php'));
-			$t3editor = t3lib_div::makeInstance('tx_t3editor');
+		if ($extensionConfiguration['enable_t3editor'] && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')) {
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor', 'classes/class.tx_t3editor.php'));
+			$t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_t3editor');
 		} else {
 			return;
 		}
@@ -49,7 +49,7 @@ class tx_beautyofcode_tceforms_wizard {
 		}
 
 		// get flexform content
-		$flexform = t3lib_div::xml2array($parameters['row'][$parameters['field']]);
+		$flexform = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($parameters['row'][$parameters['field']]);
 		$content = $flexform['data']['sDEF']['lDEF']['cCode']['vDEF'];
 		$language = $flexform['data']['sDEF']['lDEF']['cLang']['vDEF'];
 

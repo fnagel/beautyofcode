@@ -30,10 +30,10 @@
  * @subpackage	tx_beautyofcode
  */
 class boc_standalone {
-	var $prefixId      = 'tx_beautyofcode_pi1';		// Same as class name
-	var $scriptRelPath = 'lib/class.tx_beautyofcode_standalone.php';	// Path to this script relative to the extension dir.
-	var $extKey        = 'beautyofcode';	// The extension key.
-	var $pi_checkCHash = true;
+	var $prefixId = 'tx_beautyofcode_pi1';		// Same as class name
+	var $scriptRelPath = 'Classes/Controller/class.tx_beautyofcode_standalone.php';	// Path to this script relative to the extension dir.
+	var $extKey = 'beautyofcode';	// The extension key.
+	var $pi_checkCHash = TRUE;
 
 	/**
 	 * The main method of the PlugIn
@@ -42,10 +42,10 @@ class boc_standalone {
 	 * @param	array		$conf: The PlugIn configuration
 	 * @return	The content that is displayed on the website
 	 */
-	function main($content,$conf) {
+	function main($content, $conf) {
 		$this->conf = $conf;
-		t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_div.php'));
-		$this->boc_div = t3lib_div::makeInstance('tx_boc_div');
+		\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Utility/class.tx_beautyofcode_div.php'));
+		$this->boc_div = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('tx_boc_div');
 	}
 
 	/**
@@ -54,7 +54,9 @@ class boc_standalone {
 	public function setHeaderData() {
 
 		// check if we use online hosting or local files
-		if (strlen(trim($this->conf["standalone."]["baseUrl"])) > 0  && strlen(trim($this->conf["standalone."]["styles"])) > 0 && strlen(trim($this->conf["standalone."]["scripts"])) > 0 ) {
+		if (strlen(trim($this->conf["standalone."]["baseUrl"])) > 0
+			&& strlen(trim($this->conf["standalone."]["styles"])) > 0
+			&& strlen(trim($this->conf["standalone."]["scripts"])) > 0) {
 			$this->filePathBase = $this->boc_div->makeAbsolutePath($this->conf["standalone."]["baseUrl"]);
 			$this->filePathScripts = trim($this->conf["standalone."]["scripts"]);
 			$this->filePathStyles = trim($this->conf["standalone."]["styles"]);
@@ -65,7 +67,7 @@ class boc_standalone {
 		}
 
 		// add css files
-		$GLOBALS['TSFE']->getPageRenderer()->addCssFile( $this->filePathBase . $this->filePathStyles . 'shCore.css');
+		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($this->filePathBase . $this->filePathStyles . 'shCore.css');
 
 		// add theme in header
 		if (strlen(trim($this->conf["theme"])) > 0) {
@@ -73,7 +75,7 @@ class boc_standalone {
 		} else {
 			$cssStyleFile = 'shCoreDefault.css';
 		}
-		$GLOBALS['TSFE']->getPageRenderer()->addCssFile( $this->filePathBase . $this->filePathStyles . $cssStyleFile);
+		$GLOBALS['TSFE']->getPageRenderer()->addCssFile($this->filePathBase . $this->filePathStyles . $cssStyleFile);
 
 		// add js files
 		$GLOBALS['TSFE']->getPageRenderer()->addJsLibrary($this->prefixId . '_JS_shCoreJS', $this->filePathBase . $this->filePathScripts . 'shCore.js');
@@ -83,20 +85,20 @@ class boc_standalone {
 		$defaults = $this->getDefaults();
 		// init SyntaxHighlighter autoloader
 		$jsCodeSh = "";
-		$jsCodeSh .= '	SyntaxHighlighter.autoloader('."\n";
+		$jsCodeSh .= '	SyntaxHighlighter.autoloader(' . "\n";
 		$jsCodeSh .= $this->getBrushes();
-		$jsCodeSh .= '	);'."\n";
+		$jsCodeSh .= '	);' . "\n";
 		// set SyntaxHighlighter options
-		$jsCodeSh 							.= $this->getLanguageStrings() ."\n";
-		if (!empty($defaults)) $jsCodeSh 	.= $defaults ."\n";
+		$jsCodeSh .= $this->getLanguageStrings() ."\n";
+		if (!empty($defaults)) $jsCodeSh .= $defaults . "\n";
 		// init SyntaxHighlighter
-		$jsCodeSh .= " 	SyntaxHighlighter.all();"."\n";
+		$jsCodeSh .= " 	SyntaxHighlighter.all();" . "\n";
 
 		// add hook to add custom JS in header
 		if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData']) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addJS_setHeaderData'] as $_funcRef) {
 				if ($_funcRef) {
-					t3lib_div::callUserFunction($_funcRef, $jsCodeSh, $this);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($_funcRef, $jsCodeSh, $this);
 				}
 			}
 		}
@@ -108,31 +110,31 @@ class boc_standalone {
 			$jQvar = ($this->conf['jQueryNoConflict']) ? "jQuery" : "$";
 			// add noConflict jQuery code
 			if ($this->conf['jQueryNoConflict']) {
-				$jsCode	.= $jQvar.'.noConflict();'."\n";
+				$jsCode .= $jQvar . '.noConflict();' . "\n";
 			}
-			$jsCode 	.= $jQvar.$this->conf['jQueryOnReadyCallback']."\n";
-			$jsCode 	.= $jsCodeSh;
-			$jsCode 	.= '});'."\n";
+			$jsCode .= $jQvar . $this->conf['jQueryOnReadyCallback'] . "\n";
+			$jsCode .= $jsCodeSh;
+			$jsCode .= '});' . "\n";
 		} else {
 			// add js domready event manually
 			// http://phpperformance.de/javascript-event-onload-und-die-bessere-alternative/
-			$jsCode .= "window.onDomReady = initReady;"."\n";
-			$jsCode .= "function initReady(fn) {"."\n";
-			$jsCode .= "	if(document.addEventListener) {"."\n";
-			$jsCode .= "		document.addEventListener('DOMContentLoaded', fn, false);"."\n";
-			$jsCode .= "	} else {"."\n";
-			$jsCode .= "		document.onreadystatechange = function(){readyState(fn)}"."\n";
-			$jsCode .= "	}"."\n";
-			$jsCode .= "}"."\n";
-			$jsCode .= "function readyState(func) {"."\n";
-			$jsCode .= "	if(document.readyState == 'interactive' || document.readyState == 'complete') {"."\n";
-			$jsCode .= "		func();"."\n";
-			$jsCode .= "	}"."\n";
-			$jsCode .= "}"."\n";
-			$jsCode .= "window.onDomReady(onReady);"."\n";
-			$jsCode .= "function onReady() {"."\n";
+			$jsCode .= "window.onDomReady = initReady;" . "\n";
+			$jsCode .= "function initReady(fn) {" . "\n";
+			$jsCode .= "	if(document.addEventListener) {" . "\n";
+			$jsCode .= "		document.addEventListener('DOMContentLoaded', fn, false);" . "\n";
+			$jsCode .= "	} else {" . "\n";
+			$jsCode .= "		document.onreadystatechange = function(){readyState(fn)}" . "\n";
+			$jsCode .= "	}" . "\n";
+			$jsCode .= "}" . "\n";
+			$jsCode .= "function readyState(func) {" . "\n";
+			$jsCode .= "	if(document.readyState == 'interactive' || document.readyState == 'complete') {" . "\n";
+			$jsCode .= "		func();" . "\n";
+			$jsCode .= "	}" . "\n";
+			$jsCode .= "}" . "\n";
+			$jsCode .= "window.onDomReady(onReady);" . "\n";
+			$jsCode .= "function onReady() {" . "\n";
 			$jsCode .= $jsCodeSh;
-			$jsCode .= "};"."\n";
+			$jsCode .= "};" . "\n";
 		}
 		$GLOBALS['TSFE']->getPageRenderer()->addJsInlineCode($this->extKey . "_JS_init", $jsCode);
 	}
@@ -148,9 +150,9 @@ class boc_standalone {
 		// make html
 		$lang = ($this->values['lang']) ? $this->values['lang'] : "plain";
 		$HTML['code'] = '';
-		$HTML['code'] .= "\n".'<pre class="brush: '. $lang . $this->getCssConfig() . '">'."\n";
-		$HTML['code'] .= htmlspecialchars($this->values['code'])."\n";
-		$HTML['code'] .= '</pre>'."\n";
+		$HTML['code'] .= "\n" . '<pre class="brush: ' . $lang . $this->getCssConfig() . '">' . "\n";
+		$HTML['code'] .= htmlspecialchars($this->values['code']) . "\n";
+		$HTML['code'] .= '</pre>' . "\n";
 
 		// make label
 		$HTML['label'] = ($this->conf['showLabel'] && trim($this->values['label']) != "") ? trim($this->values['label']) : "";
@@ -166,15 +168,15 @@ class boc_standalone {
 	public function getBrushes() {
 		// built brushes string
 		$temp = "\t\t" . "'plain" . "\t" . $this->filePathBase . $this->filePathScripts . "shBrushPlain.js'";
-		if (strlen($this->conf['brushes'])>0) {
-			$brushesArray = t3lib_div::trimExplode(",", $this->conf['brushes'], true);
-			foreach($brushesArray AS $brush) {
+		if (strlen($this->conf['brushes']) > 0) {
+			$brushesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(",", $this->conf['brushes'], TRUE);
+			foreach ($brushesArray as $brush) {
 				$temp .= "," . "\n";
 				$temp .= "\t\t" . "'" . $this->chooseCSSTag($brush) . "\t" . $this->filePathBase . $this->filePathScripts . "shBrush" . $brush . ".js'";
 			}
 		}
 		$temp .= "\n";
-		return  $temp;
+		return $temp;
 	}
 
 	/**
@@ -267,12 +269,12 @@ class boc_standalone {
 		if (is_array($this->values['css'])) {
 			// built brushes string
 			$string = '; ';
-			foreach($this->values['css'] AS $config => $configValue) {
+			foreach ($this->values['css'] as $config => $configValue) {
 				// use TS config or not available in SyntaxHighlighter v3
 				if (($configValue != "" && $configValue != "auto") && $config != "toolbar") {
 					// highlight range
 					if ($config == "highlight") {
-						$string .= " highlight: [".t3lib_div::expandList($configValue)."]; ";
+						$string .= " highlight: [" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]; ";
 					} else {
 						$state = ($configValue) ? "true" : "false";
 						$string .= $config . ": " . $state . "; ";
@@ -291,11 +293,11 @@ class boc_standalone {
 	 */
 	public function getDefaults() {
 		$temp = '';
-		if (is_array($this->conf['defaults.']) >0) {
-			foreach($this->conf['defaults.'] AS $key => $value) {
+		if (is_array($this->conf['defaults.']) > 0) {
+			foreach ($this->conf['defaults.'] as $key => $value) {
 				// not available in SyntaxHighlighter v3
 				if ($key != "toolbar") {
-					$temp .= "\t" . "SyntaxHighlighter.defaults['".trim($key)."'] = ".trim($value).';'."\n";
+					$temp .= "\t" . "SyntaxHighlighter.defaults['" . trim($key) . "'] = " . trim($value) . ';'."\n";
 				}
 			}
 		}
@@ -309,11 +311,11 @@ class boc_standalone {
 	 */
 	public function getLanguageStrings() {
 		$temp = '';
-		if (is_array($this->conf['config.']['strings.'])>0) {
-			foreach($this->conf['config.']['strings.'] AS $key => $value) {
+		if (is_array($this->conf['config.']['strings.']) > 0) {
+			foreach ($this->conf['config.']['strings.'] as $key => $value) {
 				// not available in SyntaxHighlighter v3
 				if ($key != "viewSource" && $key != "copyToClipboard" && $key != "copyToClipboardConfirmation" && $key != "print") {
-					$temp .= "\t" . "SyntaxHighlighter.config.strings.".trim($key).' = "'.trim($value).'";'."\n";
+					$temp .= "\t" . "SyntaxHighlighter.config.strings." . trim($key) . ' = "' . trim($value) . '";' . "\n";
 				}
 			}
 		}

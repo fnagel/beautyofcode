@@ -25,8 +25,8 @@
 require_once(PATH_tslib.'class.tslib_pibase.php');
 
 // check for loaded t3jquery extension
-if (t3lib_extMgm::isLoaded('t3jquery')) {
-	require_once(t3lib_extMgm::extPath('t3jquery').'class.tx_t3jquery.php');
+if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
+	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery') . 'class.tx_t3jquery.php');
 }
 
 /**
@@ -37,10 +37,10 @@ if (t3lib_extMgm::isLoaded('t3jquery')) {
  * @subpackage	tx_beautyofcode
  */
 class tx_beautyofcode_pi1 extends tslib_pibase {
-	var $prefixId      	= 'tx_beautyofcode_pi1';		// Same as class name
-	var $scriptRelPath 	= 'pi1/class.tx_beautyofcode_pi1.php';	// Path to this script relative to the extension dir.
-	var $extKey        	= 'beautyofcode';	// The extension key.
-	var $pi_checkCHash 	= true;
+	var $prefixId = 'tx_beautyofcode_pi1';		// Same as class name
+	var $scriptRelPath = 'Classes/Controller/class.tx_beautyofcode_pi1.php';	// Path to this script relative to the extension dir.
+	var $extKey = 'beautyofcode';	// The extension key.
+	var $pi_checkCHash = TRUE;
 
 	/**
 	 * The main method of the PlugIn
@@ -54,7 +54,7 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 		$this->conf = $conf;
 		$this->pi_setPiVarDefaults();
 		// init vars
-		$this->error = false;
+		$this->error = FALSE;
 
 		// check for static template
 		$this->checkForStaticTempl();
@@ -64,19 +64,19 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 
 		// proceed if no error is saved
 		if ($this->error) {
-			return '<div style="text-align: left; text-size: 12px; color: red; margin: 10px; padding: 10px; background: white; border: 3px solid red;"><strong>Beauty of Code Extension Error</strong><br /><p><em>PID: '.$this->cObj->data['pid'].'</em><br /><em>UID: '.$this->cObj->data['uid'].'</em></p><p>'.implode("<br />", $this->error).'</p></div>';
+			return '<div style="text-align: left; text-size: 12px; color: red; margin: 10px; padding: 10px; background: white; border: 3px solid red;"><strong>Beauty of Code Extension Error</strong><br /><p><em>PID: ' . $this->cObj->data['pid'] . '</em><br /><em>UID: ' . $this->cObj->data['uid'] . '</em></p><p>' . implode("<br />", $this->error) . '</p></div>';
 		}
-		
+
 		// parse XML data into php array
 		$this->pi_initPIflexForm();
 
 		// use Syntax Highlighter v2 (jQuery 'beautyOfCode' driven) or v3 (standalone)
 		if ($this->conf['version'] == 'jquery') {
-			t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_jquery.php'));
-			$this->boc = t3lib_div::makeInstance('boc_jquery');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_jquery.php'));
+			$this->boc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('boc_jquery');
 		} else {
-			t3lib_div::requireOnce(t3lib_extMgm::extPath($this->extKey, 'lib/class.tx_beautyofcode_standalone.php'));
-			$this->boc = t3lib_div::makeInstance('boc_standalone');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_standalone.php'));
+			$this->boc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('boc_standalone');
 		}
 
 		// init need version class
@@ -95,7 +95,7 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 
 		//create preview
 		$this->makePreview();
-		
+
 		return $this->getHTML();
 	}
 
@@ -107,7 +107,7 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	public function getflexFormValue() {
 		$temp = array();
 		$temp['css'] = array();
-		
+
 		// get flexform values
 		$piFlexForm = $this->cObj->data['pi_flexform'];
 		$temp['label'] = $this->pi_getFFvalue($piFlexForm, 'cLabel', 'sDEF');
@@ -127,12 +127,16 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 *
 	 */
 	public function makePreview() {
-		if (strlen($this->cObj->data['header'])>0) {
-			$preview = ($this->flexFormValue['label']) ? "[".$this->flexFormValue['lang']."] ".substr($this->flexFormValue['label'], 0, 60) : "[".$this->flexFormValue['lang']."] ".htmlspecialchars(substr($this->flexFormValue['code'], 0, 60));
+		if (strlen($this->cObj->data['header']) > 0) {
+			$preview = ($this->flexFormValue['label']) ? "[" . $this->flexFormValue['lang'] . "] " . substr($this->flexFormValue['label'], 0, 60) : "[" . $this->flexFormValue['lang'] . "] " . htmlspecialchars(substr($this->flexFormValue['code'], 0, 60));
 			$bodytext = $this->cObj->data['bodytext'];
 			if ($bodytext != $preview) {
 				// copy the code to bodytext for preview in BE
-				$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery('tt_content', 'uid='.$this->cObj->data['uid'], array('bodytext'=>$preview));
+				$res = $GLOBALS['TYPO3_DB']->exec_UPDATEquery(
+					'tt_content',
+					'uid=' . $this->cObj->data['uid'],
+					array('bodytext' => $preview)
+				);
 			}
 		}
 	}
@@ -165,7 +169,7 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 		if ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addMarker_getHTML']) {
 			foreach($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$this->extKey]['addMarker_getHTML'] as $_funcRef) {
 				if ($_funcRef) {
-					t3lib_div::callUserFunction($_funcRef, $markerArrayMain, $this);
+					\TYPO3\CMS\Core\Utility\GeneralUtility::callUserFunction($_funcRef, $markerArrayMain, $this);
 				}
 			}
 		}
@@ -182,11 +186,11 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 */
 	public function getTemplateFile() {
 		// Get the template
-		$templateFile = (strlen(trim($this->conf['templateFile']))>0) ? trim($this->conf['templateFile']) : "EXT:beautyofcode/res/template.html";
+		$templateFile = (strlen(trim($this->conf['templateFile'])) > 0) ? trim($this->conf['templateFile']) : "EXT:beautyofcode/Resources/Private/Templates/template.html";
 		$this->templateHtml = $this->cObj->fileResource($templateFile);
-		
+
 		if (!$this->templateHtml) {
-			$this->handleError('Error while fetching the template file: <em>'.$templateFile.'</em>');
+			$this->handleError('Error while fetching the template file: <em>' . $templateFile . '</em>');
 		}
 	}
 
@@ -218,21 +222,21 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 */
 	public function handleError($msg) {
 		// prepare FE output
-		if ($this->error === FALSE) {		
+		if ($this->error === FALSE) {
 			$this->error = array();
 		}
 		$this->error[] = $msg . "<br />";
 
-		t3lib_div::sysLog($msg, $this->extKey, 3); // error
+		\TYPO3\CMS\Core\Utility\GeneralUtility::sysLog($msg, $this->extKey, 3); // error
 		// write dev log if enabled
 		if ($GLOBALS['TYPO3_CONF_VARS']['SYS']['enable_DLOG']) {
-			t3lib_div::devLog($msg, $this->extKey, 3); // fatal error
+			\TYPO3\CMS\Core\Utility\GeneralUtility::devLog($msg, $this->extKey, 3); // fatal error
 		}
 	}
 }
 
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1.php']);
 }
 

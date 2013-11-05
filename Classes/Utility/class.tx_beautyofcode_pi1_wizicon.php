@@ -36,16 +36,16 @@ class tx_beautyofcode_pi1_wizicon {
 	 * @param	array		$wizardItems: The wizard items
 	 * @return	Modified array with wizard items
 	 */
-	function proc($wizardItems)	{
+	function proc($wizardItems) {
 		global $LANG;
 
 		$LL = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_beautyofcode_pi1'] = array(
-			'icon'=>t3lib_extMgm::extRelPath('beautyofcode').'pi1/ce_wiz.gif',
-			'title'=>$LANG->getLLL('tt_content.list_type_pi1',$LL),
-			'description'=>$LANG->getLLL('wiz_description',$LL),
-			'params'=>'&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_pi1'
+			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
+			'title' => $LANG->getLLL('tt_content.list_type_pi1', $LL),
+			'description' => $LANG->getLLL('wiz_description', $LL),
+			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_pi1'
 		);
 
 		return $wizardItems;
@@ -56,15 +56,15 @@ class tx_beautyofcode_pi1_wizicon {
 	 *
 	 * @return	The array with language labels
 	 */
-	function includeLocalLang()	{
-		$llFile = t3lib_extMgm::extPath('beautyofcode').'locallang_db.xml';
-		$LOCAL_LANG = t3lib_div::readLLfile($llFile, $GLOBALS['LANG']->lang);
+	function includeLocalLang() {
+		$llFile = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('beautyofcode') . 'Resources/Private/Language/locallang_db.xml';
+		$LOCAL_LANG = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile($llFile, $GLOBALS['LANG']->lang);
 
 		return $LOCAL_LANG;
 	}
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_wizicon.php'])	{
+if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_wizicon.php']) {
 	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_wizicon.php']);
 }
 ?>

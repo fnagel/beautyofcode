@@ -23,8 +23,12 @@
 			<label index="toolbar">Show toolbar (only available in SyntaxHighlighter v2)</label>
 			<label index="collapse">Collapse code element</label>
 
-            <label index="cms_layout.no_code">Sourcecode field is empty</label>
-            <label index="cms_layout.no_label">no title</label>
+			<label index="cms_layout.no_code">Sourcecode field is empty</label>
+			<label index="cms_layout.no_label">no title</label>
+
+			<label index="tt_content.list_type_pi1">Sourcecode (beautyOfCode)</label>
+			<label index="wiz_description">This plugin provides state-of-the-art, feature rich syntax highlighting.</label>
+			<label index="enable_t3editor">Enable t3editor: Use syntax editor with syntax highlighting in Backend (t3editor)</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="extlabel">beautyOfCode</label>
@@ -44,8 +48,12 @@
 			<label index="toolbar">Toolbar anzeigen (nur in Version 2 verfügbar)</label>
 			<label index="collapse">Quellcode Elemente einklappen</label>
 
-            <label index="cms_layout.no_code">Quellcode Feld ist leer</label>
-            <label index="cms_layout.no_label">kein Titel</label>
+			<label index="cms_layout.no_code">Quellcode Feld ist leer</label>
+			<label index="cms_layout.no_label">kein Titel</label>
+
+			<label index="tt_content.list_type_pi1">Quellcode (beautyOfCode)</label>
+			<label index="wiz_description">Dieses Plugin bietet umfangreiche Funktionen um Quellcode anzuzeigen.</label>
+			<label index="enable_t3editor">Benutze t3editor: Benutze Syntax Highlighting im Backend (t3editor)</label>
 		</languageKey>
 	</data>
 </T3locallang>

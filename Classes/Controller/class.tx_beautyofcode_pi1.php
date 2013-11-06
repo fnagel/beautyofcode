@@ -72,10 +72,12 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 
 		// use Syntax Highlighter v2 (jQuery 'beautyOfCode' driven) or v3 (standalone)
 		if ($this->conf['version'] == 'jquery') {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_jquery.php'));
+			$jqueryRenderer = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_jquery.php');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($jqueryRenderer);
 			$this->boc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('boc_jquery');
 		} else {
-			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_standalone.php'));
+			$standaloneRenderer = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($this->extKey, 'Classes/Controller/class.tx_beautyofcode_standalone.php');
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($standaloneRenderer);
 			$this->boc = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('boc_standalone');
 		}
 
@@ -127,8 +129,21 @@ class tx_beautyofcode_pi1 extends tslib_pibase {
 	 *
 	 */
 	public function makePreview() {
+		$flexformValue = $this->getflexFormValue();
+
 		if (strlen($this->cObj->data['header']) > 0) {
-			$preview = ($this->flexFormValue['label']) ? "[" . $this->flexFormValue['lang'] . "] " . substr($this->flexFormValue['label'], 0, 60) : "[" . $this->flexFormValue['lang'] . "] " . htmlspecialchars(substr($this->flexFormValue['code'], 0, 60));
+			if ($flexFormValue['label']) {
+				$preview = sprintf("[%s] %s",
+					$flexFormValue['lang'],
+					substr($flexFormValue['label'], 0, 60)
+				);
+			} else {
+				$preview = sprintf("[%s] %s",
+					$flexFormValue['lang'],
+					htmlspecialchars(substr($flexFormValue['code'], 0, 60))
+				);
+			}
+
 			$bodytext = $this->cObj->data['bodytext'];
 			if ($bodytext != $preview) {
 				// copy the code to bodytext for preview in BE

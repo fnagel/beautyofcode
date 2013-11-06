@@ -51,3 +51,35 @@ plugin.tx_beautyofcode {
 		.tx_beautyofcode_pi1 pre { overflow: auto; }
 	)
 }
+
+tx_beautyofcode_assetrenderer = PAGE
+tx_beautyofcode_assetrenderer {
+	typeNum = 1383777325
+	config {
+		disableAllHeaderCode = 1
+		additionalHeaders = Content-Type: text/css
+		xhtml_cleaning = 0
+		admPanel = 0
+	}
+	10 = USER
+	10 {
+		userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
+		extensionName = Beautyofcode
+		pluginName = AssetRenderer
+		vendorName = FNagel
+		controller = JqueryAsset
+		switchableControllerActions {
+			JqueryAsset {
+				1 = render
+			}
+			/*
+			StandaloneAsset {
+				1 = render
+			}
+			*/
+		}
+		view < plugin.tx_beautyofcode.view
+		persistence < plugin.tx_beautyofcode.persistence
+		settings < plugin.tx_beautyofcode.settings
+	}
+}

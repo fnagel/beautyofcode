@@ -1,3 +1,4 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:beautyofcode/Configuration/TypoScript/Setup/extbase.ts">
 plugin.tx_beautyofcode_pi1 {
 	# jquery or standalone
 	version = {$plugin.tx_beautyofcode_pi1.version}

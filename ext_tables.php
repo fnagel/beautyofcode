@@ -31,4 +31,10 @@ if (TYPO3_MODE == 'BE') {
 	$newContentElementWizardItem = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Service/NewContentElementWizardService.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['FNagel\\Beautyofcode\\Service\\NewContentElementWizardService'] = $newContentElementWizardItem;
 }
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
+	$_EXTKEY,
+	'ContentRenderer',
+	'beautyofcode - Syntaxhighlighter'
+);
 ?>

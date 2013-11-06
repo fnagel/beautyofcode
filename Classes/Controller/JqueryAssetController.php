@@ -62,7 +62,7 @@ class JqueryAssetController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 
 	public function renderAction() {
 		$this->view->assign('jQvar', $this->settings['jQueryNoConflict'] ? "jQuery" : "$");
-		$this->view->assign('jQuerySelector', (strlen(trim($this->settings['jQuerySelector'])) > 0) ? trim($this->settings['jQuerySelector']) . ' ' : FALSE;
+		$this->view->assign('jQuerySelector', (strlen(trim($this->settings['jQuerySelector'])) > 0) ? trim($this->settings['jQuerySelector']) . ' ' : FALSE);
 	}
 }
 ?>

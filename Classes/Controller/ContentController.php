@@ -123,7 +123,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			->setCreateAbsoluteUri(FALSE)
 			->uriFor('render', array(), 'JqueryAsset', NULL, 'AssetRenderer');
 
-		$this->pageRenderer->addJsFooterFile($inlineAsset, 'text/javascript', TRUE, FALSE, '', FALSE);
+		$compress = FALSE;
+		$excludeFromConcatenation = TRUE;
+		$this->pageRenderer->addJsFooterFile($inlineAsset, 'text/javascript', $oompress, FALSE, '', $excludeFromConcatenation);
 	}
 
 	public function renderAction() {

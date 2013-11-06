@@ -33,7 +33,7 @@ namespace FNagel\Beautyofcode\ViewHelpers;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class Explode extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *

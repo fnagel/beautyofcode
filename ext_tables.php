@@ -33,7 +33,7 @@ if (TYPO3_MODE == 'BE') {
 }
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-	$_EXTKEY,
+	'FNagel.' . $_EXTKEY,
 	'ContentRenderer',
 	'beautyofcode - Syntaxhighlighter'
 );

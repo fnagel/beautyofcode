@@ -12,7 +12,7 @@ if (!defined ('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	$_EXTKEY,
+	'FNagel.' . $_EXTKEY,
 	'AssetRenderer',
 	array(
 		'JqueryAsset' => 'render',
@@ -24,7 +24,7 @@ if (!defined ('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	$_EXTKEY,
+	'FNagel.' . $_EXTKEY,
 	'ContentRenderer',
 	array(
 		'Content' => 'render'

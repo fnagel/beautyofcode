@@ -23,17 +23,6 @@ class JqueryAssetController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 
 	/**
 	 *
-	 * @param \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $yposcriptFrontendController
-	 * @return void
-	 */
-	public function injectTypoScriptFrontendController(\TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController $yposcriptFrontendController) {
-		$this->typoscriptFrontendController = $typoscriptFrontendController;
-
-		$this->pageRenderer = $this->typoscriptFrontendController->getPageRenderer();
-	}
-
-	/**
-	 *
 	 * @param \FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility
 	 */
 	public function injectBeautyofcodeGeneralUtility(\FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility) {
@@ -41,6 +30,10 @@ class JqueryAssetController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionCont
 	}
 
 	public function initializeAction() {
+		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
+
+		$this->pageRenderer = $this->typoscriptFrontendController->getPageRenderer();
+
 		// please note only the jquery core js is included by t3jquery.
 		// All other components added manually cause of more flexibility
 		if (T3JQUERY === TRUE) {

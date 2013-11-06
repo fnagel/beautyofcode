@@ -1,5 +1,29 @@
-{foo}
-<br />
-<f:link.action pluginName="AssetRenderer" controller="JqueryAsset" action="render" format="js" pageType="1383777325">
-	jQuery asset renderer
-</f:link.action>
+<f:layout name="Default" />
+
+<f:section name="Main">
+	<f:render section="Container_{version}" arguments="{ lang: lang, cssConfig: cssConfig, code: code, label: label }" />
+</f:section>
+
+<f:section name="Container_jquery">
+	<div class="tx_beautyofcode_pi1">
+		<pre class="code">
+			<code class="{f:if(condition: {lang}, then: {lang}, else: 'plain')}{cssConfig}">
+				<f:format.htmlspecialchars>{code}</f:format.htmlspecialchars>
+			</code>
+		</pre>
+		<f:if condition="{settings.showLabel} && {label}">
+			<em>{label}</em>
+		</f:if>
+	</div>
+</f:section>
+
+<f:section name="Container_standalone">
+	<div class="tx_beautyofcode_pi1">
+		<pre class="brush: {f:if(condition: {lang}, then: {lang}, else: 'plain')}{cssConfig}">
+			<f:format.htmlspecialchars>{code}</f:format.htmlspecialchars>
+		</pre>
+		<f:if condition="{settings.showLabel} && {label}">
+			<em>{label}</em>
+		</f:if>
+	</div>
+</f:section>

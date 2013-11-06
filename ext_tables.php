@@ -37,4 +37,12 @@ if (TYPO3_MODE == 'BE') {
 	'ContentRenderer',
 	'beautyofcode - Syntaxhighlighter'
 );
+
+$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($_EXTKEY);
+$pluginSignature = strtolower($extensionName) . '_contentrenderer';
+$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+	$pluginSignature,
+	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/flexform_ds_pi1.xml'
+);
 ?>

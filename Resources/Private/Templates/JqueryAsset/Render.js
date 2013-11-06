@@ -48,9 +48,7 @@
 </f:section>
 
 <f:section name="Brushes">
-	<f:comment>
-		<f:for each="{settings.brushes -> f:format.explode(delimiter: ',', removeEmptyValues: 'TRUE')}" as="brush">
+	<f:for each="{settings.brushes -> boc:format.explode(delimiter: ',', removeEmptyValues: 'TRUE')}" as="brush">
 	,"{brush}";
-		</f:for>
-	</f:comment>
+	</f:for>
 </f:section>

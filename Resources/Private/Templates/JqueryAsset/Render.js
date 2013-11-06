@@ -29,7 +29,7 @@
 <![CDATA[}]]>);
 
 <f:section name="Defaults">
-	<f:if cndition="{settings.defaults}">
+	<f:if condition="{settings.defaults}">
 		<f:for each="{settings.defaults}" as="value" key="key" iteration="i">
 <f:if condition="{i.cycle} != 1">,</f:if>"{key}": {value}
 		</f:for>
@@ -48,7 +48,9 @@
 </f:section>
 
 <f:section name="Brushes">
-	<f:for each="{settings.brushes -> f:format.explode(delimiter: ',', removeEmptyValues: 'TRUE')}" as="brush">
-,"{brush}";
-	</f:for>
+	<f:comment>
+		<f:for each="{settings.brushes -> f:format.explode(delimiter: ',', removeEmptyValues: 'TRUE')}" as="brush">
+	,"{brush}";
+		</f:for>
+	</f:comment>
 </f:section>

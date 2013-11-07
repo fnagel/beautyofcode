@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace FNagel\Beautyofcode\Configuration\Wizard;
 
 /***************************************************************
  * Copyright notice
@@ -31,7 +31,7 @@ namespace FNagel\Beautyofcode\Service;
  * @package	TYPO3
  * @subpackage	tx_beautyofcode
  */
-class NewContentElementWizardService {
+class NewContentElementWizard {
 
 	/**
 	 * Processing the wizard items array

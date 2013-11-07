@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace FNagel\Beautyofcode\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -25,13 +25,13 @@ namespace FNagel\Beautyofcode\Service;
  ***************************************************************/
 
 /**
- * Function to add select options dynamically (loaded out of TS)
+ * Function to add select options dynamically (loaded in flexform)
  *
  * @author	Felix Nagel <info@felixnagel.com>
  * @package	TYPO3
  * @subpackage	tx_beautyofcode
  */
-class FlexformService {
+class LanguageItems {
 
 	/**
 	 * This function is called from the flexform and

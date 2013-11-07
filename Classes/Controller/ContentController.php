@@ -37,21 +37,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+	 * @var \FNagel\Beautyofcode\Service\LibraryServiceInterface
 	 */
-	protected $typoscriptFrontendController;
-
-	/**
-	 *
-	 * @var \TYPO3\CMS\Core\Page\PageRenderer
-	 */
-	protected $pageRenderer;
-
-	/**
-	 *
-	 * @var \FNagel\Beautyofcode\Utility\GeneralUtility
-	 */
-	protected $bocGeneralUtility;
+	protected $libraryService;
 
 	/**
 	 *
@@ -61,10 +49,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @param \FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility
+	 * @param \FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService
 	 */
-	public function injectBeautyofcodeGeneralUtility(\FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility) {
-		$this->bocGeneralUtility = $generalUtility;
+	public function injectLibraryService(\FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
+		$this->libraryService = $libraryService;
 	}
 
 	/**
@@ -78,55 +66,8 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	public function initializeAction() {
 		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
 
-		$this->pageRenderer = $this->typoscriptFrontendController->getPageRenderer();
-
-		if ($this->settings['version'] === 'jquery') {
-			$this->addJqueryLibraries();
-		} else if ($this->settings['version'] === 'standalone') {
-// 			$this->addStandaloneLibraries();
-		}
-	}
-
-	/**
-	 * adds the necessary jquery libraries to the TSFE page renderer
-	 *
-	 * @return void
-	 */
-	protected function addJqueryLibraries() {
-		// please note only the jquery core js is included by t3jquery.
-		// All other components added manually cause of more flexibility
-		if (T3JQUERY === TRUE) {
-			// add jQuery core by t3jquery extension
-			tx_t3jquery::addJqJS();
-		} else if ($this->settings['jquery']['addjQuery'] > 0) {
-			$this->pageRenderer->addJsLibrary(
-				"beautyofcode_jquery",
-				$this
-					->typoscriptFrontendController
-					->tmpl
-					->getFileName(
-						"EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js"
-					)
-			);
-		}
-
-		// add jquery.beautyOfCode.js
-		$this->pageRenderer->addJsLibrary(
-			"beautyofcode_boc",
-			$this->bocGeneralUtility->makeAbsolutePath(trim($this->settings['jquery']['scriptUrl']))
-		);
-
-		$inlineAsset = $this->uriBuilder->reset()
-			->setTargetPageUid(0)
-			->setTargetPageType(1383777325)
-			->setUseCacheHash(TRUE)
-			->setFormat('js')
-			->setCreateAbsoluteUri(FALSE)
-			->uriFor('render', array(), 'JqueryAsset', NULL, 'AssetRenderer');
-
-		$compress = FALSE;
-		$excludeFromConcatenation = TRUE;
-		$this->pageRenderer->addJsFooterFile($inlineAsset, 'text/javascript', $oompress, FALSE, '', $excludeFromConcatenation);
+		$this->libraryService->setConfiguration($this->settings[$this->settings['version']]);
+		$this->libraryService->load($this->settings['version']);
 	}
 
 	public function renderAction() {

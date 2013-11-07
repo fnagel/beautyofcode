@@ -33,7 +33,7 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 	 */
 	public function load($library) {
 		/* @var $concreteLibraryService \FNagel\Beautyofcode\Service\AbstractLibraryService */
-		$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfist($library) . 'LibraryService');
+		$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
 		$concreteLibraryService->setConfiguration($this->configuration);
 		$concreteLibraryService->load();
 	}

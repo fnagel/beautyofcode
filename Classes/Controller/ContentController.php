@@ -66,8 +66,8 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	public function initializeAction() {
 		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
 
-		$this->libraryService->setConfiguration($this->settings[$this->settings['version']]);
-		$this->libraryService->load($this->settings['version']);
+// 		$this->libraryService->setConfiguration($this->settings[$this->settings['version']]);
+// 		$this->libraryService->load($this->settings['version']);
 	}
 
 	public function renderAction() {

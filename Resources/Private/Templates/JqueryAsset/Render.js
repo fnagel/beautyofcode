@@ -5,7 +5,7 @@
 {jQvar}{settings.jQueryOnReadyCallback}
 	{jQvar}.beautyOfCode.init(<![CDATA[{]]>
 <f:if condition="{settings.jquery.baseUrl}">
-		baseUrl: "{boc:makeAbsolute(url: {settings.jquery.baseUrl})}",
+		baseUrl: "{boc:makeAbsolute(url: settings.jquery.baseUrl)}",
 </f:if>
 <f:if condition="{settings.jquery.scripts}">
 		scripts: "{settings.jquery.scripts}",

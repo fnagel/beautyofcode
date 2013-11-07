@@ -117,7 +117,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		);
 
 		$inlineAsset = $this->uriBuilder->reset()
-			->setTargetPageType($targetPageType)
+			->setTargetPageType(1383777325)
 			->setUseCacheHash(TRUE)
 			->setFormat('js')
 			->setCreateAbsoluteUri(FALSE)

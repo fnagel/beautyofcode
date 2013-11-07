@@ -33,7 +33,7 @@ namespace FNagel\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class AbstractLibraryService extends \TYPO3\CMS\Core\SingletonInterface {
+abstract class AbstractLibraryService extends \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface

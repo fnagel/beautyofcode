@@ -48,8 +48,8 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 
 		$commonConfiguration = $_configuration['common'];
 		// we also could pull that from the class name, but this is more pragmatic...
-		$version = $_configuration[$version];
-		$versionConfiguration = $_configuration['version'];
+		$version = $_configuration['version'];
+		$versionConfiguration = $_configuration[$version];
 
 		$this->configuration = array_merge($commonConfiguration, $versionConfiguration);
 	}

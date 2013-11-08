@@ -32,13 +32,10 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 	 * @see \FNagel\Beautyofcode\Service\LibraryServiceInterface::load()
 	 */
 	public function load($library) {
-		try {
-			/* @var $concreteLibraryService \FNagel\Beautyofcode\Service\AbstractLibraryService */
-			$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
-			$concreteLibraryService->setConfiguration($this->configuration);
-			$concreteLibraryService->load();
-		} catch (\FNagel\Beautyofcode\Service\LibraryServiceAlreadyLoadedException $e) {
-		}
+		/* @var $concreteLibraryService \FNagel\Beautyofcode\Service\AbstractLibraryService */
+		$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
+		$concreteLibraryService->setConfiguration($this->configuration);
+		$concreteLibraryService->load();
 	}
 }
 ?>

@@ -213,7 +213,7 @@ class LanguageItems {
 		// Generate TS config
 		$template->generateConfig();
 
-		return $template->setup['plugin.']['tx_beautyofcode_pi1.'];
+		return $template->setup['plugin.']['tx_beautyofcode.']['common.'];
 	}
 }
 

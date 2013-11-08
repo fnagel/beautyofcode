@@ -49,7 +49,8 @@ class PageLayoutViewHook {
 	public function getExtensionSummary($params, &$pObj) {
 		$result = '';
 
-		if ($params['row']['list_type'] == 'beautyofcode_pi1') {
+		if ($params['row']['list_type'] == 'beautyofcode_pi1'
+			|| $params['row']['list_type'] == 'beautyofcode_contentrenderer') {
 			$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
 
 			$uid = $params['row']['uid'];

@@ -81,12 +81,66 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$flexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
 		$flexformValues = $this->flexformService->convertFlexFormContentToArray($flexform);
 
+		$getCssConfigMethod = 'get' . ucfirst($this->settings['version']) . 'CssConfig';
+
 		$this->view->assignMultiple(array(
 			'lang' => $flexformValues['cLang'],
 			'label' => $flexformValues['cLabel'],
 			'code' => $flexformValues['cCode'],
-			'cssConfig' => '',
+			'cssConfig' => method_exists($this, $getCssConfigMethod) ? $this->$getCssConfigMethod() : '',
 		));
+	}
+
+	/**
+	 * Function to solve CSSconfiguration which overwrites TS configuration
+	 *
+	 * @return	string  space and semicolon seperated CSS classes
+	 */
+	protected function getStandaloneCssConfig() {
+		$string = '';
+		if (is_array($this->values['css'])) {
+			// built brushes string
+			$string = '; ';
+			foreach ($this->values['css'] as $config => $configValue) {
+				// use TS config or not available in SyntaxHighlighter v3
+				if (($configValue != "" && $configValue != "auto") && $config != "toolbar") {
+					// highlight range
+					if ($config == "highlight") {
+						$string .= " highlight: [" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]; ";
+					} else {
+						$state = ($configValue) ? "true" : "false";
+						$string .= $config . ": " . $state . "; ";
+					}
+				}
+			}
+			$string = substr($string, 0, -2);
+		}
+		return $string;
+	}
+
+	/**
+	 * Function to solve CSSconfiguration which overwrites TS configuration
+	 *
+	 * @return	string  space seperated CSS classes
+	 */
+	public function getJqueryCssConfig() {
+		$string = '';
+		if (is_array($this->values['css'])) {
+			// built brushes string
+			$string = '';
+			foreach($this->values['css'] AS $config => $configValue) {
+				if ($configValue != "" && $configValue != "auto") {
+					// highlight range
+					if ($config == "highlight") {
+						$string .= " boc-highlight[" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]";
+					} else {
+						if ($configValue) $string .= " boc-" . $config;
+						else $string .= " boc-no-" . $config;
+					}
+				}
+			}
+		}
+		return $string;
 	}
 }
 ?>

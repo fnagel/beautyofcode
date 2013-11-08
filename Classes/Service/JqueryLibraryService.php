@@ -78,7 +78,7 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 		$cacheId = md5(serialize($this->configuration));
 
 		if ($this->cacheManager->getCache('cache_beautyofcode')->has($cacheId)) {
-			throw new \FNagel\Service\LibraryServiceAlreadyLoadedException();
+			throw new \FNagel\Beautyofcode\Service\LibraryServiceAlreadyLoadedException();
 		}
 
 		// just flag, that a file for this configuration was generated

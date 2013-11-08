@@ -27,7 +27,7 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 	 * (non-PHPdoc)
 	 * @see \FNagel\Beautyofcode\Service\LibraryServiceInterface::setConfigurationManager()
 	 */
-	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
+	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
 	}
 

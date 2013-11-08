@@ -66,8 +66,15 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	public function initializeAction() {
 		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
 
-// 		$this->libraryService->setConfiguration($this->settings[$this->settings['version']]);
-// 		$this->libraryService->load($this->settings['version']);
+		// @todo: merge from flexform settings
+
+		$this->libraryService->setConfiguration(
+			array_merge(
+				$this->settings['common'],
+				$this->settings[$this->settings['version']]
+			)
+		);
+		$this->libraryService->load($this->settings['version']);
 	}
 
 	public function renderAction() {

@@ -36,9 +36,16 @@ namespace FNagel\Beautyofcode\Service;
 abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
+	 *
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Core\Cache\CacheManager
+	 */
+	protected $cacheManager;
 
 	/**
 	 *
@@ -77,6 +84,14 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	 */
 	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
 		$this->objectManager = $objectManager;
+	}
+
+	/**
+	 *
+	 * @param \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+	 */
+	public function injectCacheManager(\TYPO3\CMS\Core\Cache\CacheManager $cacheManager) {
+		$this->cacheManager = $cacheManager;
 	}
 
 	/**

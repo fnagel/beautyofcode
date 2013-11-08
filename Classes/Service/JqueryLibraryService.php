@@ -35,6 +35,8 @@ namespace FNagel\Beautyofcode\Service;
  */
 class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryService {
 
+	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.js';
+
 	public function load() {
 		if (T3JQUERY === TRUE) {
 			$this->loadT3JqueryCore();
@@ -72,16 +74,31 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 	}
 
 	protected function loadGeneratedResource() {
-		$inlineAsset = $this->uriBuilder->reset()
-			->setTargetPageType(1383777325)
-			->setUseCacheHash(TRUE)
-			->setFormat('js')
-			->setCreateAbsoluteUri(FALSE)
-			->uriFor('render', array(), 'JqueryAsset', NULL, 'AssetRenderer');
+		// @todo: cache_phpcode
+		$cacheId = md5(serialize($this->configuration));
 
-		$compress = FALSE;
-		$excludeFromConcatenation = TRUE;
-		$this->pageRenderer->addJsFooterFile($inlineAsset, 'text/javascript', $oompress, FALSE, '', $excludeFromConcatenation);
+		if ($this->cacheManager->getCache('cache_beautyofcode')->has($cacheId)) {
+			throw new \FNagel\Service\LibraryServiceAlreadyLoadedException();
+		}
+
+		// just flag, that a file for this configuration was generated
+		$this->cacheManager
+			->getCache('cache_beautyofcode')
+			->set($cacheId, 'generated');
+
+		/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+		$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+
+		$view->setFormat('js');
+		$view->setTemplatePathAndFilename($this->templatePathAndFilename);
+
+		$view->assignMultiple(array(
+			'settings' => $this->configuration
+		));
+
+		$resource = $view->render();
+
+		$this->pageRenderer->addJsInlineCode('beautyofcode_inline', $resource);
 	}
 }
 ?>

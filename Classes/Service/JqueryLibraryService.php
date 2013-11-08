@@ -37,6 +37,23 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 
 	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.js';
 
+	/**
+	 * (non-PHPdoc)
+	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::configure()
+	 */
+	public function configure() {
+		$_configuration = $this
+			->configurationManager
+			->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+		$commonConfiguration = $_configuration['common'];
+		// we also could pull that from the class name, but this is more pragmatic...
+		$version = $_configuration['version'];
+		$versionConfiguration = $_configuration['version'];
+
+		$this->configuration = array_merge($commonConfiguration, $versionConfiguration);
+	}
+
 	public function load() {
 		if (T3JQUERY === TRUE) {
 			$this->loadT3JqueryCore();
@@ -81,7 +98,10 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 			$resource = $this->cacheManager->getCache('cache_beautyofcode')->get($cacheId);
 		} else {
 			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-			$view = $this->objectManager->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+			$view = $this->objectManager->get(
+				'TYPO3\\CMS\\Fluid\\View\\StandaloneView',
+				$this->configurationManager->getContentObject()
+			);
 
 			$view->setFormat('js');
 			$view->setTemplatePathAndFilename($this->templatePathAndFilename);

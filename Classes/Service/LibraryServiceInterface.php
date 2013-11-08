@@ -36,10 +36,16 @@ namespace FNagel\Beautyofcode\Service;
 interface LibraryServiceInterface extends \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
+	 * Sets the configuration manager from the controller
 	 *
-	 * @param array $configuration
+	 * This is necessary, as the flud standalone view otherwise creates its own
+	 * ContentObjectRenderer instance. It seems there is a race conditon and the
+	 * content object within the controller gets the instance from the service
+	 * and returns an empty `data` array and no flexform values.
+	 *
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function setConfiguration($configuration);
+	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager);
 
 	/**
 	 *

@@ -11,9 +11,9 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 
 	/**
 	 *
-	 * @var array
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
 	 */
-	protected $configuration;
+	protected $configurationManager;
 
 	/**
 	 *
@@ -23,8 +23,12 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 		$this->objectManager = $objectManager;
 	}
 
-	public function setConfiguration($configuration) {
-		$this->configuration = $configuration;
+	/**
+	 * (non-PHPdoc)
+	 * @see \FNagel\Beautyofcode\Service\LibraryServiceInterface::setConfigurationManager()
+	 */
+	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManager $configurationManager) {
+		$this->configurationManager = $configurationManager;
 	}
 
 	/**
@@ -34,7 +38,10 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 	public function load($library) {
 		/* @var $concreteLibraryService \FNagel\Beautyofcode\Service\AbstractLibraryService */
 		$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
-		$concreteLibraryService->setConfiguration($this->configuration);
+
+		$concreteLibraryService->setConfigurationManager($this->configurationManager);
+
+		$concreteLibraryService->configure();
 		$concreteLibraryService->load();
 	}
 }

@@ -63,26 +63,25 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->flexformService = $flexformService;
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
+	 */
 	public function initializeAction() {
-		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
-
-		// @todo: merge from flexform settings
-
-		$this->libraryService->setConfiguration(
-			array_merge(
-				$this->settings['common'],
-				$this->settings[$this->settings['version']]
-			)
-		);
+		// @todo: allow merging from flexform
+		$this->libraryService->setConfigurationManager($this->configurationManager);
 		$this->libraryService->load($this->settings['version']);
 	}
 
+	/**
+	 *
+	 * @return void
+	 */
 	public function renderAction() {
 		$flexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
 		$flexformValues = $this->flexformService->convertFlexFormContentToArray($flexform);
 
 		$this->view->assignMultiple(array(
-			'version' => $this->settings['version'],
 			'lang' => $flexformValues['cLang'],
 			'label' => $flexformValues['cLabel'],
 			'code' => $flexformValues['cCode'],

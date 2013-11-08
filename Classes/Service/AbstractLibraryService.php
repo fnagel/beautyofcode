@@ -54,11 +54,6 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	protected $bocGeneralUtility;
 
 	/**
-	 * @var \TYPO3\CMS\Extbase\Mvc\Web\Routing\UriBuilder
-	 */
-	protected $uriBuilder;
-
-	/**
 	 *
 	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
@@ -72,9 +67,16 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 
 	/**
 	 *
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+	 */
+	protected $configurationManager;
+
+	/**
+	 * The concrete configuration, extracted from the configuration manager
+	 *
 	 * @var array
 	 */
-	protected $configuration = array();
+	protected $configuration;
 
 	/**
 	 * Injects the object manager
@@ -111,13 +113,19 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	}
 
 	/**
-	 * sets the configuration for the concrete library service
 	 *
-	 * @param array $configuration
+	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
 	 */
-	public function setConfiguration($configuration) {
-		$this->configuration = $configuration;
+	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
+		$this->configurationManager = $configurationManager;
 	}
+
+	/**
+	 * Extracts and stores the concrete library configuration
+	 *
+	 * @return void
+	 */
+	abstract public function configure();
 
 	/**
 	 * adds the necessary libraries to the page renderer

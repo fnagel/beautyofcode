@@ -1,29 +1,24 @@
 <f:layout name="Default" />
 
 <f:section name="Main">
-	<f:render section="Container_{settings.version}" arguments="{ lang: lang, cssConfig: cssConfig, code: code, label: label }" />
+	<div class="tx_beautyofcode_pi1">
+		<f:render section="Container_{settings.version}" arguments="{ lang: lang, cssConfig: cssConfig, code: code }" />
+		<f:if condition="{settings.showLabel} && {label}">
+			<em>{label}</em>
+		</f:if>
+	</div>
 </f:section>
 
 <f:section name="Container_jquery">
-	<div class="tx_beautyofcode_pi1">
-		<pre class="code">
-			<code class="{f:if(condition: lang, then: lang, else: 'plain')}{cssConfig}">
+	<pre class="code">
+		<code class="{f:if(condition: lang, then: lang, else: 'plain')}{cssConfig}">
 <f:format.htmlspecialchars>{code}</f:format.htmlspecialchars>
-			</code>
-		</pre>
-		<f:if condition="{settings.showLabel} && {label}">
-			<em>{label}</em>
-		</f:if>
-	</div>
+		</code>
+	</pre>
 </f:section>
 
 <f:section name="Container_standalone">
-	<div class="tx_beautyofcode_pi1">
-		<pre class="brush: {f:if(condition: lang, then: lang, else: 'plain')}{cssConfig}">
+	<pre class="brush: {f:if(condition: lang, then: lang, else: 'plain')}{cssConfig}">
 <f:format.htmlspecialchars>{code}</f:format.htmlspecialchars>
-		</pre>
-		<f:if condition="{settings.showLabel} && {label}">
-			<em>{label}</em>
-		</f:if>
-	</div>
+	</pre>
 </f:section>

@@ -3,6 +3,8 @@ plugin.tx_beautyofcode {
 		# jquery or standalone
 		version = {$plugin.tx_beautyofcode.version}
 
+		showLabel = {$plugin.tx_beautyofcode.showLabel}
+
 		jquery {
 			baseUrl = {$plugin.tx_beautyofcode.jquery.baseUrl}
 			scripts = {$plugin.tx_beautyofcode.jquery.scripts}

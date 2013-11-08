@@ -3,26 +3,6 @@ if (!defined ('TYPO3_MODE')) {
 	die ('Access denied.');
 }
 
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPItoST43(
-	$_EXTKEY,
-	'Classes/Controller/class.tx_beautyofcode_pi1.php',
-	'_pi1',
-	'list_type',
-	1
-);
-
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'FNagel.' . $_EXTKEY,
-	'AssetRenderer',
-	array(
-		'JqueryAsset' => 'render',
-// 		'StandaloneAsset' => 'render'
-	),
-	// non-cacheable actions
-	array(
-	)
-);
-
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
 	'FNagel.' . $_EXTKEY,
 	'ContentRenderer',

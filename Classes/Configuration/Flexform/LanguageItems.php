@@ -27,9 +27,8 @@ namespace FNagel\Beautyofcode\Configuration\Flexform;
 /**
  * Function to add select options dynamically (loaded in flexform)
  *
- * @author	Felix Nagel <info@felixnagel.com>
- * @package	TYPO3
- * @subpackage	tx_beautyofcode
+ * @author Felix Nagel <info@felixnagel.com>
+ * @package \FNagel\Beautyofcode\Configuration\Flexform
  */
 class LanguageItems {
 
@@ -37,8 +36,8 @@ class LanguageItems {
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
-	 * @param	array	flexform data
-	 * @return	array
+	 * @param array flexform data
+	 * @return array
 	 */
 	public function getConfiguredLanguages($config) {
 		static $cachedFields = 0;
@@ -82,8 +81,8 @@ class LanguageItems {
 	/**
 	 * Solves the key delivered by TS to the CSS and JS key
 	 *
-	 * @param	string	language key
-	 * @return	array
+	 * @param string language key
+	 * @return array
 	 */
 	protected function getFieldValues($key) {
 		$css = "";
@@ -188,8 +187,8 @@ class LanguageItems {
 	/**
 	 * Generates TS Config of the plugin
 	 *
-	 * @param	array	config
-	 * @return	array
+	 * @param array config
+	 * @return array
 	 */
 	protected function getConfig($config) {
 
@@ -215,9 +214,5 @@ class LanguageItems {
 
 		return $template->setup['plugin.']['tx_beautyofcode.']['settings.']['common.'];
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_addFields.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_addFields.php']);
 }
 ?>

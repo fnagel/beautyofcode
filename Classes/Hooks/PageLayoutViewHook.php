@@ -27,9 +27,8 @@ namespace FNagel\Beautyofcode\Hooks;
 /**
  * Hook class for PageLayoutView hook `list_type_Info`
  *
- * @author	Felix Nagel <info@felixnagel.com>
- * @package	TYPO3
- * @subpackage	tx_beautyofcode
+ * @author Felix Nagel <info@felixnagel.com>
+ * @package	\FNagel\Beautyofcode\Hooks
  */
 class PageLayoutViewHook {
 
@@ -42,9 +41,9 @@ class PageLayoutViewHook {
 	/**
 	 * Returns information about this extension's pi1 plugin
 	 *
-	 * @param	array		$params	Parameters to the hook
-	 * @param	object		$pObj	A reference to calling object
-	 * @return	string		Information about pi1 plugin
+	 * @param array $params	Parameters to the hook
+	 * @param object $pObj A reference to calling object
+	 * @return string Information about pi1 plugin
 	 */
 	public function getExtensionSummary($params, &$pObj) {
 		$result = '';
@@ -126,9 +125,5 @@ class PageLayoutViewHook {
 
 		return $preview;
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/pi1/class.tx_beautyofcode_pi1_cms_layout.php']);
 }
 ?>

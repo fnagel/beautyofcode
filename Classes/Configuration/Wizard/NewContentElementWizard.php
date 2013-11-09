@@ -27,17 +27,16 @@ namespace FNagel\Beautyofcode\Configuration\Wizard;
 /**
  * Class that adds the wizard icon.
  *
- * @author	Felix Nagel <info@felixnagel.com>
- * @package	TYPO3
- * @subpackage	tx_beautyofcode
+ * @author Felix Nagel <info@felixnagel.com>
+ * @package \FNagel\Beautyofcode\Configuration\Wizard
  */
 class NewContentElementWizard {
 
 	/**
 	 * Processing the wizard items array
 	 *
-	 * @param	array		$wizardItems: The wizard items
-	 * @return	Modified array with wizard items
+	 * @param array $wizardItems: The wizard items
+	 * @return Modified array with wizard items
 	 */
 	public function proc($wizardItems) {
 		global $LANG;
@@ -57,7 +56,7 @@ class NewContentElementWizard {
 	/**
 	 * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
 	 *
-	 * @return	The array with language labels
+	 * @return The array with language labels
 	 */
 	protected function includeLocalLang() {
 		$llFile = 'EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';

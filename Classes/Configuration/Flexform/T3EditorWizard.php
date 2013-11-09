@@ -29,11 +29,9 @@ namespace FNagel\Beautyofcode\Service;
  *
  * This file was developed and tested with TYPO3 4.7.7 and its t3editor extension
  *
- * @author	Felix Nagel <info@felixnagel.com>
- * @package	TYPO3
- * @subpackage	tx_beautyofcode
+ * @author Felix Nagel <info@felixnagel.com>
+ * @package	\FNagel\Beautyofcode\Configuration\Flexform
  */
-
 class FlexformT3EditorWizardService {
 
 	/**
@@ -159,9 +157,5 @@ class FlexformT3EditorWizardService {
 			'onchange="' . $onChangeFunction . '" ';
 
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_t3editor.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_t3editor.php']);
 }
 ?>

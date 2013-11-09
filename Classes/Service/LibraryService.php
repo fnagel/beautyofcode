@@ -17,6 +17,12 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 
 	/**
 	 *
+	 * @var \FNagel\Beautyofcode\Service\AbstractLibraryService
+	 */
+	protected $concreteLibraryService;
+
+	/**
+	 *
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 */
 	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager) {
@@ -36,13 +42,20 @@ class LibraryService implements \FNagel\Beautyofcode\Service\LibraryServiceInter
 	 * @see \FNagel\Beautyofcode\Service\LibraryServiceInterface::load()
 	 */
 	public function load($library) {
-		/* @var $concreteLibraryService \FNagel\Beautyofcode\Service\AbstractLibraryService */
-		$concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
+		$this->concreteLibraryService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
 
-		$concreteLibraryService->setConfigurationManager($this->configurationManager);
+		$this->concreteLibraryService->setConfigurationManager($this->configurationManager);
 
-		$concreteLibraryService->configure();
-		$concreteLibraryService->load();
+		$this->concreteLibraryService->configure();
+		$this->concreteLibraryService->load();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see \FNagel\Beautyofcode\Service\LibraryServiceInterface::getCssConfig()
+	 */
+	public function getClassAttributeConfiguration($config = array()) {
+		return $this->concreteLibraryService->getClassAttributeConfiguration($config);
 	}
 }
 ?>

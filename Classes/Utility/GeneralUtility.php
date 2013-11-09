@@ -27,19 +27,18 @@ namespace FNagel\Beautyofcode\Utility;
 /**
  * Utility class for beautyofcode
  *
- * @author	Felix Nagel <info@felixnagel.com>
- * @package	TYPO3
- * @subpackage	tx_beautyofcode
+ * @author Felix Nagel <info@felixnagel.com>
+ * @package	\FNagel\Beautyofcode\Utility
  */
 class GeneralUtility {
 
 	/**
-	 * Function to solve path with FILE: and EXT:
+	 * Function which resolves a path prefixed with FILE: and EXT:
 	 *
-	 * @param	string	path to directory
-	 * @return	string
+	 * @param string path to directory
+	 * @return string
 	 */
-	public function makeAbsolutePath($dir) {
+	public static function makeAbsolutePath($dir) {
 		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:'))	{
 			list($extKey, $script) = explode('/', substr($dir, 4), 2);
 			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
@@ -52,9 +51,5 @@ class GeneralUtility {
 			return $dir;
 		}
 	}
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_base.php'])	{
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/beautyofcode/lib/class.tx_beautyofcode_d.php']);
 }
 ?>

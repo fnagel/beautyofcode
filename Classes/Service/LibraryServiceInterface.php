@@ -52,5 +52,13 @@ interface LibraryServiceInterface extends \TYPO3\CMS\Core\SingletonInterface {
 	 * @param string $library
 	 */
 	public function load($library);
+
+	/**
+	 * Returns the class attribute configuration string for the concrete service
+	 *
+	 * @param array $config
+	 * @return string
+	 */
+	public function getClassAttributeConfiguration($config = array());
 }
 ?>

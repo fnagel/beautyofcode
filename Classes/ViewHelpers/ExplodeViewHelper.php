@@ -27,9 +27,7 @@ namespace FNagel\Beautyofcode\ViewHelpers;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * Class short description
- *
- * Class long description
+ * Fluid view helper around GeneralUtility::trimExplode()
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
@@ -47,7 +45,7 @@ class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHel
 			$value = $this->renderChildren();
 		}
 
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $emoveEmptyValues);
+		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);
 	}
 
 }

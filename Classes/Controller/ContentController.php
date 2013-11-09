@@ -27,9 +27,7 @@ namespace FNagel\Beautyofcode\Controller;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * Class short description
- *
- * Class long description
+ * The frontend plugin controller for the syntaxhighlighter
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
@@ -49,6 +47,12 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
+	 * @var array
+	 */
+	protected $flexformValues = array();
+
+	/**
+	 *
 	 * @param \FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService
 	 */
 	public function injectLibraryService(\FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
@@ -56,11 +60,15 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	}
 
 	/**
+	 * Injects the flexform service and populates flexform values from `pi_flexform`
 	 *
 	 * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService
 	 */
 	public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService) {
 		$this->flexformService = $flexformService;
+
+		$flexformString = $this->configurationManager->getContentObject()->data['pi_flexform'];
+		$this->flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 	}
 
 	/**
@@ -68,7 +76,6 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 */
 	public function initializeAction() {
-		// @todo: allow merging from flexform
 		$this->libraryService->setConfigurationManager($this->configurationManager);
 		$this->libraryService->load($this->settings['version']);
 	}
@@ -78,69 +85,19 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function renderAction() {
-		$flexform = $this->configurationManager->getContentObject()->data['pi_flexform'];
-		$flexformValues = $this->flexformService->convertFlexFormContentToArray($flexform);
-
-		$getCssConfigMethod = 'get' . ucfirst($this->settings['version']) . 'CssConfig';
+		$cssConfig = array(
+			'highlight' => $this->flexformValues['cHighlight'],
+			'gutter' => $this->flexformValues['cGutter'],
+			'toolbar' => $this->flexformValues['cToolbar'],
+			'collapse' => $this->flexformValues['cCollapse'],
+		);
 
 		$this->view->assignMultiple(array(
-			'lang' => $flexformValues['cLang'],
-			'label' => $flexformValues['cLabel'],
-			'code' => $flexformValues['cCode'],
-			'cssConfig' => method_exists($this, $getCssConfigMethod) ? $this->$getCssConfigMethod() : '',
+			'lang' => $this->flexformValues['cLang'],
+			'label' => $this->flexformValues['cLabel'],
+			'code' => $this->flexformValues['cCode'],
+			'cssConfig' => $this->libraryService->getClassAttributeConfiguration($cssConfig),
 		));
-	}
-
-	/**
-	 * Function to solve CSSconfiguration which overwrites TS configuration
-	 *
-	 * @return	string  space and semicolon seperated CSS classes
-	 */
-	protected function getStandaloneCssConfig() {
-		$string = '';
-		if (is_array($this->values['css'])) {
-			// built brushes string
-			$string = '; ';
-			foreach ($this->values['css'] as $config => $configValue) {
-				// use TS config or not available in SyntaxHighlighter v3
-				if (($configValue != "" && $configValue != "auto") && $config != "toolbar") {
-					// highlight range
-					if ($config == "highlight") {
-						$string .= " highlight: [" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]; ";
-					} else {
-						$state = ($configValue) ? "true" : "false";
-						$string .= $config . ": " . $state . "; ";
-					}
-				}
-			}
-			$string = substr($string, 0, -2);
-		}
-		return $string;
-	}
-
-	/**
-	 * Function to solve CSSconfiguration which overwrites TS configuration
-	 *
-	 * @return	string  space seperated CSS classes
-	 */
-	public function getJqueryCssConfig() {
-		$string = '';
-		if (is_array($this->values['css'])) {
-			// built brushes string
-			$string = '';
-			foreach($this->values['css'] AS $config => $configValue) {
-				if ($configValue != "" && $configValue != "auto") {
-					// highlight range
-					if ($config == "highlight") {
-						$string .= " boc-highlight[" . \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue) . "]";
-					} else {
-						if ($configValue) $string .= " boc-" . $config;
-						else $string .= " boc-no-" . $config;
-					}
-				}
-			}
-		}
-		return $string;
 	}
 }
 ?>

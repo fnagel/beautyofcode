@@ -104,9 +104,11 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 		$this->bocGeneralUtility = $generalUtility;
 	}
 
+	/**
+	 *
+	 * @return void
+	 */
 	public function initializeObject() {
-		$this->uriBuilder = $this->objectManager->get('TYPO3\\CMS\\Extbase\\Mvc\\Web\\Routing\\UriBuilder');
-
 		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
 
 		$this->pageRenderer = $this->typoscriptFrontendController->getPageRenderer();
@@ -125,7 +127,18 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	 *
 	 * @return void
 	 */
-	abstract public function configure();
+	public function configure() {
+		$_configuration = $this
+			->configurationManager
+			->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+
+		$commonConfiguration = $_configuration['common'];
+		// we also could pull that from the class name, but this is more pragmatic...
+		$version = $_configuration['version'];
+		$versionConfiguration = $_configuration[$version];
+
+		$this->configuration = array_merge($commonConfiguration, $versionConfiguration);
+	}
 
 	/**
 	 * adds the necessary libraries to the page renderer
@@ -133,5 +146,13 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	 * @return void
 	 */
 	abstract public function load();
+
+	/**
+	 * Returns the class attribute configuration string for a concrete service
+	 *
+	 * @param array $config
+	 * @return string
+	 */
+	abstract public function getClassAttributeConfiguration($config = array());
 }
 ?>

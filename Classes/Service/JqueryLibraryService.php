@@ -32,7 +32,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
 }
 
 /**
- * Class short description
+ * Service which adds and generates all necessary assets for the jquery version
  *
  * Class long description
  *
@@ -40,63 +40,60 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
  */
 class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryService {
 
+	/**
+	 *
+	 * @var string
+	 */
 	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.js';
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::configure()
+	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::load()
 	 */
-	public function configure() {
-		$_configuration = $this
-			->configurationManager
-			->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
+	public function load() {
+		$this->addJavascriptLibraries();
 
-		$commonConfiguration = $_configuration['common'];
-		// we also could pull that from the class name, but this is more pragmatic...
-		$version = $_configuration['version'];
-		$versionConfiguration = $_configuration[$version];
-
-		$this->configuration = array_merge($commonConfiguration, $versionConfiguration);
+		$this->renderAndAddInlineJavascript();
 	}
 
-	public function load() {
+	/**
+	 *
+	 * @return void
+	 */
+	protected function addJavascriptLibraries() {
 		if (T3JQUERY === TRUE) {
-			$this->loadT3JqueryCore();
-		} else if ($this->configuration['addjQuery'] > 0) {
-			$this->loadShippedCore();
+			$this->addT3JqueryLibrary();
+		} else {
+			$this->pageRenderer->addJsLibrary(
+				"beautyofcode_jquery",
+				$this
+					->typoscriptFrontendController
+					->tmpl
+					->getFileName(
+						"EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js"
+					)
+			);
 		}
 
-		$this->loadWrapper();
-
-		$this->loadGeneratedResource();
-	}
-
-	protected function loadT3JqueryCore() {
-		\tx_t3jquery::addJqJS();
-	}
-
-	protected function loadShippedCore() {
-		$this->pageRenderer->addJsLibrary(
-			"beautyofcode_jquery",
-			$this
-				->typoscriptFrontendController
-				->tmpl
-				->getFileName(
-					"EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js"
-				)
-		);
-	}
-
-	protected function loadWrapper() {
-		// add jquery.beautyOfCode.js
 		$this->pageRenderer->addJsLibrary(
 			"beautyofcode_boc",
 			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
 		);
 	}
 
-	protected function loadGeneratedResource() {
-		// @todo: cache_phpcode
+	/**
+	 *
+	 * @return void
+	 */
+	protected function addT3JqueryLibrary() {
+		\tx_t3jquery::addJqJS();
+	}
+
+	/**
+	 *
+	 * @return void
+	 */
+	protected function renderAndAddInlineJavascript() {
 		$cacheId = md5(serialize($this->configuration));
 
 		if ($this->cacheManager->getCache('cache_beautyofcode')->has($cacheId)) {
@@ -123,6 +120,33 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 		}
 
 		$this->pageRenderer->addJsInlineCode('beautyofcode_inline', $resource);
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
+	 */
+	public function getClassAttributeConfiguration($config = array()) {
+		$string = '';
+
+		foreach ($config as $configKey => $configValue) {
+			if ($configValue == "" || $configValue != "auto") {
+				continue;
+			}
+
+			if ($configKey == "highlight") {
+				$string .= sprintf(" boc-highlight[%s]",
+					\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue)
+				);
+			} else {
+				$string .= sprintf(' boc-%s%s',
+					$configValue ? '' : 'no-',
+					$configKey
+				);
+			}
+		}
+
+		return $string;
 	}
 }
 ?>

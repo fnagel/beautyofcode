@@ -20,7 +20,7 @@ $pluginSignature = strtolower($extensionName) . '_contentrenderer';
 $TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
 	$pluginSignature,
-	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/flexform_ds_pi1.xml'
+	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/ContentRenderer.xml'
 );
 
 if (TYPO3_MODE == 'BE') {

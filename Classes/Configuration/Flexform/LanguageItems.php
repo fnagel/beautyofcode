@@ -33,6 +33,40 @@ namespace FNagel\Beautyofcode\Configuration\Flexform;
 class LanguageItems {
 
 	/**
+	 * A CSS class/label map for the select box
+	 *
+	 * Key is the brush string from TS Setup; Value is an array with the CSS
+	 * class in key 0 and the label for the select box in key 1
+	 *
+	 * @var array
+	 */
+	protected $cssClassLabelMap = array(
+		'AS3' => array('actionscript3', 'Actionscript 3'),
+		'Bash' => array('bash', 'Bash / Shell'),
+		'ColdFusion' => array('coldfusion', 'ColdFusion'),
+		'Cpp' => array('cpp', 'C / C++'),
+		'CSharp' => array('csharp', 'C#'),
+		'Css' => array('css', 'CSS'),
+		'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
+		'Diff' => array('diff', 'Diff / Patch'),
+		'Erlang' => array('erlang', 'Erlang'),
+		'Groovy' => array('groovy', 'Groovy'),
+		'Java' => array('java', 'Java'),
+		'JavaFX' => array('javafx', 'Java FX'),
+		'JScript' => array('javascript', 'Java-Script'),
+		'Perl' => array('perl', 'Perl'),
+		'Php' => array('php', 'PHP'),
+		'PowerShell' => array('powershell', 'Power-Shell'),
+		'Python' => array('python', 'Python'),
+		'Ruby' => array('ruby', 'Ruby on Rails'),
+		'Scala' => array('scala', 'Scala'),
+		'Sql' => array('sql', 'SQL / MySQL'),
+		'Typoscript' => array('typoscript', 'Typoscript'),
+		'Vb' => array('vbnet', 'Virtual Basic / .Net'),
+		'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
+	);
+
+	/**
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
@@ -45,32 +79,24 @@ class LanguageItems {
 		if ($cachedFields != 0) {
 			$config['items'] = $cachedFields;
 		} else {
-			$configArray = $this->getConfig($config);
 
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
-			if (strlen($configArray['brushes']) > 0) {
-				$brushesArray = explode(',', $configArray['brushes']);
-				// make unique
-				foreach ($brushesArray as &$value) {
-					$value = serialize(trim($value));
+
+			$brushesArray = $this->getUniqueAndSortedBrushes();
+
+			foreach ($brushesArray as $i => $brush) {
+				if ($brush === 'Plain') {
+					continue;
 				}
-				$brushesArray = array_unique($brushesArray);
-				foreach ($brushesArray as &$value) {
-					$value = unserialize($value);
+				// skip unknown brushes
+				if (FALSE === isset($this->cssClassLabelMap[$brush])) {
+					continue;
 				}
-				// sort a-z
-				sort($brushesArray);
-				// get label and css selector
-				$i = 0;
-				for ($x = 0; $x < count($brushesArray); $x++) {
-					// Plain is defined as default in flexform, so we dont add it again
-					if (trim($brushesArray[$x]) != "Plain") {
-						$optionList[$i] = $this->getFieldValues(trim($brushesArray[$x]));
-						$i++;
-					}
-				}
+
+				$optionsList[$i] = $this->cssClassLabelMap[$brush];
 			}
+
 			$config['items'] = array_merge($config['items'], $optionList);
 		}
 		$cachedFields = $config['items'];
@@ -79,109 +105,30 @@ class LanguageItems {
 	}
 
 	/**
-	 * Solves the key delivered by TS to the CSS and JS key
+	 * Returns unique and sorted brushes
 	 *
-	 * @param string language key
 	 * @return array
 	 */
-	protected function getFieldValues($key) {
-		$css = "";
-		$label = "";
-		switch ($key) {
-			case "AS3":
-				$css = "actionscript3";
-				$label = "Actionscript 3";
-			break;
-			case "Bash":
-				$css = "bash";
-				$label = "Bash / Shell";
-			break;
-			case "ColdFusion":
-				$css = "coldfusion";
-				$label = "ColdFusion";
-			break;
-			case "Cpp":
-				$css = "cpp";
-				$label = "C / C++";
-			break;
-			case "CSharp":
-				$css = "csharp";
-				$label = "C#";
-			break;
-			case "Css":
-				$css = "css";
-				$label = "CSS";
-			break;
-			case "Delphi":
-				$css = "delphi";
-				$label = "Delphi / Pas / Pascal";
-			break;
-			case "Diff":
-				$css = "diff";
-				$label = "Diff / Patch";
-			break;
-			case "Erlang":
-				$css = "erlang";
-				$label = "Erlang";
-			break;
-			case "Groovy":
-				$css = "groovy";
-				$label = "Groovy";
-			break;
-			case "Java":
-				$css = "java";
-				$label = "Java";
-			break;
-			case "JavaFX":
-				$css = "javafx";
-				$label = "Java FX";
-			break;
-			case "JScript":
-				$css = "javascript";
-				$label = "Java-Script";
-			break;
-			case "Perl":
-				$css = "perl";
-				$label = "Perl";
-			break;
-			case "Php":
-				$css = "php";
-				$label = "PHP";
-			break;
-			case "PowerShell":
-				$css = "powershell";
-				$label = "Power-Shell";
-			break;
-			case "Python":
-				$css = "python";
-				$label = "Python";
-			break;
-			case "Ruby":
-				$css = "ruby";
-				$label = "Ruby on Rails";
-			break;
-			case "Scala":
-				$css = "scala";
-				$label = "Scala";
-			break;
-			case "Sql":
-				$css = "sql";
-				$label = "SQL / MySQL";
-			break;
-			case "Typoscript":
-				$css = "typoscript";
-				$label = "Typoscript";
-			break;
-			case "Vb":
-				$css = "vbnet";
-				$label = "Virtual Basic / .Net";
-			break;
-			case "Xml":
-				$css = "xml";
-				$label = "XML / XSLT / XHTML / HTML";
-			break;
+	protected function getUniqueAndSortedBrushes() {
+		$configArray = $this->getConfig($config);
+
+		$brushesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configArray['brushes'], TRUE);
+
+		// make unique
+		foreach ($brushesArray as &$value) {
+			$value = serialize($value);
 		}
-		return array(0 => $label, 1 => $css);
+
+		$brushesArray = array_unique($brushesArray);
+
+		foreach ($brushesArray as &$value) {
+			$value = unserialize($value);
+		}
+
+		// sort a-z
+		sort($brushesArray);
+
+		return $brushesArray;
 	}
 
 	/**

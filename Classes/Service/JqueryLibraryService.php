@@ -65,18 +65,18 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 			$this->addT3JqueryLibrary();
 		} else {
 			$this->pageRenderer->addJsLibrary(
-				"beautyofcode_jquery",
+				'beautyofcode_jquery',
 				$this
 					->typoscriptFrontendController
 					->tmpl
 					->getFileName(
-						"EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js"
+						'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js'
 					)
 			);
 		}
 
 		$this->pageRenderer->addJsLibrary(
-			"beautyofcode_boc",
+			'beautyofcode_boc',
 			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
 		);
 	}
@@ -130,12 +130,12 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 		$string = '';
 
 		foreach ($config as $configKey => $configValue) {
-			if ($configValue == "" || $configValue != "auto") {
+			if ($configValue == '' || $configValue == 'auto') {
 				continue;
 			}
 
-			if ($configKey == "highlight") {
-				$string .= sprintf(" boc-highlight[%s]",
+			if ($configKey == 'highlight') {
+				$string .= sprintf(' boc-highlight[%s]',
 					\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue)
 				);
 			} else {

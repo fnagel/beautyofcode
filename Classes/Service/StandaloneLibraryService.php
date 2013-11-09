@@ -123,18 +123,18 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 	 * @return void
 	 */
 	protected function checkAndPossiblyOverrideFilePaths() {
-		$isBaseUrlSet = strlen(trim($this->configuration["baseUrl"])) > 0;
-		$isStylePathSet = strlen(trim($this->configuration["styles"])) > 0;
-		$isScriptPathSet = strlen(trim($this->configuration["scripts"])) > 0;
+		$isBaseUrlSet = strlen(trim($this->configuration['baseUrl'])) > 0;
+		$isStylePathSet = strlen(trim($this->configuration['styles'])) > 0;
+		$isScriptPathSet = strlen(trim($this->configuration['scripts'])) > 0;
 
 		$overridePaths = $isBaseUrlSet && $isStylePathSet && $isScriptPathSet;
 
 		if ($overridePaths) {
 			$this->filePathBase = $this->bocGeneralUtility->makeAbsolutePath(
-				$this->configuration["baseUrl"]
+				$this->configuration['baseUrl']
 			);
-			$this->filePathScripts = trim($this->configuration["scripts"]);
-			$this->filePathStyles = trim($this->configuration["styles"]);
+			$this->filePathScripts = trim($this->configuration['scripts']);
+			$this->filePathStyles = trim($this->configuration['styles']);
 		}
 	}
 
@@ -161,8 +161,8 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 	protected function addStylesheets() {
 		$cssStyleFile = 'shCoreDefault.css';
 
-		if ('' !== trim($this->configuration["theme"])) {
-			$cssStyleFile = 'shTheme' . trim($this->configuration["theme"]) . '.css';
+		if ('' !== trim($this->configuration['theme'])) {
+			$cssStyleFile = 'shTheme' . trim($this->configuration['theme']) . '.css';
 		}
 
 		$this->pageRenderer->addCssFile(
@@ -234,13 +234,13 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 
 		foreach ($config as $configKey => $configValue) {
 			// skip unavailable SyntaxHighlighter v3 configuration keys
-			if (($configValue == "" || $configValue == "auto") || $configKey == "toolbar") {
+			if (($configValue == '' || $configValue == 'auto') || $configKey == 'toolbar') {
 				continue;
 			}
 
 			// highlight range
-			if ($configKey == "highlight") {
-				$string .= sprintf("highlight: [%s]; ",
+			if ($configKey == 'highlight') {
+				$string .= sprintf('highlight: [%s]; ',
 					\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue)
 				);
 			} else {

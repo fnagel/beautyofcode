@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace FNagel\Beautyofcode\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -32,7 +32,7 @@ namespace FNagel\Beautyofcode\Service;
  * @author Felix Nagel <info@felixnagel.com>
  * @package	\FNagel\Beautyofcode\Configuration\Flexform
  */
-class FlexformT3EditorWizardService {
+class T3EditorWizard {
 
 	/**
 	 *
@@ -104,6 +104,8 @@ class FlexformT3EditorWizardService {
 		$t3EditorLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor');
 
 		if ($enableT3Editor && $t3EditorLoaded) {
+			$t3EditorClass = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor') . 'Classes/T3Editor.php';
+			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($t3EditorClass);
 			$this->t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\T3Editor\\T3Editor');
 		}
 	}

@@ -31,7 +31,7 @@ namespace FNagel\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class VersionAssetService implements \FNagel\Beautyofcode\Service\LibraryServiceInterface {
+class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetServiceInterface {
 
 	/**
 	 *

@@ -37,7 +37,7 @@ class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 	 * @return string
 	 */
 	public function render($url) {
-		return \FNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($dir);
+		return \FNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
 	}
 }
 ?>

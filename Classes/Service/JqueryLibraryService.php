@@ -53,7 +53,7 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 	public function load() {
 		$this->addJavascriptLibraries();
 
-		$this->renderAndAddInlineJavascript();
+		$this->addInlineJavascript();
 	}
 
 	/**
@@ -83,39 +83,6 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 			'beautyofcode_boc',
 			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
 		);
-	}
-
-	/**
-	 *
-	 * @return void
-	 */
-	protected function renderAndAddInlineJavascript() {
-		$cacheId = md5(serialize($this->configuration));
-
-		if ($this->cacheManager->getCache('cache_beautyofcode')->has($cacheId)) {
-			$resource = $this->cacheManager->getCache('cache_beautyofcode')->get($cacheId);
-		} else {
-			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-			$view = $this->objectManager->get(
-				'TYPO3\\CMS\\Fluid\\View\\StandaloneView',
-				$this->configurationManager->getContentObject()
-			);
-
-			$view->setFormat('js');
-			$view->setTemplatePathAndFilename($this->templatePathAndFilename);
-
-			$view->assignMultiple(array(
-				'settings' => $this->configuration
-			));
-
-			$resource = $view->render();
-
-			$this->cacheManager
-				->getCache('cache_beautyofcode')
-				->set($cacheId, $resource, array(), 0);
-		}
-
-		$this->pageRenderer->addJsInlineCode('beautyofcode_inline', $resource);
 	}
 
 	/**

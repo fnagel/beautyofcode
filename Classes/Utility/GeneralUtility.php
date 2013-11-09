@@ -42,7 +42,7 @@ class GeneralUtility {
 		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:'))	{
 			list($extKey, $script) = explode('/', substr($dir, 4), 2);
 			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
-				$extPath=\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
+				$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
 				return substr($extPath, strlen(PATH_site)) . $script;
 			}
 		} elseif (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:')) {

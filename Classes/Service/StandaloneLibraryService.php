@@ -114,7 +114,11 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 
 		$this->loadBrushes();
 
-		$this->renderAndAddInlineJavascript();
+		$this->addInlineJavascript(array(
+			'brushes' => $this->brushes,
+			'filePathBase' => $this->filePathBase,
+			'filePathScripts' => $this->filePathScripts,
+		));
 	}
 
 	/**
@@ -123,9 +127,9 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 	 * @return void
 	 */
 	protected function checkAndPossiblyOverrideFilePaths() {
-		$isBaseUrlSet = strlen(trim($this->configuration['baseUrl'])) > 0;
-		$isStylePathSet = strlen(trim($this->configuration['styles'])) > 0;
-		$isScriptPathSet = strlen(trim($this->configuration['scripts'])) > 0;
+		$isBaseUrlSet = trim($this->configuration['baseUrl']) !== '';
+		$isStylePathSet = trim($this->configuration['styles']) !== '';
+		$isScriptPathSet = trim($this->configuration['scripts']) !== '';
 
 		$overridePaths = $isBaseUrlSet && $isStylePathSet && $isScriptPathSet;
 
@@ -136,6 +140,8 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 			$this->filePathScripts = trim($this->configuration['scripts']);
 			$this->filePathStyles = trim($this->configuration['styles']);
 		}
+
+		$this->excludeAssetFromConcatenation = !\TYPO3\CMS\Core\Utility\GeneralUtility::isOnCurrentHost($this->filePathBase);
 	}
 
 	/**
@@ -145,12 +151,22 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 	protected function addJavascriptLibaries() {
 		$this->pageRenderer->addJsLibrary(
 			'beautyofcode_JS_shCoreJS',
-			$this->filePathBase . $this->filePathScripts . 'shCore.js'
+			$this->filePathBase . $this->filePathScripts . 'shCore.js',
+			'text/javascript',
+			FALSE,
+			FALSE,
+			'',
+			$this->excludeAssetFromConcatenation
 		);
 
 		$this->pageRenderer->addJsLibrary(
 			'beautyofcode_JS_shAutoloader',
-			$this->filePathBase . $this->filePathScripts . 'shAutoloader.js'
+			$this->filePathBase . $this->filePathScripts . 'shAutoloader.js',
+			'text/javascript',
+			FALSE,
+			FALSE,
+			'',
+			$this->excludeAssetFromConcatenation
 		);
 	}
 
@@ -166,10 +182,25 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 		}
 
 		$this->pageRenderer->addCssFile(
-			$this->filePathBase . $this->filePathStyles . 'shCore.css'
+			$this->filePathBase . $this->filePathStyles . 'shCore.css',
+			'stylesheet',
+			'all',
+			'',
+			$this->excludeAssetFromConcatenation,
+			FALSE,
+			'',
+			$this->excludeAssetFromConcatenation
 		);
+
 		$this->pageRenderer->addCssFile(
-			$this->filePathBase . $this->filePathStyles . $cssStyleFile
+			$this->filePathBase . $this->filePathStyles . $cssStyleFile,
+			'stylesheet',
+			'all',
+			'',
+			$this->excludeAssetFromConcatenation,
+			FALSE,
+			'',
+			$this->excludeAssetFromConcatenation
 		);
 	}
 
@@ -187,42 +218,6 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 		foreach ($brushes as $brush) {
 			$this->brushes[$this->brushCssClassMap[$brush]] = $brush;
 		}
-	}
-
-	/**
-	 *
-	 * @return void
-	 */
-	protected function renderAndAddInlineJavascript() {
-		$cacheId = md5(serialize($this->configuration));
-
-		if ($this->cacheManager->getCache('cache_beautyofcode')->has($cacheId)) {
-			$resource = $this->cacheManager->getCache('cache_beautyofcode')->get($cacheId);
-		} else {
-			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-			$view = $this->objectManager->get(
-				'TYPO3\\CMS\\Fluid\\View\\StandaloneView',
-				$this->configurationManager->getContentObject()
-			);
-
-			$view->setFormat('js');
-			$view->setTemplatePathAndFilename($this->templatePathAndFilename);
-
-			$view->assignMultiple(array(
-				'settings' => $this->configuration,
-				'brushes' => $this->brushes,
-				'filePathBase' => $this->filePathBase,
-				'filePathScripts' => $this->filePathScripts,
-			));
-
-			$resource = $view->render();
-
-			$this->cacheManager
-				->getCache('cache_beautyofcode')
-				->set($cacheId, $resource, array(), 0);
-		}
-
-		$this->pageRenderer->addJsInlineCode('beautyofcode_inline', $resource);
 	}
 
 	/**

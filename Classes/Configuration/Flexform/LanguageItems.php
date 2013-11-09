@@ -67,6 +67,12 @@ class LanguageItems {
 	);
 
 	/**
+	 *
+	 * @var integer
+	 */
+	protected $contentElementPid;
+
+	/**
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
@@ -83,6 +89,8 @@ class LanguageItems {
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
 
+			$this->contentElementPid = $config['row']['pid'];
+
 			$brushesArray = $this->getUniqueAndSortedBrushes();
 
 			foreach ($brushesArray as $i => $brush) {
@@ -94,7 +102,7 @@ class LanguageItems {
 					continue;
 				}
 
-				$optionsList[$i] = $this->cssClassLabelMap[$brush];
+				$optionList[$i] = array_reverse($this->cssClassLabelMap[$brush]);
 			}
 
 			$config['items'] = array_merge($config['items'], $optionList);
@@ -110,7 +118,7 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getUniqueAndSortedBrushes() {
-		$configArray = $this->getConfig($config);
+		$configArray = $this->getConfig();
 
 		$brushesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configArray['brushes'], TRUE);
 
@@ -134,10 +142,9 @@ class LanguageItems {
 	/**
 	 * Generates TS Config of the plugin
 	 *
-	 * @param array config
 	 * @return array
 	 */
-	protected function getConfig($config) {
+	protected function getConfig() {
 
 		// Initialize the page selector
 		$sysPage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
@@ -151,7 +158,7 @@ class LanguageItems {
 		$template->tt_track = 0;
 
 		// Get rootline for current PID
-		$rootline = $sysPage->getRootLine($config["row"]["pid"]);
+		$rootline = $sysPage->getRootLine($this->contentElementPid);
 
 		// Start TS template
 		$template->start($rootline);

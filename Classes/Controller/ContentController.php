@@ -66,9 +66,6 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService) {
 		$this->flexformService = $flexformService;
-
-		$flexformString = $this->configurationManager->getContentObject()->data['pi_flexform'];
-		$this->flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 	}
 
 	/**
@@ -76,6 +73,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 */
 	public function initializeAction() {
+		$flexformString = $this->configurationManager->getContentObject()->data['pi_flexform'];
+		$this->flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
+
 		$this->libraryService->setConfigurationManager($this->configurationManager);
 		$this->libraryService->load($this->settings['version']);
 	}

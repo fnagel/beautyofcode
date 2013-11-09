@@ -61,9 +61,13 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 	 * @return void
 	 */
 	protected function addJavascriptLibraries() {
-		if (T3JQUERY === TRUE) {
-			$this->addT3JqueryLibrary();
-		} else {
+		$addJquery = (boolean) $this->configuration['addjQuery'];
+		$addJqueryFromT3Jquery = T3JQUERY === TRUE;
+
+		if ($addJquery && $addJqueryFromT3Jquery) {
+			\tx_t3jquery::addJqJS();
+		}
+		if ($addJquery && !$addJqueryFromT3Jquery) {
 			$this->pageRenderer->addJsLibrary(
 				'beautyofcode_jquery',
 				$this
@@ -79,14 +83,6 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 			'beautyofcode_boc',
 			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
 		);
-	}
-
-	/**
-	 *
-	 * @return void
-	 */
-	protected function addT3JqueryLibrary() {
-		\tx_t3jquery::addJqJS();
 	}
 
 	/**

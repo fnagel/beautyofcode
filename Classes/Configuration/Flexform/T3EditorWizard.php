@@ -69,9 +69,14 @@ class T3EditorWizard {
 
 		$doc = $GLOBALS['SOBE']->doc;
 
+		if (is_array($parameters['fieldConfig'])) {
+			$fieldConfig = $parameters['fieldConfig'];
+		} else {
+			$fieldConfig = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
+		}
+
 		$textareaAttributes = $this->getTextareaAttributes(
-			$parameters['table'],
-			$parameters['field'],
+			$fieldConfig,
 			$parameters['fieldChangeFunc']['TBE_EDITOR_fieldChanged']
 		);
 
@@ -144,16 +149,13 @@ class T3EditorWizard {
 	/**
 	 * returns a string of additional textarea attributes
 	 *
-	 * @param string $table the table name to fetch rows/cols attributes
-	 * @param field $field the field name to fetch rows/cols attributes
+	 * @param aray $fieldConfig TCA/flexform field configuration
 	 * @param string $onChangeFunction the content of the onchange attribute
 	 * @return string
 	 */
-	protected function getTextareaAttributes($table, $field, $onChangeFunction) {
-		$config = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
-
-		return 'rows="' . $config['rows'] . '" ' .
-			'cols="' . $config['cols'] . '" ' .
+	protected function getTextareaAttributes($fieldConfig, $onChangeFunction) {
+		return 'rows="' . $fieldConfig['rows'] . '" ' .
+			'cols="' . $fieldConfig['cols'] . '" ' .
 			'wrap="off" ' .
 			'style="width:98%; height: 100%" ' .
 			'onchange="' . $onChangeFunction . '" ';

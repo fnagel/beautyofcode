@@ -27,13 +27,11 @@ namespace FNagel\Beautyofcode\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * Class short description
- *
- * Class long description
+ * Abstract version asset service
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterface {
+abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
@@ -189,14 +187,14 @@ abstract class AbstractLibraryService implements \TYPO3\CMS\Core\SingletonInterf
 	}
 
 	/**
-	 * adds the necessary libraries to the page renderer
+	 * Adds the necessary libraries to the page renderer
 	 *
 	 * @return void
 	 */
 	abstract public function load();
 
 	/**
-	 * Returns the class attribute configuration string for a concrete service
+	 * Returns the class attribute configuration string for a concrete version asset service
 	 *
 	 * @param array $config
 	 * @return string

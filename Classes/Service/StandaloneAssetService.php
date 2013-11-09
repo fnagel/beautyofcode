@@ -32,7 +32,7 @@ namespace FNagel\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryService {
+class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAssetService {
 
 	/**
 	 *
@@ -103,7 +103,7 @@ class StandaloneLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibr
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::load()
+	 * @see \FNagel\Beautyofcode\Service\AbstractVersionAssetService::load()
 	 */
 	public function load() {
 		$this->checkAndPossiblyOverrideFilePaths();

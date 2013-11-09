@@ -34,11 +34,9 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
 /**
  * Service which adds and generates all necessary assets for the jquery version
  *
- * Class long description
- *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryService {
+class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAssetService {
 
 	/**
 	 *
@@ -48,7 +46,7 @@ class JqueryLibraryService extends \FNagel\Beautyofcode\Service\AbstractLibraryS
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::load()
+	 * @see \FNagel\Beautyofcode\Service\AbstractVersionAssetService::load()
 	 */
 	public function load() {
 		$this->addJavascriptLibraries();

@@ -27,13 +27,11 @@ namespace FNagel\Beautyofcode\Service;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 /**
- * Class short description
- *
- * Class long description
+ * Service interface for adding assets of a beautyofcode version
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-interface LibraryServiceInterface extends \TYPO3\CMS\Core\SingletonInterface {
+interface VersionAssetServiceInterface extends \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 * Sets the configuration manager from the controller

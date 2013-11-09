@@ -35,9 +35,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \FNagel\Beautyofcode\Service\LibraryServiceInterface
+	 * @var \FNagel\Beautyofcode\Service\VersionAssetServiceInterface
 	 */
-	protected $libraryService;
+	protected $versionAssetService;
 
 	/**
 	 *
@@ -53,10 +53,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @param \FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService
+	 * @param \FNagel\Beautyofcode\Service\VersionAssetServiceInterface $libraryService
 	 */
-	public function injectLibraryService(\FNagel\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
-		$this->libraryService = $libraryService;
+	public function injectVersionAssetService(\FNagel\Beautyofcode\Service\VersionAssetServiceInterface $versionAssetService) {
+		$this->versionAssetService = $versionAssetService;
 	}
 
 	/**
@@ -76,8 +76,8 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$flexformString = $this->configurationManager->getContentObject()->data['pi_flexform'];
 		$this->flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
-		$this->libraryService->setConfigurationManager($this->configurationManager);
-		$this->libraryService->load($this->settings['version']);
+		$this->versionAssetService->setConfigurationManager($this->configurationManager);
+		$this->versionAssetService->load($this->settings['version']);
 	}
 
 	/**
@@ -96,7 +96,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			'lang' => $this->flexformValues['cLang'],
 			'label' => $this->flexformValues['cLabel'],
 			'code' => $this->flexformValues['cCode'],
-			'cssConfig' => $this->libraryService->getClassAttributeConfiguration($cssConfig),
+			'cssConfig' => $this->versionAssetService->getClassAttributeConfiguration($cssConfig),
 		));
 	}
 }

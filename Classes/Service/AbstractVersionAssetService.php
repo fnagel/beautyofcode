@@ -163,7 +163,7 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 				->set($cacheId, $resource, array(), 0);
 		}
 
-		$this->pageRenderer->addJsInlineCode('beautyofcode_inline', $resource);
+		$this->pageRenderer->addJsFooterInlineCode('beautyofcode_inline', $resource);
 	}
 
 	/**

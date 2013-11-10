@@ -149,7 +149,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 	 * @return void
 	 */
 	protected function addJavascriptLibaries() {
-		$this->pageRenderer->addJsLibrary(
+		$this->pageRenderer->addJsFooterLibrary(
 			'beautyofcode_JS_shCoreJS',
 			$this->filePathBase . $this->filePathScripts . 'shCore.js',
 			'text/javascript',
@@ -159,7 +159,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 			$this->excludeAssetFromConcatenation
 		);
 
-		$this->pageRenderer->addJsLibrary(
+		$this->pageRenderer->addJsFooterLibrary(
 			'beautyofcode_JS_shAutoloader',
 			$this->filePathBase . $this->filePathScripts . 'shAutoloader.js',
 			'text/javascript',

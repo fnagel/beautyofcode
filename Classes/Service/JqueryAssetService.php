@@ -66,7 +66,7 @@ class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAss
 			\tx_t3jquery::addJqJS();
 		}
 		if ($addJquery && !$addJqueryFromT3Jquery) {
-			$this->pageRenderer->addJsLibrary(
+			$this->pageRenderer->addJsFooterLibrary(
 				'beautyofcode_jquery',
 				$this
 					->typoscriptFrontendController
@@ -77,7 +77,7 @@ class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAss
 			);
 		}
 
-		$this->pageRenderer->addJsLibrary(
+		$this->pageRenderer->addJsFooterLibrary(
 			'beautyofcode_boc',
 			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
 		);

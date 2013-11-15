@@ -153,7 +153,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 			'beautyofcode_JS_shCoreJS',
 			$this->filePathBase . $this->filePathScripts . 'shCore.js',
 			'text/javascript',
-			FALSE,
+			TRUE,
 			FALSE,
 			'',
 			$this->excludeAssetFromConcatenation
@@ -163,7 +163,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 			'beautyofcode_JS_shAutoloader',
 			$this->filePathBase . $this->filePathScripts . 'shAutoloader.js',
 			'text/javascript',
-			FALSE,
+			TRUE,
 			FALSE,
 			'',
 			$this->excludeAssetFromConcatenation

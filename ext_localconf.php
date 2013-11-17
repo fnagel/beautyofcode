@@ -15,7 +15,7 @@ if (!defined ('TYPO3_MODE')) {
 );
 
 // BE preview
-$backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHook.php:FNagel\Beautyofcode\Hooks\PageLayoutViewHook->getExtensionSummary';
+$backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHook.php:FNagel\Beautyofcode\Hooks\PageLayoutViewHookS->getExtensionSummary';
 $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_contentrenderer'][] = $backendPreviewHook;
 
 // cache registration

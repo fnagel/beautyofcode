@@ -30,7 +30,7 @@ namespace FNagel\Beautyofcode\Hooks;
  * @author Felix Nagel <info@felixnagel.com>
  * @package	\FNagel\Beautyofcode\Hooks
  */
-class PageLayoutViewHook {
+class PageLayoutViewHooks {
 
 	/**
 	 *

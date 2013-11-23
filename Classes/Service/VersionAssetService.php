@@ -68,16 +68,24 @@ class VersionAssetService implements \TYPO3\Beautyofcode\Service\VersionAssetSer
 		$this->configurationManager = $configurationManager;
 	}
 
+
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::load()
+	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::configure()
 	 */
-	public function load($library) {
+	public function configure($library) {
 		$this->concreteVersionAssetService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . ucfirst($library) . 'AssetService');
 
 		$this->concreteVersionAssetService->setConfigurationManager($this->configurationManager);
 
 		$this->concreteVersionAssetService->configure();
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::load()
+	 */
+	public function load() {
 		$this->concreteVersionAssetService->load();
 	}
 

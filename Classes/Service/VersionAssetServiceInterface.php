@@ -47,10 +47,18 @@ interface VersionAssetServiceInterface {
 	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager);
 
 	/**
+	 * Configures the version asset service
 	 *
-	 * @param string $library
+	 * @param sstring $library
 	 */
-	public function load($library);
+	public function configure($library);
+
+	/**
+	 * Loads all libraries, CSS and generates + loads the inline javascript for the concrete asset version
+	 *
+	 * @return void
+	 */
+	public function load();
 
 	/**
 	 *

@@ -65,7 +65,7 @@ class T3EditorWizard {
 
 		$this->setT3EditorMode();
 
-		$content = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
+		$content = $this->flexformData['data']['sDEF']['lDEF']['setings.cCode']['vDEF'];
 
 		$doc = $GLOBALS['SOBE']->doc;
 
@@ -121,7 +121,7 @@ class T3EditorWizard {
 	 * @return void
 	 */
 	protected function setT3EditorMode() {
-		$language = $this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'];
+		$language = $this->flexformData['data']['sDEF']['lDEF']['settings.cLang']['vDEF'];
 
 		// set code type
 		// TODO: check if more available at sysext\t3editor\classes\class.tx_t3editor.php

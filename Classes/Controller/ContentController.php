@@ -86,20 +86,18 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function renderAction() {
 		$this->versionAssetService
-			->pushClassAttributeConfiguration('highlight', $this->flexformValues['settings.cHighlight']);
+			->pushClassAttributeConfiguration('highlight', $this->settings['cHighlight']);
 		$this->versionAssetService
-			->pushClassAttributeConfiguration('gutter', $this->flexformValues['settings.cGutter']);
+			->pushClassAttributeConfiguration('gutter', $this->settings['cGutter']);
 		$this->versionAssetService
-			->pushClassAttributeConfiguration('toolbar', $this->flexformValues['settings.cToolbar']);
+			->pushClassAttributeConfiguration('toolbar', $this->settings['cToolbar']);
 		$this->versionAssetService
-			->pushClassAttributeConfiguration('collapse', $this->flexformValues['settings.cCollapse']);
+			->pushClassAttributeConfiguration('collapse', $this->settings['cCollapse']);
 
-		$this->view->assignMultiple(array(
-			'lang' => $this->flexformValues['settings.cLang'],
-			'label' => $this->flexformValues['settings.cLabel'],
-			'code' => $this->flexformValues['settings.cCode'],
-			'cssConfig' => $this->versionAssetService->getClassAttributeConfiguration(),
-		));
+		$this->view->assign(
+			'classConfiguration',
+			$this->versionAssetService->getClassAttributeConfiguration()
+		);
 	}
 }
 ?>

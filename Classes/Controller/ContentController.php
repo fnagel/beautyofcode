@@ -88,10 +88,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 		$flexform->setVersionAssetService($this->versionAssetService);
 
-		$this->view->assign(
-			'flexform',
-			$flexform
-		);
+		$this->view->assign('flexform', $flexform);
 	}
 }
 ?>

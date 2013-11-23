@@ -30,7 +30,6 @@ namespace TYPO3\Beautyofcode\Domain\Repository;
 /**
  * The repository for the plugin flexform domain model object
  *
- *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
 class FlexformRepository {

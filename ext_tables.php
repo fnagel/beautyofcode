@@ -27,4 +27,17 @@ if (TYPO3_MODE == 'BE') {
 	$newContentElementWizardItem = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Configuration/Wizard/NewContentElementWizard.php';
 	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['TYPO3\\Beautyofcode\\Configuration\\Wizard\\NewContentElementWizard'] = $newContentElementWizardItem;
 }
+
+// this dummy data is necessary to allow the extbase data mapper to work
+$TCA['tx_beautyofcode_domain_model_flexform']['columns'] = array(
+	'c_label' => array('config' => array()),
+	'c_lang' => array('config' => array()),
+	'c_code' => array('config' => array()),
+	'c_highlight' => array('config' => array()),
+	'c_collapse' => array('config' => array()),
+	'c_gutter' => array('config' => array()),
+	'c_toolbar' => array('config' => array()),
+	'uid' => array('config' => array()),
+	'pid' => array('config' => array()),
+);
 ?>

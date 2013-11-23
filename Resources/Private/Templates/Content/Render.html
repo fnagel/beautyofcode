@@ -2,20 +2,20 @@
 
 <f:section name="Main">
 	<div class="tx_beautyofcode_pi1">
-		<f:render section="Container_{settings.version}" arguments="{ classConfiguration: classConfiguration }" />
-		<f:if condition="{settings.showLabel} && {settings.cLabel}">
-			<em>{settings.cLabel}</em>
+		<f:render section="Container_{settings.version}" arguments="{ flexform: flexform }" />
+		<f:if condition="{settings.showLabel} && {flexform.CLabel}">
+			<em>{flexform.CLabel}</em>
 		</f:if>
 	</div>
 </f:section>
 
 <f:section name="Container_jquery">
 	<pre class="code">
-		<code class="{f:if(condition: settings.cLang, then: settings.cLang, else: 'plain')}{classConfiguration}">
-<f:format.htmlspecialchars>{settings.cCode}</f:format.htmlspecialchars></code></pre>
+		<code class="{f:if(condition: flexform.CLang, then: flexform.CLang, else: 'plain')}{flexform.classAttributeConfiguration}">
+<f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
 </f:section>
 
 <f:section name="Container_standalone">
-	<pre class="brush: {f:if(condition: settings.cLang, then: settings.cLang, else: 'plain')}{classConfiguration}">
-<f:format.htmlspecialchars>{settings.cCode}</f:format.htmlspecialchars></pre>
+	<pre class="brush: {f:if(condition: flexform.CLang, then: flexform.CLang, else: 'plain')}{flexform.classAttributeConfiguration}">
+<f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></pre>
 </f:section>

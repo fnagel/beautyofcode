@@ -41,15 +41,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Extbase\Service\FlexFormService
+	 * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
 	 */
-	protected $flexformService;
-
-	/**
-	 *
-	 * @var array
-	 */
-	protected $flexformValues = array();
+	protected $flexformRepository;
 
 	/**
 	 *
@@ -60,12 +54,11 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	}
 
 	/**
-	 * Injects the flexform service and populates flexform values from `pi_flexform`
 	 *
-	 * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService
+	 * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
 	 */
-	public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService) {
-		$this->flexformService = $flexformService;
+	public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository) {
+		$this->flexformRepository = $flexformRepository;
 	}
 
 	/**
@@ -73,9 +66,6 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 */
 	public function initializeAction() {
-		$flexformString = $this->configurationManager->getContentObject()->data['pi_flexform'];
-		$this->flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
-
 		$this->versionAssetService->setConfigurationManager($this->configurationManager);
 		$this->versionAssetService->load($this->settings['version']);
 	}
@@ -85,18 +75,17 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function renderAction() {
-		$this->versionAssetService
-			->pushClassAttributeConfiguration('highlight', $this->settings['cHighlight']);
-		$this->versionAssetService
-			->pushClassAttributeConfiguration('gutter', $this->settings['cGutter']);
-		$this->versionAssetService
-			->pushClassAttributeConfiguration('toolbar', $this->settings['cToolbar']);
-		$this->versionAssetService
-			->pushClassAttributeConfiguration('collapse', $this->settings['cCollapse']);
+		$flexform = $this
+			->flexformRepository
+			->reconstituteByContentObject(
+				$this->configurationManager->getContentObject()
+			);
+
+		$flexform->setVersionAssetService($this->versionAssetService);
 
 		$this->view->assign(
-			'classConfiguration',
-			$this->versionAssetService->getClassAttributeConfiguration()
+			'flexform',
+			$flexform
 		);
 	}
 }

@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace TYPO3\Beautyofcode\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -47,7 +47,7 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 
 	/**
 	 *
-	 * @var \FNagel\Beautyofcode\Utility\GeneralUtility
+	 * @var \TYPO3\Beautyofcode\Utility\GeneralUtility
 	 */
 	protected $bocGeneralUtility;
 
@@ -96,9 +96,9 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 
 	/**
 	 *
-	 * @param \FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility
+	 * @param \TYPO3\Beautyofcode\Utility\GeneralUtility $generalUtility
 	 */
-	public function injectBeautyofcodeGeneralUtility(\FNagel\Beautyofcode\Utility\GeneralUtility $generalUtility) {
+	public function injectBeautyofcodeGeneralUtility(\TYPO3\Beautyofcode\Utility\GeneralUtility $generalUtility) {
 		$this->bocGeneralUtility = $generalUtility;
 	}
 

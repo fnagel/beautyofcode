@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Configuration\Wizard;
+namespace TYPO3\Beautyofcode\Configuration\Wizard;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace FNagel\Beautyofcode\Configuration\Wizard;
  * Class that adds the wizard icon.
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package \FNagel\Beautyofcode\Configuration\Wizard
+ * @package \TYPO3\Beautyofcode\Configuration\Wizard
  */
 class NewContentElementWizard {
 

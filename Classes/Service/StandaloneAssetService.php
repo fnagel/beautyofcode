@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace TYPO3\Beautyofcode\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -32,7 +32,7 @@ namespace FNagel\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAssetService {
+class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAssetService {
 
 	/**
 	 *
@@ -103,7 +103,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractVersionAssetService::load()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractVersionAssetService::load()
 	 */
 	public function load() {
 		$this->checkAndPossiblyOverrideFilePaths();
@@ -222,7 +222,7 @@ class StandaloneAssetService extends \FNagel\Beautyofcode\Service\AbstractVersio
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
 	 */
 	public function getClassAttributeConfiguration($config = array()) {
 		$string = '; ';

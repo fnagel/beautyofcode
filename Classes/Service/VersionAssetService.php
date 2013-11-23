@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace TYPO3\Beautyofcode\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -31,7 +31,7 @@ namespace FNagel\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetServiceInterface {
+class VersionAssetService implements \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface {
 
 	/**
 	 *
@@ -47,7 +47,7 @@ class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetSe
 
 	/**
 	 *
-	 * @var \FNagel\Beautyofcode\Service\AbstractVersionAssetService
+	 * @var \TYPO3\Beautyofcode\Service\AbstractVersionAssetService
 	 */
 	protected $concreteVersionAssetService;
 
@@ -61,7 +61,7 @@ class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetSe
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\VersionAssetServiceInterface::setConfigurationManager()
+	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::setConfigurationManager()
 	 */
 	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager) {
 		$this->configurationManager = $configurationManager;
@@ -69,10 +69,10 @@ class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetSe
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\VersionAssetServiceInterface::load()
+	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::load()
 	 */
 	public function load($library) {
-		$this->concreteVersionAssetService = $this->objectManager->get('FNagel\\Beautyofcode\\Service\\' . ucfirst($library) . 'AssetService');
+		$this->concreteVersionAssetService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . ucfirst($library) . 'AssetService');
 
 		$this->concreteVersionAssetService->setConfigurationManager($this->configurationManager);
 
@@ -82,7 +82,7 @@ class VersionAssetService implements \FNagel\Beautyofcode\Service\VersionAssetSe
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\VersionAssetServiceInterface::getCssConfig()
+	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::getCssConfig()
 	 */
 	public function getClassAttributeConfiguration($config = array()) {
 		return $this->concreteVersionAssetService->getClassAttributeConfiguration($config);

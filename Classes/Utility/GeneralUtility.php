@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Utility;
+namespace TYPO3\Beautyofcode\Utility;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace FNagel\Beautyofcode\Utility;
  * Utility class for beautyofcode
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package	\FNagel\Beautyofcode\Utility
+ * @package	\TYPO3\Beautyofcode\Utility
  */
 class GeneralUtility {
 

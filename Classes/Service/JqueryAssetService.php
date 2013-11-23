@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Service;
+namespace TYPO3\Beautyofcode\Service;
 
 /***************************************************************
  *  Copyright notice
@@ -36,7 +36,7 @@ if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAssetService {
+class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAssetService {
 
 	/**
 	 *
@@ -46,7 +46,7 @@ class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAss
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractVersionAssetService::load()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractVersionAssetService::load()
 	 */
 	public function load() {
 		$this->addJavascriptLibraries();
@@ -85,7 +85,7 @@ class JqueryAssetService extends \FNagel\Beautyofcode\Service\AbstractVersionAss
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \FNagel\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
 	 */
 	public function getClassAttributeConfiguration($config = array()) {
 		$string = '';

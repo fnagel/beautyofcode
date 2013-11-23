@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\Configuration\Flexform;
+namespace TYPO3\Beautyofcode\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -30,7 +30,7 @@ namespace FNagel\Beautyofcode\Configuration\Flexform;
  * This file was developed and tested with TYPO3 4.7.7 and its t3editor extension
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package	\FNagel\Beautyofcode\Configuration\Flexform
+ * @package	\TYPO3\Beautyofcode\Configuration\Flexform
  */
 class T3EditorWizard {
 

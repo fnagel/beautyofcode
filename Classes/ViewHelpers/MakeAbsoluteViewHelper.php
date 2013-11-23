@@ -1,5 +1,5 @@
 <?php
-namespace FNagel\Beautyofcode\ViewHelpers;
+namespace TYPO3\Beautyofcode\ViewHelpers;
 
 /***************************************************************
  * Copyright notice
@@ -27,7 +27,7 @@ namespace FNagel\Beautyofcode\ViewHelpers;
 /**
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package \FNagel\Beautyofcode\ViewHelpers
+ * @package \TYPO3\Beautyofcode\ViewHelpers
  */
 class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
@@ -37,7 +37,7 @@ class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 	 * @return string
 	 */
 	public function render($url) {
-		return \FNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
+		return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
 	}
 }
 ?>

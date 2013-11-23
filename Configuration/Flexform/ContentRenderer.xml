@@ -30,7 +30,7 @@
 										<numIndex index="1">plain</numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:FNagel\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</settings.cLang>
@@ -45,7 +45,7 @@
 								<wizards type="array">
 									<t3editor type="array">
 										<type>userFunc</type>
-										<userFunc>EXT:beautyofcode/Classes/Configuration/Flexform/T3EditorWizard.php:FNagel\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
+										<userFunc>EXT:beautyofcode/Classes/Configuration/Flexform/T3EditorWizard.php:TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
 									</t3editor>
 								</wizards>
 								<noTableWrapping>0</noTableWrapping>

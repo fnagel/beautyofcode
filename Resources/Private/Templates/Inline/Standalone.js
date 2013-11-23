@@ -1,4 +1,4 @@
-{namespace boc=FNagel\Beautyofcode\ViewHelpers}
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
 
 <f:if condition="{settings.includeAsDomReady} == 'jquery'">
 	<f:then>

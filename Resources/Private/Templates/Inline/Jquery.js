@@ -1,4 +1,4 @@
-{namespace boc=FNagel\Beautyofcode\ViewHelpers}
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
 ;(function ($) {
 	${settings.onReadyCallback}
 		$.beautyOfCode.init(<![CDATA[{]]>

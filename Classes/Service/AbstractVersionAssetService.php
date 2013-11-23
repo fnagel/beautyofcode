@@ -35,6 +35,18 @@ abstract class AbstractVersionAssetService {
 
 	/**
 	 *
+	 * @var string
+	 */
+	protected $layoutRootPath = 'typo3conf/ext/beautyofcode/Resources/Private/Layouts/';
+
+	/**
+	 *
+	 * @var string
+	 */
+	protected $partialRootPath = 'typo3conf/ext/beautyofcode/Resources/Private/Partials/';
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
@@ -199,6 +211,8 @@ abstract class AbstractVersionAssetService {
 		);
 
 		$view->setFormat('html');
+		$view->setLayoutRootPath($this->layoutRootPath);
+		$view->setPartialRootPath($this->partialRootPath);
 		$view->setTemplatePathAndFilename($this->templatePathAndFilename);
 
 		$view->assignMultiple($templateVariables);

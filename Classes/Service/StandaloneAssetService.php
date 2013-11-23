@@ -44,7 +44,7 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 	 *
 	 * @var string
 	 */
-	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Standalone.js';
+	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Standalone.html';
 
 	/**
 	 *

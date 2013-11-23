@@ -101,7 +101,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	public function getCLang() {
-		return $this->CLang;
+		return $this->cLang;
 	}
 
 	public function setCCode($cCode) {

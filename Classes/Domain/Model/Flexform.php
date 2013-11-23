@@ -162,16 +162,16 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 */
 	public function getClassAttributeConfiguration() {
 		$this->versionAssetService
-			->pushClassAttributConfiguration('highlight', \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight));
+			->pushClassAttributeConfiguration('highlight', \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight));
 
 		$this->versionAssetService
-			->pushClassAttributConfiguration('gutter', $this->cGutter);
+			->pushClassAttributeConfiguration('gutter', $this->cGutter);
 
 		$this->versionAssetService
-			->pushClassAttributConfiguration('toolbar', $this->cToolbar);
+			->pushClassAttributeConfiguration('toolbar', $this->cToolbar);
 
 		$this->versionAssetService
-			->pushClassAttributConfiguration('collapse', $this->cCollapse);
+			->pushClassAttributeConfiguration('collapse', $this->cCollapse);
 
 		return $this->versionAssetService->getClassAttributeConfiguration();
 	}

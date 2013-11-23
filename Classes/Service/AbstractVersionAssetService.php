@@ -198,7 +198,7 @@ abstract class AbstractVersionAssetService {
 			$this->configurationManager->getContentObject()
 		);
 
-		$view->setFormat('js');
+		$view->setFormat('html');
 		$view->setTemplatePathAndFilename($this->templatePathAndFilename);
 
 		$view->assignMultiple($templateVariables);

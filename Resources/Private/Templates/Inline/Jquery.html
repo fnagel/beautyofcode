@@ -1,0 +1,73 @@
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
+
+<f:layout name="InlineJavascript" />
+
+<script type="text/javascript">
+	<f:section name="Main">
+		;(function ($) {
+			var
+				options = {
+
+				<f:if condition="{settings.baseUrl}">
+					baseUrl: '<boc:makeAbsolute url="{settings.baseUrl}" />',
+				</f:if>
+
+				<f:if condition="{settings.scripts}">
+					scripts: '{settings.scripts}',
+				</f:if>
+
+				<f:if condition="{settings.styles}">
+					styles: '{settings.styles}',
+				</f:if>
+
+				<f:if condition="{settings.theme}">
+					theme: '{settings.theme}',
+				</f:if>
+
+				<f:if condition="{settings.defaults}">
+					defaults: {
+						<f:render section="Defaults" arguments="{ defaults: settings.defaults }" />
+					},
+				</f:if>
+
+				<f:if condition="{settings.config.strings}">
+					config: {
+						<f:render section="LanguageStrings" arguments="{ strings: settings.config.strings }" />
+					},
+				</f:if>
+
+				<f:if condition="{settings.selector}">
+					ready: function() {
+						$("{settings.selector} pre.code:has(code[class])").beautifyCode();
+					},
+				</f:if>
+
+					brushes: [ "Plain"<f:render section="Brushes" /> ]
+				};
+
+			<![CDATA[
+			${settings.onReadyCallback}
+				$.beautyOfCode.init(options);
+			});
+			]]>
+		})(jQuery);
+	</f:section>
+</script>
+
+<f:section name="Defaults">
+	<f:for each="{defaults}" as="value" key="key" iteration="i">
+		<f:if condition="{i.cycle} != 1">,</f:if>"{key}": {value}
+	</f:for>
+</f:section>
+
+<f:section name="LanguageStrings">
+	strings: <![CDATA[{]]>
+	<f:for each="{strings}" as="value" key="key">
+		{key}: "{value}",
+	</f:for>
+	<![CDATA[}]]>
+</f:section>
+
+<f:section name="Brushes">
+	<f:for each="{settings.brushes -> boc:explode(delimiter: ',', removeEmptyValues: 'TRUE')}" as="brush">, "{brush}"</f:for>
+</f:section>

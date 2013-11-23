@@ -42,7 +42,7 @@ class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAsse
 	 *
 	 * @var string
 	 */
-	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.js';
+	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.html';
 
 	/**
 	 * (non-PHPdoc)

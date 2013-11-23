@@ -36,6 +36,12 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 	/**
 	 *
+	 * @var array
+	 */
+	protected $classAttributeConfigurationSkipKeys = array('toolbar');
+
+	/**
+	 *
 	 * @var string
 	 */
 	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Standalone.js';
@@ -222,33 +228,22 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getClassAttributeConfiguration()
 	 */
-	public function getClassAttributeConfiguration($config = array()) {
-		$string = '; ';
+	public function getClassAttributeConfiguration() {
+		$configurationItems = array();
 
-		foreach ($config as $configKey => $configValue) {
-			// skip unavailable SyntaxHighlighter v3 configuration keys
-			if (($configValue == '' || $configValue == 'auto') || $configKey == 'toolbar') {
-				continue;
-			}
-
-			// highlight range
-			if ($configKey == 'highlight') {
-				$string .= sprintf('highlight: [%s]; ',
-					\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue)
-				);
+		foreach ($this->classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+			if ($configurationKey === 'highlight') {
+				$value = sprintf('[%s]', $value);
 			} else {
-				$string .= sprintf('%s: %s; ',
-					$configKey,
-					var_export((boolean) $configValue, TRUE)
-				);
+				$value = var_export((boolean) $configurationValue, TRUE);
 			}
+
+			$configurationItems[] = sprintf('%s: %s', $configurationKey, $value);
 		}
 
-		$string = substr($string, 0, -2);
-
-		return $string;
+		return '; ' . implode('; ', $configurationItems);
 	}
 }
 ?>

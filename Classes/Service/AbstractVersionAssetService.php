@@ -77,6 +77,26 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 	protected $configuration;
 
 	/**
+	 * A list of keys which are invalid or unavailable in the concrete asset service
+	 *
+	 * @var array
+	 */
+	protected $classAttributeConfigurationSkipKeys = array();
+
+	/**
+	 * A list of values which should be skipped in the concrete asset service
+	 *
+	 * @var array
+	 */
+	protected $classAttributeConfigurationSkipValues = array('', 'auto');
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $classAttributeConfigurationStack = array();
+
+	/**
 	 * Injects the object manager
 	 *
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
@@ -187,6 +207,20 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 	}
 
 	/**
+	 *
+	 * @param string $key
+	 * @param string $value
+	 */
+	public function pushClassAttributeConfiguration($key, $value) {
+		$skipKey = in_array($key, $this->classAttributeConfigurationSkipKeys);
+		$skipValue = in_array($value, $this->classAttributeConfigurationSkipValues);
+
+		if (FALSE === $skipKey && FALSE === $skipValue) {
+			$this->classAttributeConfigurationStack[$key] = $value;
+		}
+	}
+
+	/**
 	 * Adds the necessary libraries to the page renderer
 	 *
 	 * @return void
@@ -196,9 +230,8 @@ abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonI
 	/**
 	 * Returns the class attribute configuration string for a concrete version asset service
 	 *
-	 * @param array $config
 	 * @return string
 	 */
-	abstract public function getClassAttributeConfiguration($config = array());
+	abstract public function getClassAttributeConfiguration();
 }
 ?>

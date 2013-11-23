@@ -53,11 +53,18 @@ interface VersionAssetServiceInterface extends \TYPO3\CMS\Core\SingletonInterfac
 	public function load($library);
 
 	/**
+	 *
+	 * @param string $key The configuration key, e.g. `highlight`, `gutter`, ...
+	 * @param string $value
+	 * @return void
+	 */
+	public function pushClassAttributeConfiguration($key, $value);
+
+	/**
 	 * Returns the class attribute configuration string for the concrete service
 	 *
-	 * @param array $config
 	 * @return string
 	 */
-	public function getClassAttributeConfiguration($config = array());
+	public function getClassAttributeConfiguration();
 }
 ?>

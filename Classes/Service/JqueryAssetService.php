@@ -85,29 +85,24 @@ class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAsse
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getCssConfig()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::getClassAttributeConfiguration()
 	 */
-	public function getClassAttributeConfiguration($config = array()) {
-		$string = '';
+	public function getClassAttributeConfiguration() {
+		$configurationItems = array();
 
-		foreach ($config as $configKey => $configValue) {
-			if ($configValue == '' || $configValue == 'auto') {
-				continue;
-			}
-
-			if ($configKey == 'highlight') {
-				$string .= sprintf(' boc-highlight[%s]',
-					\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($configValue)
-				);
+		foreach ($this->classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+			if ($configurationKey === 'highlight') {
+				$key = $configurationKey;
+				$value = sprintf('[%s]', $configurationValue);
 			} else {
-				$string .= sprintf(' boc-%s%s',
-					$configValue ? '' : 'no-',
-					$configKey
-				);
+				$key = $configurationValue ? '' : 'no-';
+				$value = $configurationKey;
 			}
+
+			$configurationItems[] = sprintf('boc-%s%s', $key, $value);
 		}
 
-		return $string;
+		return implode(' ', $configurationItems);
 	}
 }
 ?>

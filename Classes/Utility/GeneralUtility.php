@@ -39,17 +39,47 @@ class GeneralUtility {
 	 * @return string
 	 */
 	public static function makeAbsolutePath($dir) {
-		if (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:'))	{
-			list($extKey, $script) = explode('/', substr($dir, 4), 2);
-			if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
-				$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
-				return substr($extPath, strlen(PATH_site)) . $script;
-			}
-		} elseif (\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:')) {
-				return substr($dir, 5);
+		$absolutePath = '';
+
+		$isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
+		$isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
+
+		if ($isExtensionNotation) {
+			$absolutePath = self::getAbsolutePathFromExtensionNotation($dir);
+		} elseif ($isFileNotation) {
+			$absolutePath = substr($dir, 5);
 		} else {
-			return $dir;
+			$absolutePath = $dir;
 		}
+
+		return $absolutePath;
+	}
+
+	/**
+	 * Returns an absolute path from EXT: notation from given $dir string
+	 *
+	 * @param string $dir
+	 * @throws \BadFunctionCallException If the extension is not loaded, because then the file cannot be found/loaded.
+	 * @return string
+	 */
+	protected static function getAbsolutePathFromExtensionNotation($dir) {
+		list($extKey, $script) = explode('/', substr($dir, 4), 2);
+
+		if ($extKey && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded($extKey)) {
+			$extPath = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($extKey);
+
+			$absolutePath = substr($extPath, strlen(PATH_site)) . $script;
+		} else {
+			$msg = sprintf(
+				'\TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolute(): You specified an extension path (%s), but the extension %s is not loaded!',
+				$dir,
+				$extKey
+			);
+
+			throw new \BadFunctionCallException($msg, 1385231536);
+		}
+
+		return $absolutePath;
 	}
 }
 ?>

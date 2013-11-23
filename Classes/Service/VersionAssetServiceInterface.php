@@ -32,7 +32,7 @@ namespace TYPO3\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-interface VersionAssetServiceInterface extends \TYPO3\CMS\Core\SingletonInterface {
+interface VersionAssetServiceInterface {
 
 	/**
 	 * Sets the configuration manager from the controller

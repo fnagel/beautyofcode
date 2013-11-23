@@ -31,7 +31,7 @@ namespace TYPO3\Beautyofcode\Service;
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-abstract class AbstractVersionAssetService implements \TYPO3\CMS\Core\SingletonInterface {
+abstract class AbstractVersionAssetService {
 
 	/**
 	 *

@@ -65,7 +65,7 @@ class T3EditorWizard {
 
 		$this->setT3EditorMode();
 
-		$content = $this->flexformData['data']['sDEF']['lDEF']['setings.cCode']['vDEF'];
+		$content = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
 
 		$doc = $GLOBALS['SOBE']->doc;
 

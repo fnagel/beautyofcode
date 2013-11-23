@@ -45,31 +45,6 @@ class ext_update {
 	protected $countOldPlugins;
 
 	/**
-	 *
-	 * @var integer
-	 */
-	protected $countOldFlexformConfigurations;
-
-
-	/**
-	 * Stack of old flexform configuration key signatures
-	 *
-	 * These signatures get wrapped by '%<|>%' in the where clause of the old
-	 * flexform configuration detection/updating.
-	 *
-	 * @var array
-	 */
-	protected $oldFlexformConfigurationKeySignatures = array(
-		'cLabel',
-		'cLang',
-		'cCode',
-		'cHighlight',
-		'cCollapse',
-		'cGutter',
-		'cToolbar',
-	);
-
-	/**
 	 * initializes the updater
 	 *
 	 * @return void
@@ -89,9 +64,8 @@ class ext_update {
 		$this->initialize();
 
 		$hasOldPlugins = $this->hasInstanceOldPlugins();
-		$hasOldFlexformConfigurations = $this->hasInstanceOldFlexformConfigurations();
 
-		return $hasOldPlugins || $hasOldFlexformConfigurations;
+		return $hasOldPlugins;
 	}
 
 	/**
@@ -106,37 +80,6 @@ class ext_update {
 	}
 
 	/**
-	 * Counts the amount of old flexform configuration string within tt_content records
-	 *
-	 * @return boolean
-	 */
-	protected function hasInstanceOldFlexformConfigurations() {
-		$oldConfigurationWhereClause = $this->getOldFlexformConfigurationsWhereClause();
-
-		$this->countOldFlexformConfigurations = $this->db->exec_SELECTcountRows('*', 'tt_content', $oldConfigurationWhereClause);
-
-		return 0 < $this->countOldFlexformConfigurations;
-	}
-
-	/**
-	 * Builds a where clause to query old flexform configuration strings
-	 *
-	 * @return string
-	 */
-	protected function getOldFlexformConfigurationsWhereClause() {
-		$oldConfigurationKeyClauseParts = array();
-		foreach ($this->oldFlexformConfigurationKeySignatures as $keySignature) {
-			$oldConfigurationKeyClauseParts[] = 'pi_flexform LIKE "%<' . $keySignature . '>%';
-		}
-
-		return sprintf('%s AND (%s)',
-			'list_type = "beautyofcode_pi1" OR list_type = "beautyofcode_contentrenderer"',
-			// search by ANDing: all keys must be found in the flexform string...
-			implode(' AND ', $oldConfigurationKeyClauseParts)
-		);
-	}
-
-	/**
 	 * Executes the update script
 	 *
 	 * @return string
@@ -148,10 +91,6 @@ class ext_update {
 
 		if ($this->hasInstanceOldPlugins()) {
 			$output .= $this->updateOldPlugins();
-		}
-
-		if ($this->hasInstanceOldFlexformConfigurations()) {
-			$output .= $this->updateOldFlexformConfigurations();
 		}
 
 		if ($output === '') {
@@ -170,56 +109,6 @@ class ext_update {
 		$this->db->exec_UPDATEquery('tt_content', 'list_type = "beautyofcode_pi1"', array('list_type' => 'beautyofcode_contentrenderer'));
 
 		return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
-	}
-
-	/**
-	 * Updates tt_content records by replacing old configuration keys within the flexform field
-	 *
-	 * @return string
-	 */
-	protected function updateOldFlexformConfigurations() {
-		$whereClause = $this->getOldFlexformConfigurationsWhereClause();
-
-		$rows = $this->db->exec_SELECTgetRows('uid, pi_flexform', 'tt_content', $whereClause);
-
-		if (TRUE === is_null($rows)) {
-			return '';
-		}
-
-		$countSuccessfulUpdates = 0;
-
-		foreach ($rows as $row) {
-			$updatedFlexformString = $this->replaceOldFlexformConfigurationKeySignatures($row['pi_flexform']);
-			$updateResult = $this->db->exec_UPDATEquery('tt_content', 'uid = ' . $row['uid'], array('pi_flexform' => $updatedFlexformString));
-
-			if (TRUE === $updateResult) {
-				$countSuccessfulUpdates++;
-			}
-		}
-
-		return sprintf('<p>Found %s old flexform configurations. Updated %s of them.</p>',
-			$this->countOldFlexformConfigurations,
-			$countSuccessfulUpdates
-		);
-	}
-
-	/**
-	 * Updates the old flexform configuration key signatures in the incoming flexform configuration string
-	 *
-	 * @param string $inputFlexform
-	 * @return string
-	 */
-	protected function replaceOldFlexformConfigurationKeySignatures($inputFlexform) {
-		$outputFlexform = $inputFlexform;
-
-		foreach ($this->oldFlexformConfigurationKeySignatures as $keySignature) {
-			$search = array('<' . $keySignature . '>', '</' . $keySignature . '>');
-			$replace = array('<settings.' . $keySignature . '>', '</settings.' . $keySignature . '>');
-
-			$outputFlexform = str_replace($search, $replace, $outputFlexform);
-		}
-
-		return $outputFlexform;
 	}
 }
 ?>

@@ -78,30 +78,6 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 *
 	 * @test
 	 */
-	public function accessReturnsTrueIfTtContentRecordsWithOldFlexformStringsWereFound() {
-		$this->assertOldFlexformConfigurationStringsExist();
-
-		$sut = new \ext_update();
-
-		$this->assertTrue($sut->access());
-	}
-
-	protected function assertOldFlexformConfigurationStringsExist() {
-		$this->db
-			->expects($this->at(1))
-			->method('exec_SELECTcountRows')
-			->with(
-				$this->equalTo('*'),
-				$this->equalTo('tt_content'),
-				$this->stringContains('%<cLabel>%', FALSE)
-			)
-			->will($this->returnValue(1));
-	}
-
-	/**
-	 *
-	 * @test
-	 */
 	public function mainWillUpdateTheListTypeFieldOfOldPluginContentElements() {
 		$this->assertOldPluginInstancesExist();
 
@@ -119,40 +95,6 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$updateOutput = $sut->main();
 
 		$this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function mainWillUpdateTheFlexformConfigurationStringOfOldFlexformConfigurations() {
-		$this->assertOldFlexformConfigurationStringsExist();
-
-		$this->db
-			->expects($this->at(2))
-			->method('exec_SELECTgetRows')
-			->with(
-				$this->equalTo('uid, pi_flexform'),
-				$this->equalTo('tt_content'),
-				$this->stringContains('%<cCode>%', FALSE)
-			)
-			->will($this->returnValue(array(array('uid' => 1, 'pi_flexform' => '<cCode>php</cCode>'))));
-
-		$this->db
-			->expects($this->at(3))
-			->method('exec_UPDATEquery')
-			->with(
-				$this->equalTo('tt_content'),
-				$this->equalTo('uid = 1'),
-				$this->equalTo(array('pi_flexform' => '<settings.cCode>php</settings.cCode>'))
-			)
-			->will($this->returnValue(TRUE));
-
-		$sut = new \ext_update();
-
-		$updateOutput = $sut->main();
-
-		$this->assertEquals('<p>Found 1 old flexform configurations. Updated 1 of them.</p>', $updateOutput);
 	}
 }
 ?>

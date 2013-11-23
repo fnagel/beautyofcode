@@ -100,7 +100,6 @@ class FlexformRepository {
 		$flexformValues = array();
 
 		foreach ($flexformValueArray as $propertyName => $propertyValue) {
-			$propertyValue = str_replace('settings.', '', $propertyValue);
 			$propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
 
 			$flexformValues[$propertyNameLowerCaseUnderscored] = $propertyValue;

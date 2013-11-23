@@ -75,7 +75,7 @@ class PageLayoutViewHooks {
 			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_label')
 		);
 
-		$label = $this->flexformData['data']['sDEF']['lDEF']['settings.cLabel']['vDEF'];
+		$label = $this->flexformData['data']['sDEF']['lDEF']['cLabel']['vDEF'];
 
 		if (strlen(trim($label)) > 0) {
 			$header = "<strong>" . htmlspecialchars($label) . "</strong>";
@@ -92,7 +92,7 @@ class PageLayoutViewHooks {
 	protected function buildCodeLanguageHeader() {
 		return sprintf("<br /><br /><strong>%s</strong> (%s)<br />",
 			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code'),
-			htmlspecialchars($this->flexformData['data']['sDEF']['lDEF']['settings.cLang']['vDEF'])
+			htmlspecialchars($this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'])
 		);
 	}
 
@@ -103,7 +103,7 @@ class PageLayoutViewHooks {
 	 * @return string
 	 */
 	protected function buildCodePreview($uid) {
-		$code = $this->flexformData['data']['sDEF']['lDEF']['settings.cCode']['vDEF'];
+		$code = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
 
 		$preview = sprintf("<em>%s</em>",
 			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_code')

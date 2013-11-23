@@ -8,7 +8,7 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<settings.cLabel>
+					<cLabel>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
 							<config>
@@ -18,8 +18,8 @@
 								<eval>trim</eval>
 							</config>
 						</TCEforms>
-					</settings.cLabel>
-					<settings.cLang>
+					</cLabel>
+					<cLang>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
 							<config>
@@ -33,8 +33,8 @@
 								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
 							</config>
 						</TCEforms>
-					</settings.cLang>
-					<settings.cCode>
+					</cLang>
+					<cCode>
 						<TCEforms>
 							<exclude>1</exclude>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code</label>
@@ -51,7 +51,7 @@
 								<noTableWrapping>0</noTableWrapping>
 							</config>
 						</TCEforms>
-					</settings.cCode>
+					</cCode>
 				</el>
 			</ROOT>
 		</sDEF>
@@ -62,7 +62,7 @@
 				</TCEforms>
 				<type>array</type>
 				<el>
-					<settings.cHighlight>
+					<cHighlight>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
 							<config>
@@ -72,8 +72,8 @@
 								<eval>trim</eval>
 							</config>
 						</TCEforms>
-					</settings.cHighlight>
-					<settings.cCollapse>
+					</cHighlight>
+					<cCollapse>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
 							<config>
@@ -94,8 +94,8 @@
 									</items>
 							</config>
 						</TCEforms>
-					</settings.cCollapse>
-					<settings.cGutter>
+					</cCollapse>
+					<cGutter>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
 							<config>
@@ -116,8 +116,8 @@
 									</items>
 							</config>
 						</TCEforms>
-					</settings.cGutter>
-					<settings.cToolbar>
+					</cGutter>
+					<cToolbar>
 						<TCEforms>
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:toolbar</label>
 							<config>
@@ -138,7 +138,7 @@
 									</items>
 							</config>
 						</TCEforms>
-					</settings.cToolbar>
+					</cToolbar>
 				</el>
 			</ROOT>
 		</sOPTIONS>

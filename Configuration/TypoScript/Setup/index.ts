@@ -5,6 +5,8 @@ plugin.tx_beautyofcode {
 
 		showLabel = {$plugin.tx_beautyofcode.showLabel}
 
+		deactivateAssetService = {$plugin.tx_beautyofcode.deactivateAssetService}
+
 		jquery {
 			baseUrl = {$plugin.tx_beautyofcode.jquery.baseUrl}
 			scripts = {$plugin.tx_beautyofcode.jquery.scripts}

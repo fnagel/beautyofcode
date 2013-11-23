@@ -26,6 +26,7 @@ namespace TYPO3\Beautyofcode\Controller;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
 /**
  * The frontend plugin controller for the syntaxhighlighter
  *
@@ -67,7 +68,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function initializeAction() {
 		$this->versionAssetService->setConfigurationManager($this->configurationManager);
-		$this->versionAssetService->load($this->settings['version']);
+
+		if (TRUE === (boolean) $this->settings['deactivateAssetService']) {
+			$this->versionAssetService->load($this->settings['version']);
+		}
 	}
 
 	/**

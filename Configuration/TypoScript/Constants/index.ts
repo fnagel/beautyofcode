@@ -7,6 +7,9 @@ plugin.tx_beautyofcode {
 		# cat=beautyofcode/file/020; type=boolean; label=Template - Show label: If set to false the label atg within the template is hidden.
 	showLabel = 1
 
+		# cat=beautyofcode/enable/2; type=boolean; label=Asset service: Check to deactivate the asset service
+	deactivateAssetService = 0
+
 	// -- VERSION DEPENDENT SETTINGS
 		# cat=beautyofcode/file/030; type=string; label=Standalone - Base URL: Enter path to the res directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/). Leave empty to use online repository.
 	standalone.baseUrl = EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/

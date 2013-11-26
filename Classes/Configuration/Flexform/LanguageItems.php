@@ -73,6 +73,46 @@ class LanguageItems {
 	protected $contentElementPid;
 
 	/**
+	 *
+	 * @var \TYPO3\CMS\Frontend\Page\PageRepository
+	 */
+	protected $pageRepository;
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
+	 */
+	protected $templateService;
+
+	/**
+	 * Injects the page repository
+	 *
+	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository
+	 * @return void
+	 */
+	public function injectPageRepository(\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL) {
+		if (TRUE === is_null($pageRepository)) {
+			$this->pageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
+		} else {
+			$this->pageRepository = $pageRepository;
+		}
+	}
+
+	/**
+	 * Injects the template service
+	 *
+	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService
+	 * @return void
+	 */
+	public function injectTemplateService(\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL) {
+		if (TRUE === is_null($templateService)) {
+			$this->templateService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+		} else {
+			$this->templateService = $templateService;
+		}
+	}
+
+	/**
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
@@ -145,28 +185,29 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getConfig() {
-
 		// Initialize the page selector
-		$sysPage = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
-		$sysPage->init(true);
+		$this->injectPageRepository($this->pageRepository);
 
 		// Initialize the TS template
-		$template = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
-		$template->init();
+		$this->injectTemplateService($this->templateService);
+
+		$this->pageRepository->init(TRUE);
+
+		$this->templateService->init();
 
 		// Avoid an error
-		$template->tt_track = 0;
+		$this->templateService->tt_track = 0;
 
 		// Get rootline for current PID
-		$rootline = $sysPage->getRootLine($this->contentElementPid);
+		$rootline = $this->pageRepository->getRootLine($this->contentElementPid);
 
 		// Start TS template
-		$template->start($rootline);
+		$this->templateService->start($rootline);
 
 		// Generate TS config
-		$template->generateConfig();
+		$this->templateService->generateConfig();
 
-		return $template->setup['plugin.']['tx_beautyofcode.']['settings.']['common.'];
+		return $this->templateService->setup['plugin.']['tx_beautyofcode.']['settings.']['common.'];
 	}
 }
 ?>

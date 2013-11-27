@@ -71,7 +71,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		$this->versionAssetService->configure($this->settings['version']);
 
 		if (FALSE === (boolean) $this->settings['deactivateAssetService']) {
-			$this->versionAssetService->load($this->settings['version']);
+			$this->versionAssetService->load();
 		}
 	}
 

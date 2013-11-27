@@ -11,9 +11,13 @@ plugin.tx_beautyofcode {
 			baseUrl = {$plugin.tx_beautyofcode.jquery.baseUrl}
 			scripts = {$plugin.tx_beautyofcode.jquery.scripts}
 			styles = {$plugin.tx_beautyofcode.jquery.styles}
+
 			scriptUrl = {$plugin.tx_beautyofcode.jquery.scriptUrl}
+
 			addjQuery = {$plugin.tx_beautyofcode.jquery.addjQuery}
+
 			selector = {$plugin.tx_beautyofcode.jquery.selector}
+
 			onReadyCallback = {$plugin.tx_beautyofcode.jquery.onReadyCallback}
 		}
 

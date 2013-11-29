@@ -39,23 +39,21 @@ plugin.tx_beautyofcode {
 	jquery.scripts = scripts/
 		# cat=beautyofcode/file/042; type=string; label=jQuery - Relative path to styles: Enter relative path to baseUrl. Leave empty or default when using online repository.
 	jquery.styles = styles/
-		# cat=beautyofcode/file/043; type=string; label=jQuery - Script URL: Path to jquery.beautyOfCode.js file (use FILE: and EXT: or absolute path http://your.domain.de/...).
-	jquery.scriptUrl = EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js
-		# cat=beautyofcode/file/044; type=boolean; label=jQuery - Add jQuery Library: This option adds jQuery Framework file if the extension t3jquery is NOT installed. See documentationfor more information.
+		# cat=beautyofcode/file/043; type=boolean; label=jQuery - Add jQuery Library: This option adds jQuery Framework file if the extension t3jquery is NOT installed. See documentationfor more information.
 	jquery.addjQuery = 1
-		# cat=beautyofcode/file/045; type=string; label=jQuery - jQuery selector: Define a jQuery selector to improve frontend performance (example: #myMainContent)
+		# cat=beautyofcode/file/044; type=string; label=jQuery - jQuery selector: Define a jQuery selector to improve frontend performance (example: #myMainContent)
 	jquery.selector =
-		# cat=beautyofcode//9; type=string; label=onReady Callback Signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
+		# cat=beautyofcode/file/045; type=string; label=onReady Callback Signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
 	jquery.onReadyCallback = (document).ready(function () {
 
-		# cat=beautyofcode/file/030; type=string; label=Standalone - Base URL: Enter path to the res directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/). Leave empty to use online repository.
+		# cat=beautyofcode/file/050; type=string; label=Standalone - Base URL: Enter path to the res directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/). Leave empty to use online repository.
 	standalone.baseUrl = EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/
-		# cat=beautyofcode/file/031; type=string; label=Standalone - Relative path to scripts: Enter relative path to baseUrl. Leave empty or default when using online repository.
+		# cat=beautyofcode/file/051; type=string; label=Standalone - Relative path to scripts: Enter relative path to baseUrl. Leave empty or default when using online repository.
 	standalone.scripts = scripts/
-		# cat=beautyofcode/file/032; type=string; label=Standalone - Relative path to styles: Enter relative path to baseUrl. Leave empty or default when using online repository.
+		# cat=beautyofcode/file/052; type=string; label=Standalone - Relative path to styles: Enter relative path to baseUrl. Leave empty or default when using online repository.
 	standalone.styles = styles/
-		# cat=beautyofcode/file/034; type=options [standalone=standalone,jquery=jquery]; label=Standalone - Use JS dom ready event: If using standalone version it's possible to add a JS domReady instaed of injecting the code at the bottom of the body. Usefull when using minifaction scripts.
+		# cat=beautyofcode/file/053; type=options [standalone=standalone,jquery=jquery]; label=Standalone - Use JS dom ready event: If using standalone version it's possible to add a JS domReady instaed of injecting the code at the bottom of the body. Usefull when using minifaction scripts.
 	standalone.includeAsDomReady = false
-		# cat=beautyofcode/file/035; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
+		# cat=beautyofcode/file/054; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
 	standalone.onReadyCallback = (document).ready(function () {
 }

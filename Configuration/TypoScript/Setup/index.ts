@@ -43,8 +43,6 @@ plugin.tx_beautyofcode {
 			scripts = {$plugin.tx_beautyofcode.jquery.scripts}
 			styles = {$plugin.tx_beautyofcode.jquery.styles}
 
-			scriptUrl = {$plugin.tx_beautyofcode.jquery.scriptUrl}
-
 			addjQuery = {$plugin.tx_beautyofcode.jquery.addjQuery}
 
 			selector = {$plugin.tx_beautyofcode.jquery.selector}

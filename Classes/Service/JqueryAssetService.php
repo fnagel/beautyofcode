@@ -79,7 +79,12 @@ class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAsse
 
 		$this->pageRenderer->addJsFooterLibrary(
 			'beautyofcode_boc',
-			$this->bocGeneralUtility->makeAbsolutePath(trim($this->configuration['scriptUrl']))
+			$this
+				->typoscriptFrontendController
+				->tmpl
+				->getFileName(
+					'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js'
+				)
 		);
 	}
 

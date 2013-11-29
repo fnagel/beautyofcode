@@ -235,12 +235,14 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 		foreach ($this->classAttributeConfigurationStack as $configurationKey => $configurationValue) {
 			if ($configurationKey === 'highlight') {
+				$key = $configurationKey;
 				$value = sprintf('[%s]', $value);
 			} else {
+				$key = $configurationKey;
 				$value = var_export((boolean) $configurationValue, TRUE);
 			}
 
-			$configurationItems[] = sprintf('%s: %s', $configurationKey, $value);
+			$configurationItems[] = sprintf('%s: %s', $key, $value);
 		}
 
 		return '; ' . implode('; ', $configurationItems);

@@ -7,32 +7,6 @@ plugin.tx_beautyofcode {
 
 		deactivateAssetService = {$plugin.tx_beautyofcode.deactivateAssetService}
 
-		jquery {
-			baseUrl = {$plugin.tx_beautyofcode.jquery.baseUrl}
-			scripts = {$plugin.tx_beautyofcode.jquery.scripts}
-			styles = {$plugin.tx_beautyofcode.jquery.styles}
-
-			scriptUrl = {$plugin.tx_beautyofcode.jquery.scriptUrl}
-
-			addjQuery = {$plugin.tx_beautyofcode.jquery.addjQuery}
-
-			selector = {$plugin.tx_beautyofcode.jquery.selector}
-
-			onReadyCallback = {$plugin.tx_beautyofcode.jquery.onReadyCallback}
-		}
-
-		standalone {
-			baseUrl = {$plugin.tx_beautyofcode.standalone.baseUrl}
-			scripts = {$plugin.tx_beautyofcode.standalone.scripts}
-			styles = {$plugin.tx_beautyofcode.standalone.styles}
-	
-			# if enabled JS code is fired with a domReady event (not recomended)
-			# always enabled if TYPO3 version < 4.3
-			# possible options: false, native, jquery
-			includeAsDomReady = {$plugin.tx_beautyofcode.standalone.includeAsDomReady}
-			onReadyCallback = {$plugin.tx_beautyofcode.standalone.onReadyCallback}
-		}
-
 		common {
 			theme = {$plugin.tx_beautyofcode.common.theme}
 			brushes = {$plugin.tx_beautyofcode.common.brushes}
@@ -62,6 +36,32 @@ plugin.tx_beautyofcode {
 			# [globalVar = GP:L = 1]
 				# common.config.strings.viewSource = custom string
 			# [global]
+		}
+
+		jquery {
+			baseUrl = {$plugin.tx_beautyofcode.jquery.baseUrl}
+			scripts = {$plugin.tx_beautyofcode.jquery.scripts}
+			styles = {$plugin.tx_beautyofcode.jquery.styles}
+
+			scriptUrl = {$plugin.tx_beautyofcode.jquery.scriptUrl}
+
+			addjQuery = {$plugin.tx_beautyofcode.jquery.addjQuery}
+
+			selector = {$plugin.tx_beautyofcode.jquery.selector}
+
+			onReadyCallback = {$plugin.tx_beautyofcode.jquery.onReadyCallback}
+		}
+
+		standalone {
+			baseUrl = {$plugin.tx_beautyofcode.standalone.baseUrl}
+			scripts = {$plugin.tx_beautyofcode.standalone.scripts}
+			styles = {$plugin.tx_beautyofcode.standalone.styles}
+	
+			# if enabled JS code is fired with a domReady event (not recomended)
+			# always enabled if TYPO3 version < 4.3
+			# possible options: false, native, jquery
+			includeAsDomReady = {$plugin.tx_beautyofcode.standalone.includeAsDomReady}
+			onReadyCallback = {$plugin.tx_beautyofcode.standalone.onReadyCallback}
 		}
 	}
 

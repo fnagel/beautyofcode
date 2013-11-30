@@ -155,25 +155,22 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 	 * @return void
 	 */
 	protected function addJavascriptLibaries() {
-		$this->pageRenderer->addJsFooterLibrary(
-			'beautyofcode_JS_shCoreJS',
-			$this->filePathBase . $this->filePathScripts . 'shCore.js',
-			'text/javascript',
-			TRUE,
-			FALSE,
-			'',
-			$this->excludeAssetFromConcatenation
+		$jsLibraries = array(
+			'shCoreJS' => 'shCore.js',
+			'shAutoloader' => 'shAutoloader.js',
 		);
 
-		$this->pageRenderer->addJsFooterLibrary(
-			'beautyofcode_JS_shAutoloader',
-			$this->filePathBase . $this->filePathScripts . 'shAutoloader.js',
-			'text/javascript',
-			TRUE,
-			FALSE,
-			'',
-			$this->excludeAssetFromConcatenation
-		);
+		foreach ($jsLibraries as $jsLibraryKey => $jsLibrary) {
+			$this->pageRenderer->addJsFooterLibrary(
+				'beautyofcode_JS_' . $jsLibraryKey,
+				$this->filePathBase . $this->filePathScripts . $jsLibrary,
+				'text/javascript',
+				TRUE,
+				FALSE,
+				'',
+				$this->excludeAssetFromConcatenation
+			);
+		}
 	}
 
 	/**
@@ -181,33 +178,27 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 	 * @return void
 	 */
 	protected function addStylesheets() {
-		$cssStyleFile = 'shCoreDefault.css';
+		$cssFiles = array(
+			'core' => 'shCore.css',
+			'theme' => 'shCoreDefault.css'
+		);
 
 		if ('' !== trim($this->configuration['theme'])) {
-			$cssStyleFile = 'shTheme' . trim($this->configuration['theme']) . '.css';
+			$cssFiles['theme'] = 'shTheme' . trim($this->configuration['theme']) . '.css';
 		}
 
-		$this->pageRenderer->addCssFile(
-			$this->filePathBase . $this->filePathStyles . 'shCore.css',
-			'stylesheet',
-			'all',
-			'',
-			$this->excludeAssetFromConcatenation,
-			FALSE,
-			'',
-			$this->excludeAssetFromConcatenation
-		);
-
-		$this->pageRenderer->addCssFile(
-			$this->filePathBase . $this->filePathStyles . $cssStyleFile,
-			'stylesheet',
-			'all',
-			'',
-			$this->excludeAssetFromConcatenation,
-			FALSE,
-			'',
-			$this->excludeAssetFromConcatenation
-		);
+		foreach ($cssFiles as $cssFile) {
+			$this->pageRenderer->addCssFile(
+				$this->filePathBase . $this->filePathStyles . $cssFile,
+				'stylesheet',
+				'all',
+				'',
+				$this->excludeAssetFromConcatenation,
+				FALSE,
+				'',
+				$this->excludeAssetFromConcatenation
+			);
+		}
 	}
 
 	/**

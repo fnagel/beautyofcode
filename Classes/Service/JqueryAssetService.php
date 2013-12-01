@@ -67,7 +67,7 @@ class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAsse
 		if ($addJquery && $addJqueryFromT3Jquery) {
 			\tx_t3jquery::addJqJS();
 		} else if ($addJquery) {
-			$libraries['jquery'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js';
+			$jsLibraries['jquery'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js';
 		}
 
 		$jsLibraries['boc'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js';

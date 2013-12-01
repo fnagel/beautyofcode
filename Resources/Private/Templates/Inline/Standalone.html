@@ -56,29 +56,17 @@
 		</f:for>
 		);
 
-		<f:if condition="{settings.config.strings}">
-			<f:render section="LanguageStrings" arguments="{ strings: settings.config.strings }" />
-		</f:if>
+		SyntaxHighlighter.config.strings.expandSource: '<f:translate id="config.strings.expandSource" default="show source" />';
+		SyntaxHighlighter.config.strings.help: '<f:translate id="config.strings.help" default="?"" />';
+		SyntaxHighlighter.config.strings.alert: '<f:translate id="config.strings.alert" default="SyntaxHighlighter\n\n" />';
+		SyntaxHighlighter.config.strings.noBrush: '<f:translate id="config.strings.noBrush" default="Can\'t find brush for: " />';
+		SyntaxHighlighter.config.strings.brushNotHtmlScript: '<f:translate id="config.strings.brushNotHtmlScript" default="Brush wasn\'t configured for html-script option: " />';
 
 		<f:if condition="{settings.defaults}">
 			<f:render section="Defaults" arguments="{ defaults: settings.defaults }" />
 		</f:if>
 
 		SyntaxHighlighter.all();
-	</f:section>
-
-	<f:comment>
-		strings not available in v3: (!= && != ..)
-			- viewSource
-			- copyToClipboard
-			- copyToClipboardConfirmation
-			- print
-	</f:comment>
-
-	<f:section name="LanguageStrings">
-		<f:for each="{strings}" key="key" as="value">
-			SyntaxHighlighter.config.strings.{key} = "{value}";
-		</f:for>
 	</f:section>
 
 	<f:comment>

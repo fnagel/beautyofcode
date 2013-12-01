@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2011-08-25T17:54:43Z" product-name="beautyofcode">
+		<header />
+		<body>
+			<trans-unit id="config.strings.expandSource">
+				<source>show source</source>
+			</trans-unit>
+			<trans-unit id="config.strings.viewSource">
+				<source>view source</source>
+			</trans-unit>
+			<trans-unit id="config.strings.copyToClipboard">
+				<source>copy to clipboard</source>
+			</trans-unit>
+			<trans-unit id="config.strings.copyToClipboardConfirmation">
+				<source>The code is in your clipboard now</source>
+			</trans-unit>
+			<trans-unit id="config.strings.print">
+				<source>print</source>
+			</trans-unit>
+			<trans-unit id="config.strings.help">
+				<source>?</source>
+			</trans-unit>
+			<trans-unit id="config.strings.alert">
+				<source>SyntaxHighlighter\n\n</source>
+			</trans-unit>
+			<trans-unit id="config.strings.noBrush">
+				<source>Can\'t find brush for: </source>
+			</trans-unit>
+			<trans-unit id="config.strings.brushNotHtmlScript">
+				<source>Brush wasn\'t configured for html-script option: </source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

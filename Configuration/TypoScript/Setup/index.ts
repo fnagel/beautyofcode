@@ -20,22 +20,6 @@ plugin.tx_beautyofcode {
 				wrap-lines = {$plugin.tx_beautyofcode.common.defaults.wrap-lines}
 				toolbar = {$plugin.tx_beautyofcode.common.defaults.toolbar}
 			}
-
-			# example of how to edit JS language strings (german)
-			# use globalVar conditions for multilanguage support
-			# config {
-				# strings {
-					# expandSource = Quellcode anzeigen
-					# viewSource = Quellcode im PopUp öffnen
-					# copyToClipboard = In Zwischenablage kopieren
-					# copyToClipboardConfirmation = Der Quellcode bedindet sich jetzt in der Zwischenablage
-					# print = Quellcode drucken
-				# }
-			# }
-			# For mulitlanguage installations please use globalVar conditons:
-			# [globalVar = GP:L = 1]
-				# common.config.strings.viewSource = custom string
-			# [global]
 		}
 
 		jquery {

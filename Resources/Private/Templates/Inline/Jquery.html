@@ -30,11 +30,19 @@
 					},
 				</f:if>
 
-				<f:if condition="{settings.config.strings}">
 					config: {
-						<f:render section="LanguageStrings" arguments="{ strings: settings.config.strings }" />
+						strings: {
+							expandSource: '<f:translate id="config.strings.expandSource" default="show source" />',
+							viewSource: '<f:translate id="config.strings.viewSource" default="view source" />',
+							copyToClipboard: '<f:translate id="config.strings.copyToClipboard" default="copy to clipboard" />',
+							copyToClipboardConfirmation: '<f:translate id="config.strings.copyToClipboardConfirmation" default="The code is in your clipboard now" />',
+							print: '<f:translate id="config.strings.print" default="print" />',
+							help: '<f:translate id="config.strings.help" default="?"" />',
+							alert: '<f:translate id="config.strings.alert" default="SyntaxHighlighter\n\n" />',
+							noBrush: '<f:translate id="config.strings.noBrush" default="Can\'t find brush for: " />',
+							brushNotHtmlScript: '<f:translate id="config.strings.brushNotHtmlScript" default="Brush wasn\'t configured for html-script option: " />'
+						}
 					},
-				</f:if>
 
 				<f:if condition="{settings.selector}">
 					ready: function() {
@@ -57,14 +65,6 @@
 		<f:for each="{defaults}" as="value" key="key" iteration="i">
 			<f:if condition="{i.cycle} != 1">,</f:if>"{key}": {value}
 		</f:for>
-	</f:section>
-
-	<f:section name="LanguageStrings">
-		strings: {
-		<f:for each="{strings}" as="value" key="key">
-			{key}: "{value}",
-		</f:for>
-		}
 	</f:section>
 
 	<f:section name="Brushes">

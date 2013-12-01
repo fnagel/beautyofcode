@@ -28,11 +28,11 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 /**
- * Asset service implementation which initializes a concrete version asset
+ * Library service implementation which initializes a concrete syntax highlighter library
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class VersionAssetService implements \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface {
+class LibraryService implements \TYPO3\Beautyofcode\Service\LibraryServiceInterface {
 
 	/**
 	 *
@@ -48,9 +48,9 @@ class VersionAssetService implements \TYPO3\Beautyofcode\Service\VersionAssetSer
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\AbstractVersionAssetService
+	 * @var \TYPO3\Beautyofcode\Service\AbstractLibraryService
 	 */
-	protected $concreteVersionAssetService;
+	protected $concreteLibraryService;
 
 	/**
 	 *
@@ -71,39 +71,39 @@ class VersionAssetService implements \TYPO3\Beautyofcode\Service\VersionAssetSer
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::configure()
+	 * @see \TYPO3\Beautyofcode\Service\LibraryServiceInterface::configure()
 	 */
 	public function configure($library) {
-		$this->concreteVersionAssetService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . ucfirst($library) . 'AssetService');
+		$this->concreteLibraryService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
 
-		$this->concreteVersionAssetService->setConfigurationManager($this->configurationManager);
+		$this->concreteLibraryService->setConfigurationManager($this->configurationManager);
 
-		$this->concreteVersionAssetService->configure();
+		$this->concreteLibraryService->configure();
 	}
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::load()
+	 * @see \TYPO3\Beautyofcode\Service\LibraryServiceInterface::load()
 	 */
 	public function load() {
-		$this->concreteVersionAssetService->load();
+		$this->concreteLibraryService->load();
 	}
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::pushClassAttributeConfiguration()
+	 * @see \TYPO3\Beautyofcode\Service\LibraryServiceInterface::pushClassAttributeConfiguration()
 	 */
 	public function pushClassAttributeConfiguration($key, $value) {
-		$this->concreteVersionAssetService->pushClassAttributeConfiguration($key, $value);
+		$this->concreteLibraryService->pushClassAttributeConfiguration($key, $value);
 	}
 
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface::getClassAttributeConfiguration()
+	 * @see \TYPO3\Beautyofcode\Service\LibraryServiceInterface::getClassAttributeConfiguration()
 	 */
 	public function getClassAttributeConfiguration() {
-		return $this->concreteVersionAssetService->getClassAttributeConfiguration();
+		return $this->concreteLibraryService->getClassAttributeConfiguration();
 	}
 }
 ?>

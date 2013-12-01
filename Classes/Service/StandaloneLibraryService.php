@@ -28,11 +28,11 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 /**
- * Service which adds and generates all necessary assets for the standalone version
+ * Service which adds and generates all necessary assets for the standalone library (v3)
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAssetService {
+class StandaloneLibraryService extends \TYPO3\Beautyofcode\Service\AbstractLibraryService {
 
 	/**
 	 *
@@ -109,7 +109,7 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 	/**
 	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Service\AbstractVersionAssetService::load()
+	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::load()
 	 */
 	public function load() {
 		$this->checkAndPossiblyOverrideFilePaths();

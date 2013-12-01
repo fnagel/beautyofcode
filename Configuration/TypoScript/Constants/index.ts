@@ -7,8 +7,8 @@ plugin.tx_beautyofcode {
 		# cat=beautyofcode/file/020; type=boolean; label=Template - Show label: If set to false the label atg within the template is hidden.
 	showLabel = 1
 
-		# cat=beautyofcode/enable/2; type=boolean; label=Asset service: Check to deactivate the asset service
-	deactivateAssetService = 0
+		# cat=beautyofcode/enable/2; type=boolean; label=Library service: Check to deactivate the library service
+	deactivateLibraryService = 0
 
 	// -- COMMON SETTINGS
 		# cat=beautyofcode//1; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is lazy loaded a single js file. Add a seperated list out of: AS3, Bash, ColdFusion, Cpp, CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.

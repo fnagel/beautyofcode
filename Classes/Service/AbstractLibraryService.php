@@ -28,11 +28,11 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 /**
- * Abstract version asset service
+ * Abstract library service
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-abstract class AbstractVersionAssetService {
+abstract class AbstractLibraryService {
 
 	/**
 	 *
@@ -243,7 +243,7 @@ abstract class AbstractVersionAssetService {
 	abstract public function load();
 
 	/**
-	 * Returns the class attribute configuration string for a concrete version asset service
+	 * Returns the class attribute configuration string for a concrete library service
 	 *
 	 * @return string
 	 */

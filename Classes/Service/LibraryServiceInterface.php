@@ -28,11 +28,11 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 /**
- * Service interface for adding assets of a beautyofcode version
+ * Service interface for library assets for a syntax highlighter
  *
  * @author Thomas Juhnke <tommy@van-tomas.de>
  */
-interface VersionAssetServiceInterface {
+interface LibraryServiceInterface {
 
 	/**
 	 * Sets the configuration manager from the controller
@@ -47,14 +47,14 @@ interface VersionAssetServiceInterface {
 	public function setConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager);
 
 	/**
-	 * Configures the version asset service
+	 * Configures the library
 	 *
 	 * @param sstring $library
 	 */
 	public function configure($library);
 
 	/**
-	 * Loads all libraries, CSS and generates + loads the inline javascript for the concrete asset version
+	 * Loads all libraries, CSS and generates + loads the inline javascript for the concrete library
 	 *
 	 * @return void
 	 */
@@ -69,7 +69,7 @@ interface VersionAssetServiceInterface {
 	public function pushClassAttributeConfiguration($key, $value);
 
 	/**
-	 * Returns the class attribute configuration string for the concrete service
+	 * Returns the class attribute configuration string for the concrete library
 	 *
 	 * @return string
 	 */

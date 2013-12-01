@@ -150,10 +150,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	/**
 	 *
-	 * @param \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface $versionAssetServiceInterface
+	 * @param \TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService
 	 */
-	public function setVersionAssetService(\TYPO3\Beautyofcode\Service\VersionAssetServiceInterface $versionAssetService) {
-		$this->versionAssetService = $versionAssetService;
+	public function setLibraryService(\TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
+		$this->libraryService = $libraryService;
 	}
 
 	/**
@@ -161,19 +161,19 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 * @return string
 	 */
 	public function getClassAttributeConfiguration() {
-		$this->versionAssetService
+		$this->libraryService
 			->pushClassAttributeConfiguration(
 				'highlight',
 				\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight)
 			);
 
-		$this->versionAssetService
+		$this->libraryService
 			->pushClassAttributeConfiguration('gutter', $this->cGutter);
 
-		$this->versionAssetService
+		$this->libraryService
 			->pushClassAttributeConfiguration('toolbar', $this->cToolbar);
 
-		$this->versionAssetService
+		$this->libraryService
 			->pushClassAttributeConfiguration('collapse', $this->cCollapse);
 
 		return $this->versionAssetService->getClassAttributeConfiguration();

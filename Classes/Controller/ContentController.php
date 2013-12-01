@@ -36,9 +36,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface
+	 * @var \TYPO3\Beautyofcode\Service\LibraryInterface
 	 */
-	protected $versionAssetService;
+	protected $libraryService;
 
 	/**
 	 *
@@ -48,10 +48,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @param \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface $libraryService
+	 * @param \TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService
 	 */
-	public function injectVersionAssetService(\TYPO3\Beautyofcode\Service\VersionAssetServiceInterface $versionAssetService) {
-		$this->versionAssetService = $versionAssetService;
+	public function injectVersionAssetService(\TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
+		$this->libraryService = $libraryService;
 	}
 
 	/**
@@ -67,11 +67,11 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 */
 	public function initializeAction() {
-		$this->versionAssetService->setConfigurationManager($this->configurationManager);
-		$this->versionAssetService->configure($this->settings['version']);
+		$this->libraryService->setConfigurationManager($this->configurationManager);
+		$this->libraryService->configure($this->settings['version']);
 
-		if (FALSE === (boolean) $this->settings['deactivateAssetService']) {
-			$this->versionAssetService->load();
+		if (FALSE === (boolean) $this->settings['deactivateLibraryService']) {
+			$this->libraryService->load();
 		}
 	}
 
@@ -86,7 +86,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$this->configurationManager->getContentObject()
 			);
 
-		$flexform->setVersionAssetService($this->versionAssetService);
+		$flexform->setLibraryService($this->libraryService);
 
 		$this->view->assign('flexform', $flexform);
 	}

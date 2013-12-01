@@ -5,7 +5,7 @@ plugin.tx_beautyofcode {
 
 		showLabel = {$plugin.tx_beautyofcode.showLabel}
 
-		deactivateAssetService = {$plugin.tx_beautyofcode.deactivateAssetService}
+		deactivateLibraryService = {$plugin.tx_beautyofcode.deactivateLibraryService}
 
 		common {
 			theme = {$plugin.tx_beautyofcode.common.theme}

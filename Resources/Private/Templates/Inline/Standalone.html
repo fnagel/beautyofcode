@@ -51,7 +51,7 @@
 
 	<f:section name="Syntaxhighlighter">
 		SyntaxHighlighter.autoloader(
-			<f:render section="Brushes" arguments="{ filePathBase: filePathBase, filePathScripts: filePathScripts, brushes: brushes }" />
+			<f:render section="Brushes" arguments="{ filePathScripts: filePathScripts, brushes: brushes }" />
 		);
 
 		<f:if condition="{settings.config.strings}">
@@ -66,9 +66,9 @@
 	</f:section>
 
 	<f:section name="Brushes">
-			'plain	{filePathBase}{filePathScripts}shBrushPlain.js'
+			'plain	{filePathScripts}shBrushPlain.js'
 		<f:for each="{brushes}" key="cssTag" as="brush">
-			,'{cssTag}	{filePathBase}{filePathScripts}shBrush{brush}.js'
+			,'{cssTag}	{filePathScripts}shBrush{brush}.js'
 		</f:for>
 	</f:section>
 

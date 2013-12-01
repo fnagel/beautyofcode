@@ -122,8 +122,7 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 		$this->addInlineJavascript(array(
 			'brushes' => $this->brushes,
-			'filePathBase' => $this->filePathBase,
-			'filePathScripts' => $this->filePathScripts,
+			'filePathScripts' => $this->filePathBase . $this->filePathScripts,
 		));
 	}
 

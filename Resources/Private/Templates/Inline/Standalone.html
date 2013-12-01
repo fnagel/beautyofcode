@@ -51,7 +51,9 @@
 
 	<f:section name="Syntaxhighlighter">
 		SyntaxHighlighter.autoloader(
-			<f:render section="Brushes" arguments="{ brushes: brushes }" />
+		<f:for each="{brushes}" key="cssTag" as="brushPath" iteration="i">
+			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag}	{brushPath}'
+		</f:for>
 		);
 
 		<f:if condition="{settings.config.strings}">
@@ -63,12 +65,6 @@
 		</f:if>
 
 		SyntaxHighlighter.all();
-	</f:section>
-
-	<f:section name="Brushes">
-		<f:for each="{brushes}" key="cssTag" as="brushPath" iteration="i">
-			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag}	{brushPath}'
-		</f:for>
 	</f:section>
 
 	<f:comment>

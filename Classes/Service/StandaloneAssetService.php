@@ -118,11 +118,10 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 
 		$this->addStylesheets();
 
-		$this->loadBrushes();
+		$this->prepareBrushesForAutoloader();
 
 		$this->addInlineJavascript(array(
 			'brushes' => $this->brushes,
-			'filePathScripts' => $this->filePathBase . $this->filePathScripts,
 		));
 	}
 
@@ -201,18 +200,23 @@ class StandaloneAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersion
 	}
 
 	/**
-	 * Iterates over configured brushes and looks up the matching css tag
+	 * Prepares the configured brushes for the autoloader call.
 	 *
 	 * @return void
 	 */
-	protected function loadBrushes() {
+	protected function prepareBrushesForAutoloader() {
 		$brushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
 			',',
 			$this->configuration['brushes']
 		);
 
+		$this->brushes['plain'] = $this->filePathBase . $this->filePathScripts . 'shBrushPlain.js';
+
 		foreach ($brushes as $brush) {
-			$this->brushes[$this->brushCssClassMap[$brush]] = $brush;
+			$cssTag = $this->brushCssClassMap[$brush];
+			$brushPath = $this->filePathBase . $this->filePathScripts . $brush;
+
+			$this->brushes[$cssTag] = $brushPath;
 		}
 	}
 

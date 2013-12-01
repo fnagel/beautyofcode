@@ -37,7 +37,7 @@ interface VersionAssetServiceInterface {
 	/**
 	 * Sets the configuration manager from the controller
 	 *
-	 * This is necessary, as the flud standalone view otherwise creates its own
+	 * This is necessary, as the fluid standalone view otherwise creates its own
 	 * ContentObjectRenderer instance. It seems there is a race conditon and the
 	 * content object within the controller gets the instance from the service
 	 * and returns an empty `data` array and no flexform values.

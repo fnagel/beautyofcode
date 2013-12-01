@@ -68,7 +68,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function initializeAction() {
 		$this->libraryService->setConfigurationManager($this->configurationManager);
-		$this->libraryService->configure($this->settings['version']);
+		$this->libraryService->configure($this->settings['library']);
 
 		if (FALSE === (boolean) $this->settings['deactivateLibraryService']) {
 			$this->libraryService->load();

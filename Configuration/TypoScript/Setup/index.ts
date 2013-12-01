@@ -1,7 +1,7 @@
 plugin.tx_beautyofcode {
 	settings {
 		# jquery or standalone
-		version = {$plugin.tx_beautyofcode.version}
+		library = {$plugin.tx_beautyofcode.library}
 
 		showLabel = {$plugin.tx_beautyofcode.showLabel}
 

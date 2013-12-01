@@ -1,8 +1,8 @@
 plugin.tx_beautyofcode {
 
 	// -- ENABLE FEATURES
-	# cat=beautyofcode/enable/1; type=options [standalone=standalone,jquery=jquery]; label=Coose which version to use: jQuery (SyntaxHighlighter v2) or standalone (SyntaxHighlighter v3)
-	version = standalone
+	# cat=beautyofcode/enable/1; type=options [standalone=standalone,jquery=jquery]; label=Choose which library to use: jQuery (SyntaxHighlighter v2) or standalone (SyntaxHighlighter v3)
+	library = standalone
 
 		# cat=beautyofcode/file/020; type=boolean; label=Template - Show label: If set to false the label atg within the template is hidden.
 	showLabel = 1
@@ -20,7 +20,7 @@ plugin.tx_beautyofcode {
 		# cat=beautyofcode//4; type=int+; label=Size of tabulator: Tabulator chars will be changed to spaces. Default is 4 (spaces).
 	common.defaults.tab-size = 4
 
-		# cat=beautyofcode//5; type=boolean; label=Toolbar: Show toolbar when mouseover (with following functions: code in pop-up, copy to cliboard via swf, print, info; Only available in jQuery version aka SyntaxHighlighter v2).
+		# cat=beautyofcode//5; type=boolean; label=Toolbar: Show toolbar when mouseover (with following functions: code in pop-up, copy to cliboard via swf, print, info; Only available in jQuery library aka SyntaxHighlighter v2).
 	common.defaults.toolbar = 1
 
 		# cat=beautyofcode//6; type=boolean; label=Gutter: Show or hide gutter. Helps user to recognize correct line with numbers.
@@ -29,10 +29,10 @@ plugin.tx_beautyofcode {
 		# cat=beautyofcode//7; type=boolean; label=Collapse: Allows you to force highlighted elements on the page to be collapsed. A link "show source" is displayed instead (not customizable yet).
 	common.defaults.collapse = 0
 
-		# cat=beautyofcode//8; type=boolean; label=Wrap lines: Allows you to turn line wrapping feature on and off. Recomended to to be enabled. Only available in jQuery version aka SyntaxHighlighter v2.
+		# cat=beautyofcode//8; type=boolean; label=Wrap lines: Allows you to turn line wrapping feature on and off. Recomended to to be enabled. Only available in jQuery library aka SyntaxHighlighter v2.
 	common.defaults.wrap-lines = 1
 
-	// -- VERSION DEPENDENT SETTINGS
+	// -- LIBRARY DEPENDENT SETTINGS
 		# cat=beautyofcode/file/040; type=string; label=jQuery - Base URL: Enter path to the res directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/). Leave empty to use online repository.
 	jquery.baseUrl = EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v2/
 		# cat=beautyofcode/file/041; type=string; label=jQuery - Relative path to scripts: Enter relative path to baseUrl. Leave empty or default when using online repository.
@@ -52,7 +52,7 @@ plugin.tx_beautyofcode {
 	standalone.scripts = scripts/
 		# cat=beautyofcode/file/052; type=string; label=Standalone - Relative path to styles: Enter relative path to baseUrl. Leave empty or default when using online repository.
 	standalone.styles = styles/
-		# cat=beautyofcode/file/053; type=options [standalone=standalone,jquery=jquery]; label=Standalone - Use JS dom ready event: If using standalone version it's possible to add a JS domReady instaed of injecting the code at the bottom of the body. Usefull when using minifaction scripts.
+		# cat=beautyofcode/file/053; type=options [standalone=standalone,jquery=jquery]; label=Standalone - Use JS dom ready event: If using standalone library it's possible to add a JS domReady instaed of injecting the code at the bottom of the body. Usefull when using minifaction scripts.
 	standalone.includeAsDomReady = false
 		# cat=beautyofcode/file/054; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
 	standalone.onReadyCallback = (document).ready(function () {

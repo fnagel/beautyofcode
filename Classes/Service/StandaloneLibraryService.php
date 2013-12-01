@@ -163,7 +163,7 @@ class StandaloneLibraryService extends \TYPO3\Beautyofcode\Service\AbstractLibra
 				'beautyofcode_JS_' . $jsLibraryKey,
 				$this->filePathBase . $this->filePathScripts . $jsLibrary,
 				'text/javascript',
-				TRUE,
+				$this->excludeAssetFromConcatenation,
 				FALSE,
 				'',
 				$this->excludeAssetFromConcatenation

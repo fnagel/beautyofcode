@@ -62,30 +62,24 @@ class JqueryAssetService extends \TYPO3\Beautyofcode\Service\AbstractVersionAsse
 		$addJquery = (boolean) $this->configuration['addjQuery'];
 		$addJqueryFromT3Jquery = T3JQUERY === TRUE;
 
+		$jsLibraries = array();
+
 		if ($addJquery && $addJqueryFromT3Jquery) {
 			\tx_t3jquery::addJqJS();
-		}
-		if ($addJquery && !$addJqueryFromT3Jquery) {
-			$this->pageRenderer->addJsFooterLibrary(
-				'beautyofcode_jquery',
-				$this
-					->typoscriptFrontendController
-					->tmpl
-					->getFileName(
-						'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js'
-					)
-			);
+		} else if ($addJquery) {
+			$libraries['jquery'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js';
 		}
 
-		$this->pageRenderer->addJsFooterLibrary(
-			'beautyofcode_boc',
-			$this
-				->typoscriptFrontendController
-				->tmpl
-				->getFileName(
-					'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js'
-				)
-		);
+		$jsLibraries['boc'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js';
+
+		foreach ($jsLibraries as $jsLibraryKey => $jsLibrary) {
+			$this->pageRenderer->addJsFooterLibrary(
+				'beautyofcode_' . $jsLibraryKey,
+				$this->typoscriptFrontendController
+					->tmpl
+					->getFileName($jsLibrary)
+			);
+		}
 	}
 
 	/**

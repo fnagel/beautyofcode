@@ -46,7 +46,7 @@ class GeneralUtility {
 
 		if ($isExtensionNotation) {
 			$absolutePath = self::getAbsolutePathFromExtensionNotation($dir);
-		} elseif ($isFileNotation) {
+		} else if ($isFileNotation) {
 			$absolutePath = substr($dir, 5);
 		} else {
 			$absolutePath = $dir;

@@ -108,5 +108,17 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 		$this->assertEquals($invalidPath, $path);
 	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function passingFileNotationWithExternalUrlWillReturnAnEmptyString() {
+		$invalidExternalPath = 'FILE:http://example.org/test.js';
+
+		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidExternalPath);
+
+		$this->assertEquals('', $path);
+	}
 }
 ?>

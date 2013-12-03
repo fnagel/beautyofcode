@@ -41,14 +41,10 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		if (FALSE === defined('PATH_site')) {
 			define('PATH_site', '/home/foo/');
 		}
-	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
-		define('REQUIRED_EXTENSIONS', 'foo,bar');
+		if (FALSE === defined('REQUIRED_EXTENSIONS')) {
+			define('REQUIRED_EXTENSIONS', 'foo,bar');
+		}
 
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extListArray'] = array('beautyofcode');
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['requiredExt'] = array('foo', 'bar');
@@ -56,7 +52,13 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$GLOBALS['TYPO3_LOADED_EXT']['beautyofcode'] = array(
 			'siteRelPath' => 'typo3conf/ext/beautyofcode/'
 		);
+	}
 
+	/**
+	 *
+	 * @test
+	 */
+	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('EXT:beautyofcode/ext_emconf.php');
 
 		$this->assertStringStartsWith('typo3conf/', $path);
@@ -83,6 +85,16 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($externalPath);
 
 		$this->assertEquals($externalPath, $path);
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile() {
+		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
+
+		$this->assertStringStartsWith('typo3conf/', $path);
 	}
 }
 ?>

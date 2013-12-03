@@ -77,7 +77,7 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 *
 	 * @test
 	 */
-	public function insertingAnExternalUrlWillReturnItUntouched() {
+	public function passingInAnExternalUrlWillReturnItUntouched() {
 		$externalPath = 'http://www.example.org/test.js';
 
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($externalPath);

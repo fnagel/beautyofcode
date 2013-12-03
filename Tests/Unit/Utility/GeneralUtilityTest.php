@@ -96,5 +96,17 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 		$this->assertStringStartsWith('typo3conf/', $path);
 	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function passingInACompletelyInvalidPathLeavesItUntouched() {
+		$invalidPath = 'foo://bar.jpeg';
+
+		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidPath);
+
+		$this->assertEquals($invalidPath, $path);
+	}
 }
 ?>

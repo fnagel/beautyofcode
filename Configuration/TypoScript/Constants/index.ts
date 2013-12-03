@@ -1,7 +1,7 @@
 plugin.tx_beautyofcode {
 
 	// -- ENABLE FEATURES
-	# cat=beautyofcode/enable/1; type=options [standalone=standalone,jquery=jquery]; label=Choose which library to use: jQuery (SyntaxHighlighter v2) or standalone (SyntaxHighlighter v3)
+		# cat=beautyofcode/enable/1; type=options [standalone=standalone,jquery=jquery]; label=Choose which library to use: jQuery (SyntaxHighlighter v2) or standalone (SyntaxHighlighter v3)
 	library = standalone
 
 		# cat=beautyofcode/file/020; type=boolean; label=Template - Show label: If set to false the label atg within the template is hidden.

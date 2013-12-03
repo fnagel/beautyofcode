@@ -33,7 +33,11 @@ namespace TYPO3\Beautyofcode\Utility;
 class GeneralUtility {
 
 	/**
-	 * Function which resolves a path prefixed with FILE: and EXT:
+	 * Resolves a path prefixed with FILE: and EXT:
+	 *
+	 * If the path can successfully be resolved to an internal (relative to PATH_site)
+	 * path, the PATH_site part is removed and the resulting path is returned.
+	 * If its an external path, the input parameter is returned unchanged.
 	 *
 	 * @param string path to directory
 	 * @return string
@@ -44,11 +48,11 @@ class GeneralUtility {
 		$isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
 		$isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
 
-		if ($isExtensionNotation) {
-			$absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, TRUE, FALSE);
-			$absolutePath = substr($absolutePath, strlen(PATH_site));
-		} else if ($isFileNotation) {
+		if ($isFileNotation) {
 			$dir = substr($dir, 5);
+		}
+
+		if ($isExtensionNotation || $isFileNotation) {
 			$absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, TRUE, FALSE);
 			$absolutePath = substr($absolutePath, strlen(PATH_site));
 		} else if (FALSE !== parse_url($dir)) {

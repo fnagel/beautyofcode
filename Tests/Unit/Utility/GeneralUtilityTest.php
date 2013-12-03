@@ -37,13 +37,18 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
 
+	public function setUp() {
+		if (FALSE === defined('PATH_site')) {
+			define('PATH_site', '/home/foo/');
+		}
+	}
+
 	/**
 	 *
 	 * @test
 	 */
 	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
 		define('REQUIRED_EXTENSIONS', 'foo,bar');
-		define('PATH_site', '/home/foo/');
 
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extListArray'] = array('beautyofcode');
 		$GLOBALS['TYPO3_CONF_VARS']['EXT']['requiredExt'] = array('foo', 'bar');
@@ -62,6 +67,7 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function prefixingWithFileReturnsPathSiteAbsolutePathToFile() {
+		define('TYPO3_OS', !stristr(PHP_OS, 'darwin') && stristr(PHP_OS, 'win') ? 'WIN' : '');
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:fileadmin/test.js');
 
 		$this->assertStringStartsWith('fileadmin/', $path);

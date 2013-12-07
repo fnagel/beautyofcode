@@ -1,0 +1,1 @@
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:beautyofcode/Configuration/TypoScript/Constants/Standalone/index.ts">

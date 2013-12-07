@@ -5,8 +5,14 @@ if (!defined ('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
-	'Configuration/TypoScript/Static/',
-	'beautyOfCode Syntax Highlighter'
+	'Configuration/TypoScript/Static/Jquery/',
+	'beautyOfCode Syntax Highlighter (v2)'
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+	$_EXTKEY,
+	'Configuration/TypoScript/Static/Standalone/',
+	'beautyOfCode Syntax Highlighter (v3)'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(

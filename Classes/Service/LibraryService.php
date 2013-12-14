@@ -74,7 +74,7 @@ class LibraryService implements \TYPO3\Beautyofcode\Service\LibraryServiceInterf
 	 * @see \TYPO3\Beautyofcode\Service\LibraryServiceInterface::configure()
 	 */
 	public function configure($library) {
-		$this->concreteLibraryService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . ucfirst($library) . 'LibraryService');
+		$this->concreteLibraryService = $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\' . $library . 'LibraryService');
 
 		$this->concreteLibraryService->setConfigurationManager($this->configurationManager);
 

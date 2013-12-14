@@ -2,7 +2,7 @@
 
 <f:section name="Main">
 	<div class="tx_beautyofcode_pi1">
-		<f:render section="Container_{settings.version}" arguments="{ flexform: flexform }" />
+		<f:render section="Container{settings.library}" arguments="{ flexform: flexform }" />
 		<f:if condition="{settings.showLabel} && {flexform.CLabel}">
 			<em>{flexform.CLabel}</em>
 		</f:if>
@@ -14,13 +14,13 @@
 	within the generated output.
 </f:comment>
 
-<f:section name="Container_jquery">
+<f:section name="ContainerJquery">
 	<pre class="code">
 		<code class="{flexform.language}{flexform.classAttributeConfiguration}">
 <f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
 </f:section>
 
-<f:section name="Container_standalone">
+<f:section name="ContainerStandalone">
 	<pre class="brush: {flexform.language}{flexform.classAttributeConfiguration}">
 <f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></pre>
 </f:section>

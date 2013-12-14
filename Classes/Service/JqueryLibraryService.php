@@ -35,44 +35,10 @@ namespace TYPO3\Beautyofcode\Service;
 class JqueryLibraryService extends \TYPO3\Beautyofcode\Service\AbstractLibraryService {
 
 	/**
-	 *
-	 * @var string
-	 */
-	protected $templatePathAndFilename = 'typo3conf/ext/beautyofcode/Resources/Private/Templates/Inline/Jquery.html';
-
-	/**
 	 * (non-PHPdoc)
 	 * @see \TYPO3\Beautyofcode\Service\AbstractLibraryService::load()
 	 */
 	public function load() {
-		$this->addJavascriptLibraries();
-
-		$this->addInlineJavascript();
-	}
-
-	/**
-	 *
-	 * @return void
-	 */
-	protected function addJavascriptLibraries() {
-		$addJquery = (boolean) $this->configuration['addjQuery'];
-
-		$jsLibraries = array();
-
-		if ($addJquery) {
-			$jsLibraries['jquery'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js';
-		}
-
-		$jsLibraries['boc'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery.beautyOfCode.js';
-
-		foreach ($jsLibraries as $jsLibraryKey => $jsLibrary) {
-			$this->pageRenderer->addJsFooterLibrary(
-				'beautyofcode_' . $jsLibraryKey,
-				$this->typoscriptFrontendController
-					->tmpl
-					->getFileName($jsLibrary)
-			);
-		}
 	}
 
 	/**

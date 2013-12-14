@@ -27,10 +27,6 @@ namespace TYPO3\Beautyofcode\Service;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
-	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery') . 'class.tx_t3jquery.php');
-}
-
 /**
  * Service which adds and generates all necessary assets for the jquery library (v2)
  *
@@ -60,13 +56,10 @@ class JqueryLibraryService extends \TYPO3\Beautyofcode\Service\AbstractLibrarySe
 	 */
 	protected function addJavascriptLibraries() {
 		$addJquery = (boolean) $this->configuration['addjQuery'];
-		$addJqueryFromT3Jquery = T3JQUERY === TRUE;
 
 		$jsLibraries = array();
 
-		if ($addJquery && $addJqueryFromT3Jquery) {
-			\tx_t3jquery::addJqJS();
-		} else if ($addJquery) {
+		if ($addJquery) {
 			$jsLibraries['jquery'] = 'EXT:beautyofcode/Resources/Public/Javascript/vendor/jquery/jquery-1.3.2.min.js';
 		}
 

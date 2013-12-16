@@ -37,7 +37,9 @@ class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelpe
 
 	/**
 	 *
-	 * @param string $name The block name
+	 * @param string $name
+	 * @param string $compress
+	 * @param string $forceOnTop
 	 * @return NULL
 	 */
 	public function render($name, $compress = TRUE, $forceOnTop = FALSE) {

@@ -43,7 +43,7 @@ class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelpe
 	public function render($name, $compress = TRUE, $forceOnTop = FALSE) {
 		$block = $this->renderChildren();
 
-		$this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop)
+		$this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop);
 
 		return NULL;
 	}

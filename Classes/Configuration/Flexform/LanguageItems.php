@@ -207,7 +207,7 @@ class LanguageItems {
 		// Generate TS config
 		$this->templateService->generateConfig();
 
-		return $this->templateService->setup['plugin.']['tx_beautyofcode.']['settings.']['common.'];
+		return $this->templateService->setup['plugin.']['tx_beautyofcode.']['settings.'];
 	}
 }
 ?>

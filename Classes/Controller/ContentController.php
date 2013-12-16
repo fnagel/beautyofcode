@@ -36,23 +36,27 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\LibraryInterface
-	 */
-	protected $libraryService;
-
-	/**
-	 *
 	 * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
 	 */
 	protected $flexformRepository;
 
 	/**
 	 *
-	 * @param \TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService
+	 * @var string
 	 */
-	public function injectVersionAssetService(\TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
-		$this->libraryService = $libraryService;
-	}
+	protected $filePathBase = 'http://alexgorbatchev.com/';
+
+	/**
+	 *
+	 * @var string
+	 */
+	protected $filePathScripts = 'pub/sh/current/scripts/';
+
+	/**
+	 *
+	 * @var string
+	 */
+	protected $filePathStyles = 'pub/sh/current/styles/';
 
 	/**
 	 *
@@ -67,12 +71,31 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
 	 */
 	public function initializeAction() {
-		$this->libraryService->setConfigurationManager($this->configurationManager);
-		$this->libraryService->configure($this->settings['library']);
-
-		if (FALSE === (boolean) $this->settings['deactivateLibraryService']) {
-			$this->libraryService->load();
+		if ('Standalone' === $this->settings['library']) {
+			$this->setDefaultFileResourcePaths();
 		}
+	}
+
+	protected function setDefaultFileResourcePaths() {
+		$isBaseUrlSet = trim($this->settings['baseUrl']) !== '';
+		$isStylePathSet = trim($this->settings['styles']) !== '';
+		$isScriptPathSet = trim($this->settings['scripts']) !== '';
+
+		$overridePaths = $isBaseUrlSet && $isStylePathSet && $isScriptPathSet;
+
+		if ($overridePaths) {
+			$this->settings['baseUrl'] = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath(
+				$this->settings['baseUrl']
+			);
+			$this->settings['scripts'] = trim($this->settings['scripts']);
+			$this->settings['styles'] = trim($this->settings['styles']);
+		} else {
+			$this->settings['baseUrl'] = $this->filePathBase;
+			$this->settings['scripts'] = $this->filePathScripts;
+			$this->settings['styles'] = $this->filePathStyles;
+		}
+
+// 		$this->excludeAssetFromConcatenation = !\TYPO3\CMS\Core\Utility\GeneralUtility::isOnCurrentHost($this->filePathBase);
 	}
 
 	/**
@@ -85,8 +108,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			->reconstituteByContentObject(
 				$this->configurationManager->getContentObject()
 			);
-
-		$flexform->setLibraryService($this->libraryService);
+		$flexform->setBrushes($this->settings['brushes']);
 
 		$this->view->assign('flexform', $flexform);
 	}

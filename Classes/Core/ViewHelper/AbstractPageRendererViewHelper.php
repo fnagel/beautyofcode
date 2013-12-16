@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
+namespace TYPO3\Beautyofcode\Core\ViewHelper;
 
 /***************************************************************
  * Copyright notice
@@ -26,26 +26,27 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  ***************************************************************/
 
 /**
- * Adds javascript inline code to the page footer
+ * Abstract page renderer based view helper
  *
- * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
+ * @package \TYPO3\Beautyofcode\Core\ViewHelper
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
+abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
-	 * @param string $name The block name
-	 * @return NULL
+	 * @var \TYPO3\CMS\Core\Page\PageRenderer
 	 */
-	public function render($name, $compress = TRUE, $forceOnTop = FALSE) {
-		$block = $this->renderChildren();
+	protected $pageRenderer;
 
-		$this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop)
-
-		return NULL;
+	/**
+	 *
+	 * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer
+	 */
+	public function injectPageRenderer(\TYPO3\CMS\Core\Page\PageRenderer $pageRenderer) {
+		$this->pageRenderer = $pageRenderer;
 	}
 }
 ?>

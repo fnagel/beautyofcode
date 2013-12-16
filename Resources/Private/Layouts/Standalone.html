@@ -1,0 +1,18 @@
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
+<f:layout name="Standalone" />
+
+<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: settings.baseUrl)}{settings.styles}shCore.css" />
+<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: settings.baseUrl)}{settings.styles}shCoreDefault.css" />
+
+<f:if condition="{settings.theme}">
+	<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: settings.baseUrl)}{settings.styles}shTheme{settings.theme}.css" />
+</f:if>
+
+<f:render section="Main" />
+
+<boc:pageRenderer.addJsFooterLibrary name="boc_standalone_core" file="{boc:makeAbsolute(url: settings.baseUrl)}{settings.scripts}shCore.js" />
+<boc:pageRenderer.addJsFooterLibrary name="boc_standalone_autoloader" file="{boc:makeAbsolute(url: settings.baseUrl)}{settings.scripts}shAutoloader.js" />
+
+<boc:pageRenderer.addJsFooterInlineCode name="boc_inline">
+	<f:render partial="InlineJavascript/Standalone" section="Main" arguments="{ brushes: flexform.standaloneBrushesForAutoloader }" />
+</boc:pageRenderer.addJsFooterInlineCode>

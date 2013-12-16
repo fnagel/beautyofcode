@@ -78,15 +78,46 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	/**
 	 *
+	 * @var array
+	 */
+	protected $brushes = array();
+
+	/**
+	 *
 	 * @var string
 	 */
 	protected $languageFallback = 'plain';
 
 	/**
+	 * A map of $brush => $cssTag for the lazy loader of v3
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\VersionAssetServiceInterface
+	 * @var array
 	 */
-	protected $versionAssetService;
+	protected $standaloneBrushCssClassMap = array(
+		'AS3' => 'actionscript3',
+		'Bash' => 'bash',
+		'ColdFusion' => 'coldfusion',
+		'Cpp' => 'cpp',
+		'CSharp' => 'csharp',
+		'Css' => 'css',
+		'Delphi' => 'delphi',
+		'Diff' => 'diff',
+		'Erlang' => 'erlang',
+		'Groovy' => 'groovy',
+		'Java' => 'java',
+		'JavaFX' => 'javafx',
+		'JScript' => 'javascript',
+		'Perl' => 'perl',
+		'Php' => 'php',
+		'PowerShell' => 'powershell',
+		'Python' => 'python',
+		'Ruby' => 'ruby',
+		'Scala' => 'scala',
+		'Sql' => 'sql',
+		'Typoscript' => 'typoscript',
+		'Vb' => 'vbnet',
+		'Xml' => 'xml',
+	);
 
 	public function setCLabel($cLabel) {
 		$this->cLabel = $cLabel;
@@ -144,39 +175,105 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		return $this->cToolbar;
 	}
 
+	public function setBrushes($brushes = array()) {
+		$this->brushes = $brushes;
+	}
+
 	public function getLanguage() {
 		return $this->cLang ? $this->cLang : $this->languageFallback;
 	}
 
 	/**
-	 *
-	 * @param \TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService
-	 */
-	public function setLibraryService(\TYPO3\Beautyofcode\Service\LibraryServiceInterface $libraryService) {
-		$this->libraryService = $libraryService;
-	}
-
-	/**
+	 * Returns the class attribute configuration for the jquery (v2) library
 	 *
 	 * @return string
 	 */
-	public function getClassAttributeConfiguration() {
-		$this->libraryService
-			->pushClassAttributeConfiguration(
-				'highlight',
-				\TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight)
-			);
+	public function getJqueryClassAttributeConfiguration() {
+		$configurationItems = array();
 
-		$this->libraryService
-			->pushClassAttributeConfiguration('gutter', $this->cGutter);
+		$classAttributeConfigurationStack = array(
+			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
+			'gutter' => $this->cGutter,
+			'toolbar' => $this->cToolbar,
+			'collapse' => $this->cCollapse,
+		);
 
-		$this->libraryService
-			->pushClassAttributeConfiguration('toolbar', $this->cToolbar);
+		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
+				continue;
+			}
 
-		$this->libraryService
-			->pushClassAttributeConfiguration('collapse', $this->cCollapse);
+			if ($configurationKey === 'highlight') {
+				$key = $configurationKey;
+				$value = sprintf('[%s]', $configurationValue);
+			} else {
+				$key = $configurationValue ? '' : 'no-';
+				$value = $configurationKey;
+			}
 
-		return $this->versionAssetService->getClassAttributeConfiguration();
+			$configurationItems[] = sprintf('boc-%s%s', $key, $value);
+		}
+
+		return implode(' ', $configurationItems);
+	}
+
+	/**
+	 * Returns the class attribute configuration for the standalone (v2) library
+	 *
+	 * @return string
+	 */
+	public function getStandaloneClassAttributeConfiguration() {
+		$configurationItems = array();
+
+		$classAttributeConfigurationStack = array(
+			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
+			'gutter' => $this->cGutter,
+			// no toolbar
+			'collapse' => $this->cCollapse,
+		);
+
+		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
+				continue;
+			}
+
+			if ($configurationKey === 'highlight') {
+				$key = $configurationKey;
+				$value = sprintf('[%s]', $configurationValue);
+			} else {
+				$key = $configurationKey;
+				$value = var_export((boolean) $configurationValue, TRUE);
+			}
+
+			$configurationItems[] = sprintf('%s: %s', $key, $value);
+		}
+
+		return '; ' . implode('; ', $configurationItems);
+	}
+
+	/**
+	 * Returns an array of brush CSS name + ressource file name
+	 *
+	 * @return array
+	 */
+	public function getStandaloneBrushesForAutoloader() {
+		$brushes = array();
+
+		$configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
+			',',
+			$this->brushes
+		);
+
+		$brushes['plain'] = 'shBrushPlain.js';
+
+		foreach ($configuredBrushes as $brush) {
+			$cssTag = $this->standaloneBrushCssClassMap[$brush];
+			$brushPath = 'shBrush' . $brush . '.js';
+
+			$brushes[$cssTag] = $brushPath;
+		}
+
+		return $brushes;
 	}
 }
 ?>

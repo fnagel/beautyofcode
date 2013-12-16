@@ -26,47 +26,33 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  ***************************************************************/
 
 /**
- * Adds javascript libraries to the page footer
+ * Adds a css file resources to the page
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
+class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected $typoscriptFrontendController;
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-	 */
-	public function initialize() {
-		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
-	}
-
-	/**
-	 *
-	 * @param string $name
 	 * @param string $file
-	 * @param string $type
+	 * @param string $rel
+	 * @param string $media
+	 * @param string $title
 	 * @param string $compress
 	 * @param string $forceOnTop
 	 * @param string $allWrap
 	 * @param string $excludeFromConcatenation
 	 * @return NULL
 	 */
-	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
-		$this->pageRenderer->addJsFooterLibrary(
-			$name,
-			$this->typoscriptFrontendController
-				->tmpl
-				->getFileName($file),
-			$type,
+	public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
+		$this->pageRenderer->addCssFile(
+			$file,
+			$rel,
+			$media,
+			$title,
 			$compress,
 			$forceOnTop,
 			$allWrap,

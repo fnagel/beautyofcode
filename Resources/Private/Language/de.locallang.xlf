@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2011-08-25T17:54:43Z" product-name="beautyofcode">
+		<header />
+		<body>
+			<trans-unit id="config.strings.expandSource" approved="yes" xml:space="preserve">
+				<source>show source</source>
+				<target>aufklappen</target>
+			</trans-unit>
+			<trans-unit id="config.strings.viewSource" approved="yes" xml:space="preserve">
+				<source>view source</source>
+				<target>Quelltext im Rohformat anzeigen</target>
+			</trans-unit>
+			<trans-unit id="config.strings.copyToClipboard" approved="yes" xml:space="preserve">
+				<source>copy to clipboard</source>
+				<target>In die Zwischenablage kopieren</target>
+			</trans-unit>
+			<trans-unit id="config.strings.copyToClipboardConfirmation" approved="yes" xml:space="preserve">
+				<source>The code is in your clipboard now</source>
+				<target>Der Quelltext ist nun in der Zwischenablage</target>
+			</trans-unit>
+			<trans-unit id="config.strings.print" approved="yes" xml:space="preserve">
+				<source>print</source>
+				<target>drucken</target>
+			</trans-unit>
+			<trans-unit id="config.strings.help" approved="yes" xml:space="preserve">
+				<source>?</source>
+				<target>?</target>
+			</trans-unit>
+			<trans-unit id="config.strings.alert" approved="yes" xml:space="preserve">
+				<source>SyntaxHighlighter\n\n</source>
+				<target>SyntaxHighlighter\n\n</target>
+			</trans-unit>
+			<trans-unit id="config.strings.noBrush" approved="yes" xml:space="preserve">
+				<source>Can\'t find brush for: </source>
+				<target>Brush wurde nicht gefunden: </target>
+			</trans-unit>
+			<trans-unit id="config.strings.brushNotHtmlScript" approved="yes" xml:space="preserve">
+				<source>Brush wasn\'t configured for html-script option: </source>
+				<target>Brush war nicht für HTML-Script option konfiguriert: </target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

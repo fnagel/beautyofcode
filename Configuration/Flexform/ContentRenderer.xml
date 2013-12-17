@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+<T3DataStructure>
+	<sheets>
+		<sDEF>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<cLabel>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
+							<config>
+								<type>input</type>
+								<size>50</size>
+								<max>200</max>
+								<eval>trim</eval>
+							</config>
+						</TCEforms>
+					</cLabel>
+					<cLang>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
+							<config>
+								<type>select</type>
+								<items>
+									<numIndex index="0">
+										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
+										<numIndex index="1">plain</numIndex>
+									</numIndex>
+								</items>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
+							</config>
+						</TCEforms>
+					</cLang>
+					<cCode>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code</label>
+							<config type="array">
+								<type>text</type>
+								<rows>20</rows>
+								<cols>48</cols>
+								<wizards type="array">
+									<t3editor type="array">
+										<type>userFunc</type>
+										<userFunc>EXT:beautyofcode/Classes/Configuration/Flexform/T3EditorWizard.php:TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
+									</t3editor>
+								</wizards>
+								<noTableWrapping>0</noTableWrapping>
+							</config>
+						</TCEforms>
+					</cCode>
+				</el>
+			</ROOT>
+		</sDEF>
+		<sOPTIONS>
+			<ROOT>
+				<TCEforms>
+					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel.options</sheetTitle>
+				</TCEforms>
+				<type>array</type>
+				<el>
+					<cHighlight>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
+							<config>
+								<type>input</type>
+								<size>50</size>
+								<max>100</max>
+								<eval>trim</eval>
+							</config>
+						</TCEforms>
+					</cHighlight>
+					<cCollapse>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
+							<config>
+								<type>select</type>
+									<items>
+										<numIndex index="0">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
+											<numIndex index="1">auto</numIndex>
+										</numIndex>
+										<numIndex index="1">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
+											<numIndex index="1">1</numIndex>
+										</numIndex>
+										<numIndex index="2">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
+											<numIndex index="1">0</numIndex>
+										</numIndex>
+									</items>
+							</config>
+						</TCEforms>
+					</cCollapse>
+					<cGutter>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
+							<config>
+								<type>select</type>
+									<items>
+										<numIndex index="0">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
+											<numIndex index="1">auto</numIndex>
+										</numIndex>
+										<numIndex index="1">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
+											<numIndex index="1">1</numIndex>
+										</numIndex>
+										<numIndex index="2">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
+											<numIndex index="1">0</numIndex>
+										</numIndex>
+									</items>
+							</config>
+						</TCEforms>
+					</cGutter>
+					<cToolbar>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:toolbar</label>
+							<config>
+								<type>select</type>
+									<items>
+										<numIndex index="0">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
+											<numIndex index="1">auto</numIndex>
+										</numIndex>
+										<numIndex index="1">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
+											<numIndex index="1">1</numIndex>
+										</numIndex>
+										<numIndex index="2">
+											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
+											<numIndex index="1">0</numIndex>
+										</numIndex>
+									</items>
+							</config>
+						</TCEforms>
+					</cToolbar>
+				</el>
+			</ROOT>
+		</sOPTIONS>
+	</sheets>
+</T3DataStructure>

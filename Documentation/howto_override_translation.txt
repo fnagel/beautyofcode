@@ -1,0 +1,3 @@
+@see
+
+http://xavier.perseguers.ch/tutoriels/typo3/articles/managing-localization-files.html

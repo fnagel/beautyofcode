@@ -1,0 +1,75 @@
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
+
+<f:section name="Main">
+	<f:if condition="{settings.includeAsDomReady} == 'jquery'">
+		<f:then>
+			<f:render section="JqueryOnReady" arguments="{_all}" />
+		</f:then>
+		<f:else>
+			<f:render section="StandaloneOnReady" arguments="{_all}" />
+		</f:else>
+	</f:if>
+</f:section>
+
+<script type="text/javascript">
+	<f:section name="JqueryOnReady">
+		;(function ($) {
+			${settings.onReadyCallback}
+				<f:render section="Syntaxhighlighter" arguments="{_all}" />
+			});
+		})(jQuery);
+	</f:section>
+
+	<f:section name="StandaloneOnReady">
+		<![CDATA[
+			window.onDomReady = initReady;
+
+			function initReady(fn) {
+				if (document.addEventListener) {
+					document.addEventListener('DOMContentLoaded', fn, false);
+				} else {
+					document.onreadystatechange = function () { readyState(fn) };
+				}
+			}
+
+			function readyState(func) {
+				if (document.readyState == 'interactive' || document.readyState == 'complete') {
+					func();
+				}
+			}
+
+			window.onDomReady(onReady);
+		]]>
+
+		function onReady() {
+			<f:render section="Syntaxhighlighter" arguments="{_all}" />
+		}
+	</f:section>
+
+
+	<f:section name="Syntaxhighlighter">
+		SyntaxHighlighter.autoloader(
+		<f:for each="{brushes}" key="cssTag" as="brushResource" iteration="i">
+			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag}	{boc:makeAbsolute(url: settings.baseUrl)}{settings.scripts}{brushResource}'
+		</f:for>
+		);
+
+		SyntaxHighlighter.config.strings.expandSource = '<f:translate id="config.strings.expandSource" default="show source" />';
+		SyntaxHighlighter.config.strings.help = '<f:translate id="config.strings.help" default="?" />';
+		SyntaxHighlighter.config.strings.alert = '<f:translate id="config.strings.alert" default="SyntaxHighlighter\n\n" />';
+		SyntaxHighlighter.config.strings.noBrush = '<f:translate id="config.strings.noBrush" default="Can\'t find brush for: " />';
+		SyntaxHighlighter.config.strings.brushNotHtmlScript = '<f:translate id="config.strings.brushNotHtmlScript" default="Brush wasn\'t configured for html-script option: " />';
+
+		<f:if condition="{settings.defaults}">
+			<f:render section="Defaults" arguments="{ defaults: settings.defaults }" />
+		</f:if>
+
+		SyntaxHighlighter.all();
+	</f:section>
+
+	<f:section name="Defaults">
+		<f:for each="{defaults}" key="key" as="value">
+			SyntaxHighlighter.defaults['{key}'] = {value};
+		</f:for>
+	</f:section>
+</script>

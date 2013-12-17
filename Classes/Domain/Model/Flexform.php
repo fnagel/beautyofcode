@@ -214,7 +214,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 			$configurationItems[] = sprintf('boc-%s%s', $key, $value);
 		}
 
-		return implode(' ', $configurationItems);
+		return ' ' . implode(' ', $configurationItems);
 	}
 
 	/**

@@ -15,6 +15,12 @@ if (!defined ('TYPO3_MODE')) {
 	'beautyOfCode Syntax Highlighter (v3)'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+	$_EXTKEY,
+	'Configuation/TypoScript/Static/Prism/',
+	'beautyofcode Syntax Highlighter (prism)'
+);
+
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
 	'TYPO3.' . $_EXTKEY,
 	'ContentRenderer',

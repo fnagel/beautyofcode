@@ -183,5 +183,58 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->assertArrayHasKey('typoscript', $brushes);
 		$this->assertArrayHasKey('actionscript3', $brushes);
 	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToZero() {
+		$this->sut->setCGutter('0');
+
+		$this->assertFalse($this->sut->getIsGutterActive());
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToOne() {
+		$this->sut->setCGutter('1');
+
+		$this->assertTrue($this->sut->getIsGutterActive());
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy() {
+		$this->sut->setCGutter('auto');
+		$this->sut->setTyposcriptDefaults(array('gutter' => ''));
+
+		$this->assertFalse($this->sut->getIsGutterActive());
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff() {
+		$this->sut->setCGutter('auto');
+		$this->sut->setTyposcriptDefaults(array('gutter' => '0'));
+
+		$this->assertFalse($this->sut->getIsGutterActive());
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn() {
+		$this->sut->setCGutter('auto');
+		$this->sut->setTyposcriptDefaults(array('gutter' => '1'));
+
+		$this->assertTrue($this->sut->getIsGutterActive());
+	}
 }
 ?>

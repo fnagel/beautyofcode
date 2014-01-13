@@ -174,7 +174,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		return $this->cGutter;
 	}
 
-	public function isGutterActive() {
+	public function getIsGutterActive() {
 		$isOffForInstance = '0' === $this->cGutter;
 		$isOnForInstance = '1' === $this->cGutter;
 		$useDefault = 'auto' === $this->cGutter;

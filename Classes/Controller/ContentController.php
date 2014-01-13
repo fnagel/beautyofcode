@@ -42,60 +42,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var string
-	 */
-	protected $filePathBase = 'http://alexgorbatchev.com/';
-
-	/**
-	 *
-	 * @var string
-	 */
-	protected $filePathScripts = 'pub/sh/current/scripts/';
-
-	/**
-	 *
-	 * @var string
-	 */
-	protected $filePathStyles = 'pub/sh/current/styles/';
-
-	/**
-	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
 	 */
 	public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository) {
 		$this->flexformRepository = $flexformRepository;
-	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\CMS\Extbase\Mvc\Controller\ActionController::initializeAction()
-	 */
-	public function initializeAction() {
-		if ('Standalone' === $this->settings['library']) {
-			$this->setDefaultFileResourcePaths();
-		}
-	}
-
-	protected function setDefaultFileResourcePaths() {
-		$isBaseUrlSet = trim($this->settings['baseUrl']) !== '';
-		$isStylePathSet = trim($this->settings['styles']) !== '';
-		$isScriptPathSet = trim($this->settings['scripts']) !== '';
-
-		$overridePaths = $isBaseUrlSet && $isStylePathSet && $isScriptPathSet;
-
-		if ($overridePaths) {
-			$this->settings['baseUrl'] = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath(
-				$this->settings['baseUrl']
-			);
-			$this->settings['scripts'] = trim($this->settings['scripts']);
-			$this->settings['styles'] = trim($this->settings['styles']);
-		} else {
-			$this->settings['baseUrl'] = $this->filePathBase;
-			$this->settings['scripts'] = $this->filePathScripts;
-			$this->settings['styles'] = $this->filePathStyles;
-		}
-
-// 		$this->excludeAssetFromConcatenation = !\TYPO3\CMS\Core\Utility\GeneralUtility::isOnCurrentHost($this->filePathBase);
 	}
 
 	/**

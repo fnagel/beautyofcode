@@ -252,6 +252,28 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
+	 * Returns the class attribute configuration string suitable for prism
+	 *
+	 * @return string
+	 */
+	public function getPrismClassAttributeConfiguration() {
+		$configurationItems = array();
+		$classAttributeConfigurationStack = array(
+			'data-line' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
+		);
+
+		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
+				continue;
+			}
+
+			$configurationItems[] = sprintf('%s="%s"', $configurationKey, $configurationValue);
+		}
+
+		return ' ' . implode(' ', $configurationItems);
+	}
+
+	/**
 	 * Returns an array of brush CSS name + ressource file name
 	 *
 	 * @return array

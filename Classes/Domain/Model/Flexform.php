@@ -83,6 +83,13 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	protected $brushes = array();
 
 	/**
+	 * Default settings from settings.defaults
+	 *
+	 * @var array
+	 */
+	protected $typoscriptDefaults = array();
+
+	/**
 	 *
 	 * @var string
 	 */
@@ -167,6 +174,23 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		return $this->cGutter;
 	}
 
+	public function isGutterActive() {
+		$isOffForInstance = '0' === $this->cGutter;
+		$isOnForInstance = '1' === $this->cGutter;
+		$useDefault = 'auto' === $this->cGutter;
+		$isDefaultSet = isset($this->typoscriptDefaults['gutter']);
+
+		if ($isOffForInstance) {
+			return FALSE;
+		} else if ($isOnForInstance) {
+			return TRUE;
+		} else if ($useDefault && $isDefaultSet) {
+			return (bool) $this->typoscriptDefaults['gutter'];
+		} else {
+			return FALSE;
+		}
+	}
+
 	public function setCToolbar($cToolbar) {
 		$this->cToolbar = $cToolbar;
 	}
@@ -177,6 +201,15 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	public function setBrushes($brushes = array()) {
 		$this->brushes = $brushes;
+	}
+
+	/**
+	 *
+	 * @param unknown $typoscriptDefaults
+	 * @return void
+	 */
+	public function setTyposcriptDefaults($typoscriptDefaults = array()) {
+		$this->typoscriptDefaults = $typoscriptDefaults;
 	}
 
 	public function getLanguage() {

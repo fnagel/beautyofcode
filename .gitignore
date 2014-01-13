@@ -163,4 +163,5 @@ pip-log.txt
 .DS_Store
 
 # composer
-vendor/
+vendor/**
+node_modules

@@ -34,6 +34,30 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
  */
 class SortedAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
+	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
+
+	public function setUp() {
+		if (FALSE === defined('PATH_site')) {
+			define('PATH_site', realpath(dirname(__FILE__) . '/../../../../../'));
+		}
+		if (FALSE === defined('REQUIRED_EXTENSIONS')) {
+			define('REQUIRED_EXTENSIONS', '');
+		}
+
+		$GLOBALS['TYPO3_CONF_VARS'] = array(
+			'EXT' => array(
+				'extListArray' => array('beautyofcode'),
+				'requiredExt' => array(),
+			),
+		);
+
+		$GLOBALS['TYPO3_LOADED_EXT'] = array(
+			'beautyofcode' => array(
+				'siteRelPath' => '/',
+			)
+		);
+	}
+
 	/**
 	 *
 	 * @test
@@ -53,10 +77,10 @@ class SortedAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			'plugin.' => array(
 				'tx_beautyofcode.' => array(
 					'settings.' => array(
-						'brushes' => 'Sql, Python, Php',
-					),
-				),
-			),
+						'library' => 'Jquery'
+					)
+				)
+			)
 		);
 
 		$configFromFlexform = array(
@@ -72,12 +96,12 @@ class SortedAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			),
 		);
 
-		$newConfig = $sut->getConfiguredLanguages($configFromFlexform);
+		$newConfig = $sut->getDiscovereBrushes($configFromFlexform);
 
 		$this->assertEquals('plain', $newConfig['items'][0][1]);
-		$this->assertEquals('php', $newConfig['items'][1][1]);
-		$this->assertEquals('python', $newConfig['items'][2][1]);
-		$this->assertEquals('sql', $newConfig['items'][3][1]);
+		$this->assertEquals('AS3', $newConfig['items'][1][1]);
+		$this->assertEquals('Bash', $newConfig['items'][2][1]);
+		$this->assertEquals('Cpp', $newConfig['items'][3][1]);
 	}
 }
 ?>

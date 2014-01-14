@@ -138,12 +138,7 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
 	 * @return array
 	 */
-	public function getConfiguredLanguages(
-		$config,
-		\TYPO3\CMS\Backend\Form\FormEngine $formEngine
-	) {
-		$this->initialize();
-
+	public function getDiscovereBrushes($config) {
 		static $cachedFields = 0;
 
 		if ($cachedFields != 0) {
@@ -162,20 +157,10 @@ class LanguageItems {
 
 			$this->contentElementPid = $recordPid;
 
-			$brushesArray = $this->getUniqueAndSortedBrushes();
+			$brushesArray = $this->getBrushes();
 
-			foreach ($brushesArray as $i => $brush) {
-				if (strtolower($brush) === 'plain') {
-					continue;
-				}
-				// skip unknown brushes
-				if (!$this->highlighterConfiguration->hasBrushIdentifier($brush)) {
-					continue;
-				}
-
-				$optionList[$i] = array_reverse(
-					$this->highlighterConfiguration->getBrushIdentifierAliasAndLabel($brush)
-				);
+			foreach ($brushesArray as $brushKey => $brushLabel) {
+				$optionList[] = array($brushLabel, $brushKey);
 			}
 
 			$config['items'] = array_merge($config['items'], $optionList);
@@ -186,44 +171,30 @@ class LanguageItems {
 	}
 
 	/**
-	 * Returns unique and sorted brushes
+	 * Returns the brushes according to the selected library
 	 *
 	 * @return array
 	 */
-	protected function getUniqueAndSortedBrushes() {
-		$configArray = $this->getConfig();
+	protected function getBrushes() {
+		$configArray = $this->getExtensionTypoScriptSetup();
 
-		$brushesArray = GeneralUtility::trimExplode(
-			',',
-			$configArray['brushes'],
-			TRUE
-		);
+		$brushDiscovery = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Configuration\\Brush\\' . $configArray['settings.']['library'] . 'Brush');
+		$brushes = $brushDiscovery->getBrushes();
 
-		// make unique
-		foreach ($brushesArray as &$value) {
-			$value = serialize($value);
-		}
-
-		$brushesArray = array_unique($brushesArray);
-
-		foreach ($brushesArray as &$value) {
-			$value = unserialize($value);
-		}
-
-		// sort a-z
-		sort($brushesArray);
-
-		return $brushesArray;
+		return $brushes;
 	}
 
 	/**
-	 * Generates TS Config of the plugin
+	 * Returns the TypoScript setup of the extension
 	 *
 	 * @return array
 	 */
-	protected function getConfig() {
-		// create dummy TSFE for TemplateService
-		$GLOBALS['TSFE'] = new \stdClass();
+	protected function getExtensionTypoScriptSetup() {
+		// Initialize the page selector
+		$this->injectPageRepository($this->pageRepository);
+
+		// Initialize the TS template
+		$this->injectTemplateService($this->templateService);
 
 		$this->pageRepository->init(TRUE);
 
@@ -245,9 +216,7 @@ class LanguageItems {
 		// Generate TS config
 		$this->templateService->generateConfig();
 
-		return $this
-			->templateService
-			->setup['plugin.']['tx_beautyofcode.']['settings.'];
+		return $this->templateService->setup['plugin.']['tx_beautyofcode.'];
 	}
 }
 ?>

@@ -30,7 +30,7 @@
 										<numIndex index="1">plain</numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</cLang>

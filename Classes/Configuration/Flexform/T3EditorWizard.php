@@ -67,6 +67,7 @@ class T3EditorWizard {
 
 		$content = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
 
+		/* @var $doc \TYPO3\CMS\Backend\Template\DocumentTemplate */
 		$doc = $GLOBALS['SOBE']->doc;
 
 		if (is_array($parameters['fieldConfig'])) {

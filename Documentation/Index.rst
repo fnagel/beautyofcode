@@ -59,12 +59,3 @@ beautyOfCode
    ToDoList/Index
    ChangeLog/Index
    Targets
-
-.. tip::
-   Please visit http://wiki.typo3.org/ReST_Syntax for further instructions and tips and tricks
-   how to start with reStructuredText and Sphinx.
-
-.. STILL TO ADD IN THIS DOCUMENT
-   @todo: add section about how screenshots can be automated. Pointer to PhantomJS could be added.
-   @todo: explain how documentation can be rendered locally and remotely.
-   @todo: explain what files should be versioned and what not (_build, Makefile, conf.py, ...)

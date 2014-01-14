@@ -4,7 +4,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2013 Thomas Juhnke <tommy@van-tomas.de>
+ * (c) 2013 Thomas Juhnke <typo3@van-tomas.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -30,7 +30,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
 /**
  * Fluid view helper around GeneralUtility::trimExplode()
  *
- * @author Thomas Juhnke <tommy@van-tomas.de>
+ * @author Thomas Juhnke <typo3@van-tomas.de>
  */
 class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 

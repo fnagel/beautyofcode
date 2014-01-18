@@ -26,7 +26,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  ***************************************************************/
 
 if (\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3jquery')) {
-	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery'));
+	require_once(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3jquery') . 'class.tx_t3jquery.php');
 }
 
 /**

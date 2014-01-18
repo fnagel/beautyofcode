@@ -12,6 +12,7 @@ plugin.tx_beautyofcode {
 		# always enabled if TYPO3 version < 4.3
 		# possible options: false, native, jquery
 		includeAsDomReady = {$plugin.tx_beautyofcode.settings.includeAsDomReady}
+		addjQuery = {$plugin.tx_beautyofcode.settings.addjQuery}
 		onReadyCallback = {$plugin.tx_beautyofcode.settings.onReadyCallback}
 
 		theme = {$plugin.tx_beautyofcode.settings.theme}

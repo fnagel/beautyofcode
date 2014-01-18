@@ -34,26 +34,9 @@ class ext_update {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+	 * @var array<\TYPO3\Beautyofcode\Update\AbstractUpdate>
 	 */
-	protected $db;
-
-	/**
-	 *
-	 * @var integer
-	 */
-	protected $countOldPlugins;
-
-	/**
-	 * initializes the updater
-	 *
-	 * @return void
-	 */
-	protected function initialize() {
-		if (FALSE === isset($this->db)) {
-			$this->db = $GLOBALS['TYPO3_DB'];
-		}
-	}
+	protected $updaters = array();
 
 	/**
 	 * Checks if the update script must be run
@@ -61,22 +44,7 @@ class ext_update {
 	 * @return boolean
 	 */
 	public function access() {
-		$this->initialize();
-
-		$hasOldPlugins = $this->hasInstanceOldPlugins();
-
-		return $hasOldPlugins;
-	}
-
-	/**
-	 * Counts the amount of old plugin instances within tt_content records
-	 *
-	 * @return boolean
-	 */
-	protected function hasInstanceOldPlugins() {
-		$this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_pi1"');
-
-		return 0 < $this->countOldPlugins;
+		return TRUE;
 	}
 
 	/**
@@ -85,12 +53,50 @@ class ext_update {
 	 * @return string
 	 */
 	public function main() {
-		$this->initialize();
+		$this->injectUpdaters();
 
+		if (NULL === \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('boc_update')) {
+			$output = $this->showUpdateInformation();
+		} else {
+			$output = $this->update();
+		}
+
+		return $output;
+	}
+
+	/**
+	 *
+	 * @return void
+	 */
+	protected function injectUpdaters() {
+		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\OldPlugins');
+		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\LanguageSetting');
+	}
+
+	/**
+	 * Returns a form with update information
+	 *
+	 * @return string
+	 */
+	protected function showUpdateInformation() {
+		$output = '<form action="" method="post">';
+
+		foreach ($this->updaters as $updater) {
+			/* @var $updater \TYPO3\Beautyofcode\Update\AbstractUpdate */
+			$output .= $updater->getInformation();
+		}
+
+		$output .= '<input type="submit" name="boc_update" value="Perform update"></form>';
+
+		return $output;
+	}
+
+	protected function update() {
 		$output = '';
 
-		if ($this->hasInstanceOldPlugins()) {
-			$output .= $this->updateOldPlugins();
+		foreach ($this->updaters as $updater) {
+			/* @var $updater \TYPO3\Beautyofcode\Update\AbstractUpdate */
+			$output .= $updater->execute();
 		}
 
 		if ($output === '') {
@@ -98,17 +104,6 @@ class ext_update {
 		}
 
 		return $output;
-	}
-
-	/**
-	 * Updates tt_content records by setting `list_type` to new plugin signature
-	 *
-	 * @return string
-	 */
-	protected function updateOldPlugins() {
-		$this->db->exec_UPDATEquery('tt_content', 'list_type = "beautyofcode_pi1"', array('list_type' => 'beautyofcode_contentrenderer'));
-
-		return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
 	}
 }
 ?>

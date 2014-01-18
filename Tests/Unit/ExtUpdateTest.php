@@ -59,21 +59,9 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$GLOBALS['TYPO3_DB'] = NULL;
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function accessReturnsTrueIfListTypesWithOldPluginSignatureWereFound() {
-		$this->assertOldPluginInstancesExist();
-
-		$sut = new \ext_update();
-
-		$this->assertTrue($sut->access());
-	}
-
 	protected function assertOldPluginInstancesExist() {
 		$this->db
-			->expects($this->at(0))
+			->expects($this->once())
 			->method('exec_SELECTcountRows')
 			->with(
 				$this->equalTo('*'),
@@ -88,10 +76,17 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function mainWillUpdateTheListTypeFieldOfOldPluginContentElements() {
+		$_POST = array(
+			'boc_update' => 'UpdateInformationSubmitButtonLabel',
+			'update' => array(
+				'oldPlugins' => '1',
+			),
+		);
+
 		$this->assertOldPluginInstancesExist();
 
 		$this->db
-			->expects($this->at(1))
+			->expects($this->once())
 			->method('exec_UPDATEquery')
 			->with(
 				$this->equalTo('tt_content'),
@@ -103,7 +98,7 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 
 		$updateOutput = $sut->main();
 
-		$this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
+		$this->assertEquals('<strong>Updated plugin signature of 1 tt_content records.</strong><br />', $updateOutput);
 	}
 }
 ?>

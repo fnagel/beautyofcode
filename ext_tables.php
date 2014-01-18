@@ -5,19 +5,19 @@ if (!defined ('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
-	'Configuration/TypoScript/Static/Jquery/',
+	'Configuration/TypoScript/Jquery/',
 	'beautyOfCode Syntax Highlighter (v2)'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
-	'Configuration/TypoScript/Static/Standalone/',
+	'Configuration/TypoScript/Standalone/',
 	'beautyOfCode Syntax Highlighter (v3)'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
-	'Configuation/TypoScript/Static/Prism/',
+	'Configuation/TypoScript/Prism/',
 	'beautyofcode Syntax Highlighter (prism)'
 );
 

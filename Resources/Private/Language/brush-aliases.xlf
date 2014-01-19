@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="brush-aliases" date="2011-08-25T17:54:43Z" product-name="beautyofcode">
+		<header />
+		<body>
+			<!-- SyntaxHighlighter -->
+			<trans-unit id="AS3">
+				<source>ActionScript 3</source>
+			</trans-unit>
+			<trans-unit id="Bash">
+				<source>Bash / Shell</source>
+			</trans-unit>
+			<trans-unit id="Cpp">
+				<source>C / C++</source>
+			</trans-unit>
+			<trans-unit id="CSharp">
+				<source>C#</source>
+			</trans-unit>
+			<trans-unit id="Css">
+				<source>CSS</source>
+			</trans-unit>
+			<trans-unit id="Delphi">
+				<source>Delphi / Pascal</source>
+			</trans-unit>
+			<trans-unit id="Diff">
+				<source>Diff / Patch</source>
+			</trans-unit>
+			<trans-unit id="JScript">
+				<source>JavaScript</source>
+			</trans-unit>
+			<trans-unit id="Php">
+				<source>PHP</source>
+			</trans-unit>
+			<trans-unit id="Sass">
+				<source>Sass / SCSS</source>
+			</trans-unit>
+			<trans-unit id="Sql">
+				<source>SQL / MySQL</source>
+			</trans-unit>
+			<trans-unit id="Typoscript">
+				<source>TypoScript</source>
+			</trans-unit>
+			<trans-unit id="Vb">
+				<sourve>Visual Basic / .Net</sourve>
+			</trans-unit>
+			<trans-unit id="Xml">
+				<source>XML / XSLT / XHTML / HTML</source>
+			</trans-unit>
+			<!-- Prism -->
+			<trans-unit id="bash">
+				<source>Bash / Shell</source>
+			</trans-unit>
+			<trans-unit id="c">
+				<source>Ansi C</source>
+			</trans-unit>
+			<trans-unit id="clike">
+				<source>Ansi C-like</source>
+			</trans-unit>
+			<trans-unit id="coffeescript">
+				<source>CoffeeScript</source>
+			</trans-unit>
+			<trans-unit id="cpp">
+				<source>C++</source>
+			</trans-unit>
+			<trans-unit id="csharp">
+				<source>C#</source>
+			</trans-unit>
+			<trans-unit id="css">
+				<source>CSS</source>
+			</trans-unit>
+			<trans-unit id="gherkin">
+				<source>Gherkin</source>
+			</trans-unit>
+			<trans-unit id="go">
+				<source>Go</source>
+			</trans-unit>
+			<trans-unit id="groovy">
+				<source>Groovy</source>
+			</trans-unit>
+			<trans-unit id="http">
+				<source>HTTP</source>
+			</trans-unit>
+			<trans-unit id="php">
+				<source>PHP</source>
+			</trans-unit>
+			<trans-unit id="java">
+				<source>Java</source>
+			</trans-unit>
+			<trans-unit id="javascript">
+				<source>JavaScript</source>
+			</trans-unit>
+			<trans-unit id="markup">
+				<source>XML / XSLT / XHTML / HTML</source>
+			</trans-unit>
+			<trans-unit id="php">
+				<source>PHP</source>
+			</trans-unit>
+			<trans-unit id="python">
+				<source>Python</source>
+			</trans-unit>
+			<trans-unit id="ruby">
+				<source>Ruby</source>
+			</trans-unit>
+			<trans-unit id="scss">
+				<source>Sass / SCSS</source>
+			</trans-unit>
+			<trans-unit id="sql">
+				<source>SQL / MySQL</source>
+			</trans-unit>
+			<trans-unit id="typoscript">
+				<source>TypoScript</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -25,4 +25,36 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend'
 	);
 }
+
+// registry for available syntax highlighting libraries and their brushes
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(
+	'SyntaxHighlighter' => array(
+		'path' => 'EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/scripts/',
+		'excludePattern' => 'sh(BrushPlain|Autoloader|Core|Legacy)\.js',
+		'prefix' => 'shBrush',
+		'suffix' => '.js',
+		'dependencies' => array(),
+	),
+	'Prism' => array(
+		'path' => 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/',
+		'excludePattern' => '.*(core|extras|\.min)\.js',
+		'prefix' => 'prism-',
+		'suffix' => '.js',
+		'dependencies' => array(
+			'bash' => 'clike',
+			'c' => 'clike',
+			'coffeescript' => 'javascript',
+			'cpp' => 'c',
+			'csharp' => 'clike',
+			'go' => 'clike',
+			'groovy' => 'clike',
+			'java' => 'clike',
+			'javascript' => 'clike',
+			'php' => 'clike',
+			'ruby' => 'clike',
+			'scss' => 'css',
+			'typoscript' => 'clike',
+		),
+	),
+);
 ?>

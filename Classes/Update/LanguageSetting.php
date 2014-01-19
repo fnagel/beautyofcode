@@ -94,21 +94,49 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 			<td><input type="hidden" name="languages[' . $plugin['uid'] . ']" value="1" /></td>
 			<td>' . $title . '</td>
 			<td>' . $flexformSettings['cLang']['vDEF'] . '</td>
-			<td>' . $this->getDiscoveredLanguages($flexformSettings['cLang']['vDEF']) . '</td>
+			<td>' . $this->getAvailableBrushes($flexformSettings['cLang']['vDEF']) . '</td>
 			<td>' . substr($flexformSettings['cCode']['vDEF'], 0, 32) . '...</td>
 		</tr>';
 	}
 
 	/**
-	 * Returns a select list with all discovered languages
+	 * Returns a select list with all available brushes
 	 *
-	 * @param string $selectedLanguage
+	 * @param string $currentBrush
 	 * @return string
 	 */
-	protected function getDiscoveredLanguages($selectedLanguage) {
-		$selected = FALSE;
+	protected function getAvailableBrushes($currentBrush) {
+		$output = '';
 
-		return '';
+		$options = '';
+
+		$selected = '';
+
+		/* @var $brushDiscoveryService \TYPO3\Beautyofcode\Service\BrushDiscoveryService */
+		$brushDiscoveryService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService');
+		$libraries = $brushDiscoveryService->discoverBrushes();
+
+		foreach ($libraries as $library => $brushes) {
+			$options .= '<optgroup label="' . $library . '">';
+
+			foreach ($brushes as $brushName => $brushAlias) {
+				if ('' === $selected && strtolower($brushName) === $currentBrush) {
+					$selected = ' selected="selected"';
+				}
+
+				$options .= sprintf('<option value="%s"%s>%s</option>',
+					$brushName,
+					$selected,
+					$brushAlias
+				);
+			}
+
+			$options .= '</optgroup>';
+		}
+
+		$output = '<select name="languages[]" size="1">' . $options . '</select>';
+
+		return $output;
 	}
 
 	/**

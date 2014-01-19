@@ -5,20 +5,14 @@ if (!defined ('TYPO3_MODE')) {
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
-	'Configuration/TypoScript/Jquery/',
-	'beautyOfCode Syntax Highlighter (v2)'
-);
-
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
-	$_EXTKEY,
-	'Configuration/TypoScript/Standalone/',
-	'beautyOfCode Syntax Highlighter (v3)'
+	'Configuration/TypoScript/SyntaxHighlighter/',
+	'beautyOfCode (SyntaxHighlighter)'
 );
 
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
 	$_EXTKEY,
 	'Configuation/TypoScript/Prism/',
-	'beautyofcode Syntax Highlighter (prism)'
+	'beautyofcode (Prism)'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
@@ -48,7 +42,6 @@ $TCA['tx_beautyofcode_domain_model_flexform']['columns'] = array(
 	'c_highlight' => array('config' => array()),
 	'c_collapse' => array('config' => array()),
 	'c_gutter' => array('config' => array()),
-	'c_toolbar' => array('config' => array()),
 	'uid' => array('config' => array()),
 	'pid' => array('config' => array()),
 );

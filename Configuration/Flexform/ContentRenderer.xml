@@ -117,28 +117,6 @@
 							</config>
 						</TCEforms>
 					</cGutter>
-					<cToolbar>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:toolbar</label>
-							<config>
-								<type>select</type>
-									<items>
-										<numIndex index="0">
-											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
-											<numIndex index="1">auto</numIndex>
-										</numIndex>
-										<numIndex index="1">
-											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
-											<numIndex index="1">1</numIndex>
-										</numIndex>
-										<numIndex index="2">
-											<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
-											<numIndex index="1">0</numIndex>
-										</numIndex>
-									</items>
-							</config>
-						</TCEforms>
-					</cToolbar>
 				</el>
 			</ROOT>
 		</sOPTIONS>

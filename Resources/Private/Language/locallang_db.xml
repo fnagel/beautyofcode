@@ -20,7 +20,6 @@
 
 			<label index="highlight">Highlight one or more lines (1,2,3,4-6...)</label>
 			<label index="gutter">Show gutter</label>
-			<label index="toolbar">Show toolbar (only available in SyntaxHighlighter v2)</label>
 			<label index="collapse">Collapse code element</label>
 
 			<label index="cms_layout.no_code">Sourcecode field is empty</label>
@@ -45,7 +44,6 @@
 
 			<label index="highlight">Markierung für bestimmte Zeilen (1,2,3,4-6...)</label>
 			<label index="gutter">Zeilennummerierung anzeigen</label>
-			<label index="toolbar">Toolbar anzeigen (nur in Version 2 verfügbar)</label>
 			<label index="collapse">Quellcode Elemente einklappen</label>
 
 			<label index="cms_layout.no_code">Quellcode Feld ist leer</label>

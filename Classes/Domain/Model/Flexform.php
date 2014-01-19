@@ -72,12 +72,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	/**
 	 *
-	 * @var string
-	 */
-	protected $cToolbar;
-
-	/**
-	 *
 	 * @var array
 	 */
 	protected $brushes = array();
@@ -191,14 +185,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		}
 	}
 
-	public function setCToolbar($cToolbar) {
-		$this->cToolbar = $cToolbar;
-	}
-
-	public function getCToolbar() {
-		return $this->cToolbar;
-	}
-
 	public function setBrushes($brushes = array()) {
 		$this->brushes = $brushes;
 	}
@@ -217,45 +203,11 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * Returns the class attribute configuration for the jquery (v2) library
+	 * Returns the class attribute configuration for the SyntaxHighlighter library
 	 *
 	 * @return string
 	 */
-	public function getJqueryClassAttributeConfiguration() {
-		$configurationItems = array();
-
-		$classAttributeConfigurationStack = array(
-			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
-			'gutter' => $this->cGutter,
-			'toolbar' => $this->cToolbar,
-			'collapse' => $this->cCollapse,
-		);
-
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
-				continue;
-			}
-
-			if ($configurationKey === 'highlight') {
-				$key = $configurationKey;
-				$value = sprintf('[%s]', $configurationValue);
-			} else {
-				$key = $configurationValue ? '' : 'no-';
-				$value = $configurationKey;
-			}
-
-			$configurationItems[] = sprintf('boc-%s%s', $key, $value);
-		}
-
-		return ' ' . implode(' ', $configurationItems);
-	}
-
-	/**
-	 * Returns the class attribute configuration for the standalone (v2) library
-	 *
-	 * @return string
-	 */
-	public function getStandaloneClassAttributeConfiguration() {
+	public function getSyntaxHighlighterClassAttributeConfiguration() {
 		$configurationItems = array();
 
 		$classAttributeConfigurationStack = array(
@@ -311,7 +263,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 *
 	 * @return array
 	 */
-	public function getStandaloneBrushesForAutoloader() {
+	public function getSyntaxHighlighterBrushesForAutoloader() {
 		$brushes = array();
 
 		$configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(

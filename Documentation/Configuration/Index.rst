@@ -1,3 +1,8 @@
+.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
 .. include:: ../Includes.txt
 
 .. _configuration:
@@ -40,7 +45,6 @@ Properties
    theme_                                                :ref:`t3tsref:data-type-string`                                       no                      :code:`Default`
    showLabel_                                            :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
    defaults.tab-size_                                    :ref:`t3tsref:data-type-integer`                                                              :code:`4`
-   defaults.toolbar_                                     :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
    defaults.gutter_                                      :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
    defaults.collapse_                                    :ref:`t3tsref:data-type-boolean`                                                              :code:`0`
    defaults.wrap-lines_                                  :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
@@ -152,14 +156,6 @@ defaults.tab-size
 :typoscript:`plugin.tx_beautyofcode.settings.defaults.tab-size =` :ref:`t3tsref:data-type-integer`
 
 Specify a tabulator size. Tabulator chars will be changed to spaces.
-
-defaults.toolbar
-""""""""""""""""
-
-:typoscript:`plugin.tx_beautyofcode.settings.defaults.toolbar =` :ref:`t3tsref:data-type-boolean`
-
-Show toolbar when mouseover the code in FE (with following functions: code in 
-pop-up, copy to cliboard via swf, print, info about SyntaxHighlighter 2.0).
 
 defaults.gutter
 """""""""""""""

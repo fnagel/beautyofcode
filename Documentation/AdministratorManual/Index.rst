@@ -1,3 +1,8 @@
+.. ==================================================
+.. FOR YOUR INFORMATION
+.. --------------------------------------------------
+.. -*- coding: utf-8 -*- with BOM.
+
 .. include:: ../Includes.txt
 
 .. _admin-manual:
@@ -13,11 +18,13 @@ Installation
 - Install the extension via extension manager.
 - Add the static template in your main typoscript (go to: list module, root 
   page, edit your root TS template, tab: includes, add one of the static 
-  templates named “beautyOfCode Syntax Highlighter”).
+  templates named “beautyOfCode”).
 - You could add the jQuery core file yourself or via this extension by enable 
-  addjQuery configuration. Since version 2.0 support of the t3jquery extension 
-  was removed. Version 1.3.x and 1.4.x of jQuery will work. Since version 
-  0.7.0 it's possible to use SyntaxHighlighter standalone without using jQuery.
+  addjQuery configuration. You can either install ext:t3jquery and make usage
+  of the shipped backend module to compile a ext:beautyofcode specific jQuery 
+  library, by analyzing the t3jquery.txt file. Otherwise, the shipped jQuery 
+  Version 1.3.2 will be used. Version 1.3.x and 1.4.x of jQuery will work. Since 
+  version 0.7.0 it's possible to use SyntaxHighlighter without using jQuery.
 
 **Please note**: It's strongly recommended to add one line in your 
 localconf.php to force CDATA escaping within the flexforms in TYPO3. Please see 
@@ -74,16 +81,18 @@ What you need to know:
 
 Please see the changelog for all changes in detail.
 
-To 2.0
-^^^^^^
+1.0 to 2.0
+^^^^^^^^^^
 
-Rewritten to fit into extbase/fluid development paradigms.
+Rewritten for Extbase/Fluid.
 
 What you need to know:
 
-- Execute update script within extension manager to update adjusted plugin names in database
+- Execute update script within extension manager to update adjusted plugin names 
+  in database
 - You'll need to change your TypoScript code
 
+   - SyntaxHighlighter v2 was removed
    - include the correct static template
    - jquery.scriptUrl was removed (adapt template if you need to adjust)
    - jQueryNoConflict was removed (inline JS is wrapped in module pattern style code)
@@ -99,36 +108,26 @@ FAQ
 Which version to choose?
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This extension has three versions of SyntaxHighlighter to choose. v2 & v3 
-supports lazyloading of the necessary CSS and JS files after the DOM ready 
-event has fired. Version 2 uses a jQuery plugin “beautyOfCode” by Lars 
-Corneliussen and version 3 wich runs standalone using the autoloader feature 
-introduced with version v3. Prism is also a standalone library without any 
-dependencies. There are some benefits and disadvantages by using each version:
+This extension ships with two syntax highlighting libraries.
 
-Version v2 (“jquery”)
-"""""""""""""""""""""
+Choose either SyntaxHighlighter which supports lazyloading of the necessary CSS 
+and JS files  after the DOM ready event has fired. It runs standalone using an 
+autoloading feature.
 
-- needs jQuery
-- configurable toolbar
-- runs within a domReady event (runs very smooth when merging scripts automatically)
-- less code needs to be injected in your HTML
-- wrap-lines feature (line break)
-- more feature rich
+Prism is also a standalone library without any dependencies. There are some 
+benefits and disadvantages by using each version:
 
-Version v3 (“standalone”)
-"""""""""""""""""""""""""
+SyntaxHighlighter
+"""""""""""""""""
 
-- runs without using a Java-Script framework
-- no toolbar available as it has been removed in v3
+- runs without using a JavaScript framework
 - uses latest version of SyntaxHighlighter
 - slim and less feature rich (but with almost the same  functionality)
 
-Prism Version
-"""""""""""""
+Prism
+"""""
 
-- runs without using a Javascript framework
-- no toolbar available
+- runs without using a JavaScript framework
 - based on regular expressions for syntax parsing
 - syntax files has dependencies with each other (php → clike)
 - lightweight
@@ -173,7 +172,6 @@ Install the extension and add these lines to your TSconfig:
    .. code-block:: ts
 
       TCEFORM.tt_content.beautyofcode_cGutter.disabled = 1
-      TCEFORM.tt_content.beautyofcode_cToolbar.disabled = 1
       TCEFORM.tt_content.beautyofcode_cCollapse.disabled = 1
 
 .. _libxmlbug: http://lists.netfielders.de/pipermail/typo3-dev/2009-August/036436.html

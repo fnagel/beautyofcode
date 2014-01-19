@@ -1,4 +1,4 @@
-.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -70,3 +70,13 @@ Howto install prism
    .. code-block: bash
 
       ./node_modules/.bin/bower install prism#gh-pages
+
+Howto add BOM to all reStructuredText files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+While editing the files in Eclipse, the BOM possibly gets removed, this command 
+will help you to re-add the UTF8 BOM again:
+
+   .. code-block: bash
+
+      for file in $(ls -R Documentation/*.rst Documentation/*/*.rst); do sed -i '1s/^/\xef\xbb\xbf/' "$file"; done

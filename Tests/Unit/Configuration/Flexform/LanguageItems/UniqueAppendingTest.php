@@ -53,25 +53,23 @@ class UniqueAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			'plugin.' => array(
 				'tx_beautyofcode.' => array(
 					'settings.' => array(
-						'common.' => array(
-							'brushes' => 'Php, Sql, Python, Sql'
-						)
-					)
-				)
-			)
+						'brushes' => 'Php, Sql, Python, Sql',
+					),
+				),
+			),
 		);
 
 		$configFromFlexform = array(
 			'row' => array(
 				'uid' => 1,
-				'pid' => 1
+				'pid' => 1,
 			),
 			'items' => array(
 				array(
 					'Plain', // TCEforms: label
 					'plain' // TCEforms: key
-				)
-			)
+				),
+			),
 		);
 
 		$newConfig = $sut->getConfiguredLanguages($configFromFlexform);

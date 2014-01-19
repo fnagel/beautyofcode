@@ -49,7 +49,6 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->sut->setCHighlight('1,2-3,8');
 		$this->sut->setCCollapse('1');
 		$this->sut->setCGutter('1');
-		$this->sut->setCToolbar('1');
 		$this->sut->setBrushes('Xml,Php,Typoscript');
 	}
 
@@ -57,116 +56,44 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 *
 	 * @test
 	 */
-	public function settingAnEmptyValueForJQueryLibraryWillSkipTheOutputForTheSetting() {
+	public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
 		$this->sut->setCCollapse('');
 
-		$this->assertNotContains('collapse', $this->sut->getJqueryClassAttributeConfiguration());
+		$this->assertNotContains('collapse', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
 	}
 
 	/**
 	 *
 	 * @test
 	 */
-	public function settingAutoValueForJQueryLibraryWillSkipTheOutputForTheSetting() {
+	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
 		$this->sut->setCGutter('auto');
 
-		$this->assertNotContains('gutter', $this->sut->getJqueryClassAttributeConfiguration());
+		$this->assertNotContains('gutter', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
 	}
 
 	/**
 	 *
 	 * @test
 	 */
-	public function settingAnEmptyValueForStandaloneLibraryWillSkipTheOutputForTheSetting() {
-		$this->sut->setCCollapse('');
-
-		$this->assertNotContains('collapse', $this->sut->getStandaloneClassAttributeConfiguration());
+	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
+		$this->assertContains('highlight: [', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
 	}
 
 	/**
 	 *
 	 * @test
 	 */
-	public function settingAutoValueForStandaloneLibraryWillSkipTheOutputForTheSetting() {
-		$this->sut->setCGutter('auto');
-
-		$this->assertNotContains('gutter', $this->sut->getStandaloneClassAttributeConfiguration());
+	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
+		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
 	}
 
 	/**
 	 *
 	 * @test
 	 */
-	public function standaloneLibraryClassAttributeConfigurationWillNotContainAToolbarSetting() {
-		$this->sut->setCToolbar('1');
-
-		$this->assertNotContains('toolbar', $this->sut->getStandaloneClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingHasSpecialFormattingForJQueryLibrary() {
-		$this->assertContains('boc-highlight[', $this->sut->getJqueryClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingHasSpecialFormattingForStandaloneLibrary() {
-		$this->assertContains('highlight: [', $this->sut->getStandaloneClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingWillBeExpandedForJQueryLibrary() {
-		$this->assertContains('boc-highlight[1,2,3,8]', $this->sut->getJqueryClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingWilllBeExpandedForStandaloneLibrary() {
-		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getStandaloneClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function nonEmptySettingWillResultInAnPrefixedSettingStringForJQueryLibrary() {
-		$this->assertContains('boc-collapse', $this->sut->getJqueryClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function boolishTrueSettingWillResultInAPrefixedSettingStringContainingTheConfigurationKeyForJqueryLibrary() {
-		$this->assertContains('boc-collapse', $this->sut->getJqueryClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function boolishFalseSettingWillResultInAPrefixedSettingStringContainingTheConfigurationKeyAndNoForJqueryLibrary() {
-		$this->sut->setCCollapse('0');
-
-		$this->assertContains('boc-no-collapse', $this->sut->getJqueryClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForStandaloneLibrary() {
-		$brushes = $this->sut->getStandaloneBrushesForAutoloader();
+	public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForSyntaxHighlighter() {
+		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
 
 		$this->assertArrayHasKey('plain', $brushes);
 	}
@@ -175,10 +102,10 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 *
 	 * @test
 	 */
-	public function brushesForStandaloneLibraryAreMappedToASuitableCssTagString() {
+	public function brushesForSyntaxHighlighterAreMappedToASuitableCssTagString() {
 		$this->sut->setBrushes('Typoscript,AS3');
 
-		$brushes = $this->sut->getStandaloneBrushesForAutoloader();
+		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
 
 		$this->assertArrayHasKey('typoscript', $brushes);
 		$this->assertArrayHasKey('actionscript3', $brushes);

@@ -46,8 +46,14 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			define('REQUIRED_EXTENSIONS', 'foo,bar');
 		}
 
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extListArray'] = array('beautyofcode');
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['requiredExt'] = array('foo', 'bar');
+		$GLOBALS['TYPO3_CONF_VARS'] = array(
+			'EXT' => array(
+				'extListArray' => array(
+					'beautyofcode'
+				),
+				'requiredExt' => array('foo', 'bar'),
+			),
+		);
 
 		$GLOBALS['TYPO3_LOADED_EXT']['beautyofcode'] = array(
 			'siteRelPath' => 'typo3conf/ext/beautyofcode/'

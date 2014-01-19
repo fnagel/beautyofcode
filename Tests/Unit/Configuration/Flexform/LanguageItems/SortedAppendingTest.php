@@ -53,25 +53,23 @@ class SortedAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 			'plugin.' => array(
 				'tx_beautyofcode.' => array(
 					'settings.' => array(
-						'common.' => array(
-							'brushes' => 'Sql, Python, Php'
-						)
-					)
-				)
-			)
+						'brushes' => 'Sql, Python, Php',
+					),
+				),
+			),
 		);
 
 		$configFromFlexform = array(
 			'row' => array(
 				'uid' => 1,
-				'pid' => 1
+				'pid' => 1,
 			),
 			'items' => array(
 				array(
 					'Plain', // TCEforms: label
 					'plain' // TCEforms: key
-				)
-			)
+				),
+			),
 		);
 
 		$newConfig = $sut->getConfiguredLanguages($configFromFlexform);

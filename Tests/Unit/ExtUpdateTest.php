@@ -51,6 +51,15 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	}
 
 	/**
+	 * (non-PHPdoc)
+	 * @see PHPUnit_Framework_TestCase::tearDown()
+	 */
+	public function tearDown() {
+		// tearing down TYPO3_DB global; otherwise causes serialization errors
+		$GLOBALS['TYPO3_DB'] = NULL;
+	}
+
+	/**
 	 *
 	 * @test
 	 */

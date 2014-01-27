@@ -1,0 +1,20 @@
+<f:section name="Information">
+	<h4>Update old plugin signatures</h4>
+	
+	<f:if condition="{mustExecute}">
+		<f:then>
+			<label><input type="checkbox" name="update[oldPlugins]" value="1"> Update {countOldPlugins} old plugin signatures.</label><br />
+		</f:then>
+		<f:else>
+			No old plugins found.<br />
+		</f:else>
+	</f:if>
+</f:section>
+
+<f:section name="Execute">
+	<f:if condition="{countOldPlugins}">
+		<strong>Updated plugin signature of {countOldPlugins} tt_content records.</strong><br />
+	</f:if>
+</f:section>
+
+<f:render section="{section}" arguments="{_all}" />

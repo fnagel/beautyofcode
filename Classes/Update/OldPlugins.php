@@ -40,22 +40,30 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 */
 	protected $countOldPlugins;
 
+	/**
+	 *
+	 * @var strng
+	 */
+	protected $template = 'EXT:beautyofcode/Resources/Private/Templates/Update/OldPlugins.html';
+
 	public function initializeObject() {
-		$this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_pi1"');
+		$this->countOldPlugins = $this->db->exec_SELECTcountRows(
+			'*',
+			'tt_content',
+			'list_type = "beautyofcode_pi1"'
+		);
+
+		$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->template);
+		$this->view->setTemplatePathAndFilename($templatePath);
 	}
 
 	public function getInformation() {
-		$output = '';
+		$this->view->assign('section', 'Information');
 
-		$output .= '<h4>Update old plugin signatures</h4>';
+		$this->view->assign('mustExecute', $this->mustExecute());
+		$this->view->assign('countOldPlugins', $this->countOldPlugins);
 
-		if ($this->mustExecute()) {
-			$output .= '<label><input type="checkbox" name="update[oldPlugins]" value="1"> Update ' . $this->countOldPlugins . ' old plugin signatures.<br />';
-		} else {
-			$output .= 'No old plugins found.<br />';
-		}
-
-		return $output;
+		return $this->view->render();
 	}
 
 	/**
@@ -71,7 +79,7 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @return string
 	 */
 	public function execute() {
-		$output = '';
+		$this->view->assign('section', 'Execute');
 
 		if ($this->hasUpdateInstruction('oldPlugins') && $this->mustExecute()) {
 			$this->db->exec_UPDATEquery(
@@ -82,10 +90,10 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 				)
 			);
 
-			$output = sprintf('<strong>Updated plugin signature of %s tt_content records.</strong><br />', $this->countOldPlugins);
+			$this->view->assign('countOldPlugins', $this->countOldPlugins);
 		}
 
-		return $output;
+		return $this->view->render();
 	}
 }
 ?>

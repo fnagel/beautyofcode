@@ -1,0 +1,26 @@
+<phpunit>
+	<!--
+		Switch off E_NOTICE errors because the FlexformTools used within
+		ExtUpdate testsuite accesses probably undefined array indices.
+	-->
+	<php>
+		<ini name="error_reporting" value="4" />
+	</php>
+	<testsuites>
+		<testsuite name="Configuration">
+			<directory>Tests/Unit/Configuration</directory>
+		</testsuite>
+		<testsuite name="Domain">
+			<directory>Tests/Unit/Domain</directory>
+		</testsuite>
+		<testsuite name="ExtUpdate">
+			<directory>Tests/Unit/ExtUpdate</directory>
+		</testsuite>
+		<testsuite name="Utility">
+			<directory>Tests/Unit/Utility</directory>
+		</testsuite>
+		<testsuite name="ViewHelpers">
+			<directory>Tests/Unit/ViewHelpers</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>

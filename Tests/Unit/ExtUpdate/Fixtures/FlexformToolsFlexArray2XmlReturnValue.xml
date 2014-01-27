@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3FlexForms>
+    <data>
+        <sheet index="sDEF">
+            <language index="lDEF">
+                <field index="cLabel">
+                    <value index="vDEF">Foo? Bar!</value>
+                </field>
+                <field index="cLang">
+                    <value index="vDEF">TypoScript</value>
+                </field>
+            </language>
+        </sheet>
+    </data>
+</T3FlexForms>

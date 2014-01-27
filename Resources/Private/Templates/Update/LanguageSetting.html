@@ -1,0 +1,46 @@
+<f:section name="Information">
+	<h4>Update language/syntax associations.</h4>
+	<label>
+		<input type="checkbox" name="update[language]" value="1"> Update plugin language settings according to the following settings:
+	</label><br />
+	
+	<table class="typo3-dblist" border="0" cellspacing="0" cellpadding="0">
+		<thead>
+			<tr class="t3-row-header">
+				<th>&nbsp;</th>
+				<th>Title</th>
+				<th>Current language</th>
+				<th>New language</th>
+				<th>Code excerpt</th>
+			</tr>
+		</thead>
+		<tbody>
+			<f:for each="{plugins}" as="plugin">
+				<tr>
+					<td>&nbsp;</td>
+					<td>{plugin.header}</td>
+					<td>{plugin.pi_flexform.data.sDEF.lDEF.cLang.vDEF}</td>
+					<td>
+						<!-- selected: {plugin.pi_flexform.data.sDEF.lDEF.cLang.vDEF} -->
+						<select name="language[{plugin.uid}]">
+							<f:for each="{availableBrushes}" as="brushes" key="library">
+								<optgroup label="{library}">
+									<f:for each="{brushes}" as="brushLabel" key="brushKey">
+										<option value="{brushKey}">{brushLabel}</option>
+									</f:for>
+								</optgroup>
+							</f:for>
+						</select>
+					</td>
+					<td>{plugin.pi_flexform.data.sDEF.lDEF.cCode.vDEF -> f:format.crop(maxCharacters: 32, append: '...')}</td>
+				</tr>
+			</f:for>
+		</tbody>
+	</table>
+</f:section>
+
+<f:section name="Execute">
+	Successfully updated the language from {successfulUpdates} of {totalUpdates} plugins.
+</f:section>
+
+<f:render section="{section}" arguments="{_all}" />

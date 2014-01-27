@@ -71,6 +71,15 @@ class ext_update {
 	protected function injectUpdaters() {
 		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\OldPlugins');
 		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\LanguageSetting');
+
+		foreach ($this->updaters as $updater) {
+			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
+			$view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+
+			$updater->injectDatabaseConnection($GLOBALS['TYPO3_DB']);
+			$updater->injectView($view);
+			$updater->initializeObject();
+		}
 	}
 
 	/**

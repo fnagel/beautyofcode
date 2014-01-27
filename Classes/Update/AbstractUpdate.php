@@ -47,14 +47,32 @@ abstract class AbstractUpdate {
 	 */
 	protected $updateInstructions = array();
 
+	/**
+	 *
+	 * @var \TYPO3\CMS\Fluid\View\StandaloneView
+	 */
+	protected $view;
+
 	public function __construct() {
-		if (FALSE === isset($this->db)) {
-			$this->db = $GLOBALS['TYPO3_DB'];
-		}
-
 		$this->updateInstructions = (array) \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
+	}
 
-		$this->initializeObject();
+	/**
+	 *
+	 * @param \TYPO3\CMS\Core\Database\DatabaseConnection $db
+	 * @return void
+	 */
+	public function injectDatabaseConnection(\TYPO3\CMS\Core\Database\DatabaseConnection $db) {
+		$this->db = $db;
+	}
+
+	/**
+	 *
+	 * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
+	 * @return void
+	 */
+	public function injectView(\TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view = NULL) {
+		$this->view = $view;
 	}
 
 	/**

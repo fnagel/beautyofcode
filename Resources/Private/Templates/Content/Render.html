@@ -2,9 +2,9 @@
 
 <f:section name="Main">
 	<div class="tx_beautyofcode_pi1">
-		<f:render section="Container{settings.library}" arguments="{ flexform: flexform }" />
-		<f:if condition="{settings.showLabel} && {flexform.CLabel}">
-			<em>{flexform.CLabel}</em>
+		<f:render section="Container{settings.library}" arguments="{ flexform: contentElement.flexformObject }" />
+		<f:if condition="{settings.showLabel} && {contentElement.flexformObject.CLabel}">
+			<em>{contentElement.flexformObject.CLabel}</em>
 		</f:if>
 	</div>
 </f:section>

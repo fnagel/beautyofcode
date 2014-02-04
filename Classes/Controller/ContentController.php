@@ -36,16 +36,17 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
+	 * @var \TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository
 	 */
-	protected $flexformRepository;
+	protected $contentElementRepository;
 
 	/**
 	 *
-	 * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
+	 * @param \TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository
+	 * @return void
 	 */
-	public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository) {
-		$this->flexformRepository = $flexformRepository;
+	public function injectContentElementRepository(\TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository) {
+		$this->contentElementRepository = $contentElementRepository;
 	}
 
 	/**
@@ -53,14 +54,13 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function renderAction() {
-		$flexform = $this
-			->flexformRepository
-			->reconstituteByContentObject(
-				$this->configurationManager->getContentObject()
+		$contentElementRaw = $this->configurationManager->getContentObject();
+		$contentElement = $this->contentElementRepository
+			->findByUid(
+				$contentElementRaw->data['uid']
 			);
-		$flexform->setTyposcriptDefaults($this->settings['defaults']);
 
-		$this->view->assign('flexform', $flexform);
+		$this->view->assign('contentElement', $contentElement);
 	}
 }
 ?>

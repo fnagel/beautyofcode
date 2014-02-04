@@ -24,22 +24,19 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * Function to add select options dynamically (loaded in flexform)
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @author Thomas Juhnke <typo3@van-tomas.de>
  * @package \TYPO3\Beautyofcode\Configuration\Flexform
  */
 class LanguageItems {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+	 * @var integer
 	 */
-	protected $objectManager;
+	protected $contentElementPid;
 
 	/**
 	 *
@@ -55,29 +52,9 @@ class LanguageItems {
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
 	 */
-	protected $highlighterConfiguration;
-
-	/**
-	 *
-	 * @var integer
-	 */
-	protected $contentElementPid;
-
-	/**
-	 * injectObjectManager
-	 *
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager = NULL) {
-		if (is_null($objectManager)) {
-			$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
-		}
-
-		$this->objectManager = $objectManager;
-	}
+	protected $brushDiscoveryService;
 
 	/**
 	 * Injects the page repository
@@ -85,16 +62,12 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository
 	 * @return void
 	 */
-	public function injectPageRepository(
-		\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL
-	) {
-		if (is_null($pageRepository)) {
-			$pageRepository = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\Frontend\\Page\\PageRepository'
-			);
+	public function injectPageRepository(\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL) {
+		if (TRUE === is_null($pageRepository)) {
+			$this->pageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
+		} else {
+			$this->pageRepository = $pageRepository;
 		}
-
-		$this->pageRepository = $pageRepository;
 	}
 
 	/**
@@ -103,42 +76,48 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService
 	 * @return void
 	 */
-	public function injectTemplateService(
-		\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL
-	) {
-		if (is_null($templateService)) {
-			$templateService = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\Core\\TypoScript\\TemplateService'
-			);
+	public function injectTemplateService(\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL) {
+		if (TRUE === is_null($templateService)) {
+			$this->templateService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+		} else {
+			$this->templateService = $templateService;
 		}
-
-		$this->templateService = $templateService;
 	}
 
 	/**
-	 * initialize
+	 *
+	 * @param \TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService
+	 * @return void
+	 */
+	public function injectBrushDiscoveryService(\TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService = NULL) {
+		if (NULL === $brushDiscoveryService) {
+			$this->brushDiscoveryService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService');
+		} else {
+			$this->brushDiscoveryService = $brushDiscoveryService;
+		}
+	}
+
+	/**
+	 * Initializes the object
 	 *
 	 * @return void
 	 */
-	public function initialize() {
-		$this->injectObjectManager($this->objectManager);
+	public function initializeObject() {
 		$this->injectPageRepository($this->pageRepository);
 		$this->injectTemplateService($this->templateService);
-
-		$this->highlighterConfiguration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
-		);
+		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
 	}
 
 	/**
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
-	 * @param array $config flexform data
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
+	 * @param array flexform data
 	 * @return array
 	 */
-	public function getDiscovereBrushes($config) {
+	public function getConfiguredLanguages($config) {
+		$this->initializeObject();
+
 		static $cachedFields = 0;
 
 		if ($cachedFields != 0) {
@@ -148,54 +127,41 @@ class LanguageItems {
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
 
-			$recordPid = $config['row']['pid'];
-			if ($recordPid < 0) {
-				/* @var $editDocumentController \TYPO3\CMS\Backend\Controller\EditDocumentController */
-				$editDocumentController = $GLOBALS['SOBE'];
-				$recordPid = $editDocumentController->viewId;
+			$this->contentElementPid = $config['row']['pid'];
+
+			$brushesArray = $this->getUniqueAndSortedBrushes();
+
+			foreach ($brushesArray as $brushName => $brushLabel) {
+				$optionList[] = array($brushLabel, $brushName);
 			}
 
-			$this->contentElementPid = $recordPid;
-
-			$brushesArray = $this->getBrushes();
-
-			foreach ($brushesArray as $brushKey => $brushLabel) {
-				$optionList[] = array($brushLabel, $brushKey);
-			}
-
-			$config['items'] = array_merge($config['items'], $optionList);
+			$config['items'] = $optionList;
 		}
+
 		$cachedFields = $config['items'];
 
 		return $config;
 	}
 
 	/**
-	 * Returns the brushes according to the selected library
+	 * Returns unique and sorted brushes
 	 *
 	 * @return array
 	 */
-	protected function getBrushes() {
-		$configArray = $this->getExtensionTypoScriptSetup();
+	protected function getUniqueAndSortedBrushes() {
+		$configArray = $this->getConfig();
 
-		$brushDiscovery = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Configuration\\Brush\\' . $configArray['settings.']['library'] . 'Brush');
-		$brushes = $brushDiscovery->getBrushes();
+		$brushes = $this->brushDiscoveryService->discoverBrushes();
 
-		return $brushes;
+		return $brushes[$configArray['library']];
 	}
 
 	/**
-	 * Returns the TypoScript setup of the extension
+	 * Generates TS Config of the plugin
 	 *
 	 * @return array
 	 */
-	protected function getExtensionTypoScriptSetup() {
-		// Initialize the page selector
-		$this->injectPageRepository($this->pageRepository);
-
-		// Initialize the TS template
-		$this->injectTemplateService($this->templateService);
-
+	protected function getConfig() {
 		$this->pageRepository->init(TRUE);
 
 		$this->templateService->init();
@@ -204,11 +170,7 @@ class LanguageItems {
 		$this->templateService->tt_track = 0;
 
 		// Get rootline for current PID
-		$rootline = $this
-			->pageRepository
-			->getRootLine(
-				$this->contentElementPid
-			);
+		$rootline = $this->pageRepository->getRootLine($this->contentElementPid);
 
 		// Start TS template
 		$this->templateService->start($rootline);
@@ -216,7 +178,7 @@ class LanguageItems {
 		// Generate TS config
 		$this->templateService->generateConfig();
 
-		return $this->templateService->setup['plugin.']['tx_beautyofcode.'];
+		return $this->templateService->setup['plugin.']['tx_beautyofcode.']['settings.'];
 	}
 }
 ?>

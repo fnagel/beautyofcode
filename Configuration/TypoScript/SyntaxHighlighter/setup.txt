@@ -1,4 +1,18 @@
 plugin.tx_beautyofcode {
+	persistence {
+		classes {
+			TYPO3\Beautyofcode\Domain\Model\ContentElement {
+				mapping {
+					tableName = tt_content
+					columns {
+						header.mapOnProperty = header
+						pi_flexform.mapOnProperty = flexform
+					}
+				}
+			}
+		}
+	}
+
 	settings {
 		showLabel = {$plugin.tx_beautyofcode.settings.showLabel}
 

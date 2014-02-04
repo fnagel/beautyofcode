@@ -26,8 +26,8 @@
 								<type>select</type>
 								<items>
 									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
-										<numIndex index="1">plain</numIndex>
+										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cannot_load_brushes</numIndex>
+										<numIndex index="1"></numIndex>
 									</numIndex>
 								</items>
 								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>

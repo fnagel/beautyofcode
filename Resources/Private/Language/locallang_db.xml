@@ -16,7 +16,7 @@
 			<label index="label">Label</label>
 			<label index="lang">Programming Language</label>
 			<label index="code">Sourcecode</label>
-			<label index="plain">Default (Plain text)</label>
+			<label index="cannot_load_brushes">Can not load brushes</label>
 
 			<label index="highlight">Highlight one or more lines (1,2,3,4-6...)</label>
 			<label index="gutter">Show gutter</label>
@@ -40,7 +40,7 @@
 			<label index="label">Beschriftung</label>
 			<label index="lang">Programmiersprache</label>
 			<label index="code">Quellcode</label>
-			<label index="plain">Standard (Plain Text)</label>
+			<label index="cannot_load_brushes">Brushes nicht geladen</label>
 
 			<label index="highlight">Markierung für bestimmte Zeilen (1,2,3,4-6...)</label>
 			<label index="gutter">Zeilennummerierung anzeigen</label>

@@ -27,6 +27,8 @@ namespace TYPO3\Beautyofcode\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Registry;
+
 /**
  * The frontend plugin controller for the syntaxhighlighter
  *
@@ -55,10 +57,13 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 */
 	public function renderAction() {
 		$contentElementRaw = $this->configurationManager->getContentObject();
+		/* @var $contentElement \TYPO3\Beautyofcode\Domain\Model\ContentElement */
 		$contentElement = $this->contentElementRepository
 			->findByUid(
 				$contentElementRaw->data['uid']
 			);
+
+		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preRenderSignal', array($contentElement));
 
 		$this->view->assign('contentElement', $contentElement);
 	}

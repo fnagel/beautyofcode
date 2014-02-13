@@ -29,7 +29,6 @@ plugin.tx_beautyofcode {
 		onReadyCallback = {$plugin.tx_beautyofcode.settings.onReadyCallback}
 
 		theme = {$plugin.tx_beautyofcode.settings.theme}
-		brushes = {$plugin.tx_beautyofcode.settings.brushes}
 
 		defaults {
 			tab-size = {$plugin.tx_beautyofcode.settings.defaults.tab-size}

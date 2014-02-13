@@ -272,14 +272,5 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	public function getClassAttributeString() {
 		return $this->highlighterConfiguration->getClassAttributeString($this);
 	}
-
-	/**
-	 * Returns an array of brush CSS name + ressource file name
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap() {
-		return $this->highlighterConfiguration->getAutoloaderBrushMap();
-	}
 }
 ?>

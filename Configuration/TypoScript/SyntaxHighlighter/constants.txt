@@ -21,9 +21,6 @@ plugin.tx_beautyofcode.settings {
 		# cat=beautyofcode//3; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
 	onReadyCallback = (document).ready(function () {
 
-		# cat=beautyofcode//4; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is a lazy loaded, single js file. Add a CSV list out of: AS3, Bash, ColdFusion, Cpp, CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
-	brushes = Xml,JScript,CSharp,Plain
-
 		# cat=beautyofcode//5; type=string; label=Theme: One out of Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 (which is dark minimal and not available when using online hosting).
 	theme = Default
 

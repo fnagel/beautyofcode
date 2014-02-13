@@ -22,9 +22,20 @@ $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_
 if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {
 	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = array(
 		'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
-		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend'
+		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend'
 	);
 }
+
+\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher')->connect(
+	'TYPO3\\Beautyofcode\\Controller\\ContentController',
+	'preRenderSignal',
+	'TYPO3\\Beautyofcode\\Service\\BrushRegistryService',
+	'registerBrush'
+);
+
+$pageRendererHook = 'EXT:beautyofcode/Classes/Hooks/PageRendererHooks.php';
+$pageRendererHook .= ':TYPO3\\Beautyofcode\\Hooks\\PageRendererHooks->addBrushAssets';
+$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = $pageRendererHook;
 
 // registry for available syntax highlighting libraries and their brushes
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(

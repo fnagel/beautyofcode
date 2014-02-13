@@ -115,7 +115,10 @@ class LanguageItems {
 	 * @param array flexform data
 	 * @return array
 	 */
-	public function getConfiguredLanguages($config) {
+	public function getDiscoveredBrushes(
+		$config,
+		\TYPO3\CMS\Backend\Form\FormEngine $formEngine
+	) {
 		$this->initializeObject();
 
 		static $cachedFields = 0;

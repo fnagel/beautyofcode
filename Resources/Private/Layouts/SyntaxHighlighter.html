@@ -14,5 +14,5 @@
 <boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
 
 <boc:pageRenderer.addJsFooterInlineCode name="boc_inline">
-	<f:render partial="InlineJavascript/SyntaxHighlighter" section="Main" arguments="{ brushes: contentElement.flexformObject.syntaxHighlighterBrushesForAutoloader }" />
+	<f:render partial="InlineJavascript/SyntaxHighlighter" section="Main" />
 </boc:pageRenderer.addJsFooterInlineCode>

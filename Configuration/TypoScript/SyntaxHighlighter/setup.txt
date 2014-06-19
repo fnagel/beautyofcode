@@ -7,7 +7,7 @@ plugin.tx_beautyofcode {
 		baseUrl = {$plugin.tx_beautyofcode.settings.baseUrl}
 		scripts = {$plugin.tx_beautyofcode.settings.scripts}
 		styles = {$plugin.tx_beautyofcode.settings.styles}
-	
+
 		# if enabled JS code is fired with a domReady event (not recomended)
 		# always enabled if TYPO3 version < 4.3
 		# possible options: false, native, jquery

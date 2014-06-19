@@ -4,8 +4,6 @@ plugin.tx_beautyofcode {
 
 		library = {$plugin.tx_beautyofcode.settings.library}
 
-		useMinimizedResources = {$plugin.tx_beautyofcode.settings.useMinimizedResources}
-
 		brushes = {$plugin.tx_beautyofcode.settings.brushes}
 		theme = {$plugin.tx_beautyofcode.settings.theme}
 

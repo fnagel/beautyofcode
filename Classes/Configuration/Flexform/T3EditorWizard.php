@@ -24,6 +24,8 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+
 /**
  * Add t3editor in flexform
  *
@@ -65,7 +67,11 @@ class T3EditorWizard {
 
 		$this->setT3EditorMode();
 
-		$content = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
+		try {
+			$content = ArrayUtility::getValueByPath($this->flexformData, 'data/sDEF/lDEF/cCode/vDEF');
+		} catch (\Exception $e) {
+			$content = '';
+		}
 
 		/* @var $doc \TYPO3\CMS\Backend\Template\DocumentTemplate */
 		$doc = $GLOBALS['SOBE']->doc;
@@ -110,9 +116,9 @@ class T3EditorWizard {
 		$t3EditorLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor');
 
 		if ($enableT3Editor && $t3EditorLoaded) {
-			$t3EditorClass = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor') . 'Classes/T3Editor.php';
+			$t3EditorClass = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor') . 'Classes/T3editor.php';
 			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($t3EditorClass);
-			$this->t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\T3Editor\\T3Editor');
+			$this->t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\T3editor\\T3editor');
 		}
 	}
 
@@ -122,7 +128,11 @@ class T3EditorWizard {
 	 * @return void
 	 */
 	protected function setT3EditorMode() {
-		$language = $this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'];
+		try {
+			$language = ArrayUtility::getValueByPath($this->flexformData, 'data/sDEF/lDEF/cLang/vDEF');
+		} catch (\Exception $e) {
+			$language = '';
+		}
 
 		// set code type
 		// TODO: check if more available at sysext\t3editor\classes\class.tx_t3editor.php

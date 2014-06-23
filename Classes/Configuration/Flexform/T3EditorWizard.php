@@ -99,6 +99,7 @@ class T3EditorWizard {
 			)
 		);
 		$parameters['item'] .= $this->t3editor->getJavascriptCode($doc);
+		$parameters['item'] .= '<script type="text/javascript" src="/typo3conf/ext/beautyofcode/Resources/Public/Javascript/T3editorDimensions.js"></script>';
 
 		return '';
 	}

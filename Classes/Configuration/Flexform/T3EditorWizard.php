@@ -67,7 +67,7 @@ class T3EditorWizard {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\T3Editor\T3Editor
+	 * @var \TYPO3\CMS\T3editor\T3editor
 	 */
 	protected $t3editor;
 
@@ -147,14 +147,14 @@ class T3EditorWizard {
 
 			// set code type
 			// TODO: check if more available at sysext\t3editor\classes\class.tx_t3editor.php
-			$modeConstant = 'TYPO3\\CMS\\T3Editor\\T3Editor::MODE_' . strtoupper($language);
+			$modeConstant = 'TYPO3\\CMS\\T3editor\\T3editor::MODE_' . strtoupper($language);
 			if (defined($modeConstant)) {
 				$mode = constant($modeConstant);
 			} else {
-				$mode = \TYPO3\CMS\T3Editor\T3Editor::MODE_MIXED;
+				$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
 			}
 		} catch (\RuntimeException $e) {
-			$mode = \TYPO3\CMS\T3Editor\T3Editor::MODE_MIXED;
+			$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
 		}
 
 		$this->t3editor->setMode($mode);

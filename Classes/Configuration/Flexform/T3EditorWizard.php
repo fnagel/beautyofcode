@@ -27,11 +27,13 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException;
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * Add t3editor in flexform
  *
- * This file was developed and tested with TYPO3 4.7.7 and its t3editor extension
+ * This file was developed and tested with TYPO3 6.2 and its t3editor extension
  *
  * @author Felix Nagel <info@felixnagel.com>
  * @author Thomas Juhnke <typo3@van-tomas.de>
@@ -67,15 +69,22 @@ class T3EditorWizard {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\T3editor\T3editor
-	 */
-	protected $t3editor;
-
-	/**
-	 *
 	 * @var array
 	 */
 	protected $flexformData = array();
+
+	/**
+	 * TYPO3_CONF_VARS.EXT.extConf.beautyofcode
+	 *
+	 * @var array
+	 */
+	protected $extensionConfiguration = array();
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\T3editor\T3editor
+	 */
+	protected $t3editor;
 
 	/**
 	 * initalize
@@ -85,50 +94,80 @@ class T3EditorWizard {
 	public function initialize() {
 		$this->backendDocumentTemplate = $GLOBALS['SOBE']->doc;
 
-		// get flexform content
-		if ('' !== trim($this->parameters['row'][$this->parameters['field']])) {
-			$this->flexformData = GeneralUtility::xml2array(
-				$this->parameters['row'][$this->parameters['field']]
-			);
-		}
+		$this->initializeExtensionConfiguration();
+
+		$this->initializeFlexformConfiguration();
 
 		$this->initializeT3Editor();
 
 		$this->initializeT3EditorMode();
 	}
 
+
+	/**
+	 * initializeExtensionConfiguration
+	 *
+	 * @return void
+	 */
+	protected function initializeExtensionConfiguration() {
+		try {
+			$extensionConfiguration = ArrayUtility::getValueByPath(
+				$GLOBALS,
+				'TYPO3_CONF_VARS/EXT/extConf/beautyofcode'
+			);
+			$this->extensionConfiguration = unserialize($extensionConfiguration);
+		} catch (\RuntimeException $e) {
+			$this->extensionConfiguration = array();
+		}
+	}
+
+	/**
+	 * initializeFlexformConfiguration
+	 *
+	 * @return void
+	 */
+	protected function initializeFlexformConfiguration() {
+		$row = $this->parameters['row'];
+		$field = $this->parameters['field'];
+
+		if ('' !== trim($row[$field])) {
+			$this->flexformData = GeneralUtility::xml2array($row[$field]);
+		}
+	}
+
+
 	/**
 	 * initializes the t3editor
 	 *
 	 * @return void
-	 * @throws \TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException
+	 * @throws UnableToLoadT3EditorException
 	 */
 	protected function initializeT3Editor() {
-		// check if t3editor should be loaded at all
-		$extensionConfiguration = unserialize(
-			$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode']
-		);
+		$isExtensionLoaded = ExtensionManagementUtility::isLoaded('t3editor');
+		$isEnabled = (boolean) $this->extensionConfiguration['enable_t3editor'];
 
-		$enableT3Editor = (boolean) $extensionConfiguration['enable_t3editor'];
-		$t3EditorLoaded = ExtensionManagementUtility::isLoaded('t3editor');
-
-		if ($enableT3Editor && $t3EditorLoaded) {
-			$t3EditorClass = ExtensionManagementUtility::extPath(
-				't3editor',
-				'Classes/T3editor.php'
-			);
-
-			GeneralUtility::requireOnce($t3EditorClass);
-
-			$this->t3editor = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\T3editor\\T3editor'
+		if (!$isExtensionLoaded) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: ext:t3editor not installed.',
+				1403806638
 			);
 		}
 
-		if (is_null($this->t3editor) || !$this->t3editor->isEnabled()) {
-			throw new \TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException(
-				'Cannot instantiate T3editor or feature disabled.',
-				1403645949
+		if (!$isEnabled) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: Feature disabled.',
+				1403806644
+			);
+		}
+
+		$this->t3editor = GeneralUtility::makeInstance(
+			'TYPO3\\CMS\\T3editor\\T3editor'
+		);
+
+		if (!$this->t3editor->isEnabled()) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: Feature internally disabled.',
+				1403806649
 			);
 		}
 	}
@@ -137,6 +176,7 @@ class T3EditorWizard {
 	 * sets the language mode of the T3Editor
 	 *
 	 * @return void
+	 * @todo: check if more available at sysext\t3editor\
 	 */
 	protected function initializeT3EditorMode() {
 		try {
@@ -145,13 +185,15 @@ class T3EditorWizard {
 				'data/sDEF/lDEF/cLang/vDEF'
 			);
 
-			// set code type
-			// TODO: check if more available at sysext\t3editor\classes\class.tx_t3editor.php
-			$modeConstant = 'TYPO3\\CMS\\T3editor\\T3editor::MODE_' . strtoupper($language);
+			$modeConstant = sprintf(
+				'TYPO3\\CMS\\T3editor\\T3editor::MODE_%s',
+				strtoupper($language)
+			);
+
+			$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
+
 			if (defined($modeConstant)) {
 				$mode = constant($modeConstant);
-			} else {
-				$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
 			}
 		} catch (\RuntimeException $e) {
 			$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
@@ -161,13 +203,16 @@ class T3EditorWizard {
 	}
 
 	/**
-	 * renders a t3editor instance and applies all necessary stuff for highlighting
+	 * Renders a T3editor instance and applies all necessary stuff for highlighting
 	 *
 	 * @param array &$parameters Array of userFunc arguments
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine &$pObj
+	 * @param \TYPO3\CMS\Backend\Form\FormEngine &$formEngine
 	 * @return void|string
 	 */
-	public function main(&$parameters, \TYPO3\CMS\Backend\Form\FormEngine &$formEngine) {
+	public function main(
+		&$parameters,
+		\TYPO3\CMS\Backend\Form\FormEngine &$formEngine
+	) {
 		try {
 			$this->parameters = $parameters;
 			$this->formEngine = $formEngine;
@@ -178,15 +223,16 @@ class T3EditorWizard {
 				$this->flexformData,
 				'data/sDEF/lDEF/cCode/vDEF'
 			);
-		} catch (\TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException $e) {
+		} catch (UnableToLoadT3EditorException $e) {
 			return;
 		} catch (\RuntimeException $e) {
 			$content = '';
 		}
 
-		$this->parameters['item'] = '';
-		$this->parameters['item'] .= $this->getT3EditorMarkup($content);
-		$this->parameters['item'] .= '<script type="text/javascript" src="/typo3conf/ext/beautyofcode/Resources/Public/Javascript/T3editorDimensions.js"></script>';
+		$itemMarkup = $this->getT3EditorMarkup($content);
+		$itemMarkup .= $this->getDimensionsPatchMarkup();
+
+		$this->parameters['item'] = $itemMarkup;
 
 		return '';
 	}
@@ -231,30 +277,71 @@ class T3EditorWizard {
 	 */
 	protected function getTextareaAttributes() {
 		$fieldConfig = $this->getFieldConfig();
-		$onChangeFunction = $this->parameters['fieldChangeFunc']['TBE_EDITOR_fieldChanged'];
+
+		try {
+			$onChange = ArrayUtility::getValueByPath(
+				$this->parameters,
+				'fieldChangeFunc/TBE_EDITOR_fieldChanged'
+			);
+		} catch (\RuntimeException $e) {
+			$onChange = 'javascript:;';
+		}
 
 		return sprintf(
 			'rows="%" cols="%s" wrap="%s" style="%s" onchange="%s" ',
 			$fieldConfig['rows'],
 			$fieldConfig['cols'],
 			'off',
-			'width:98%; height: 100%',
-			$onChangeFunction
+			'width: 98%; height: 100%',
+			$onChange
 		);
 	}
 
 	/**
+	 * getFieldConfig
 	 *
 	 * @return array $fieldConfig TCA/flexform field configuration
 	 */
 	protected function getFieldConfig() {
 		if (is_array($this->parameters['fieldConfig'])) {
-			$fieldConfig = $this->parameters['fieldConfig'];
-		} else {
-			$fieldConfig = $GLOBALS['TCA'][$this->parameters['table']]['columns'][$this->parameters['field']]['config'];
+			return $this->parameters['fieldConfig'];
+		}
+
+		try {
+			$path = sprintf(
+				'%s/columns/%s/config',
+				$this->parameters['table'],
+				$this->parameters['field']
+			);
+			$fieldConfig = ArrayUtility::getValueByPath(
+				$GLOBALS['TCA'],
+				$path
+			);
+		} catch (\RuntimeException $e) {
+			$fieldConfig = array(
+				'rows' => 40,
+				'cols' => 10
+			);
 		}
 
 		return $fieldConfig;
+	}
+
+	/**
+	 * getDimensionsPatchMarkup
+	 *
+	 * @return string
+	 */
+	protected function getDimensionsPatchMarkup() {
+		$file = GeneralUtility::getFileAbsFileName(
+			'EXT:beautyofcode/Resources/Public/Javascript/T3editorDimensions.js'
+		);
+		$file = '/' . PathUtility::stripPathSitePrefix($file);
+
+		return sprintf(
+			'<script type="text/javascript" src="%s"></script>',
+			$file
+		);
 	}
 }
 ?>

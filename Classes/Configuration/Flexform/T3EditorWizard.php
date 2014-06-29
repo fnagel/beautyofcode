@@ -169,23 +169,16 @@ class T3EditorWizard {
 			);
 		}
 
-		$row = $this->parameters['row'];
-		$field = $this->parameters['field'];
-		$xml = $row[$field];
-
 		$this->t3editor
 			->setBackendDocumentTemplate($this->backendDocumentTemplate)
-			->setItemName($this->parameters['itemName'])
+			->setTextareaFieldName($this->parameters['itemName'])
 			->setTableName($this->parameters['table'])
 			->setFieldName($this->parameters['field'])
 			->setFlexformFieldConfiguration($this->parameters['fieldConfig'])
-			->setFlexformDataFromXml($xml)
-			->determineHighlightingModeFromFlexformPath()
-			->setHiddenFields(
-				array(
-					'target' => intval($this->formEngine->target)
-				)
-			);
+			->setFlexformData($this->flexformData)
+			->determineHighlightingModeFromFlexformPath('data/sDEF/lDEF/cLang/vDEF')
+			->setTextareaContentFromFlexformPath('data/sDEF/lDEF/cCode/vDEF')
+			->addHiddenField('target', intval($this->formEngine->target));
 
 		try {
 			$onChange = ArrayUtility::getValueByPath(
@@ -213,18 +206,11 @@ class T3EditorWizard {
 			$this->formEngine = $formEngine;
 
 			$this->initialize();
-
-			$content = ArrayUtility::getValueByPath(
-				$this->flexformData,
-				'data/sDEF/lDEF/cCode/vDEF'
-			);
 		} catch (UnableToLoadT3EditorException $e) {
 			return;
-		} catch (\RuntimeException $e) {
-			$content = '';
 		}
 
-		$itemMarkup = $this->t3editor->render($content);
+		$itemMarkup = $this->t3editor->render();
 		$itemMarkup .= $this->getDimensionsPatchMarkup();
 
 		$this->parameters['item'] = $itemMarkup;

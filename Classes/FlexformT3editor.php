@@ -50,11 +50,10 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	protected $backendDocumentTemplate;
 
 	/**
-	 * Name of the HTML textarea element
 	 *
 	 * @var string
 	 */
-	protected $itemName;
+	protected $textareaFieldName;
 
 	/**
 	 *
@@ -83,6 +82,12 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 
 	/**
 	 *
+	 * @var string
+	 */
+	protected $textareaContent = '';
+
+	/**
+	 *
 	 * @var array
 	 */
 	protected $hiddenFields = array();
@@ -106,13 +111,13 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	}
 
 	/**
-	 * setItemName
+	 * setTextareaFieldName
 	 *
-	 * @param string $itemName
+	 * @param string $textareaFieldName
 	 * @return \TYPO3\Beautyofcode\FlexformT3editor
 	 */
-	public function setItemName($itemName) {
-		$this->itemName = $itemName;
+	public function setTextareaFieldName($textareaFieldName) {
+		$this->textareaFieldName = $textareaFieldName;
 
 		return $this;
 	}
@@ -154,13 +159,13 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	}
 
 	/**
-	 * setFlexformDataFromXml
+	 * setFlexformData
 	 *
-	 * @param string $xml
+	 * @param array $flexformData
 	 * @return \TYPO3\Beautyofcode\FlexformT3editor
 	 */
-	public function setFlexformDataFromXml($xml) {
-		$this->flexformData = GeneralUtility::xml2array($xml);
+	public function setFlexformData($flexformData = array()) {
+		$this->flexformData = $flexformData;
 
 		return $this;
 	}
@@ -168,10 +173,10 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	/**
 	 * determineHighlightingModeFromFlexformPath
 	 *
-	 * @param string $path
+	 * @param string $path E.g. 'data/sDEF/lDEF/cLang/vDEF'
 	 * @return \TYPO3\Beautyofcode\FlexformT3editor
 	 */
-	public function determineHighlightingModeFromFlexformPath($path = 'data/sDEF/lDEF/cLang/vDEF') {
+	public function determineHighlightingModeFromFlexformPath($path) {
 		try {
 			$language = ArrayUtility::getValueByPath(
 				$this->flexformData,
@@ -198,13 +203,33 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	}
 
 	/**
-	 * setHiddenFields
+	 * setTextareaContentFromFlexformPath
 	 *
-	 * @param array $hiddenFields
+	 * @param string $path E.g. 'data/sDEF/lDEF/cCode/vDEF'
 	 * @return \TYPO3\Beautyofcode\FlexformT3editor
 	 */
-	public function setHiddenFields($hiddenFields = array()) {
-		$this->hiddenFields = $hiddenFields;
+	public function setTextareaContentFromFlexformPath($path) {
+		try {
+			$this->textareaContent = ArrayUtility::getValueByPath(
+				$this->flexformData,
+				$path
+			);
+		} catch (\RuntimeException $e) {
+			$this->textareaContent = '';
+		}
+
+		return $this;
+	}
+
+	/**
+	 * addHiddenField
+	 *
+	 * @param string $fieldName
+	 * @param mixed $fieldValue
+	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 */
+	public function addHiddenField($fieldName, $fieldValue) {
+		$this->hiddenFields[$fieldName] = $fieldValue;
 
 		return $this;
 	}
@@ -224,17 +249,16 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	/**
 	 * render
 	 *
-	 * @param string $content Content of the textarea tag/highlighting area
 	 * @return string
 	 */
-	public function render($content) {
+	public function render() {
 		$textareaAttributes = $this->getTextareaAttributes();
 		$statusBarTitle = $this->getStatusBar();
 
 		$html = $this->getCodeEditor(
-			$this->itemName,
+			$this->textareaFieldName,
 			'fixed-font enable-tab',
-			$content,
+			$this->textareaContent,
 			$textareaAttributes,
 			$statusBarTitle,
 			$this->hiddenFields

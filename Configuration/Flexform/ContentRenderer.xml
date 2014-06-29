@@ -40,8 +40,8 @@
 							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code</label>
 							<config type="array">
 								<type>text</type>
+								<cols>80</cols>
 								<rows>20</rows>
-								<cols>48</cols>
 								<wizards type="array">
 									<t3editor type="array">
 										<type>userFunc</type>

@@ -45,6 +45,12 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 
 	/**
 	 *
+	 * @var string
+	 */
+	const TEXTAREA_CLASSES = 'fixed-font enable-tab';
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Backend\Template\DocumentTemplate
 	 */
 	protected $backendDocumentTemplate;
@@ -257,7 +263,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 
 		$html = $this->getCodeEditor(
 			$this->textareaFieldName,
-			'fixed-font enable-tab',
+			self::TEXTAREA_CLASSES,
 			$this->textareaContent,
 			$textareaAttributes,
 			$statusBarTitle,

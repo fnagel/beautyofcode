@@ -110,8 +110,6 @@ class T3EditorWizard {
 		$t3EditorLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor');
 
 		if ($enableT3Editor && $t3EditorLoaded) {
-			$t3EditorClass = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor') . 'Classes/T3Editor.php';
-			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($t3EditorClass);
 			$this->t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\T3Editor\\T3Editor');
 		}
 	}

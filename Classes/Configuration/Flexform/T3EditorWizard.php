@@ -288,7 +288,7 @@ class T3EditorWizard {
 		}
 
 		return sprintf(
-			'rows="%" cols="%s" wrap="%s" style="%s" onchange="%s" ',
+			'rows="%s" cols="%s" wrap="%s" style="%s" onchange="%s" ',
 			$fieldConfig['rows'],
 			$fieldConfig['cols'],
 			'off',

@@ -82,7 +82,7 @@ class T3EditorWizard {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\T3editor\T3editor
+	 * @var \TYPO3\Beautyofcode\FlexformT3editor
 	 */
 	protected $t3editor;
 
@@ -99,8 +99,6 @@ class T3EditorWizard {
 		$this->initializeFlexformConfiguration();
 
 		$this->initializeT3Editor();
-
-		$this->initializeT3EditorMode();
 	}
 
 
@@ -161,7 +159,7 @@ class T3EditorWizard {
 		}
 
 		$this->t3editor = GeneralUtility::makeInstance(
-			'TYPO3\\CMS\\T3editor\\T3editor'
+			'\TYPO3\Beautyofcode\FlexformT3editor'
 		);
 
 		if (!$this->t3editor->isEnabled()) {
@@ -170,36 +168,33 @@ class T3EditorWizard {
 				1403806649
 			);
 		}
-	}
 
-	/**
-	 * sets the language mode of the T3Editor
-	 *
-	 * @return void
-	 * @todo: check if more available at sysext\t3editor\
-	 */
-	protected function initializeT3EditorMode() {
+		$row = $this->parameters['row'];
+		$field = $this->parameters['field'];
+		$xml = $row[$field];
+
+		$this->t3editor
+			->setBackendDocumentTemplate($this->backendDocumentTemplate)
+			->setItemName($this->parameters['itemName'])
+			->setTableName($this->parameters['table'])
+			->setFieldName($this->parameters['field'])
+			->setFlexformFieldConfiguration($this->parameters['fieldConfig'])
+			->setFlexformDataFromXml($xml)
+			->determineHighlightingModeFromFlexformPath()
+			->setHiddenFields(
+				array(
+					'target' => intval($this->formEngine->target)
+				)
+			);
+
 		try {
-			$language = ArrayUtility::getValueByPath(
-				$this->flexformData,
-				'data/sDEF/lDEF/cLang/vDEF'
+			$onChange = ArrayUtility::getValueByPath(
+				$this->parameters,
+				'fieldChangeFunc/TBE_EDITOR_fieldChanged'
 			);
-
-			$modeConstant = sprintf(
-				'TYPO3\\CMS\\T3editor\\T3editor::MODE_%s',
-				strtoupper($language)
-			);
-
-			$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
-
-			if (defined($modeConstant)) {
-				$mode = constant($modeConstant);
-			}
+			$this->t3editor->setTextareaOnChangeFunction($onChange);
 		} catch (\RuntimeException $e) {
-			$mode = \TYPO3\CMS\T3editor\T3editor::MODE_MIXED;
 		}
-
-		$this->t3editor->setMode($mode);
 	}
 
 	/**
@@ -229,102 +224,12 @@ class T3EditorWizard {
 			$content = '';
 		}
 
-		$itemMarkup = $this->getT3EditorMarkup($content);
+		$itemMarkup = $this->t3editor->render($content);
 		$itemMarkup .= $this->getDimensionsPatchMarkup();
 
 		$this->parameters['item'] = $itemMarkup;
 
 		return '';
-	}
-
-	/**
-	 * Builds and returns T3Editor markup for the given $content
-	 *
-	 * @param string $content
-	 * @return string
-	 */
-	protected function getT3EditorMarkup($content) {
-		$textareaAttributes = $this->getTextareaAttributes();
-		$statusBarTitle = sprintf(
-			'%s > %s',
-			$this->parameters['table'],
-			$this->parameters['field']
-		);
-		$hiddenFields = array(
-			'target' => intval($this->formEngine->target)
-		);
-
-		$html = $this->t3editor->getCodeEditor(
-			$this->parameters['itemName'],
-			'fixed-font enable-tab',
-			$content,
-			$textareaAttributes,
-			$statusBarTitle,
-			$hiddenFields
-		);
-
-		$html .= $this->t3editor->getJavascriptCode(
-			$this->backendDocumentTemplate
-		);
-
-		return $html;
-	}
-
-	/**
-	 * returns a string of additional textarea attributes
-	 *
-	 * @return string
-	 */
-	protected function getTextareaAttributes() {
-		$fieldConfig = $this->getFieldConfig();
-
-		try {
-			$onChange = ArrayUtility::getValueByPath(
-				$this->parameters,
-				'fieldChangeFunc/TBE_EDITOR_fieldChanged'
-			);
-		} catch (\RuntimeException $e) {
-			$onChange = 'javascript:;';
-		}
-
-		return sprintf(
-			'rows="%s" cols="%s" wrap="%s" style="%s" onchange="%s" ',
-			$fieldConfig['rows'],
-			$fieldConfig['cols'],
-			'off',
-			'width: 98%; height: 100%',
-			$onChange
-		);
-	}
-
-	/**
-	 * getFieldConfig
-	 *
-	 * @return array $fieldConfig TCA/flexform field configuration
-	 */
-	protected function getFieldConfig() {
-		if (is_array($this->parameters['fieldConfig'])) {
-			return $this->parameters['fieldConfig'];
-		}
-
-		try {
-			$path = sprintf(
-				'%s/columns/%s/config',
-				$this->parameters['table'],
-				$this->parameters['field']
-			);
-			$fieldConfig = ArrayUtility::getValueByPath(
-				$GLOBALS['TCA'],
-				$path
-			);
-		} catch (\RuntimeException $e) {
-			$fieldConfig = array(
-				'rows' => 40,
-				'cols' => 10
-			);
-		}
-
-		return $fieldConfig;
 	}
 
 	/**

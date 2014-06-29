@@ -31,6 +31,10 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
 /**
  * FlexformT3editor
  *
+ * A wrapper class arount \TYPO3\CMS\T3editor\T3editor, adding a sophisticated
+ * approach for setting necessary data for rendering the T3editor within
+ * flexforms.
+ *
  * @package \TYPO3\Beautyofcode
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
@@ -44,6 +48,13 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * @var \TYPO3\CMS\Backend\Template\DocumentTemplate
 	 */
 	protected $backendDocumentTemplate;
+
+	/**
+	 * Name of the HTML textarea element
+	 *
+	 * @var string
+	 */
+	protected $itemName;
 
 	/**
 	 *
@@ -71,6 +82,18 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	protected $flexformData = array();
 
 	/**
+	 *
+	 * @var array
+	 */
+	protected $hiddenFields = array();
+
+	/**
+	 *
+	 * @var string
+	 */
+	protected $textareaOnChangeFunction = 'javascript:;';
+
+	/**
 	 * setBackendDocumentTemplate
 	 *
 	 * @param \TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate
@@ -78,6 +101,18 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 */
 	public function setBackendDocumentTemplate(\TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate) {
 		$this->backendDocumentTemplate = $backendDocumentTemplate;
+
+		return $this;
+	}
+
+	/**
+	 * setItemName
+	 *
+	 * @param string $itemName
+	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 */
+	public function setItemName($itemName) {
+		$this->itemName = $itemName;
 
 		return $this;
 	}
@@ -131,15 +166,16 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	}
 
 	/**
-	 * determineHighlightingMode
+	 * determineHighlightingModeFromFlexformPath
 	 *
+	 * @param string $path
 	 * @return \TYPO3\Beautyofcode\FlexformT3editor
 	 */
-	public function determineHighlightingMode() {
+	public function determineHighlightingModeFromFlexformPath($path = 'data/sDEF/lDEF/cLang/vDEF') {
 		try {
 			$language = ArrayUtility::getValueByPath(
 				$this->flexformData,
-				'data/sDEF/lDEF/cLang/vDEF'
+				$path
 			);
 		} catch (\RuntimeException $e) {
 			$language = 'mixed';
@@ -162,27 +198,46 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	}
 
 	/**
+	 * setHiddenFields
+	 *
+	 * @param array $hiddenFields
+	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 */
+	public function setHiddenFields($hiddenFields = array()) {
+		$this->hiddenFields = $hiddenFields;
+
+		return $this;
+	}
+
+	/**
+	 * setTextareaOnChangeFunction
+	 *
+	 * @param string $textareaOnChangeFunction
+	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 */
+	public function setTextareaOnChangeFunction($textareaOnChangeFunction = '') {
+		$this->textareaOnChangeFunction = $textareaOnChangeFunction;
+
+		return $this;
+	}
+
+	/**
 	 * render
 	 *
-	 * @param sting $itemName
-	 * @param string $content
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
+	 * @param string $content Content of the textarea tag/highlighting area
 	 * @return string
 	 */
-	public function render($itemName, $content, \TYPO3\CMS\Backend\Form\FormEngine $formEngine) {
+	public function render($content) {
 		$textareaAttributes = $this->getTextareaAttributes();
 		$statusBarTitle = $this->getStatusBar();
-		$hiddenFields = array(
-			'target' => intval($formEngine->target)
-		);
 
 		$html = $this->getCodeEditor(
-			$itemName,
+			$this->itemName,
 			'fixed-font enable-tab',
 			$content,
 			$textareaAttributes,
 			$statusBarTitle,
-			$hiddenFields
+			$this->hiddenFields
 		);
 
 		$html .= $this->getJavascriptCode(
@@ -200,22 +255,13 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	protected function getTextareaAttributes() {
 		$dimensions = $this->getTextareaDimensions();
 
-		try {
-			$onChange = ArrayUtility::getValueByPath(
-				$this->parameters,
-				'fieldChangeFunc/TBE_EDITOR_fieldChanged'
-			);
-		} catch (\RuntimeException $e) {
-			$onChange = 'javascript:;';
-		}
-
 		return sprintf(
-			'rows="%" cols="%s" wrap="%s" style="%s" onchange="%s" ',
+			'rows="%s" cols="%s" wrap="%s" style="%s" onchange="%s" ',
 			$dimensions['rows'],
 			$dimensions['cols'],
 			'off',
 			'width: 98%; height: 100%',
-			$onChange
+			$this->textareaOnChangeFunction
 		);
 	}
 
@@ -231,17 +277,18 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 				$this->tableName,
 				$this->fieldName
 			);
-			$tcaConfiguration = ArrayUtility::getValueByPath(
+			$dimensions = ArrayUtility::getValueByPath(
 				$GLOBALS['TCA'],
 				$path
-			);
-			$dimensions = ArrayUtility::mergeRecursiveWithOverrule(
-				$tcaConfiguration,
-				$this->flexformFieldConfiguration
 			);
 		} catch (\RuntimeException $e) {
 			$dimensions = array('rows' => 40, 'cols' => 10);
 		}
+
+		$dimensions = ArrayUtility::mergeRecursiveWithOverrule(
+			$dimensions,
+			$this->flexformFieldConfiguration
+		);
 
 		return $dimensions;
 	}

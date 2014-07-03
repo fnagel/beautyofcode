@@ -51,6 +51,12 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 
 	/**
 	 *
+	 * @var integer
+	 */
+	const TEXTAREA_CSS_HEIGHT_FACTOR = 19;
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Backend\Template\DocumentTemplate
 	 */
 	protected $backendDocumentTemplate;
@@ -285,12 +291,14 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	protected function getTextareaAttributes() {
 		$dimensions = $this->getTextareaDimensions();
 
+		$height = ceil($dimensions['rows']) * self::TEXTAREA_CSS_HEIGHT_FACTOR;
+
 		return sprintf(
-			'rows="%s" cols="%s" wrap="%s" style="%s" onchange="%s" ',
-			$dimensions['rows'],
+			'cols="%s" rows="%s" wrap="%s" style="%s" onchange="%s" ',
 			$dimensions['cols'],
+			$dimensions['rows'],
 			'off',
-			'width: 98%; height: 100%',
+			'width: 97%; height: ' . $height . 'px',
 			$this->textareaOnChangeFunction
 		);
 	}
@@ -315,7 +323,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 			$dimensions = array('rows' => 40, 'cols' => 10);
 		}
 
-		$dimensions = ArrayUtility::mergeRecursiveWithOverrule(
+		ArrayUtility::mergeRecursiveWithOverrule(
 			$dimensions,
 			$this->flexformFieldConfiguration
 		);

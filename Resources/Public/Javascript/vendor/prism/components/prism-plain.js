@@ -1,1 +1,1 @@
-Prism.languages.plain = Prism.languages.extend('clike', {});
+Prism.languages.plain = {};

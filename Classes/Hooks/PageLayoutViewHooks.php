@@ -24,13 +24,46 @@ namespace TYPO3\Beautyofcode\Hooks;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Hook class for PageLayoutView hook `list_type_Info`
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package	\TYPO3\Beautyofcode\Hooks
+ * @package \TYPO3\Beautyofcode\Hooks
  */
 class PageLayoutViewHooks {
+
+	/**
+	 * Reference to translation catalogue
+	 *
+	 * @var string
+	 */
+	const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';
+
+	/**
+	 *
+	 * @var integer
+	 */
+	const MAX_TEXTAREA_LINES = 15;
+
+	/**
+	 *
+	 * @var integer
+	 */
+	const MAX_TEXTAREA_HEIGHT = 150;
+
+	/**
+	 *
+	 * @var integer
+	 */
+	const SMALL_TEXTAREA_FACTOR = 20;
+
+	/**
+	 *
+	 * @var integer
+	 */
+	const SMALL_TEXTAREA_ADDITION = 5;
 
 	/**
 	 *
@@ -39,17 +72,23 @@ class PageLayoutViewHooks {
 	protected $flexformData = array();
 
 	/**
+	 *
+	 * @var string
+	 */
+	protected $textareaHeight = '';
+
+	/**
 	 * Returns information about this extension's pi1 plugin
 	 *
-	 * @param array $params	Parameters to the hook
-	 * @param object $pObj A reference to calling object
+	 * @param array $params Parameters to the hook
+	 * @param object &$pObj A reference to calling object
 	 * @return string Information about pi1 plugin
 	 */
 	public function getExtensionSummary($params, &$pObj) {
 		$result = '';
 
 		if ($params['row']['list_type'] == 'beautyofcode_contentrenderer') {
-			$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($params['row']['pi_flexform']);
+			$this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
 
 			$uid = $params['row']['uid'];
 
@@ -66,13 +105,17 @@ class PageLayoutViewHooks {
 	}
 
 	/**
-	 * builds a header by reading the label field, fall back to "no label" from l10n catalogue
+	 * builds a header by reading the label field
+	 *
+	 * Falls back to "no label" from l10n catalogue
 	 *
 	 * @return string
 	 */
 	protected function buildLabelHeader() {
 		$header = sprintf("<em>%s</em>",
-			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_label')
+			$GLOBALS['LANG']->sL(
+				self::TRANSLATION_CATALOGUE . ':cms_layout.no_label'
+			)
 		);
 
 		$label = $this->flexformData['data']['sDEF']['lDEF']['cLabel']['vDEF'];
@@ -91,7 +134,7 @@ class PageLayoutViewHooks {
 	 */
 	protected function buildCodeLanguageHeader() {
 		return sprintf("<br /><br /><strong>%s</strong> (%s)<br />",
-			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code'),
+			$GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':code'),
 			htmlspecialchars($this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'])
 		);
 	}
@@ -106,24 +149,66 @@ class PageLayoutViewHooks {
 		$code = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
 
 		$preview = sprintf("<em>%s</em>",
-			$GLOBALS['LANG']->sL('LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:cms_layout.no_code')
+			$GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':cms_layout.no_code')
 		);
 
 		if (strlen($code) > 0) {
-			// calculate height
-			$proxyLines = sizeof(preg_split("/(\n)/", $code));
-			$taHeight = ($proxyLines >= 15) ? "150px" : ($proxyLines * 20 + 5) . "px";
-			// make textarea with code
-			$preview = '<textarea id="ta_hidden' . $uid . '" style="display: none;" readonly="readonly">' . \TYPO3\CMS\Core\Utility\GeneralUtility::formatForTextarea($code) . "</textarea>";
-			$preview .= '<textarea id="ta' . $uid . '" style="height: ' . $taHeight . '; width: 100%; cursor: pointer;" wrap="off" readonly="readonly"></textarea>';
-			$preview .= '<script type="text/javascript">' .
-						'var ta_hidden' . $uid . ' = document.getElementById("ta_hidden' . $uid . '");' .
-						'var ta' . $uid . ' = document.getElementById("ta' . $uid . '");' .
-						'window.setTimeout(function() { ta' . $uid . '.value = ta_hidden' . $uid . '.value; }, 500);' .
-						'</script>';
+			$this->calculateTextareaHeight($code);
+
+			$preview = sprintf(
+				'<textarea id="ta_hidden%s" style="display: none;" readonly="readonly">%s</textarea>',
+				$uid,
+				GeneralUtility::formatForTextarea($code)
+			);
+			$preview .= sprintf(
+				'<textarea id="ta%s" style="height: %s; width: 97%%; cursor: pointer;" wrap="off" readonly="readonly"></textarea>',
+				$uid,
+				$this->textareaHeight
+			);
+			$preview .= sprintf('
+				<script type="text/javascript">
+					var
+						ta_hidden%s = document.getElementById("ta_hidden%s"),
+						ta%s = document.getElementById("ta%s");
+
+					window.setTimeout(function() {
+						ta%s.value = ta_hidden%s.value;
+					}, 500);
+				</script>',
+				$uid,
+				$uid,
+				$uid,
+				$uid,
+				$uid,
+				$uid
+			);
 		}
 
 		return $preview;
+	}
+
+	/**
+	 * Calculates the height for the textarea field
+	 *
+	 * Newlines in $content be counted and then used to calculate the textarea
+	 * height.
+	 *
+	 * @param string $content
+	 * @param string $unit
+	 * @return void
+	 */
+	protected function calculateTextareaHeight($content, $unit = 'px') {
+		$lines = preg_split("/(\n)/", $content);
+		$proxyLines = sizeof($lines);
+
+		if ($proxyLines > self::MAX_TEXTAREA_LINES) {
+			$textareaHeight = self::MAX_TEXTAREA_HEIGHT;
+		} else {
+			$textareaHeight = $proxyLines * self::SMALL_TEXTAREA_FACTOR;
+			$textareaHeight += self::SMALL_TEXTAREA_ADDITION;
+		}
+
+		$this->textareaHeight = sprintf('%s%s', $textareaHeight, $unit);
 	}
 }
 ?>

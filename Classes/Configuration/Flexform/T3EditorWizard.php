@@ -24,21 +24,48 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException;
+use TYPO3\CMS\Core\Utility\PathUtility;
+
 /**
  * Add t3editor in flexform
  *
- * This file was developed and tested with TYPO3 4.7.7 and its t3editor extension
+ * This file was developed and tested with TYPO3 6.2 and its t3editor extension
  *
  * @author Felix Nagel <info@felixnagel.com>
+ * @author Thomas Juhnke <typo3@van-tomas.de>
  * @package	\TYPO3\Beautyofcode\Configuration\Flexform
  */
 class T3EditorWizard {
 
 	/**
+	 * Array of userFunc arguments, each passed by reference
 	 *
-	 * @var \TYPO3\CMS\T3Editor\T3Editor
+	 *   item - Rendered HTML markup for the field item so far
+	 *   icon - Wizard icon HTML markup, item title if not configured
+	 *   iTitle - Item title
+	 *   wConf - Wizard configuration
+	 *   row - Reference to the database record where the
+	 *         wizard is configured for a specific field
+	 *
+	 * @var array
 	 */
-	protected $t3editor;
+	protected $parameters;
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Backend\Form\FormEngine
+	 */
+	protected $formEngine;
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Backend\Template\DocumentTemplate
+	 */
+	protected $backendDocumentTemplate;
 
 	/**
 	 *
@@ -47,120 +74,165 @@ class T3EditorWizard {
 	protected $flexformData = array();
 
 	/**
-	 * renders a t3editor instance and applies all necessary stuff for highlighting
+	 * TYPO3_CONF_VARS.EXT.extConf.beautyofcode
 	 *
-	 * @param array $parameters
-	 * @param object $pObj
-	 * @return void|string
+	 * @var array
 	 */
-	public function main($parameters, $pObj) {
+	protected $extensionConfiguration = array();
+
+	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\FlexformT3editor
+	 */
+	protected $t3editor;
+
+	/**
+	 * initalize
+	 *
+	 * @return void
+	 */
+	public function initialize() {
+		$this->backendDocumentTemplate = $GLOBALS['SOBE']->doc;
+
+		$this->initializeExtensionConfiguration();
+
+		$this->initializeFlexformConfiguration();
+
 		$this->initializeT3Editor();
-
-		if (TRUE === is_null($this->t3editor) || !$this->t3editor->isEnabled()) {
-			return;
-		}
-
-		// get flexform content
-		$this->flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($parameters['row'][$parameters['field']]);
-
-		$this->setT3EditorMode();
-
-		$content = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
-
-		/* @var $doc \TYPO3\CMS\Backend\Template\DocumentTemplate */
-		$doc = $GLOBALS['SOBE']->doc;
-
-		if (is_array($parameters['fieldConfig'])) {
-			$fieldConfig = $parameters['fieldConfig'];
-		} else {
-			$fieldConfig = $GLOBALS['TCA'][$table]['columns'][$field]['config'];
-		}
-
-		$textareaAttributes = $this->getTextareaAttributes(
-			$fieldConfig,
-			$parameters['fieldChangeFunc']['TBE_EDITOR_fieldChanged']
-		);
-
-		$parameters['item'] = '';
-		$parameters['item'] .= $this->t3editor->getCodeEditor(
-			$parameters['itemName'],
-			'fixed-font enable-tab',
-			$content,
-			$textareaAttributes,
-			sprintf('%s > %s', $parameters['table'], $parameters['field']),
-			array(
-				'target' => intval($pObj->target)
-			)
-		);
-		$parameters['item'] .= $this->t3editor->getJavascriptCode($doc);
-
-		return '';
 	}
+
+
+	/**
+	 * initializeExtensionConfiguration
+	 *
+	 * @return void
+	 */
+	protected function initializeExtensionConfiguration() {
+		try {
+			$extensionConfiguration = ArrayUtility::getValueByPath(
+				$GLOBALS,
+				'TYPO3_CONF_VARS/EXT/extConf/beautyofcode'
+			);
+			$this->extensionConfiguration = unserialize($extensionConfiguration);
+		} catch (\RuntimeException $e) {
+			$this->extensionConfiguration = array();
+		}
+	}
+
+	/**
+	 * initializeFlexformConfiguration
+	 *
+	 * @return void
+	 */
+	protected function initializeFlexformConfiguration() {
+		$row = $this->parameters['row'];
+		$field = $this->parameters['field'];
+
+		if ('' !== trim($row[$field])) {
+			$this->flexformData = GeneralUtility::xml2array($row[$field]);
+		}
+	}
+
 
 	/**
 	 * initializes the t3editor
 	 *
 	 * @return void
+	 * @throws UnableToLoadT3EditorException
 	 */
 	protected function initializeT3Editor() {
-		// check if t3editor should be loaded at all
-		$extensionConfiguration = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode']);
+		$isExtensionLoaded = ExtensionManagementUtility::isLoaded('t3editor');
+		$isEnabled = (boolean) $this->extensionConfiguration['enable_t3editor'];
 
-		$enableT3Editor = (boolean) $extensionConfiguration['enable_t3editor'];
-		$t3EditorLoaded = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor');
+		if (!$isExtensionLoaded) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: ext:t3editor not installed.',
+				1403806638
+			);
+		}
 
-		if ($enableT3Editor && $t3EditorLoaded) {
-			$t3EditorClass = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath('t3editor') . 'Classes/T3Editor.php';
-			\TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($t3EditorClass);
-			$this->t3editor = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\T3Editor\\T3Editor');
+		if (!$isEnabled) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: Feature disabled.',
+				1403806644
+			);
+		}
+
+		$this->t3editor = GeneralUtility::makeInstance(
+			'\TYPO3\Beautyofcode\FlexformT3editor'
+		);
+
+		if (!$this->t3editor->isEnabled()) {
+			throw new UnableToLoadT3EditorException(
+				'Cannot instantiate T3editor: Feature internally disabled.',
+				1403806649
+			);
+		}
+
+		$this->t3editor
+			->setBackendDocumentTemplate($this->backendDocumentTemplate)
+			->setTextareaFieldName($this->parameters['itemName'])
+			->setTableName($this->parameters['table'])
+			->setFieldName($this->parameters['field'])
+			->setFlexformFieldConfiguration($this->parameters['fieldConfig'])
+			->setFlexformData($this->flexformData)
+			->determineHighlightingModeFromFlexformPath('data/sDEF/lDEF/cLang/vDEF')
+			->setTextareaContentFromFlexformPath('data/sDEF/lDEF/cCode/vDEF')
+			->addHiddenField('target', intval($this->formEngine->target));
+
+		try {
+			$onChange = ArrayUtility::getValueByPath(
+				$this->parameters,
+				'fieldChangeFunc/TBE_EDITOR_fieldChanged'
+			);
+			$this->t3editor->setTextareaOnChangeFunction($onChange);
+		} catch (\RuntimeException $e) {
 		}
 	}
 
 	/**
-	 * sets the language mode of the T3Editor
+	 * Renders a T3editor instance and applies all necessary stuff for highlighting
 	 *
-	 * @return void
+	 * @param array &$parameters Array of userFunc arguments
+	 * @param \TYPO3\CMS\Backend\Form\FormEngine &$formEngine
+	 * @return void|string
 	 */
-	protected function setT3EditorMode() {
-		$language = $this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'];
+	public function main(
+		&$parameters,
+		\TYPO3\CMS\Backend\Form\FormEngine &$formEngine
+	) {
+		try {
+			$this->parameters = $parameters;
+			$this->formEngine = $formEngine;
 
-		// set code type
-		// TODO: check if more available at sysext\t3editor\classes\class.tx_t3editor.php
-		switch($language){
-			case 'php':
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_PHP);
-				break;
-			case 'xml':
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_XML);
-				break;
-			case 'javascript':
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_JAVASCRIPT);
-				break;
-			case 'css':
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_CSS);
-				break;
-			case 'typoscript':
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_TYPOSCRIPT);
-				break;
-			default:
-				$this->t3editor->setMode(\TYPO3\CMS\T3Editor\T3Editor::MODE_MIXED);
+			$this->initialize();
+		} catch (UnableToLoadT3EditorException $e) {
+			return;
 		}
+
+		$itemMarkup = $this->t3editor->render();
+		$itemMarkup .= $this->getDimensionsPatchMarkup();
+
+		$this->parameters['item'] = $itemMarkup;
+
+		return '';
 	}
 
 	/**
-	 * returns a string of additional textarea attributes
+	 * getDimensionsPatchMarkup
 	 *
-	 * @param aray $fieldConfig TCA/flexform field configuration
-	 * @param string $onChangeFunction the content of the onchange attribute
 	 * @return string
 	 */
-	protected function getTextareaAttributes($fieldConfig, $onChangeFunction) {
-		return 'rows="' . $fieldConfig['rows'] . '" ' .
-			'cols="' . $fieldConfig['cols'] . '" ' .
-			'wrap="off" ' .
-			'style="width:98%; height: 100%" ' .
-			'onchange="' . $onChangeFunction . '" ';
+	protected function getDimensionsPatchMarkup() {
+		$file = GeneralUtility::getFileAbsFileName(
+			'EXT:beautyofcode/Resources/Public/Javascript/T3editorDimensions.js'
+		);
+		$file = '/' . PathUtility::stripPathSitePrefix($file);
 
+		return sprintf(
+			'<script type="text/javascript" src="%s"></script>',
+			$file
+		);
 	}
 }
 ?>

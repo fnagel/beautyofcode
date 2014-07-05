@@ -24,10 +24,13 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Function to add select options dynamically (loaded in flexform)
  *
  * @author Felix Nagel <info@felixnagel.com>
+ * @author Thomas Juhnke <typo3@van-tomas.de>
  * @package \TYPO3\Beautyofcode\Configuration\Flexform
  */
 class LanguageItems {
@@ -64,6 +67,29 @@ class LanguageItems {
 		'Typoscript' => array('typoscript', 'Typoscript'),
 		'Vb' => array('vbnet', 'Virtual Basic / .Net'),
 		'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
+		// Prism brushes
+		'bash' => array('bash', 'Bash / Shell'),
+		'c' => array('cpp', 'C / C++'),
+		'clike' => array('cpp', 'C-Like'),
+		'coffeescript' => array('coffeescript', 'Coffeescript'),
+		'cpp' => array('cpp', 'C / C++'),
+		'csharp' => array('csharp', 'C#'),
+		'css-extras' => array('css', 'CSS (with extras)'),
+		'css' => array('css', 'CSS'),
+		'gherkin' => array('gherkin', 'Gherkin'),
+		'go' => array('go', 'Go'),
+		'groovy' => array('groovy', 'Groovy'),
+		'http' => array('http', 'HTTP'),
+		'java' => array('java', 'Java'),
+		'javascript' => array('javascript', 'JavaScript'),
+		'markup' => array('xml', 'XML / XSLT / XHTML / HTML'),
+		'php-extras' => array('php', 'PHP (with extras)'),
+		'php' => array('php', 'PHP'),
+		'python' => array('python', 'Python'),
+		'ruby' => array('ruby', 'Ruby'),
+		'scss' => array('scss', 'SCSS'),
+		'sql' => array('sql', 'SQL'),
+		'typoscript' => array('typoscript', 'TypoScript'),
 	);
 
 	/**
@@ -90,12 +116,16 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository
 	 * @return void
 	 */
-	public function injectPageRepository(\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL) {
-		if (TRUE === is_null($pageRepository)) {
-			$this->pageRepository = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
-		} else {
-			$this->pageRepository = $pageRepository;
+	public function injectPageRepository(
+		\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL
+	) {
+		if (is_null($pageRepository)) {
+			$pageRepository = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Frontend\\Page\\PageRepository'
+			);
 		}
+
+		$this->pageRepository = $pageRepository;
 	}
 
 	/**
@@ -104,12 +134,16 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService
 	 * @return void
 	 */
-	public function injectTemplateService(\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL) {
-		if (TRUE === is_null($templateService)) {
-			$this->templateService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
-		} else {
-			$this->templateService = $templateService;
+	public function injectTemplateService(
+		\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL
+	) {
+		if (is_null($templateService)) {
+			$templateService = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Core\\TypoScript\\TemplateService'
+			);
 		}
+
+		$this->templateService = $templateService;
 	}
 
 	/**
@@ -117,9 +151,13 @@ class LanguageItems {
 	 * adds avaiable programming languages to the select options
 	 *
 	 * @param array flexform data
+	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
 	 * @return array
 	 */
-	public function getConfiguredLanguages($config) {
+	public function getConfiguredLanguages(
+		$config,
+		\TYPO3\CMS\Backend\Form\FormEngine $formEngine
+	) {
 		static $cachedFields = 0;
 
 		if ($cachedFields != 0) {
@@ -129,7 +167,14 @@ class LanguageItems {
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
 
-			$this->contentElementPid = $config['row']['pid'];
+			$recordPid = $config['row']['pid'];
+			if ($recordPid < 0) {
+				/* @var $editDocumentController \TYPO3\CMS\Backend\Controller\EditDocumentController */
+				$editDocumentController = $GLOBALS['SOBE'];
+				$recordPid = $editDocumentController->viewId;
+			}
+
+			$this->contentElementPid = $recordPid;
 
 			$brushesArray = $this->getUniqueAndSortedBrushes();
 
@@ -160,7 +205,11 @@ class LanguageItems {
 	protected function getUniqueAndSortedBrushes() {
 		$configArray = $this->getConfig();
 
-		$brushesArray = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(',', $configArray['brushes'], TRUE);
+		$brushesArray = GeneralUtility::trimExplode(
+			',',
+			$configArray['brushes'],
+			TRUE
+		);
 
 		// make unique
 		foreach ($brushesArray as &$value) {
@@ -191,6 +240,9 @@ class LanguageItems {
 		// Initialize the TS template
 		$this->injectTemplateService($this->templateService);
 
+		// create dummy TSFE for TemplateService
+		$GLOBALS['TSFE'] = new \stdClass();
+
 		$this->pageRepository->init(TRUE);
 
 		$this->templateService->init();
@@ -199,7 +251,11 @@ class LanguageItems {
 		$this->templateService->tt_track = 0;
 
 		// Get rootline for current PID
-		$rootline = $this->pageRepository->getRootLine($this->contentElementPid);
+		$rootline = $this
+			->pageRepository
+			->getRootLine(
+				$this->contentElementPid
+			);
 
 		// Start TS template
 		$this->templateService->start($rootline);
@@ -207,7 +263,9 @@ class LanguageItems {
 		// Generate TS config
 		$this->templateService->generateConfig();
 
-		return $this->templateService->setup['plugin.']['tx_beautyofcode.']['settings.'];
+		return $this
+			->templateService
+			->setup['plugin.']['tx_beautyofcode.']['settings.'];
 	}
 }
 ?>

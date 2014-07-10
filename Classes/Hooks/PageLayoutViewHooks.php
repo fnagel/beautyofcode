@@ -161,7 +161,7 @@ class PageLayoutViewHooks {
 				GeneralUtility::formatForTextarea($code)
 			);
 			$preview .= sprintf(
-				'<textarea id="ta%s" style="height: %s; width: 97%%; cursor: pointer;" wrap="off" readonly="readonly"></textarea>',
+				'<textarea id="ta%s" style="height: %s; width: 98%%; padding: 1%%; margin: 0;" wrap="off" readonly="readonly"></textarea>',
 				$uid,
 				$this->textareaHeight
 			);

@@ -6,11 +6,11 @@ plugin.tx_beautyofcode.settings {
 		# cat=beautyofcode//1; type=string; label=Library implementation: do not change! Select the proper static template instead.
 	library = Prism
 
-		# cat=beautyofcode//2; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is loaded a single js file. Add a seperated list out of: bash, c, clike, coffeescript, cpp, csharp, css-extras, css, gherkin, go, groovy, http, java, javascript, markup, php-extras, php, plain, python, ruby, scss, sql.
-	brushes = markup,clike,csharp,javascript,plain,bash,c,coffeescript,cpp,css,css-extras,gherkin,go,groovy,http,java,php,php-extras,python,ruby,scss,sql,typoscript
+		# cat=beautyofcode//2; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is loaded a single js file. Note that some of these languages definitions depend on each other. Add a seperated list out of: bash, c, clike, coffeescript, cpp, csharp, css-extras, css, gherkin, go, groovy, http, java, javascript, markup, php-extras, php, plain, python, ruby, scss, sql.
+	brushes = clike,javascript,csharp,plain,php,markup
 
 		# cat=beautyofcode//3; type=string; label=Theme: One out of Coy, Dark, Funky, Okaidia, Tomorrow, Twilight. Empty string for default theme.
-	theme = 
+	theme =
 
 		# cat=beautyofcode//4; type=boolean; label=Gutter: Show or hide gutter. Helps user to recognize correct line with numbers.
 	defaults.gutter = 1

@@ -1,4 +1,4 @@
-﻿.. ==================================================
+﻿﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -210,3 +210,10 @@ Where to post improvements or bugs
 
 Please feel free add questions, bugs and improvements at 
 http://forge.typo3.org/projects/extension-beautyofcode/issues
+
+"TypeError: lang is undefined" when using PRISM
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This Java-Script console error is caused by wrong order or missing langauge component files. Some Prism languages
+depened on each other and need to be added in correct order. Please check your TypoScript. Take a look in the Prism
+component JS files to check language dependencies.

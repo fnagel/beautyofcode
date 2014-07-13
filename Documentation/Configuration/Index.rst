@@ -139,9 +139,16 @@ PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
 bash, c, coffeescript, cpp, css, css-extras, gherkin, go, groovy, http, java,
 php, php-extras, python, ruby, scss, sql, typoscript
 
-**Note:** Prism uses its brushes in a dependency manner. For example the `clike`
+**Prism Note #1:** Prism uses its brushes in a dependency manner. For example the `clike`
 brush is necessary to load before `php`(and therefore must be defined *before*
 `php` in the `brushes` configuration.
+
+**Prism Note #2:** Furthermore, there currently is a bug in Prism which prevents
+proper line numbering and line highlighting. We're aware of this issue and keep
+an eye on this and will provide an update to Prism once this issue is fixed. For
+more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_. 
+To ensure proper functionality, you **must** provide the `markup` brush after
+the `php` Prism component/brush (like in the default configuration).
 
 theme
 """""
@@ -187,3 +194,5 @@ defaults.wrap-lines
 :typoscript:`plugin.tx_beautyofcode.settings.defaults.wrap-lines =` :ref:`t3tsref:data-type-boolean`
 
 Allows you to turn line wrapping feature on and off. Recomended to to be enabled.
+
+.. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

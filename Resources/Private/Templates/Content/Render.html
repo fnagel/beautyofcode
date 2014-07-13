@@ -20,5 +20,5 @@
 </f:section>
 
 <f:section name="ContainerPrism">
-	<pre{flexform.prismClassAttributeConfiguration}{f:if(condition: '{flexform.isGutterActive}', then: 'class="line-numbers"', else: '')}><code class="language-{flexform.language}"><f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
+	<pre<f:format.raw>{flexform.prismClassAttributeConfiguration}</f:format.raw>{f:if(condition: '{flexform.isGutterActive}', then: ' class="line-numbers"', else: '')}><code class="language-{flexform.language}"><f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
 </f:section>

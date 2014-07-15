@@ -1,4 +1,4 @@
-﻿﻿.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -19,12 +19,10 @@ Installation
 - Add the static template in your main typoscript (go to: list module, root 
   page, edit your root TS template, tab: includes, add one of the static 
   templates named “beautyOfCode”).
-- You could add the jQuery core file yourself or via this extension by enable 
-  addjQuery configuration. You can either install ext:t3jquery and make usage
-  of the shipped backend module to compile a ext:beautyofcode specific jQuery 
-  library, by analyzing the t3jquery.txt file. Otherwise, the shipped jQuery 
-  Version 1.3.2 will be used. Version 1.3.x and 1.4.x of jQuery will work. Since 
-  version 0.7.0 it's possible to use SyntaxHighlighter without using jQuery.
+- You must add the jQuery core file yourself or by installing ext:t3jquery 
+  and make usage of the shipped backend module to compile your necessary jQuery 
+  library. Since version 2.0.0 it's possible to use syntax highlighting 
+  without using jQuery.
 
 **Please note**: It's strongly recommended to add one line in your 
 localconf.php to force CDATA escaping within the flexforms in TYPO3. Please see 
@@ -92,11 +90,16 @@ What you need to know:
   in database
 - You'll need to change your TypoScript code
 
-   - SyntaxHighlighter v2 was removed
-   - include the correct static template
-   - jquery.scriptUrl was removed (adapt template if you need to adjust)
-   - jQueryNoConflict was removed (inline JS is wrapped in module pattern style code)
-   - config.strings were removed (<f:translate /> vhs in templates)
+  - SyntaxHighlighter v2 + beautyofcode (jQuery) abstraction layer was removed
+  - include the correct static template
+  - removed TypoScript constants / setup paths:
+
+    - jquery.scriptUrl (adapt template if you need to adjust)
+    - jQueryNoConflict (inline JS is wrapped in module pattern style code)
+    - config.strings (<f:translate /> vhs in templates)
+    - addjQuery (please make sure to include jQuery by yourself if you want to 
+      use the `includeAsDomReady` / `onReadyCallback` configuration settings
+    - selector
 
 Please see the changelog for all changes in detail.
 
@@ -122,7 +125,7 @@ SyntaxHighlighter
 
 - runs without using a JavaScript framework
 - uses latest version of SyntaxHighlighter
-- slim and less feature rich (but with almost the same  functionality)
+- slim and less feature rich (but with almost the same functionality)
 
 Prism
 """""
@@ -214,6 +217,7 @@ http://forge.typo3.org/projects/extension-beautyofcode/issues
 "TypeError: lang is undefined" when using PRISM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This Java-Script console error is caused by wrong order or missing langauge component files. Some Prism languages
-depened on each other and need to be added in correct order. Please check your TypoScript. Take a look in the Prism
+This JavaScript console error is caused by wrong order or missing language 
+component files. Some Prism languages depend on each other and need to be added 
+in correct order. Please check your TypoScript. Take a look in the Prism
 component JS files to check language dependencies.

@@ -39,8 +39,6 @@ Properties
    scripts_                                              :ref:`t3tsref:data-type-string`                                       no                      :code:`scripts/`
    styles_                                               :ref:`t3tsref:data-type-string`                                       no                      :code:`styles/`
    includeAsDomReady_                                    :ref:`t3tsref:data-type-boolean`                                                              :code:`false`
-   addjQuery_                                            :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
-   selector_                                             :ref:`t3tsref:data-type-string`                                       no
    brushes_                                              :ref:`t3tsref:data-type-string`                                       no                      :code:`Xml,JScript,CSharp,Plain`
    theme_                                                :ref:`t3tsref:data-type-string`                                       no                      :code:`Default`
    showLabel_                                            :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
@@ -105,23 +103,6 @@ includeAsDomReady
 If using standalone version it's possible to add a JS domReady instead of 
 injecting the code at the bottom of the body. Useful when using minification 
 scripts. Possible options: false, jquery or standalone
-
-addjQuery
-"""""""""
-
-:typoscript:`plugin.tx_beautyofcode.settings.addjQuery =` :ref:`t3tsref:data-type-boolean`
-
-This option adds jQuery Framework file. All other Java-Script files are added 
-manually (see Extension Manager configuration).
-
-selector
-""""""""
-
-:typoscript:`plugin.tx_beautyofcode.settings.selector =` :ref:`t3tsref:data-type-string`
-
-Please provide a jQuery selector (like *#myMainContent*) to improve frontend 
-performance. Is set beautyOfCode will only search for code snippets within the 
-given id.
 
 brushes
 """""""

@@ -1,4 +1,4 @@
-﻿﻿.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -67,16 +67,31 @@ Howto install prism
 
 6. install prism from CLI
 
-   .. code-block: bash
+   .. code-block:: bash
 
       ./node_modules/.bin/bower install prism#gh-pages
 
 Howto add BOM to all reStructuredText files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-While editing the files in Eclipse, the BOM possibly gets removed, this command 
-will help you to re-add the UTF8 BOM again:
+While editing the files in Eclipse, the BOM possibly gets removed, this script 
+will help you to re-add the UTF8 BOM again.
 
-   .. code-block: bash
+Simply put that into the extension root directory, add executable rights (`chmod u+x ...`). 
+If you are still experiencing issues, just comment out the last line and execute the script 
+multiple times until no output is displayed. Then uncomment the last line.
 
-      for file in $(ls -R Documentation/*.rst Documentation/*/*.rst); do sed -i '1s/^/\xef\xbb\xbf/' "$file"; done
+   .. code-block:: bash
+
+      #!/bin/bash
+      for F in $(ls -R Documentation/*.rst Documentation/*/*.rst Documentation/*.txt)
+      do
+        if [[ -f $F && `head -c 3 $F` == $'\xef\xbb\xbf' ]]; then
+            # file exists and has UTF-8 BOM
+            mv $F $F.bak
+            tail -c +4 $F.bak > $F
+            rm -f $F.bak
+            echo "removed BOM from $F"
+        fi
+      done
+      for file in $(ls -R Documentation/*.rst Documentation/*/*.rst Documentation/*.txt); do sed -i '1s/^/\xef\xbb\xbf/' "$file"; done

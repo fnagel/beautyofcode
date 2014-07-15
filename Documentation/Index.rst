@@ -1,4 +1,4 @@
-﻿﻿.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -32,10 +32,10 @@ beautyOfCode
       2013
 
    :Author:
-      Thomas Juhnke
+      Felix Nagel, Thomas Juhnke
 
    :Email:
-      typo3@van-tomas.de
+      info@felixnagel.com, typo3@van-tomas.de
 
    :License:
       This document is published under the Open Content License

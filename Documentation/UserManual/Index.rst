@@ -1,4 +1,4 @@
-﻿﻿.. ==================================================
+﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -48,8 +48,8 @@ No highlighting in FE
 
 If you're using the SyntaxHighlighter library, and decided to make usage of the 
 includeAsDomReady setting set to "jquery", you must ensure to either install the 
-extension t3jquery or include a jQuery core file by yourself? You either need to 
-add the jQuery Core file manually or activate the addjQuery option.
+extension t3jquery and compile a suitable jQuery libary on your own or include a 
+jQuery core file by yourself. You need to add the jQuery Core file manually.
 
 I get a Java-Script error in FE
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

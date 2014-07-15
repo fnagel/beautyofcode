@@ -17,25 +17,22 @@ plugin.tx_beautyofcode.settings {
 
 		# cat=beautyofcode//2; type=options [standalone=standalone,jquery=jquery]; label=Use JS domready event: It's possible to add a JS domReady instead of injecting the code at the bottom of the body. Useful when using minification scripts.
 	includeAsDomReady = false
-	
-		# cat=beautyofcode//3; type=boolean; label=Add jQuery: Activate if includeAsDomReady is set to jquery 
-	addjQuery = 0
 
-		# cat=beautyofcode//4; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
+		# cat=beautyofcode//3; type=string; label=onReady callback signature: allows alternative callback signatures (e.g. jQuery Mobile's pageshow event)
 	onReadyCallback = (document).ready(function () {
 
-		# cat=beautyofcode//5; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is a lazy loaded, single js file. Add a CSV list out of: AS3, Bash, ColdFusion, Cpp, CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
+		# cat=beautyofcode//4; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is a lazy loaded, single js file. Add a CSV list out of: AS3, Bash, ColdFusion, Cpp, CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
 	brushes = Xml,JScript,CSharp,Plain
 
-		# cat=beautyofcode//6; type=string; label=Theme: One out of Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 (which is dark minimal and not available when using online hosting).
+		# cat=beautyofcode//5; type=string; label=Theme: One out of Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 (which is dark minimal and not available when using online hosting).
 	theme = Default
 
-		# cat=beautyofcode//7; type=int+; label=Size of tabulator: Tabulator chars will be changed to spaces. Default is 4 (spaces).
+		# cat=beautyofcode//6; type=int+; label=Size of tabulator: Tabulator chars will be changed to spaces. Default is 4 (spaces).
 	defaults.tab-size = 4
 
-		# cat=beautyofcode//8; type=boolean; label=Gutter: Show or hide gutter. Helps user to recognize correct line with numbers.
+		# cat=beautyofcode//7; type=boolean; label=Gutter: Show or hide gutter. Helps user to recognize correct line with numbers.
 	defaults.gutter = 1
 
-		# cat=beautyofcode//9; type=boolean; label=Collapse: Allows you to force highlighted elements on the page to be collapsed. A link "show source" is displayed instead (not customizable yet).
+		# cat=beautyofcode//8; type=boolean; label=Collapse: Allows you to force highlighted elements on the page to be collapsed. A link "show source" is displayed instead (not customizable yet).
 	defaults.collapse = 0
 }

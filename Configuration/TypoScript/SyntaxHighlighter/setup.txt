@@ -8,11 +8,10 @@ plugin.tx_beautyofcode {
 		scripts = {$plugin.tx_beautyofcode.settings.scripts}
 		styles = {$plugin.tx_beautyofcode.settings.styles}
 
-		# if enabled JS code is fired with a domReady event (not recomended)
+		# if enabled JS code is fired with a domReady event (not recommended)
 		# always enabled if TYPO3 version < 4.3
-		# possible options: false, native, jquery
+		# possible options: false, standalone, jquery
 		includeAsDomReady = {$plugin.tx_beautyofcode.settings.includeAsDomReady}
-		addjQuery = {$plugin.tx_beautyofcode.settings.addjQuery}
 		onReadyCallback = {$plugin.tx_beautyofcode.settings.onReadyCallback}
 
 		theme = {$plugin.tx_beautyofcode.settings.theme}

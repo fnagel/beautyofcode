@@ -208,12 +208,6 @@ Enable t3editor in BE
 You need to enable the *enable_t3editor* option in Extension Manager and check 
 your user settings.
 
-Where to post improvements or bugs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Please feel free add questions, bugs and improvements at 
-http://forge.typo3.org/projects/extension-beautyofcode/issues
-
 "TypeError: lang is undefined" when using PRISM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -221,3 +215,43 @@ This JavaScript console error is caused by wrong order or missing language
 component files. Some Prism languages depend on each other and need to be added 
 in correct order. Please check your TypoScript. Take a look in the Prism
 component JS files to check language dependencies.
+
+No highlighting in FE
+^^^^^^^^^^^^^^^^^^^^^
+
+If you're using the SyntaxHighlighter library, and decided to make usage of the 
+includeAsDomReady setting set to "jquery", you must ensure to either install the 
+extension t3jquery and compile a suitable jQuery libary on your own or include a 
+jQuery core file by yourself. You need to add the jQuery Core file manually.
+
+I get a Java-Script error in FE
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+See above.
+
+Do you use other JavaScript frameworks? Please see down below.
+
+I'm using MooTools, ExtJS or similar
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+No problem, the generated inline javascript code uses the module pattern and 
+therefore doesn't need the noConflict option to be set.
+
+Please note and keep in mind if jQuery must be loaded (minified about 56KB) 
+this will lead to more traffic and less performance for your users.
+
+How to change language strings
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Adjust the templates according to your needs. Please follow the Fluid 
+templating guides for how to use your own templates for a specific extension.
+
+Also have a look at the following article:
+
+http://xavier.perseguers.ch/tutoriels/typo3/articles/managing-localization-files.html
+
+Where to post improvements or bugs
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Please feel free add questions, bugs and improvements at 
+http://forge.typo3.org/projects/extension-beautyofcode/issues

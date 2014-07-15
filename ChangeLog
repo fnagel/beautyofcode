@@ -1,3 +1,18 @@
+2014-07-15 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
+
+	2.0.0 released (Migration requires usage of update script)
+	* Rewritten for Extbase/Fluid usage
+	* Refactoring of Backend Hooks (Flexform, T3editor Wizard)
+	* Introduction of PageRenderer ViewHelpers for asset injection
+	* Introduction of (basic) Unit tests
+	* Integration of Prism (see http://prismjs.com/)
+	* Removal of SyntaxHighlighter v2 + beautyofcode (jQuery) abstraction layer
+	* Introducing ReST documentation
+
+	Note: This release is introducing breaking changes. Please make sure to
+	make a backup of your current site content and use the update script to update
+	your boc content elements.
+
 2013-09-05 Felix Nagel  <info@felixnagel.com>
 
 	1.0.3 released (no changes required)

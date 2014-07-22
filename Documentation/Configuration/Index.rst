@@ -45,7 +45,6 @@ Properties
    defaults.tab-size_                                    :ref:`t3tsref:data-type-integer`                                                              :code:`4`
    defaults.gutter_                                      :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
    defaults.collapse_                                    :ref:`t3tsref:data-type-boolean`                                                              :code:`0`
-   defaults.wrap-lines_                                  :ref:`t3tsref:data-type-boolean`                                                              :code:`1`
    ===================================================== ===================================================================== ======================= ==================
 
 
@@ -168,12 +167,5 @@ defaults.collapse
 
 Allows you to force highlighted elements on the page to be collapsed. A link 
 "show source" is displayed instead (not customizable yet).
-
-defaults.wrap-lines
-"""""""""""""""""""
-
-:typoscript:`plugin.tx_beautyofcode.settings.defaults.wrap-lines =` :ref:`t3tsref:data-type-boolean`
-
-Allows you to turn line wrapping feature on and off. Recomended to to be enabled.
 
 .. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

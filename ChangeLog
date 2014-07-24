@@ -1,6 +1,6 @@
-2014-07-15 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
+2014-07-24 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
 
-	2.0.0 released (Migration requires usage of update script)
+	2.0.0 released (Migration needed see documentation)
 	* Rewritten for Extbase/Fluid usage
 	* Refactoring of Backend Hooks (Flexform, T3editor Wizard)
 	* Introduction of PageRenderer ViewHelpers for asset injection
@@ -17,18 +17,18 @@
 
 	1.0.3 released (no changes required)
 	* fixed: label subpart rendering, see #51541, thx to Tommy Juhnke
-	* improved: general coding style and CGL 
+	* improved: general coding style and CGL
 
 2013-03-28 Felix Nagel  <info@felixnagel.com>
 
 	1.0.2 released (no changes required)
 	* fixed: issue with adding jQuery file to the document, see #46755, thx to Jochen Fröhlich
-	
+
 2013-03-11 Felix Nagel  <info@felixnagel.com>
 
 	1.0.1 released (no changes required)
 	* fixed: requirements as needed for planned TYPO3 TER cleanup
-	
+
 2013-01-26 Felix Nagel  <info@felixnagel.com>
 
 	1.0.0 released (you need to clear all caches)

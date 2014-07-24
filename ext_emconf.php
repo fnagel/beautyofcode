@@ -12,7 +12,7 @@
 
 $EM_CONF[$_EXTKEY] = array(
 	'title' => 'beautyOfCode Syntax Highlighter',
-	'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter (v2 or v3) by Alex Gorbatchev. t3editor enabled.',
+	'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism. t3editor enabled.',
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '1.0.3',

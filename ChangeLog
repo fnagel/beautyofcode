@@ -2,6 +2,7 @@
 
 	2.0.1 released (no changes required)
 	* Improved description for TS constants
+	* Use addJsFooterFile instead of addJsFooterLibrary as default to improve FE performance
 
 2014-07-24 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
 

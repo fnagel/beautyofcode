@@ -10,8 +10,8 @@
 
 <f:render section="Main" />
 
-<boc:pageRenderer.addJsFooterLibrary name="boc_standalone_core" file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shCore.js" />
-<boc:pageRenderer.addJsFooterLibrary name="boc_standalone_autoloader" file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shCore.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
 
 <boc:pageRenderer.addJsFooterInlineCode name="boc_inline">
 	<f:render partial="InlineJavascript/SyntaxHighlighter" section="Main" arguments="{ brushes: flexform.syntaxHighlighterBrushesForAutoloader }" />

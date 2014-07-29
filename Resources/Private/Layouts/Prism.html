@@ -16,12 +16,12 @@
 
 <f:render section="Main" />
 
-<boc:pageRenderer.addJsFooterLibrary name="boc_core" file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-core.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-core.js" />
 <f:if condition="{settings.defaults.gutter}">
-	<boc:pageRenderer.addJsFooterLibrary name="boc_line-numbers" file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.js" />
+	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.js" />
 </f:if>
-<boc:pageRenderer.addJsFooterLibrary name="boc_line-highlight" file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.js" />
 <f:for each="{boc:explode(value: settings.brushes)}" as="brush">
-	<boc:pageRenderer.addJsFooterLibrary name="boc_{brush}" file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}.js" />
-	<boc:pageRenderer.addJsFooterLibrary name="boc_{brush}-extras" file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}-extras.js" />
+	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}.js" />
+	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}-extras.js" />
 </f:for>

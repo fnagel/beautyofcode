@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Highlighter;
+namespace TYPO3\Beautyofcode\Highlighter\Configuration;
 
 /***************************************************************
  * Copyright notice
@@ -34,7 +34,7 @@ namespace TYPO3\Beautyofcode\Highlighter;
  *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-abstract class AbstractConfiguration implements ConfigurationInterface {
+abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface {
 
 	/**
 	 *
@@ -70,6 +70,17 @@ abstract class AbstractConfiguration implements ConfigurationInterface {
 
 		return $failSafeBrushIdentifier;
 	}
+
+	/**
+	 * hasBrushIdentifier
+	 *
+	 * @param string $brushIdentifier
+	 * @return boolean
+	 */
+	public function hasBrushIdentifier($brushIdentifier) {
+		return isset($this->brushIdentifierAliasLabelMap[$brushIdentifier]);
+	}
+
 
 	/**
 	 * getBrushIdentifierAliasAndLabel

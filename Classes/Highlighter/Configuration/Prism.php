@@ -35,8 +35,12 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * @link http://www.van-tomas.de/
  */
 class Prism
-	extends \TYPO3\Beautyofcode\Highlighter\AbstractConfiguration {
+	extends AbstractConfiguration {
 
+	/**
+	 *
+	 * @var array
+	 */
 	protected $failSafeBrushIdentifierMap = array(
 		'SyntaxHighlighter' => array(
 			'applescript' => 'javascript',

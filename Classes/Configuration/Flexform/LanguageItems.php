@@ -126,7 +126,7 @@ class LanguageItems {
 		$this->injectTemplateService($this->templateService);
 
 		$this->highlighterConfiguration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highligher\\Configuration\\ConfigurationInterface'
+			'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
 		);
 	}
 

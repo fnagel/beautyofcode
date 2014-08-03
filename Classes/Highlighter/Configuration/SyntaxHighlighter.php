@@ -35,7 +35,7 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * @link http://www.van-tomas.de/
  */
 class SyntaxHighlighter
-	extends \TYPO3\Beautyofcode\Highlighter\AbstractConfiguration {
+	extends AbstractConfiguration {
 
 	protected $failSafeBrushIdentifierMap = array(
 		'Prism' => array(

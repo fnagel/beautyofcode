@@ -27,12 +27,20 @@ namespace TYPO3\Beautyofcode\Domain\Model;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+
 /**
  * Domain model object for the flexform configuration of a plugin instance
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
 class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
+
+	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
 
 	/**
 	 *
@@ -90,84 +98,134 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	protected $languageFallback = 'plain';
 
 	/**
-	 * A map of $brush => $cssTag for the lazy loader of v3
+	 * injectHighlighterConfiguration
 	 *
-	 * @var array
+	 * @param ConfigurationInterface $highlighterConfiguration
+	 * @return void
 	 */
-	protected $standaloneBrushCssClassMap = array(
-		'AS3' => 'actionscript3',
-		'Bash' => 'bash',
-		'ColdFusion' => 'coldfusion',
-		'Cpp' => 'cpp',
-		'CSharp' => 'csharp',
-		'Css' => 'css',
-		'Delphi' => 'delphi',
-		'Diff' => 'diff',
-		'Erlang' => 'erlang',
-		'Groovy' => 'groovy',
-		'Java' => 'java',
-		'JavaFX' => 'javafx',
-		'JScript' => 'javascript',
-		'Perl' => 'perl',
-		'Php' => 'php',
-		'PowerShell' => 'powershell',
-		'Python' => 'python',
-		'Ruby' => 'ruby',
-		'Scala' => 'scala',
-		'Sql' => 'sql',
-		'Typoscript' => 'typoscript',
-		'Vb' => 'vbnet',
-		'Xml' => 'xml',
-	);
+	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
+		$this->highlighterConfiguration = $highlighterConfiguration;
+	}
 
+	/**
+	 * setCLabel
+	 *
+	 * @param string $cLabel
+	 * @return void
+	 */
 	public function setCLabel($cLabel) {
 		$this->cLabel = $cLabel;
 	}
 
+	/**
+	 * getCLabel
+	 *
+	 * @return string
+	 */
 	public function getCLabel() {
 		return $this->cLabel;
 	}
 
+	/**
+	 * setCLang
+	 *
+	 * @param string $cLang
+	 * @return void
+	 */
 	public function setCLang($cLang) {
 		$this->cLang = $cLang;
 	}
 
+	/**
+	 * getCLang
+	 *
+	 * @return string
+	 */
 	public function getCLang() {
 		return $this->cLang;
 	}
 
+	/**
+	 * setCCode
+	 *
+	 * @param string $cCode
+	 * @return void
+	 */
 	public function setCCode($cCode) {
 		$this->cCode = $cCode;
 	}
 
+	/**
+	 * getCCode
+	 *
+	 * @return string
+	 */
 	public function getCCode() {
 		return $this->cCode;
 	}
 
+	/**
+	 * setCHihglight
+	 *
+	 * @param string $cHighlight
+	 * @return void
+	 */
 	public function setCHighlight($cHighlight) {
 		$this->cHighlight = $cHighlight;
 	}
 
+	/**
+	 * getCHighlight
+	 *
+	 * @return string
+	 */
 	public function getCHighlight() {
 		return $this->cHighlight;
 	}
 
+	/**
+	 * setCCollapse
+	 *
+	 * @param string $cCollapse
+	 * @return void
+	 */
 	public function setCCollapse($cCollapse) {
 		$this->cCollapse = $cCollapse;
 	}
 
+	/**
+	 * getCCollapse
+	 *
+	 * @return string
+	 */
 	public function getCCollapse() {
 		return $this->cCollapse;
 	}
 
+	/**
+	 * setCGutter
+	 *
+	 * @param string $cGutter
+	 * @return void
+	 */
 	public function setCGutter($cGutter) {
 		$this->cGutter = $cGutter;
 	}
 
+	/**
+	 * getCGutter
+	 *
+	 * @return string
+	 */
 	public function getCGutter() {
 		return $this->cGutter;
 	}
 
+	/**
+	 * getIsGutterActive
+	 *
+	 * @return boolean
+	 */
 	public function getIsGutterActive() {
 		$isOffForInstance = '0' === $this->cGutter;
 		$isOnForInstance = '1' === $this->cGutter;
@@ -185,77 +243,34 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		}
 	}
 
-	public function setBrushes($brushes = array()) {
-		$this->brushes = $brushes;
-	}
-
 	/**
+	 * setTyposcriptDefaults
 	 *
-	 * @param unknown $typoscriptDefaults
+	 * @param array $typoscriptDefaults
 	 * @return void
 	 */
 	public function setTyposcriptDefaults($typoscriptDefaults = array()) {
 		$this->typoscriptDefaults = $typoscriptDefaults;
 	}
 
+	/**
+	 * getLanguage
+	 *
+	 * @return string
+	 */
 	public function getLanguage() {
-		return $this->cLang ? $this->cLang : $this->languageFallback;
+		$language = $this->cLang ? $this->cLang : $this->languageFallback;
+
+		return $this->highlighterConfiguration->getFailSafeBrushIdentifier($language);
 	}
 
 	/**
-	 * Returns the class attribute configuration for the SyntaxHighlighter library
+	 * getClassAttributeString
 	 *
 	 * @return string
 	 */
-	public function getSyntaxHighlighterClassAttributeConfiguration() {
-		$configurationItems = array();
-
-		$classAttributeConfigurationStack = array(
-			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
-			'gutter' => $this->cGutter,
-			// no toolbar
-			'collapse' => $this->cCollapse,
-		);
-
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
-				continue;
-			}
-
-			if ($configurationKey === 'highlight') {
-				$key = $configurationKey;
-				$value = sprintf('[%s]', $configurationValue);
-			} else {
-				$key = $configurationKey;
-				$value = var_export((boolean) $configurationValue, TRUE);
-			}
-
-			$configurationItems[] = sprintf('%s: %s', $key, $value);
-		}
-
-		return '; ' . implode('; ', $configurationItems);
-	}
-
-	/**
-	 * Returns the class attribute configuration string suitable for prism
-	 *
-	 * @return string
-	 */
-	public function getPrismClassAttributeConfiguration() {
-		$configurationItems = array();
-		$classAttributeConfigurationStack = array(
-			'data-line' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($this->cHighlight),
-		);
-
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
-				continue;
-			}
-
-			$configurationItems[] = sprintf('%s="%s"', $configurationKey, $configurationValue);
-		}
-
-		return ' ' . implode(' ', $configurationItems);
+	public function getClassAttributeString() {
+		return $this->highlighterConfiguration->getClassAttributeString($this);
 	}
 
 	/**
@@ -263,24 +278,8 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 *
 	 * @return array
 	 */
-	public function getSyntaxHighlighterBrushesForAutoloader() {
-		$brushes = array();
-
-		$configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
-			',',
-			$this->brushes
-		);
-
-		$brushes['plain'] = 'shBrushPlain.js';
-
-		foreach ($configuredBrushes as $brush) {
-			$cssTag = $this->standaloneBrushCssClassMap[$brush];
-			$brushPath = 'shBrush' . $brush . '.js';
-
-			$brushes[$cssTag] = $brushPath;
-		}
-
-		return $brushes;
+	public function getAutoloaderBrushMap() {
+		return $this->highlighterConfiguration->getAutoloaderBrushMap();
 	}
 }
 ?>

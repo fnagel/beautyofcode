@@ -58,7 +58,6 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			->reconstituteByContentObject(
 				$this->configurationManager->getContentObject()
 			);
-		$flexform->setBrushes($this->settings['brushes']);
 		$flexform->setTyposcriptDefaults($this->settings['defaults']);
 
 		$this->view->assign('flexform', $flexform);

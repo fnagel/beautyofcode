@@ -165,7 +165,7 @@ class LanguageItems {
 			$brushesArray = $this->getUniqueAndSortedBrushes();
 
 			foreach ($brushesArray as $i => $brush) {
-				if ($brush === 'Plain') {
+				if (strtolow($brush) === 'plain') {
 					continue;
 				}
 				// skip unknown brushes

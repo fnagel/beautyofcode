@@ -98,13 +98,13 @@ class Configuration implements ConfigurationInterface {
 
 
 	/**
-	 * getFailSafeBrushIdentifier
+	 * getFailSafeBrushAlias
 	 *
-	 * @param string $brushIdentifier
+	 * @param string $brushAlias
 	 * @return string
 	 */
-	public function getFailSafeBrushIdentifier($brushIdentifier) {
-		return $this->configuration->getFailSafeBrushIdentifier($brushIdentifier);
+	public function getFailSafeBrushAlias($brushAlias) {
+		return $this->configuration->getFailSafeBrushAlias($brushAlias);
 	}
 
 	/**
@@ -115,6 +115,16 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function hasBrushIdentifier($brushIdentifier) {
 		return $this->configuration->hasBrushIdentifier($brushIdentifier);
+	}
+
+	/**
+	 * hasBrushAlias
+	 *
+	 * @param string $brushAlias
+	 * @return boolean
+	 */
+	public function hasBrushAlias($brushAlias) {
+		return $this->configuration->hasBrushAlias($brushAlias);
 	}
 
 	/**

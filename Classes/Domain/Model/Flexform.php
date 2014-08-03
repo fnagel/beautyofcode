@@ -261,7 +261,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	public function getLanguage() {
 		$language = $this->cLang ? $this->cLang : $this->languageFallback;
 
-		return $this->highlighterConfiguration->getFailSafeBrushIdentifier($language);
+		return $this->highlighterConfiguration->getFailSafeBrushAlias($language);
 	}
 
 	/**

@@ -37,12 +37,12 @@ namespace TYPO3\Beautyofcode\Highlighter;
 interface ConfigurationInterface {
 
 	/**
-	 * getFailSafeBrushIdentifier
+	 * getFailSafeBrushAlias
 	 *
-	 * @param string $brushIdentifier
+	 * @param string $brushAlias
 	 * @return string
 	 */
-	public function getFailSafeBrushIdentifier($brushIdentifier);
+	public function getFailSafeBrushAlias($brushAlias);
 
 	/**
 	 * hasBrushIdentifier
@@ -51,6 +51,14 @@ interface ConfigurationInterface {
 	 * @return boolean
 	 */
 	public function hasBrushIdentifier($brushIdentifier);
+
+	/**
+	 * hasBrushAlias
+	 *
+	 * @param string $brushAlias
+	 * @return boolean
+	 */
+	public function hasBrushAlias($brushAlias);
 
 	/**
 	 * getBrushIdentifierAliasAndLabel

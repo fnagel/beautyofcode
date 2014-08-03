@@ -41,7 +41,7 @@ class Prism
 	 *
 	 * @var array
 	 */
-	protected $failSafeBrushIdentifierMap = array(
+	protected $failSafeBrushAliasMap = array(
 		'SyntaxHighlighter' => array(
 			'applescript' => 'javascript',
 			'actionscript3' => 'javascript',

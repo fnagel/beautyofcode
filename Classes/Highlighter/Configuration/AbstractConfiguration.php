@@ -53,22 +53,24 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
-	 * getFailSafeBrushIdentifier
+	 * getFailSafeBrushAlias
 	 *
-	 * @param string $brushIdentifier
+	 * @param string $brushAlias
 	 * @return string
 	 */
-	public function getFailSafeBrushIdentifier($brushIdentifier) {
-		$failSafeBrushIdentifier = $brushIdentifier;
+	public function getFailSafeBrushAlias($brushAlias) {
+		if ($this->hasBrushAlias($brushAlias)) {
+			return $brushAlias;
+		}
 
-		foreach ($this->failSafeBrushIdentifierMap as $foreignLibrary => $foreignLibraryMap) {
-			if (isset($foreignLibraryMap[$brushIdentifier])) {
-				$failSafeBrushIdentifier = $foreignLibraryMap[$brushIdentifier];
+		foreach ($this->failSafeBrushAliasMap as $foreignLibraryMap) {
+			if (isset($foreignLibraryMap[$brushAlias])) {
+				$failSafeBrushAlias = $foreignLibraryMap[$brushAlias];
 				break;
 			}
 		}
 
-		return $failSafeBrushIdentifier;
+		return $failSafeBrushAlias;
 	}
 
 	/**
@@ -79,6 +81,23 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	 */
 	public function hasBrushIdentifier($brushIdentifier) {
 		return isset($this->brushIdentifierAliasLabelMap[$brushIdentifier]);
+	}
+
+	/**
+	 * hasBrushAlias
+	 *
+	 * @param string $brushAlias
+	 * @return boolean
+	 */
+	public function hasBrushAlias($brushAlias) {
+		foreach ($this->brushIdentifierAliasLabelMap as $aliasLabelMap) {
+			list($alias, ) = $aliasLabelMap;
+			if ($alias === $brushAlias) {
+				return TRUE;
+			}
+		}
+
+		return FALSE;
 	}
 
 

@@ -37,16 +37,19 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
 class SyntaxHighlighter
 	extends AbstractConfiguration {
 
-	protected $failSafeBrushIdentifierMap = array(
+	/**
+	 *
+	 * @var array
+	 */
+	protected $failSafeBrushAliasMap = array(
 		'Prism' => array(
-			'c' => 'Cpp',
-			'coffeescript' => 'JScript',
-			'gherkin' => 'Plain',
-			'go' => 'Plain',
-			'http' => 'Plain',
-			'javascript' => 'JScript',
-			'markup' => 'Xml',
-			'scss' => 'Sass',
+			'c' => 'cpp',
+			'coffeescript' => 'javascript',
+			'gherkin' => 'plain',
+			'go' => 'plain',
+			'http' => 'plain',
+			'markup' => 'xml',
+			'scss' => 'sass',
 		),
 	);
 
@@ -101,7 +104,7 @@ class SyntaxHighlighter
 		$brushes['plain'] = 'shBrushPlain.js';
 
 		foreach ($configuredBrushes as $brush) {
-			list($cssTag, $brushLabel) = $this->cssClassLabelMap[$brush];
+			list($cssTag, ) = $this->brushIdentifierAliasLabelMap[$brush];
 			$brushPath = 'shBrush' . $brush . '.js';
 
 			$brushes[$cssTag] = $brushPath;

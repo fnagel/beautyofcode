@@ -234,13 +234,13 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 		if ($isOffForInstance) {
 			return FALSE;
-		} else if ($isOnForInstance) {
+		} elseif ($isOnForInstance) {
 			return TRUE;
-		} else if ($useDefault && $isDefaultSet) {
+		} elseif ($useDefault && $isDefaultSet) {
 			return (bool) $this->typoscriptDefaults['gutter'];
-		} else {
-			return FALSE;
 		}
+
+		return FALSE;
 	}
 
 	/**

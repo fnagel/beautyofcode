@@ -36,65 +36,10 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class LanguageItems {
 
 	/**
-	 * A CSS class/label map for the select box
 	 *
-	 * Key is the brush string from TS Setup; Value is an array with the CSS
-	 * class in key 0 and the label for the select box in key 1
-	 *
-	 * @var array
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
-	protected $cssClassLabelMap = array(
-		'AS3' => array('actionscript3', 'Actionscript 3'),
-		'Bash' => array('bash', 'Bash / Shell'),
-		'ColdFusion' => array('coldfusion', 'ColdFusion'),
-		'Cpp' => array('cpp', 'C / C++'),
-		'CSharp' => array('csharp', 'C#'),
-		'Css' => array('css', 'CSS'),
-		'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
-		'Diff' => array('diff', 'Diff / Patch'),
-		'Erlang' => array('erlang', 'Erlang'),
-		'Groovy' => array('groovy', 'Groovy'),
-		'Java' => array('java', 'Java'),
-		'JavaFX' => array('javafx', 'Java FX'),
-		'JScript' => array('javascript', 'Java-Script'),
-		'Perl' => array('perl', 'Perl'),
-		'Php' => array('php', 'PHP'),
-		'PowerShell' => array('powershell', 'Power-Shell'),
-		'Python' => array('python', 'Python'),
-		'Ruby' => array('ruby', 'Ruby on Rails'),
-		'Scala' => array('scala', 'Scala'),
-		'Sql' => array('sql', 'SQL / MySQL'),
-		'Typoscript' => array('typoscript', 'Typoscript'),
-		'Vb' => array('vbnet', 'Virtual Basic / .Net'),
-		'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
-		// Prism brushes
-		'bash' => array('bash', 'Bash / Shell'),
-		'c' => array('c', 'C / C++'),
-		'clike' => array('clike', 'C-Like'),
-		'coffeescript' => array('coffeescript', 'Coffeescript'),
-		'cpp' => array('cpp', 'C / C++'),
-		'csharp' => array('csharp', 'C#'),
-		'css' => array('css', 'CSS'),
-		'gherkin' => array('gherkin', 'Gherkin'),
-		'go' => array('go', 'Go'),
-		'groovy' => array('groovy', 'Groovy'),
-		'http' => array('http', 'HTTP'),
-		'java' => array('java', 'Java'),
-		'javascript' => array('javascript', 'JavaScript'),
-		'markup' => array('markup', 'XML / XSLT / XHTML / HTML'),
-		'php' => array('php', 'PHP'),
-		'python' => array('python', 'Python'),
-		'ruby' => array('ruby', 'Ruby'),
-		'scss' => array('scss', 'SCSS'),
-		'sql' => array('sql', 'SQL'),
-		'typoscript' => array('typoscript', 'TypoScript'),
-	);
-
-	/**
-	 *
-	 * @var integer
-	 */
-	protected $contentElementPid;
+	protected $objectManager;
 
 	/**
 	 *
@@ -107,6 +52,32 @@ class LanguageItems {
 	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
 	 */
 	protected $templateService;
+
+	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
+
+	/**
+	 *
+	 * @var integer
+	 */
+	protected $contentElementPid;
+
+	/**
+	 * injectObjectManager
+	 *
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager = NULL) {
+		if (is_null($objectManager)) {
+			$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+		}
+
+		$this->objectManager = $objectManager;
+	}
 
 	/**
 	 * Injects the page repository
@@ -145,10 +116,25 @@ class LanguageItems {
 	}
 
 	/**
+	 * initialize
+	 *
+	 * @return void
+	 */
+	public function initialize() {
+		$this->injectObjectManager($this->objectManager);
+		$this->injectPageRepository($this->pageRepository);
+		$this->injectTemplateService($this->templateService);
+
+		$this->highlighterConfiguration = $this->objectManager->get(
+			'TYPO3\\Beautyofcode\\Highligher\\Configuration\\ConfigurationInterface'
+		);
+	}
+
+	/**
 	 * This function is called from the flexform and
 	 * adds avaiable programming languages to the select options
 	 *
-	 * @param array flexform data
+	 * @param array $config flexform data
 	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
 	 * @return array
 	 */
@@ -156,6 +142,8 @@ class LanguageItems {
 		$config,
 		\TYPO3\CMS\Backend\Form\FormEngine $formEngine
 	) {
+		$this->initialize();
+
 		static $cachedFields = 0;
 
 		if ($cachedFields != 0) {
@@ -181,11 +169,13 @@ class LanguageItems {
 					continue;
 				}
 				// skip unknown brushes
-				if (FALSE === isset($this->cssClassLabelMap[$brush])) {
+				if (!$this->highlighterConfiguration->hasBrushIdentifier($brush)) {
 					continue;
 				}
 
-				$optionList[$i] = array_reverse($this->cssClassLabelMap[$brush]);
+				$optionList[$i] = array_reverse(
+					$this->highlighterConfiguration->getBrushIdentifierAliasAndLabel($brush)
+				);
 			}
 
 			$config['items'] = array_merge($config['items'], $optionList);
@@ -232,12 +222,6 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getConfig() {
-		// Initialize the page selector
-		$this->injectPageRepository($this->pageRepository);
-
-		// Initialize the TS template
-		$this->injectTemplateService($this->templateService);
-
 		// create dummy TSFE for TemplateService
 		$GLOBALS['TSFE'] = new \stdClass();
 

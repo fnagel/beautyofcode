@@ -35,10 +35,11 @@ use TYPO3\Beautyofcode\Domain\Model\ContentElement;
  *
  * @package \TYPO3\Beautyofcode\Service
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class BrushRegistryService {
+class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
@@ -53,6 +54,12 @@ class BrushRegistryService {
 	protected $typoScriptFrontendController;
 
 	/**
+	 *
+	 * @var array
+	 */
+	protected $brushes = array();
+
+	/**
 	 * Initializes the brush registry service
 	 *
 	 * @return void
@@ -62,6 +69,7 @@ class BrushRegistryService {
 	}
 
 	/**
+	 * injectCacheManager
 	 *
 	 * @param CacheManager $cacheManager
 	 * @return void
@@ -71,6 +79,7 @@ class BrushRegistryService {
 	}
 
 	/**
+	 * registerBrush
 	 *
 	 * @param ContentElement $contentElement
 	 * @return void
@@ -80,17 +89,15 @@ class BrushRegistryService {
 
 		$brush = $contentElement->getFlexformObject()->getCLang();
 
-		$brushes = array();
-
-		if ($this->cache->has($entryIdentifier)) {
-			$brushes = $this->cache->requireOnce($entryIdentifier);
+		if ($this->cache->has($entryIdentifier) && empty($this->brushes)) {
+			$this->brushes = $this->cache->requireOnce($entryIdentifier);
 		}
 
-		if (FALSE === in_array($brush, $brushes)) {
-			$brushes[] = $brush;
+		if (FALSE === in_array($brush, $this->brushes)) {
+			$this->brushes[] = $brush;
 		}
 
-		$cacheContent = 'return ' . var_export($brushes, TRUE) . ';';
+		$cacheContent = 'return ' . var_export($this->brushes, TRUE) . ';';
 		$this->cache->set($entryIdentifier, $cacheContent);
 	}
 }

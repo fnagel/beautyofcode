@@ -1,6 +1,7 @@
 <?php
 namespace TYPO3\Beautyofcode\Service;
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 /***************************************************************
  * Copyright notice
  *
@@ -32,7 +33,8 @@ namespace TYPO3\Beautyofcode\Service;
  * @package \TYPO3\Beautyofcode\Service
  * @subpackage Subpackage
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class FlexformDataMapperService {
@@ -53,30 +55,44 @@ class FlexformDataMapperService {
 	 * Injects the flexform service and populates flexform values from `pi_flexform`
 	 *
 	 * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService
+	 * @return void
 	 */
-	public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService) {
+	public function injectFlexformService(
+		\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService
+	) {
 		$this->flexformService = $flexformService;
 	}
 
 	/**
+	 * injectDataMapper
 	 *
 	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper
+	 * @return void
 	 */
-	public function injectDataMapper(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper) {
+	public function injectDataMapper(
+		\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper
+	) {
 		$this->dataMapper = $dataMapper;
 	}
 
 	/**
+	 * map
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\ContentElement $contentElement
 	 * @return \TYPO3\Beautyofcode\Domain\Model\Flexform
 	 */
-	public function map(\TYPO3\Beautyofcode\Domain\Model\ContentElement $contentElement) {
+	public function map(
+		\TYPO3\Beautyofcode\Domain\Model\ContentElement $contentElement
+	) {
 		$flexformString = $contentElement->getFlexform();
 
-		$flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
+		$flexformValues = $this->flexformService->convertFlexFormContentToArray(
+			$flexformString
+		);
 
-		$flexformValues = $this->getDataMapperToTCACompatiblePropertyArray($flexformValues);
+		$flexformValues = $this->getDataMapperToTCACompatiblePropertyArray(
+			$flexformValues
+		);
 		// adds `identity` to the plugin configuration
 		$flexformValues['uid'] = $contentElement->getUid();
 
@@ -98,11 +114,15 @@ class FlexformDataMapperService {
 	 * @param array $flexformValueArray
 	 * @return array
 	 */
-	protected function getDataMapperToTCACompatiblePropertyArray($flexformValueArray) {
+	protected function getDataMapperToTCACompatiblePropertyArray(
+		$flexformValueArray
+	) {
 		$flexformValues = array();
 
 		foreach ($flexformValueArray as $propertyName => $propertyValue) {
-			$propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
+			$propertyNameLowerCaseUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored(
+				$propertyName
+			);
 
 			$flexformValues[$propertyNameLowerCaseUnderscored] = $propertyValue;
 		}

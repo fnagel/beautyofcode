@@ -43,15 +43,19 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	protected $contentElementRepository;
 
 	/**
+	 * injectContentElementRepository
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository
 	 * @return void
 	 */
-	public function injectContentElementRepository(\TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository) {
+	public function injectContentElementRepository(
+		\TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository
+	) {
 		$this->contentElementRepository = $contentElementRepository;
 	}
 
 	/**
+	 * renderAction
 	 *
 	 * @return void
 	 */

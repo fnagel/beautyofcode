@@ -25,12 +25,16 @@ namespace TYPO3\Beautyofcode\Service;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The brush discovery service
  *
  * @package \TYPO3\Beautyofcode\Service
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
 class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 
@@ -40,22 +44,39 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	const BRUSH_LABELS_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/brush-aliases.xlf';
 
+	/**
+	 *
+	 * @var array
+	 */
 	protected $libraries = array();
 
+	/**
+	 *
+	 * @var array
+	 */
 	protected $brushStack = array();
 
 	/**
 	 * Discovers brushes and returns them
 	 *
-	 * @return array Multidimensional array with library as keys, brushes stack as value where key is the name, value is an LLL alias
+	 * @return array Multidimensional array with library as keys, brushes stack
+	 *               as value where key is the name, value is an LLL alias
 	 */
 	public function discoverBrushes() {
-		foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] as $library => $libraryConfiguration) {
+		$brushRegistry = ArrayUtility::getValueByPath(
+			$GLOBALS,
+			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
+		);
+
+		foreach ($brushRegistry as $library => $libraryConfiguration) {
 			$this->libraries[] = $library;
 
 			$brushes = $this->findBrushes($libraryConfiguration);
 
-			$this->brushStack[$library] = $this->filterAndSortBrushes($brushes, $libraryConfiguration);
+			$this->brushStack[$library] = $this->filterAndSortBrushes(
+				$brushes,
+				$libraryConfiguration
+			);
 		}
 
 		return $this->brushStack;
@@ -68,9 +89,11 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return array An array of brush file names
 	 */
 	protected function findBrushes($configuration) {
-		$absoluteBrushesPath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($configuration['path']);
+		$absoluteBrushesPath = GeneralUtility::getFileAbsFileName(
+			$configuration['path']
+		);
 
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::getFilesInDir(
+		return GeneralUtility::getFilesInDir(
 			$absoluteBrushesPath,
 			'js',
 			FALSE,
@@ -91,7 +114,7 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return array
 	 */
 	protected function filterAndSortBrushes($brushes, $configuration) {
-		$_brushes = array();
+		$filteredAndSortedBrushes = array();
 
 		foreach ($brushes as $brush) {
 			$brushName = str_replace($configuration['prefix'], '', $brush);
@@ -100,18 +123,20 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 			/* @var $languageService \TYPO3\CMS\Lang\LanguageService */
 			$languageService = $GLOBALS['LANG'];
 
-			$brushAlias = $languageService->sL(self::BRUSH_LABELS_CATALOGUE . ':' . $brushName);
+			$brushAlias = $languageService->sL(
+				self::BRUSH_LABELS_CATALOGUE . ':' . $brushName
+			);
 
 			if ('' === $brushAlias) {
 				$brushAlias = $brushName;
 			}
 
-			$_brushes[$brushName] = $brushAlias;
+			$filteredAndSortedBrushes[$brushName] = $brushAlias;
 		}
 
-		asort($_brushes);
+		asort($filteredAndSortedBrushes);
 
-		return $_brushes;
+		return $filteredAndSortedBrushes;
 	}
 }
 ?>

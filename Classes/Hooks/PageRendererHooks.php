@@ -35,7 +35,8 @@ use TYPO3\CMS\Core\Page\PageRenderer;
  *
  * @package \TYPO3\Beautyofcode\Hooks
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class PageRendererHooks {
@@ -65,6 +66,7 @@ class PageRendererHooks {
 	protected $fe;
 
 	/**
+	 * injectCacheManager
 	 *
 	 * @param CacheManager $cacheManager
 	 * @return void
@@ -78,11 +80,14 @@ class PageRendererHooks {
 	}
 
 	/**
+	 * injectTypoScriptFrontendController
 	 *
 	 * @param TypoScriptFrontendController $fe
 	 * @return void
 	 */
-	public function injectTypoScriptFrontendController(TypoScriptFrontendController $fe = NULL) {
+	public function injectTypoScriptFrontendController(
+		TypoScriptFrontendController $fe = NULL
+	) {
 		if (NULL === $fe) {
 			$fe = $GLOBALS['TSFE'];
 		}
@@ -95,11 +100,15 @@ class PageRendererHooks {
 	 *
 	 * The hook also takes care of the used syntax highlighting library.
 	 *
-	 * @param array $pageRendererAssets @see PageRenderer::executePreRenderHook() for a list of incoming assets
-	 * @param PageRenderer $pageRenderer
+	 * @param array &$pageRendererAssets @see PageRenderer::executePreRenderHook()
+	 *                                   for a list of incoming assets
+	 * @param PageRenderer &$pageRenderer
 	 * @return void
 	 */
-	public function addBrushAssets(array &$pageRendererAssets, PageRenderer &$pageRenderer) {
+	public function addBrushAssets(
+		array &$pageRendererAssets,
+		PageRenderer &$pageRenderer
+	) {
 		$this->injectCacheManager($this->cache);
 		$this->injectTypoScriptFrontendController($this->fe);
 
@@ -117,6 +126,7 @@ class PageRendererHooks {
 	}
 
 	/**
+	 * addAutoloaderAssets
 	 *
 	 * @param string $codeBlock
 	 * @return string
@@ -139,6 +149,7 @@ class PageRendererHooks {
 	}
 
 	/**
+	 * getAutoloaderStringForBrush
 	 *
 	 * @param integer $brushIndex
 	 * @param string $brush

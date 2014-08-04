@@ -24,6 +24,8 @@ namespace TYPO3\Beautyofcode\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility as CoreGeneralUtility;
+
 /**
  * Utility class for beautyofcode
  *
@@ -35,25 +37,26 @@ class GeneralUtility {
 	/**
 	 * Resolves a path prefixed with FILE: and EXT:
 	 *
-	 * If the path can successfully be resolved to an internal (relative to PATH_site)
-	 * path, the PATH_site part is removed and the resulting path is returned.
+	 * If the path can successfully be resolved to an internal (relative to
+	 * PATH_site) path, the PATH_site part is removed and the resulting path is
+	 * returned.
 	 * If its an external path, the input parameter is returned unchanged.
 	 *
-	 * @param string path to directory
+	 * @param string $dir path to directory
 	 * @return string
 	 */
 	public static function makeAbsolutePath($dir) {
 		$absolutePath = '';
 
-		$isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
-		$isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
+		$isExtensionNotation =  CoreGeneralUtility::isFirstPartOfStr($dir, 'EXT:');
+		$isFileNotation = CoreGeneralUtility::isFirstPartOfStr($dir, 'FILE:');
 
 		if ($isFileNotation) {
 			$dir = substr($dir, 5);
 		}
 
 		if ($isExtensionNotation || $isFileNotation) {
-			$absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, TRUE, FALSE);
+			$absolutePath = CoreGeneralUtility::getFileAbsFileName($dir, TRUE, FALSE);
 			$absolutePath = is_null($absolutePath) ? '' : substr($absolutePath, strlen(PATH_site));
 		} elseif (FALSE !== parse_url($dir)) {
 			$absolutePath = $dir;

@@ -99,39 +99,27 @@ See `http://prismjs.com/ <prism syntax highlighter_>`_ for more information.
 Screenshots
 -----------
 
-.. figure:: ../Images/Screenshots/FrontendPlugin.jpg
+See highlighter project website for possible frontend look.
+
+
+.. figure:: ../Images/Screenshots/ContentElement.jpg
       :width: 500px
-      :alt: Frontend Plugin
+      :alt: Content element screenshot
 
-      Frontend Plugin
+      Content element
 
-      This is the default theme when using jQuery version.
-
-.. figure:: ../Images/Screenshots/ConstantEditorSettings.jpg
+.. figure:: ../Images/Screenshots/ContentElementTab2.jpg
       :width: 500px
-      :alt: Constant Editor Settings
+      :alt: Content element options tab screenshot
 
-      Constant Editor Settings
+	  Content element options tab
 
-      Some of the available constant editor settings
-
-.. figure:: ../Images/Screenshots/BackendFCE01.jpg
+.. figure:: ../Images/Screenshots/BackendLayout.jpg
       :width: 500px
-      :alt: Backend FCE: Standard Tab
+      :alt: Backend layout screenshot
 
-      Backend FCE: Standard Tab
+      Backend layout
 
-      This screenshot shows the standard tab where you insert the code block 
-      label, syntax language and the code block itself.
-
-.. figure:: ../Images/Screenshots/BackendFCE02.jpg
-      :width: 500px
-      :alt: Backend FCE: Overwrite Configuration Tab
-
-      Backend FCE: Overwrite Configuration Tab
-
-      This screenshot shows the options tab of the backend FCE which allows you 
-      to overwrite some of the default configuration options set via TypoScript.
 
 .. _prism syntax highlighter: http://prismjs.com/
 .. _SyntaxhighlighterOnlineHelpBrushes: http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes

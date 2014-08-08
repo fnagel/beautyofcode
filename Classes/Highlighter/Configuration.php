@@ -69,8 +69,6 @@ class Configuration implements ConfigurationInterface {
 		$this->objectManager = $objectManager;
 	}
 
-
-
 	/**
 	 * injectConfiguration
 	 *

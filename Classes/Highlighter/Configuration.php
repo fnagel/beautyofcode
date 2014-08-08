@@ -27,6 +27,7 @@ namespace TYPO3\Beautyofcode\Highlighter;
 
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
  * Configuration
@@ -77,9 +78,10 @@ class Configuration implements ConfigurationInterface {
 	 * @return void
 	 */
 	public function injectConfiguration(ConfigurationManagerInterface $configurationManager) {
-		$this->settings = $configurationManager->getConfiguration(
-			ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
+		$configuration = $configurationManager->getConfiguration(
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
 		);
+		$this->settings = ArrayUtility::getValueByPath($configuration, 'plugin./tx_beautyofcode./settings.');
 	}
 
 	/**

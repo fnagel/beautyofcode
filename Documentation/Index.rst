@@ -26,7 +26,7 @@ beautyOfCode
       Manual covering TYPO3 extension beautyofcode
 
    :Keywords:
-      syntax highlighting, jquery, javascript
+      syntax highlighting, jquery, javascript, prism, syntaxhighlighter
 
    :Copyright:
       2013

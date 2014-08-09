@@ -21,7 +21,3 @@
 	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.js" />
 </f:if>
 <boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.js" />
-<f:for each="{boc:explode(value: settings.brushes)}" as="brush">
-	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}.js" />
-	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}-extras.js" />
-</f:for>

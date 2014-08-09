@@ -92,18 +92,6 @@ class Prism
 	);
 
 	/**
-	 * getAutoloaderBrushMap
-	 *
-	 * The Prism highlighter doesn't have any autoloader, but as this method
-	 * needs to be implemented, it returns an empty array.
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap() {
-		return array();
-	}
-
-	/**
 	 * getClassAttributeString
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform

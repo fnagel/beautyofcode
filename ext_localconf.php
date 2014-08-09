@@ -33,9 +33,11 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 	'registerBrush'
 );
 
-$pageRendererHook = 'EXT:beautyofcode/Classes/Hooks/PageRendererHooks.php';
-$pageRendererHook .= ':TYPO3\\Beautyofcode\\Hooks\\PageRendererHooks->addBrushAssets';
-$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = $pageRendererHook;
+if (TYPO3_MODE === 'FE') {
+	$pageRendererHook = 'EXT:beautyofcode/Classes/Hooks/PageRendererHooks.php';
+	$pageRendererHook .= ':TYPO3\\Beautyofcode\\Hooks\\PageRendererHooks->addBrushAssets';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = $pageRendererHook;
+}
 
 // registry for available syntax highlighting libraries and their brushes
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(

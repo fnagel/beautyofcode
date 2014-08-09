@@ -136,12 +136,13 @@ class Configuration implements ConfigurationInterface {
 	}
 
 	/**
-	 * getAutoloaderBrushMap
+	 * addRegisteredBrushes
 	 *
-	 * @return array
+	 * @param array $brushStack
+	 * @return void
 	 */
-	public function getAutoloaderBrushMap() {
-		return $this->configuration->getAutoloaderBrushMap();
+	public function addRegisteredBrushes(array $brushStack = array()) {
+		$this->configuration->addRegisteredBrushes($brushStack);
 	}
 
 	/**

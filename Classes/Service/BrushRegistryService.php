@@ -43,40 +43,9 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @var PhpFrontend
-	 */
-	protected $cache;
-
-	/**
-	 *
-	 * @var TypoScriptFrontendController
-	 */
-	protected $typoScriptFrontendController;
-
-	/**
-	 *
 	 * @var array
 	 */
 	protected $brushes = array();
-
-	/**
-	 * Initializes the brush registry service
-	 *
-	 * @return void
-	 */
-	public function initializeObject() {
-		$this->typoScriptFrontendController = $GLOBALS['TSFE'];
-	}
-
-	/**
-	 * injectCacheManager
-	 *
-	 * @param CacheManager $cacheManager
-	 * @return void
-	 */
-	public function injectCacheManager(CacheManager $cacheManager) {
-		$this->cache = $cacheManager->getCache('cache_beautyofcode');
-	}
 
 	/**
 	 * registerBrush
@@ -85,20 +54,20 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	public function registerBrush(ContentElement $contentElement) {
-		$entryIdentifier = $this->typoScriptFrontendController->getHash();
-
 		$brush = $contentElement->getFlexformObject()->getCLang();
-
-		if ($this->cache->has($entryIdentifier) && empty($this->brushes)) {
-			$this->brushes = $this->cache->requireOnce($entryIdentifier);
-		}
 
 		if (FALSE === in_array($brush, $this->brushes)) {
 			$this->brushes[] = $brush;
 		}
+	}
 
-		$cacheContent = 'return ' . var_export($this->brushes, TRUE) . ';';
-		$this->cache->set($entryIdentifier, $cacheContent);
+	/**
+	 * getBrushes
+	 *
+	 * @return array
+	 */
+	public function getBrushes() {
+		return $this->brushes;
 	}
 }
 ?>

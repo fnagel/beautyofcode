@@ -69,11 +69,16 @@ interface ConfigurationInterface {
 	public function getBrushIdentifierAliasAndLabel($brushIdentifier);
 
 	/**
-	 * getAutoloaderBrushMap
+	 * addRegisteredBrushes
 	 *
-	 * @return array
+	 * Adds the registered brushes (detected during rendering a page in FE) to
+	 * the PageRenderer instance. This is done by using a Fluid StandaloneView
+	 * instance, set to the corresponding Highlighter Configuration template.
+	 *
+	 * @param array $brushStack
+	 * @return void
 	 */
-	public function getAutoloaderBrushMap();
+	public function addRegisteredBrushes(array $brushStack = array());
 
 	/**
 	 * getClassAttributeString

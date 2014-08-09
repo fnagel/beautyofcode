@@ -1,14 +1,17 @@
 {namespace boc=TYPO3\Beautyofcode\ViewHelpers}
+<f:layout name="Default" />
 
 <f:section name="Main">
-	<f:if condition="{settings.includeAsDomReady} == 'jquery'">
-		<f:then>
-			<f:render section="JqueryOnReady" arguments="{_all}" />
-		</f:then>
-		<f:else>
-			<f:render section="StandaloneOnReady" arguments="{_all}" />
-		</f:else>
-	</f:if>
+	<boc:pageRenderer.addJsFooterInlineCode name="boc_inline">
+		<f:if condition="{settings.includeAsDomReady} == 'jquery'">
+			<f:then>
+				<f:render section="JqueryOnReady" arguments="{_all}" />
+			</f:then>
+			<f:else>
+				<f:render section="StandaloneOnReady" arguments="{_all}" />
+			</f:else>
+		</f:if>
+	</boc:pageRenderer.addJsFooterInlineCode>
 </f:section>
 
 <script type="text/javascript">
@@ -49,7 +52,9 @@
 
 	<f:section name="Syntaxhighlighter">
 		SyntaxHighlighter.autoloader(
-			###AUTOLOADER_LIST###
+		<f:for each="{brushes}" key="cssTag" as="brushResource" iteration="i">
+			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag} {boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}{brushResource}'
+		</f:for>
 		);
 
 		SyntaxHighlighter.config.strings.expandSource = '<f:translate id="config.strings.expandSource" default="show source" />';

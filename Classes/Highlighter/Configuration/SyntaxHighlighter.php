@@ -89,28 +89,25 @@ class SyntaxHighlighter
 	);
 
 	/**
-	 * getAutoloaderBrushMap
+	 * addRegisteredBrushes
 	 *
-	 * @return array
+	 * @param array $brushStack
+	 * @return void
 	 */
-	public function getAutoloaderBrushMap() {
-		$brushes = array();
-
-		$configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
-			',',
-			$this->settings['brushes']
+	public function addRegisteredBrushes(array $brushStack = array()) {
+		$brushes = array(
+			'plain' => 'shBrushPlain.js',
 		);
 
-		$brushes['plain'] = 'shBrushPlain.js';
-
-		foreach ($configuredBrushes as $brush) {
+		foreach ($brushStack as $brush) {
 			list($cssTag, ) = $this->brushIdentifierAliasLabelMap[$brush];
-			$brushPath = 'shBrush' . $brush . '.js';
+			$brushPath = 'shBrush' . $brush .'.js';
 
 			$brushes[$cssTag] = $brushPath;
 		}
 
-		return $brushes;
+		$this->brushLoaderView->assign('brushes', $brushes);
+		$this->brushLoaderView->render();
 	}
 
 	/**

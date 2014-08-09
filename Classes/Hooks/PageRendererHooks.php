@@ -25,10 +25,11 @@ namespace TYPO3\Beautyofcode\Hooks;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Page\PageRenderer;
+use TYPO3\Beautyofcode\Service\BrushRegistryService;
 
 /**
  * Various hooks for the PageRenderer
@@ -41,23 +42,24 @@ use TYPO3\CMS\Core\Page\PageRenderer;
  */
 class PageRendererHooks {
 
-	/**
-	 *
-	 * @var string
-	 */
-	const BRUSH_AUTOLOADER_LIST_ITEM_FORMAT = '%leadingCommaForNonZeroBasedIndices%\'%brush%	%brushResource%\'';
 
 	/**
 	 *
-	 * @var string
+	 * @var ObjectManagerInterface
 	 */
-	const AUTOLOADER_MARKER = '###AUTOLOADER_LIST###';
+	protected $objectManager;
 
 	/**
 	 *
-	 * @var PhpFrontend
+	 * @var ConfigurationInterface
 	 */
-	protected $cache;
+	protected $highlighterConfiguration;
+
+	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\Service\BrushRegistryService
+	 */
+	protected $brushRegistryService;
 
 	/**
 	 *
@@ -66,33 +68,68 @@ class PageRendererHooks {
 	protected $fe;
 
 	/**
-	 * injectCacheManager
+	 * injectObjectManager
 	 *
-	 * @param CacheManager $cacheManager
+	 * @param ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectCacheManager(CacheManager $cacheManager = NULL) {
-		if (NULL === $cacheManager) {
-			$cacheManager = $GLOBALS['typo3CacheManager'];
+	public function injectObjectManager(
+		ObjectManagerInterface $objectManager = NULL
+	) {
+		if (is_null($objectManager)) {
+			$objectManager = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
+			);
 		}
 
-		$this->cache = $cacheManager->getCache('cache_beautyofcode');
+		$this->objectManager = $objectManager;
 	}
 
 	/**
-	 * injectTypoScriptFrontendController
+	 * injectHighlighterConfiguration
 	 *
-	 * @param TypoScriptFrontendController $fe
+	 * @param ConfigurationInterface $highlighterConfiguration
 	 * @return void
 	 */
-	public function injectTypoScriptFrontendController(
-		TypoScriptFrontendController $fe = NULL
+	public function injectHighlighterConfiguration(
+		ConfigurationInterface $highlighterConfiguration = NULL
 	) {
-		if (NULL === $fe) {
-			$fe = $GLOBALS['TSFE'];
+		if (is_null($highlighterConfiguration)) {
+			$highlighterConfiguration = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
+			);
 		}
 
-		$this->fe = $fe;
+		$this->highlighterConfiguration = $highlighterConfiguration;
+	}
+
+	/**
+	 * injectBrushRegistryService
+	 *
+	 * @param BrushRegistryService $brushRegistryService
+	 * @return void
+	 */
+	public function injectBrushRegistryService(
+		BrushRegistryService $brushRegistryService = NULL
+	) {
+		if (is_null($brushRegistryService)) {
+			$brushRegistryService = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Service\BrushRegistryService'
+			);
+		}
+
+		$this->brushRegistryService = $brushRegistryService;
+	}
+
+	/**
+	 * initializeObject
+	 *
+	 * @return void
+	 */
+	public function initializeObject() {
+		$this->injectObjectManager($this->objectManager);
+		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
+		$this->injectBrushRegistryService($this->brushRegistryService);
 	}
 
 	/**
@@ -109,58 +146,10 @@ class PageRendererHooks {
 		array &$pageRendererAssets,
 		PageRenderer &$pageRenderer
 	) {
-		$this->injectCacheManager($this->cache);
-		$this->injectTypoScriptFrontendController($this->fe);
+		$this->initializeObject();
 
-		// SyntaxHighlighter is used
-		if (TRUE === array_key_exists('boc_inline', $pageRendererAssets['jsInline'])) {
-			$code = $this->addAutoloaderAssets($pageRendererAssets['jsInline']['boc_inline']['code']);
-
-			$pageRendererAssets['jsInline']['boc_inline']['code'] = $code;
-		}
-
-		// Prism is used
-// 		if (TRUE === array_key_exists('boc_[brushName]', $pageRendererAssets['jsLibs'])) {
-
-// 		}
-	}
-
-	/**
-	 * addAutoloaderAssets
-	 *
-	 * @param string $codeBlock
-	 * @return string
-	 */
-	protected function addAutoloaderAssets($codeBlock) {
-		$entryIdentifier = $this->fe->getHash();
-
-		$brushes = array();
-		if ($this->cache->has($entryIdentifier)) {
-			$brushes = $this->cache->requireOnce($entryIdentifier);
-		}
-
-		$autoloaderString = '';
-
-		foreach ($brushes as $brushIndex => $brush) {
-			$autoloaderString .= $this->getAutoloaderStringForBrush($brushIndex, $brush);
-		}
-
-		return str_replace(self::AUTOLOADER_MARKER, $autoloaderString, $codeBlock);
-	}
-
-	/**
-	 * getAutoloaderStringForBrush
-	 *
-	 * @param integer $brushIndex
-	 * @param string $brush
-	 * @return string
-	 */
-	protected function getAutoloaderStringForBrush($brushIndex, $brush) {
-		return strtr(self::BRUSH_AUTOLOADER_LIST_ITEM_FORMAT, array(
-			'%leadingCommaForNonZeroBasedIndices%' => $brushIndex > 0 ? ',' : '',
-			'%brush%' => $brush,
-			'%brushResource%' => $brush,
-		));
+		$brushes = $this->brushRegistryService->getBrushes();
+		$this->highlighterConfiguration->addRegisteredBrushes($brushes);
 	}
 }
 ?>

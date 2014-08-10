@@ -30,6 +30,7 @@ use TYPO3\Beautyofcode\Service\BrushDiscoveryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 
 /**
  * The language setting update class
@@ -71,6 +72,12 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @var \TYPO3\CMS\Core\Configuration\Flexform\FlexformTools
 	 */
 	protected $flexformTools;
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $settings = array();
 
 	/**
 	 * injectObjectManager
@@ -123,6 +130,27 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	}
 
 	/**
+	 * injectConfigurationManager
+	 *
+	 * @param ConfigurationManagerInterface $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager = NULL) {
+		if (is_null($configurationManager)) {
+			$configurationManager = $this->objectManager->get(
+				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface'
+			);
+		}
+		$configuration = $configurationManager->getConfiguration(
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+		);
+		$this->settings = ArrayUtility::getValueByPath(
+			$configuration,
+			'plugin./tx_beautyofcode./settings.'
+		);
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @see \TYPO3\Beautyofcode\Update\AbstractUpdate::initializeObject()
 	 */
@@ -130,6 +158,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
 		$this->injectFlexformTools($this->flexformTools);
+		$this->injectConfigurationManager();
 
 		$this->plugins = $this->db->exec_SELECTquery(
 			'uid, header, pi_flexform',
@@ -215,11 +244,10 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		$options = array();
 
 		$libraries = $this->brushDiscoveryService->discoverBrushes();
+		$brushes = $libraries[$this->settings['library']];
 
-		foreach ($libraries as $library => $brushes) {
-			foreach ($brushes as $brushName => $brushAlias) {
-				$options[$library][$brushName] = $brushAlias;
-			}
+		foreach ($brushes as $brushName => $brushAlias) {
+			$options[$brushName] = $brushAlias;
 		}
 
 		return $options;

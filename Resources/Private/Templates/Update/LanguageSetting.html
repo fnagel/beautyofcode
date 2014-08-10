@@ -3,7 +3,7 @@
 	<label>
 		<input type="checkbox" name="update[language]" value="1"> Update plugin language settings according to the following settings:
 	</label><br />
-	
+
 	<table class="typo3-dblist" border="0" cellspacing="0" cellpadding="0">
 		<thead>
 			<tr class="t3-row-header">
@@ -23,12 +23,8 @@
 					<td>
 						<!-- selected: {plugin.pi_flexform.data.sDEF.lDEF.cLang.vDEF} -->
 						<select name="language[{plugin.uid}]">
-							<f:for each="{availableBrushes}" as="brushes" key="library">
-								<optgroup label="{library}">
-									<f:for each="{brushes}" as="brushLabel" key="brushKey">
-										<option value="{brushKey}">{brushLabel}</option>
-									</f:for>
-								</optgroup>
+							<f:for each="{availableBrushes}" key="brushKey" as="brushLabel">
+								<option value="{brushKey}">{brushLabel}</option>
 							</f:for>
 						</select>
 					</td>

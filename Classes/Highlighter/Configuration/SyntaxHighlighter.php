@@ -81,6 +81,7 @@ class SyntaxHighlighter
 		'JScript' => 'javascript',
 		'Perl' => 'perl',
 		'Php' => 'php',
+		'Plain' => 'plain',
 		'PowerShell' => 'powershell',
 		'Python' => 'python',
 		'Ruby' => 'ruby',

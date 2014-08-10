@@ -86,6 +86,7 @@ class Prism
 		'javascript' => 'javascript',
 		'markup' => 'markup',
 		'php' => 'php',
+		'plain' => 'plain',
 		'python' => 'python',
 		'ruby' => 'ruby',
 		'scss' => 'scss',

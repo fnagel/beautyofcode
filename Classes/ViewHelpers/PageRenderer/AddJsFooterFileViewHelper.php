@@ -37,20 +37,6 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
-	 *
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected $typoscriptFrontendController;
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-	 */
-	public function initialize() {
-		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
-	}
-
-	/**
 	 * Adds JS file to footer
 	 *
 	 * @param string $file File name
@@ -64,9 +50,7 @@ class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\Abst
 	 */
 	public function render($file, $type = 'text/javascript', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE, $splitChar = '|') {
 		$this->pageRenderer->addJsFooterFile(
-			$this->typoscriptFrontendController
-				->tmpl
-				->getFileName($file),
+			$this->fe->tmpl->getFileName($file),
 			$type,
 			$compress,
 			$forceOnTop,

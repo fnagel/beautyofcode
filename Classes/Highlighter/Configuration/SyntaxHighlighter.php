@@ -92,12 +92,12 @@ class SyntaxHighlighter
 	);
 
 	/**
-	 * addRegisteredBrushes
+	 * prepareRegisteredBrushes
 	 *
 	 * @param array $brushStack
 	 * @return void
 	 */
-	public function addRegisteredBrushes(array $brushStack = array()) {
+	public function prepareRegisteredBrushes(array $brushStack = array()) {
 		$brushes = array();
 
 		$brushAliasIdentifierMap = array_flip($this->brushIdentifierAliasMap);
@@ -108,7 +108,7 @@ class SyntaxHighlighter
 			$brushes[$brushAlias] = $brushIdentifier;
 		}
 
-		parent::addRegisteredBrushes($brushes);
+		return parent::prepareRegisteredBrushes($brushes);
 	}
 
 	/**

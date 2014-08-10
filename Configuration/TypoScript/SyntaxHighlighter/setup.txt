@@ -41,3 +41,5 @@ plugin.tx_beautyofcode {
 		.tx_beautyofcode pre { overflow: auto; }
 	)
 }
+
+page.1407710024 < tt_content.list.20.beautyofcode_pageassets

@@ -40,10 +40,8 @@ Prism
 Adjusting the Fluid template output
 -----------------------------------
 
-
-
-Plugin rendering
-^^^^^^^^^^^^^^^^
+Plugin & Brushloader rendering
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Create a TYPO3.CMS extension which should encapsulate the template adjustments
 of the installed ext:beautyofcode extension in your TYPO3.CMS instance.
@@ -54,47 +52,19 @@ created folders:
    .. code-block:: bash
 
       ~$ cd typo3conf/ext/
-      ~$ mkdir -p [YOUR_EXTENSION]/Resources/Private/{Layouts,Templates}
+      ~$ mkdir -p [YOUR_EXTENSION]/Resources/Private/{Layouts,Partials,Templates}
       ~$ cp -R beautyofcode/Resources/Private/Layouts/* [YOUR_EXTENSION]/Resources/Private/Layouts/
+      ~$ cp -R beautyofcode/Resources/Private/Partials/* [YOUR_EXTENSION]/Resources/Private/Partials/
       ~$ cp -R beautyofcode/Resources/Private/Templates/Content/ [YOUR_EXTENSION]/Resources/Private/Templates/
 
-BrushLoader rendering
-^^^^^^^^^^^^^^^^^^^^^
+Now, you have to configure beautyofcode to use the new template paths:
 
-If you want adjust the brushloader rendering, create a TYPO3.CMS extension and
-the necessary directory structure. Copy the template files with these commands:
+   .. code-block: typoscript
 
-   .. code-block:: bash
-
-      ~$ cd typo3conf/ext/
-      ~$ mkdir -p [YOUR_EXTENSION]/Resources/Private/BrushLoader
-      ~$ cp -R beautyofcode/Resources/Private/BrushLoader/* [YOUR_EXTENSION]/Resources/Private/BrushLoader/
-
-After that, you must implement a SignalSlot dispatcher connection in order to
-overwrite the BrushLoaderView layouts, partials and template files during
-initializing:
-
-   .. code-block:: php
-
-      $pageRendererHook = 'EXT:[YOUR_EXTENSION]/Classes/View/Beautyofcode/BrushLoaderView.php';
-      $pageRendererHook .= ':[YOUR_VENDOR]\\[YOUR_EXTENSIOn]\\View\\Beautyofcode\\BrushLoaderView->overridePaths';
-      $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = $pageRendererHook;
-      \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher')->connect(
-          'TYPO3\\Beautyofcode\\View\\BrushLoaderView',
-          'overridePaths',
-          '[YOUR_VENDOR]\\[YOUR_EXTENSION]\\View\\Beautyofcode\\BrushLoaderView',
-          'overridePaths'
-      );
-
-   .. code-block:: php
-
-      namespace [YOUR_VENDOR]\[YOUR_EXTENSION]]\View\Beautyofcode;
-      class BrushLoaderView {
-          public function overridePaths(\TYPO3\Beautyofcode\View\BrushLoaderView $brushLoaderView) {
-            $brushLoaderView->setLayoutRootPath(...);
-            $brushLoaderView->setPartialsRootPath(...);
-            $brushLoaderView->setTemplatePathAndFilename(...);
-          }
+      plugin.tx_beautyofcode.view {
+        layoutRootPath = EXT:[YOUR_EXTENSION]/Resources/Private/Layouts/
+        partialRootPath = EXT:[YOUR_EXTENSION]/Resources/Private/Partials/
+        templateRootPath = EXT:[YOUR_EXTENSION]/Resources/Private/Templates/
       }
 
 FAQ
@@ -155,3 +125,44 @@ multiple times until no output is displayed. Then uncomment the last line.
         fi
       done
       for file in $(ls -R Documentation/*.rst Documentation/*/*.rst Documentation/*.txt); do sed -i '1s/^/\xef\xbb\xbf/' "$file"; done
+
+page.1407710024 - What is this?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This special content object is necessary in order to render all beautyofcode assets
+which depends on the plugins inserted on a certain page. For example it ensures
+to only load the brush assets which are necessary for the specific page.
+
+While developing the brush auto discovery + registry components for beautyofcode
+we tested how it works within certain conditions. First, we added the additional
+assets by hooking into the render-preProcess hook of the PageRenderer component.
+
+But this doesn't worked in contexts where *_INT cObjects (USER_INT / COA_INT)
+were used on the page. The reason for this is: the pageRenderer is serialized
+for the *_INT cObject processing, staying in a state where assets added by plugins
+from the content rendering context aren't available - saying very early in the
+request lifecycle of TYPO3.CMS.
+
+So we decided to add a special Extbase Controller for adding the page assets
+during content rendering which works in cached environment as well as uncached
+environment where *_INT cObjects are parsed.
+
+If you are using a different page cObject naming or added other PAGE cObjects for
+special rendering purposes which renders beautyofcode plugins, you have to make
+sure, the PageAssets controller of beautyofcode is added as one of the last
+content element definitions within your PAGE setup:
+
+   .. code-block:: bash
+
+      ~$ # generate a big integer (current unix time) for cObject array usage
+      ~$ date +%s
+      1407710024
+
+   .. code-block:: typoscript
+
+      myPage = PAGE
+      myPage {
+        // use the generated integer to ensure the beautyofcode page assets are
+        // added after all inserted syntax highlighting content element plugins
+        1407710024 < tt_content.20.list.beautyofcode_pageassets
+      }

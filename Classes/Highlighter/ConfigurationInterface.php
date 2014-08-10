@@ -45,16 +45,15 @@ interface ConfigurationInterface {
 	public function getFailSafeBrushAlias($brushAlias);
 
 	/**
-	 * addRegisteredBrushes
+	 * prepareRegisteredBrushes
 	 *
-	 * Adds the registered brushes (detected during rendering a page in FE) to
-	 * the PageRenderer instance. This is done by using a Fluid StandaloneView
-	 * instance, set to the corresponding Highlighter Configuration template.
+	 * Prepares registered brushes (detected during rendering a page in FE) for
+	 * adding them by the PageAssets controller into the PageRenderer instance.
 	 *
 	 * @param array $brushStack
-	 * @return void
+	 * @return array
 	 */
-	public function addRegisteredBrushes(array $brushStack = array());
+	public function prepareRegisteredBrushes(array $brushStack = array());
 
 	/**
 	 * getClassAttributeString

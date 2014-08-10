@@ -106,13 +106,13 @@ class Configuration implements ConfigurationInterface {
 	}
 
 	/**
-	 * addRegisteredBrushes
+	 * prepareRegisteredBrushes
 	 *
 	 * @param array $brushStack
-	 * @return void
+	 * @return array
 	 */
-	public function addRegisteredBrushes(array $brushStack = array()) {
-		$this->configuration->addRegisteredBrushes($brushStack);
+	public function prepareRegisteredBrushes(array $brushStack = array()) {
+		return $this->configuration->prepareRegisteredBrushes($brushStack);
 	}
 
 	/**

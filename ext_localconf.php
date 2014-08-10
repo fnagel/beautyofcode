@@ -9,9 +9,17 @@ if (!defined ('TYPO3_MODE')) {
 	array(
 		'Content' => 'render'
 	),
-	// non-cacheable actions
 	array(
 	)
+);
+
+\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+	'TYPO3.' . $_EXTKEY,
+	'PageAssets',
+	array(
+		'PageAssets' => 'add'
+	),
+	array()
 );
 
 // BE preview
@@ -32,12 +40,6 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 	'TYPO3\\Beautyofcode\\Service\\BrushRegistryService',
 	'registerBrush'
 );
-
-if (TYPO3_MODE === 'FE') {
-	$pageRendererHook = 'EXT:beautyofcode/Classes/Hooks/PageRendererHooks.php';
-	$pageRendererHook .= ':TYPO3\\Beautyofcode\\Hooks\\PageRendererHooks->addBrushAssets';
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_pagerenderer.php']['render-preProcess'][] = $pageRendererHook;
-}
 
 // registry for available syntax highlighting libraries and their brushes
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(

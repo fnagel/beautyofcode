@@ -25,8 +25,6 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\Beautyofcode\View\BrushLoaderView;
-
 /**
  * AbstractConfiguration
  *
@@ -45,12 +43,6 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	protected $settings;
 
 	/**
-	 *
-	 * @var BrushLoaderView
-	 */
-	protected $brushLoaderView;
-
-	/**
 	 * __construct
 	 *
 	 * @param array $settings
@@ -58,19 +50,6 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	 */
 	public function __construct(array $settings) {
 		$this->settings = $settings;
-	}
-
-	/**
-	 * injectBrushLoaderView
-	 *
-	 * @param BrushLoaderView $brushLoaderView
-	 * @return void
-	 */
-	public function injectBrushLoaderView(BrushLoaderView $brushLoaderView) {
-		$this->brushLoaderView = $brushLoaderView;
-		$this->brushLoaderView->setLibrary($this->settings['library']);
-		$this->brushLoaderView->initializeView();
-		$this->brushLoaderView->assign('settings', $this->settings);
 	}
 
 	/**
@@ -111,16 +90,13 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
-	 * addRegisteredBrushes
+	 * prepareRegisteredBrushes
 	 *
 	 * @param array $brushStack
-	 * @return void
+	 * @return array
 	 */
-	public function addRegisteredBrushes(array $brushStack = array()) {
-		$brushes = $brushStack;
-
-		$this->brushLoaderView->assign('brushes', $brushes);
-		$this->brushLoaderView->render();
+	public function prepareRegisteredBrushes(array $brushStack = array()) {
+		return $brushStack;
 	}
 
 	/**

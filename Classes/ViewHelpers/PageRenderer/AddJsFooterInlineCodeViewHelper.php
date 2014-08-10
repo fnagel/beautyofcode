@@ -36,6 +36,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
+	 * render
 	 *
 	 * @param string $name
 	 * @param string $compress

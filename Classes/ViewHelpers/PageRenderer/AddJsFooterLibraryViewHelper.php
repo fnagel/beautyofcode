@@ -36,20 +36,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
-	 *
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected $typoscriptFrontendController;
-
-	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-	 */
-	public function initialize() {
-		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
-	}
-
-	/**
+	 * render
 	 *
 	 * @param string $name
 	 * @param string $file
@@ -63,9 +50,7 @@ class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\A
 	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
 		$this->pageRenderer->addJsFooterLibrary(
 			$name,
-			$this->typoscriptFrontendController
-				->tmpl
-				->getFileName($file),
+			$this->fe->tmpl->getFileName($file),
 			$type,
 			$compress,
 			$forceOnTop,

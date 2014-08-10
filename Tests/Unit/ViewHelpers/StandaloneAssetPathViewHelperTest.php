@@ -83,12 +83,12 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 	 */
 	public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet() {
 		$sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-		$sut->setArguments(array('baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', 'type' => 'scripts'));
+		$sut->setArguments(array('baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/scripts/', 'type' => 'scripts'));
 		$sut->initializeArguments();
 		$sut->initialize();
 		$path = $sut->render();
 
-		$this->assertEquals('/typo3conf/ext/beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', $path);
+		$this->assertEquals('/typo3conf/ext/beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/scripts/', $path);
 	}
 }
 ?>

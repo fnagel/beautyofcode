@@ -49,7 +49,6 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->sut->setCHighlight('1,2-3,8');
 		$this->sut->setCCollapse('1');
 		$this->sut->setCGutter('1');
-		$this->sut->setBrushes('Xml,Php,Typoscript');
 	}
 
 	/**
@@ -86,29 +85,6 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 */
 	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
 		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForSyntaxHighlighter() {
-		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
-
-		$this->assertArrayHasKey('plain', $brushes);
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function brushesForSyntaxHighlighterAreMappedToASuitableCssTagString() {
-		$this->sut->setBrushes('Typoscript,AS3');
-
-		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
-
-		$this->assertArrayHasKey('typoscript', $brushes);
-		$this->assertArrayHasKey('actionscript3', $brushes);
 	}
 
 	/**

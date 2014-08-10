@@ -104,11 +104,11 @@ class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\B
 			->will($this->returnValue(
 				array(
 					'SyntaxHighlighter' => array(
-						'Bash' => 'Bash/Shell',
-						'Php' => 'PHP',
-						'Plain' => 'Plain',
-						'Python' => 'Python',
-						'Sql' => 'SQL / MySQL',
+						'bash' => 'Bash/Shell',
+						'php' => 'PHP',
+						'plain' => 'Text / Plain',
+						'python' => 'Python',
+						'sql' => 'SQL / MySQL',
 					),
 				)
 			));

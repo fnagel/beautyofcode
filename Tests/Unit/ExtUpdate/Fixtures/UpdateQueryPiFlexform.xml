@@ -7,7 +7,7 @@
                     <value index="vDEF">Foo? Bar!</value>
                 </field>
                 <field index="cLang">
-                    <value index="vDEF">TypoScript</value>
+                    <value index="vDEF">typoscript</value>
                 </field>
             </language>
         </sheet>

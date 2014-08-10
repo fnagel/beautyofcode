@@ -25,6 +25,8 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Prism
  *
@@ -61,34 +63,34 @@ class Prism
 
 
 	/**
-	 * A CSS class/label map for the select box
+	 * A Brush identifier / alias map
 	 *
-	 * Key is the brush string from TS Setup; Value is an array with the CSS
-	 * class in key 0 and the label for the select box in key 1
+	 * With Prism, the brush (component) identifier is the same as used in
+	 * the HTML element class attribute ("brush:" setting)
 	 *
 	 * @var array
 	 */
-	protected $brushIdentifierAliasLabelMap = array(
-		'bash' => array('bash', 'Bash / Shell'),
-		'c' => array('c', 'C / C++'),
-		'clike' => array('clike', 'C-Like'),
-		'coffeescript' => array('coffeescript', 'Coffeescript'),
-		'cpp' => array('cpp', 'C / C++'),
-		'csharp' => array('csharp', 'C#'),
-		'css' => array('css', 'CSS'),
-		'gherkin' => array('gherkin', 'Gherkin'),
-		'go' => array('go', 'Go'),
-		'groovy' => array('groovy', 'Groovy'),
-		'http' => array('http', 'HTTP'),
-		'java' => array('java', 'Java'),
-		'javascript' => array('javascript', 'JavaScript'),
-		'markup' => array('markup', 'XML / XSLT / XHTML / HTML'),
-		'php' => array('php', 'PHP'),
-		'python' => array('python', 'Python'),
-		'ruby' => array('ruby', 'Ruby'),
-		'scss' => array('scss', 'SCSS'),
-		'sql' => array('sql', 'SQL'),
-		'typoscript' => array('typoscript', 'TypoScript'),
+	protected $brushIdentifierAliasMap = array(
+		'bash' => 'bash',
+		'c' => 'c',
+		'clike' => 'clike',
+		'coffeescript' => 'coffeescript',
+		'cpp' => 'cpp',
+		'csharp' => 'csharp',
+		'css' => 'css',
+		'gherkin' => 'gherkin',
+		'go' => 'go',
+		'groovy' => 'groovy',
+		'http' => 'http',
+		'java' => 'java',
+		'javascript' => 'javascript',
+		'markup' => 'markup',
+		'php' => 'php',
+		'python' => 'python',
+		'ruby' => 'ruby',
+		'scss' => 'scss',
+		'sql' => 'sql',
+		'typoscript' => 'typoscript',
 	);
 
 	/**
@@ -100,7 +102,7 @@ class Prism
 	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
 		$configurationItems = array();
 		$classAttributeConfigurationStack = array(
-			'data-line' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
+			'data-line' => GeneralUtility::expandList($flexform->getCHighlight()),
 		);
 
 		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {

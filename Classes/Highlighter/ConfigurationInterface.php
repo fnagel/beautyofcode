@@ -45,30 +45,6 @@ interface ConfigurationInterface {
 	public function getFailSafeBrushAlias($brushAlias);
 
 	/**
-	 * hasBrushIdentifier
-	 *
-	 * @param string $brushIdentifier
-	 * @return boolean
-	 */
-	public function hasBrushIdentifier($brushIdentifier);
-
-	/**
-	 * hasBrushAlias
-	 *
-	 * @param string $brushAlias
-	 * @return boolean
-	 */
-	public function hasBrushAlias($brushAlias);
-
-	/**
-	 * getBrushIdentifierAliasAndLabel
-	 *
-	 * @param string $brushIdentifier
-	 * @return array
-	 */
-	public function getBrushIdentifierAliasAndLabel($brushIdentifier);
-
-	/**
 	 * addRegisteredBrushes
 	 *
 	 * Adds the registered brushes (detected during rendering a page in FE) to
@@ -87,5 +63,13 @@ interface ConfigurationInterface {
 	 * @return string
 	 */
 	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform);
+
+	/**
+	 * getBrushAliasByIdentifier
+	 *
+	 * @param string $brushIdentifier
+	 * @return string
+	 */
+	public function getBrushAliasByIdentifier($brushIdentifier);
 }
 ?>

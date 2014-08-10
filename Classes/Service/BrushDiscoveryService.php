@@ -27,6 +27,8 @@ namespace TYPO3\Beautyofcode\Service;
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
  * The brush discovery service
@@ -46,9 +48,15 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @var array
+	 * @var ObjectManagerInterface
 	 */
-	protected $libraries = array();
+	protected $objectManager;
+
+	/**
+	 *
+	 * @var ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
 
 	/**
 	 *
@@ -57,20 +65,62 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $brushStack = array();
 
 	/**
+	 * injectObjectManager
+	 *
+	 * @param ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
+		if (is_null($objectManager)) {
+			$objectManager = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
+			);
+		}
+
+		$this->objectManager = $objectManager;
+	}
+
+	/**
+	 * injectHighlighterConfiguration
+	 *
+	 * @param ConfigurationInterface $highlighterConfiguration
+	 * @return void
+	 */
+	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration = NULL) {
+		if (is_null($highlighterConfiguration)) {
+			$highlighterConfiguration = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
+			);
+		}
+
+		$this->highlighterConfiguration = $highlighterConfiguration;
+	}
+
+	/**
+	 * initializeObject
+	 *
+	 * @return void
+	 */
+	public function initializeObject() {
+		$this->injectObjectManager($this->objectManager);
+		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
+	}
+
+	/**
 	 * Discovers brushes and returns them
 	 *
 	 * @return array Multidimensional array with library as keys, brushes stack
 	 *               as value where key is the name, value is an LLL alias
 	 */
 	public function discoverBrushes() {
+		$this->initializeObject();
+
 		$brushRegistry = ArrayUtility::getValueByPath(
 			$GLOBALS,
 			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
 		);
 
 		foreach ($brushRegistry as $library => $libraryConfiguration) {
-			$this->libraries[] = $library;
-
 			$brushes = $this->findBrushes($libraryConfiguration);
 
 			$this->brushStack[$library] = $this->filterAndSortBrushes(
@@ -117,21 +167,22 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 		$filteredAndSortedBrushes = array();
 
 		foreach ($brushes as $brush) {
-			$brushName = str_replace($configuration['prefix'], '', $brush);
-			$brushName = str_replace($configuration['suffix'], '', $brushName);
+			$brushIdentifier = str_replace($configuration['prefix'], '', $brush);
+			$brushIdentifier = str_replace($configuration['suffix'], '', $brushIdentifier);
 
 			/* @var $languageService \TYPO3\CMS\Lang\LanguageService */
 			$languageService = $GLOBALS['LANG'];
 
-			$brushAlias = $languageService->sL(
-				self::BRUSH_LABELS_CATALOGUE . ':' . $brushName
+			$brushLabel = $languageService->sL(
+				self::BRUSH_LABELS_CATALOGUE . ':' . $brushIdentifier
 			);
 
-			if ('' === $brushAlias) {
-				$brushAlias = $brushName;
+			if ('' === $brushLabel) {
+				$brushLabel = $brushIdentifier;
 			}
 
-			$filteredAndSortedBrushes[$brushName] = $brushAlias;
+			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
+			$filteredAndSortedBrushes[$brushAlias] = $brushLabel;
 		}
 
 		asort($filteredAndSortedBrushes);

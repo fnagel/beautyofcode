@@ -106,36 +106,6 @@ class Configuration implements ConfigurationInterface {
 	}
 
 	/**
-	 * hasBrushIdentifier
-	 *
-	 * @param string $brushIdentifier
-	 * @return boolean
-	 */
-	public function hasBrushIdentifier($brushIdentifier) {
-		return $this->configuration->hasBrushIdentifier($brushIdentifier);
-	}
-
-	/**
-	 * hasBrushAlias
-	 *
-	 * @param string $brushAlias
-	 * @return boolean
-	 */
-	public function hasBrushAlias($brushAlias) {
-		return $this->configuration->hasBrushAlias($brushAlias);
-	}
-
-	/**
-	 * getBrushIdentifierAliasAndLabel
-	 *
-	 * @param string $brushIdentifier
-	 * @return array
-	 */
-	public function getBrushIdentifierAliasAndLabel($brushIdentifier) {
-		return $this->configuration->getBrushIdentifierAliasAndLabel($brushIdentifier);
-	}
-
-	/**
 	 * addRegisteredBrushes
 	 *
 	 * @param array $brushStack
@@ -153,6 +123,16 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
 		return $this->configuration->getClassAttributeString($flexform);
+	}
+
+	/**
+	 * getBrushAliasByIdentifier
+	 *
+	 * @param string $brushIdentifier
+	 * @return string
+	 */
+	public function getBrushAliasByIdentifier($brushIdentifier) {
+		return $this->configuration->getBrushAliasByIdentifier($brushIdentifier);
 	}
 }
 ?>

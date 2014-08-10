@@ -95,24 +95,13 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
-	 * hasBrushIdentifier
-	 *
-	 * @param string $brushIdentifier
-	 * @return boolean
-	 */
-	public function hasBrushIdentifier($brushIdentifier) {
-		return isset($this->brushIdentifierAliasLabelMap[$brushIdentifier]);
-	}
-
-	/**
 	 * hasBrushAlias
 	 *
 	 * @param string $brushAlias
 	 * @return boolean
 	 */
-	public function hasBrushAlias($brushAlias) {
-		foreach ($this->brushIdentifierAliasLabelMap as $aliasLabelMap) {
-			list($alias, ) = $aliasLabelMap;
+	protected function hasBrushAlias($brushAlias) {
+		foreach ($this->brushIdentifierAliasMap as $alias) {
 			if ($alias === $brushAlias) {
 				return TRUE;
 			}
@@ -121,15 +110,18 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 		return FALSE;
 	}
 
-
 	/**
-	 * getBrushIdentifierAliasAndLabel
+	 * getBrushAliasByIdentifier
 	 *
 	 * @param string $brushIdentifier
-	 * @return array
+	 * @return string
 	 */
-	public function getBrushIdentifierAliasAndLabel($brushIdentifier) {
-		return $this->brushIdentifierAliasLabelMap[$brushIdentifier];
+	public function getBrushAliasByIdentifier($brushIdentifier) {
+		if (isset($this->brushIdentifierAliasMap[$brushIdentifier])) {
+			return $this->brushIdentifierAliasMap[$brushIdentifier];
+		}
+
+		return $brushIdentifier;
 	}
 }
 ?>

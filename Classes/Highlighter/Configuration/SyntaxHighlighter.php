@@ -25,6 +25,8 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * SyntaxHighlighter
  *
@@ -54,38 +56,39 @@ class SyntaxHighlighter
 	);
 
 	/**
-	 * A CSS class/label map for the select box
+	 * A Brush identifier / alias map
 	 *
-	 * Key is the brush string from TS Setup; Value is an array with the CSS
-	 * class in key 0 and the label for the select box in key 1
+	 * With SyntaxHighlighter, a Brush identifier may have a Brush alias which
+	 * is used in the class attribute of the HTML element and defined within
+	 * the JavaScript brush resource.
 	 *
 	 * @var array
 	 */
-	protected $brushIdentifierAliasLabelMap = array(
-		'AppleScript' => array('applescript', 'AppleScript'),
-		'AS3' => array('actionscript3', 'Actionscript 3'),
-		'Bash' => array('bash', 'Bash / Shell'),
-		'ColdFusion' => array('coldfusion', 'ColdFusion'),
-		'Cpp' => array('cpp', 'C / C++'),
-		'CSharp' => array('csharp', 'C#'),
-		'Css' => array('css', 'CSS'),
-		'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
-		'Diff' => array('diff', 'Diff / Patch'),
-		'Erlang' => array('erlang', 'Erlang'),
-		'Groovy' => array('groovy', 'Groovy'),
-		'Java' => array('java', 'Java'),
-		'JavaFX' => array('javafx', 'Java FX'),
-		'JScript' => array('javascript', 'Java-Script'),
-		'Perl' => array('perl', 'Perl'),
-		'Php' => array('php', 'PHP'),
-		'PowerShell' => array('powershell', 'Power-Shell'),
-		'Python' => array('python', 'Python'),
-		'Ruby' => array('ruby', 'Ruby on Rails'),
-		'Scala' => array('scala', 'Scala'),
-		'Sql' => array('sql', 'SQL / MySQL'),
-		'Typoscript' => array('typoscript', 'Typoscript'),
-		'Vb' => array('vbnet', 'Virtual Basic / .Net'),
-		'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
+	protected $brushIdentifierAliasMap = array(
+		'AppleScript' => 'applescript',
+		'AS3' => 'actionscript3',
+		'Bash' => 'bash',
+		'ColdFusion' => 'coldfusion',
+		'Cpp' => 'cpp',
+		'CSharp' => 'csharp',
+		'Css' => 'css',
+		'Delphi' => 'delphi',
+		'Diff' => 'diff',
+		'Erlang' => 'erlang',
+		'Groovy' => 'groovy',
+		'Java' => 'java',
+		'JavaFX' => 'javafx',
+		'JScript' => 'javascript',
+		'Perl' => 'perl',
+		'Php' => 'php',
+		'PowerShell' => 'powershell',
+		'Python' => 'python',
+		'Ruby' => 'ruby',
+		'Scala' => 'scala',
+		'Sql' => 'sql',
+		'Typoscript' => 'typoscript',
+		'Vb' => 'vbnet',
+		'Xml' => 'xml',
 	);
 
 	/**
@@ -99,11 +102,12 @@ class SyntaxHighlighter
 			'plain' => 'shBrushPlain.js',
 		);
 
-		foreach ($brushStack as $brush) {
-			list($cssTag, ) = $this->brushIdentifierAliasLabelMap[$brush];
-			$brushPath = 'shBrush' . $brush .'.js';
+		$brushAliasIdentifierMap = array_flip($this->brushIdentifierAliasMap);
 
-			$brushes[$cssTag] = $brushPath;
+		foreach ($brushStack as $brushAlias) {
+			$brushIdentifier = $brushAliasIdentifierMap[$brushAlias];
+
+			$brushes[$brushAlias] = 'shBrush' . $brushIdentifier .'.js';
 		}
 
 		$this->brushLoaderView->assign('brushes', $brushes);
@@ -120,7 +124,7 @@ class SyntaxHighlighter
 		$configurationItems = array();
 
 		$classAttributeConfigurationStack = array(
-			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
+			'highlight' => GeneralUtility::expandList($flexform->getCHighlight()),
 			'gutter' => $flexform->getCGutter(),
 			'collapse' => $flexform->getCCollapse(),
 		);

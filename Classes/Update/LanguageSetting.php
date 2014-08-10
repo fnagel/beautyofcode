@@ -25,12 +25,18 @@ namespace TYPO3\Beautyofcode\Update;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\Beautyofcode\Service\BrushDiscoveryService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+
 /**
  * The language setting update class
  *
  * @package \TYPO3\Beautyofcode\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
 class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
@@ -60,29 +66,37 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	protected $flexformTools;
 
 	/**
+	 * injectBrushDiscoveryService
 	 *
-	 * @param \TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService
+	 * @param BrushDiscoveryService $brushDiscoveryService
 	 * @return void
 	 */
-	public function injectBrushDiscoveryService(\TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService = NULL) {
-		if (NULL === $brushDiscoveryService && NULL === $this->brushDiscoveryService) {
-			$this->brushDiscoveryService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService');
-		} else if (NULL !== $brushDiscoveryService) {
-			$this->brushDiscoveryService = $brushDiscoveryService;
+	public function injectBrushDiscoveryService(
+		BrushDiscoveryService $brushDiscoveryService = NULL
+	) {
+		if (is_null($brushDiscoveryService)) {
+			$brushDiscoveryService = GeneralUtility::makeInstance(
+				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
+			);
 		}
+
+		$this->brushDiscoveryService = $brushDiscoveryService;
 	}
 
 	/**
+	 * injectFlexformTools
 	 *
-	 * @param \TYPO3\CMS\Core\Configuration\Flexform\FlexformTools $flexformTools
+	 * @param FlexFormTools $flexformTools
 	 * @return void
 	 */
-	public function injectFlexformTools(\TYPO3\CMS\Core\Configuration\Flexform\FlexformTools $flexformTools = NULL) {
-		if (NULL === $flexformTools && NULL === $this->flexformTools) {
-			$this->flexformTools = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools');
-		} else if (NULL !== $flexformTools) {
-			$this->flexformTools = $flexformTools;
+	public function injectFlexformTools(FlexformTools $flexformTools = NULL) {
+		if (is_null($flexformTools)) {
+			$flexformTools = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools'
+			);
 		}
+
+		$this->flexformTools = $flexformTools;
 	}
 
 	/**
@@ -102,7 +116,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 			)
 		);
 
-		$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->template);
+		$templatePath = GeneralUtility::getFileAbsFileName($this->template);
 		$this->view->setTemplatePathAndFilename($templatePath);
 
 		$this->expandFlexformData();
@@ -114,37 +128,39 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @return void
 	 */
 	protected function expandFlexformData() {
-		$_plugins = array();
+		$plugins = array();
 
 		while ($plugin = $this->db->sql_fetch_assoc($this->plugins)) {
-			$flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($plugin['pi_flexform']);
+			$flexformData = GeneralUtility::xml2array($plugin['pi_flexform']);
 
 			$plugin['pi_flexform'] = $flexformData;
 			$plugin['header'] = $this->getPluginHeader($plugin);
 
-			$_plugins[] = $plugin;
+			$plugins[] = $plugin;
 		}
 
 		$this->db->sql_free_result($this->plugins);
 
-		$this->plugins = $_plugins;
+		$this->plugins = $plugins;
 	}
 
 	/**
-	 * Returns the plugin header by first looking into the flexform (cLabel), then header field
+	 * Returns the plugin header
+	 *
+	 * First looks up the flexform (cLabel), then header field
 	 *
 	 * @param array $plugin An associative array of the tt_content plugin record
 	 * @return string
 	 */
 	protected function getPluginHeader($plugin) {
-		$cLabel = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath(
+		$cLabel = ArrayUtility::getValueByPath(
 			$plugin['pi_flexform'],
 			'data/sDEF/lDEF/cLabel/vDEF'
 		);
 
 		if ('' !== $cLabel) {
 			$title = $cLabel;
-		} else if ('' !== $plugin['header']) {
+		} elseif ('' !== $plugin['header']) {
 			$title = $plugin['header'];
 		} else {
 			$title = '(Untitled)';
@@ -195,7 +211,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		$successfulUpdates = 0;
 
 		if ($this->hasUpdateInstruction('language')) {
-			$newLanguages = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('language');
+			$newLanguages = GeneralUtility::_GP('language');
 
 			foreach ($this->plugins as $plugin) {
 				try {
@@ -220,17 +236,21 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * Updates the language (cLang) within the flexform of the given plugin
 	 *
 	 * @param array $plugin A tt_content record which reflects a beautyofcode plugin
-	 * @throws \TYPO3\CMS\Core\Exception If the target plugin wasn't found with REQUEST['language'] stack
+	 * @throws \TYPO3\CMS\Core\Exception If the target plugin wasn't found in
+	 *                                   REQUEST['language'] stack
 	 * @return boolean TRUE if the update query was successful, false otherwise
 	 */
 	protected function updatePluginLanguage(array $plugin) {
-		$newLanguages = \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('language');
+		$newLanguages = GeneralUtility::_GP('language');
 
 		if (FALSE === array_key_exists($plugin['uid'], $newLanguages)) {
-			throw new \TYPO3\CMS\Core\Exception('Plugin not found in incoming language request array.', 1391374938);
+			throw new \TYPO3\CMS\Core\Exception(
+				'Plugin not found in incoming language request array.',
+				1391374938
+			);
 		}
 
-		$plugin['pi_flexform'] = \TYPO3\CMS\Core\Utility\ArrayUtility::setValueByPath(
+		$plugin['pi_flexform'] = ArrayUtility::setValueByPath(
 			$plugin['pi_flexform'],
 			'data/sDEF/lDEF/cLang/vDEF',
 			$newLanguages[$plugin['uid']]

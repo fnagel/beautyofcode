@@ -111,6 +111,19 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
+	 * addRegisteredBrushes
+	 *
+	 * @param array $brushStack
+	 * @return void
+	 */
+	public function addRegisteredBrushes(array $brushStack = array()) {
+		$brushes = $brushStack;
+
+		$this->brushLoaderView->assign('brushes', $brushes);
+		$this->brushLoaderView->render();
+	}
+
+	/**
 	 * getBrushAliasByIdentifier
 	 *
 	 * @param string $brushIdentifier

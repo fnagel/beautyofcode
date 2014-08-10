@@ -43,7 +43,7 @@ if (TYPO3_MODE === 'FE') {
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(
 	'SyntaxHighlighter' => array(
 		'path' => 'EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/scripts/',
-		'excludePattern' => 'sh(BrushPlain|Autoloader|Core|Legacy)\.js',
+		'excludePattern' => 'sh(Autoloader|Core|Legacy)\.js',
 		'prefix' => 'shBrush',
 		'suffix' => '.js',
 		'dependencies' => array(),

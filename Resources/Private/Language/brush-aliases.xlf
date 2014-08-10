@@ -31,6 +31,9 @@
 			<trans-unit id="Php">
 				<source>PHP</source>
 			</trans-unit>
+			<trans-unit id="Plain">
+				<source>Text / Plain</source>
+			</trans-unit>
 			<trans-unit id="Sass">
 				<source>Sass / SCSS</source>
 			</trans-unit>
@@ -94,6 +97,9 @@
 			</trans-unit>
 			<trans-unit id="php">
 				<source>PHP</source>
+			</trans-unit>
+			<trans-unit id="plain">
+				<source>Text / Plain</source>
 			</trans-unit>
 			<trans-unit id="python">
 				<source>Python</source>

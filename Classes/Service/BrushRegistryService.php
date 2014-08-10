@@ -25,10 +25,11 @@ namespace TYPO3\Beautyofcode\Service;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
-use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\Beautyofcode\Domain\Model\ContentElement;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
  * This service allows the storage of brushes into the system registry
@@ -43,9 +44,59 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
+	 * @var BrushDiscoveryService
+	 */
+	protected $brushDiscoveryService;
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $settings;
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $dependencies;
+
+	/**
+	 *
 	 * @var array
 	 */
 	protected $brushes = array();
+
+	/**
+	 * injectConfiguratioManager
+	 *
+	 * @param ConfigurationManagerInterface $configurationManager
+	 * @return void
+	 */
+	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager) {
+		$configuration = $configurationManager->getConfiguration(
+			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+		);
+
+		$this->settings = ArrayUtility::getValueByPath(
+			$configuration,
+			'plugin./tx_beautyofcode./settings.'
+		);
+	}
+
+	/**
+	 * injectBrushDiscoveryService
+	 *
+	 * @param BrushDiscoveryService $brushDiscoveryService
+	 * @return void
+	 */
+	public function injectBrushDiscoveryService(
+		BrushDiscoveryService $brushDiscoveryService
+	) {
+		$this->brushDiscoveryService = $brushDiscoveryService;
+		$dependencies = $this->brushDiscoveryService->discoverDependencies();
+
+		$this->dependencies = $dependencies[$this->settings['library']];
+	}
 
 	/**
 	 * registerBrush
@@ -54,10 +105,20 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	public function registerBrush(ContentElement $contentElement) {
-		$brush = $contentElement->getFlexformObject()->getCLang();
+		$brush = $contentElement->getFlexformObject()->getLanguage();
 
 		if (FALSE === in_array($brush, $this->brushes)) {
 			$this->brushes[] = $brush;
+		}
+
+		while (isset($this->dependencies[$brush])) {
+			$brush = $this->dependencies[$brush];
+
+			if (in_array($brush, $this->brushes)) {
+				continue;
+			}
+
+			array_unshift($this->brushes, $brush);
 		}
 	}
 

@@ -98,20 +98,17 @@ class SyntaxHighlighter
 	 * @return void
 	 */
 	public function addRegisteredBrushes(array $brushStack = array()) {
-		$brushes = array(
-			'plain' => 'shBrushPlain.js',
-		);
+		$brushes = array();
 
 		$brushAliasIdentifierMap = array_flip($this->brushIdentifierAliasMap);
 
 		foreach ($brushStack as $brushAlias) {
 			$brushIdentifier = $brushAliasIdentifierMap[$brushAlias];
 
-			$brushes[$brushAlias] = 'shBrush' . $brushIdentifier .'.js';
+			$brushes[$brushAlias] = $brushIdentifier;
 		}
 
-		$this->brushLoaderView->assign('brushes', $brushes);
-		$this->brushLoaderView->render();
+		parent::addRegisteredBrushes($brushes);
 	}
 
 	/**

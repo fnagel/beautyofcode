@@ -62,7 +62,19 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *
 	 * @var array
 	 */
+	protected $discoveryConfiguration = array();
+
+	/**
+	 *
+	 * @var array
+	 */
 	protected $brushStack = array();
+
+	/**
+	 *
+	 * @var array
+	 */
+	protected $dependencies = array();
 
 	/**
 	 * injectObjectManager
@@ -104,6 +116,11 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	public function initializeObject() {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
+
+		$this->discoveryConfiguration = ArrayUtility::getValueByPath(
+			$GLOBALS,
+			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
+		);
 	}
 
 	/**
@@ -115,12 +132,7 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	public function discoverBrushes() {
 		$this->initializeObject();
 
-		$brushRegistry = ArrayUtility::getValueByPath(
-			$GLOBALS,
-			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
-		);
-
-		foreach ($brushRegistry as $library => $libraryConfiguration) {
+		foreach ($this->discoveryConfiguration as $library => $libraryConfiguration) {
 			$brushes = $this->findBrushes($libraryConfiguration);
 
 			$this->brushStack[$library] = $this->filterAndSortBrushes(
@@ -188,6 +200,25 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 		asort($filteredAndSortedBrushes);
 
 		return $filteredAndSortedBrushes;
+	}
+
+	/**
+	 * discoverDependencies
+	 *
+	 * @return array
+	 */
+	public function discoverDependencies() {
+		$this->initializeObject();
+
+		if (!empty($this->dependencies)) {
+			return $this->dependencies;
+		}
+
+		foreach ($this->discoveryConfiguration as $library => $libraryConfiguration) {
+			$this->dependencies[$library] = $libraryConfiguration['dependencies'];
+		}
+
+		return $this->dependencies;
 	}
 }
 ?>

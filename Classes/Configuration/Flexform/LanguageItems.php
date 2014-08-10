@@ -106,7 +106,7 @@ class LanguageItems {
 		\TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService = NULL
 	) {
 		if (is_null($brushDiscoveryService)) {
-			$brushDiscoveryService = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+			$brushDiscoveryService = $this->objectManager->get(
 				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 			);
 		}

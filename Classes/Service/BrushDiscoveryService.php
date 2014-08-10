@@ -48,12 +48,6 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
-	 * @var ObjectManagerInterface
-	 */
-	protected $objectManager;
-
-	/**
-	 *
 	 * @var ConfigurationInterface
 	 */
 	protected $highlighterConfiguration;
@@ -77,34 +71,12 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $dependencies = array();
 
 	/**
-	 * injectObjectManager
-	 *
-	 * @param ObjectManagerInterface $objectManager
-	 * @return void
-	 */
-	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
-		if (is_null($objectManager)) {
-			$objectManager = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
-			);
-		}
-
-		$this->objectManager = $objectManager;
-	}
-
-	/**
 	 * injectHighlighterConfiguration
 	 *
 	 * @param ConfigurationInterface $highlighterConfiguration
 	 * @return void
 	 */
-	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration = NULL) {
-		if (is_null($highlighterConfiguration)) {
-			$highlighterConfiguration = $this->objectManager->get(
-				'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
-			);
-		}
-
+	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
 		$this->highlighterConfiguration = $highlighterConfiguration;
 	}
 
@@ -114,13 +86,14 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return void
 	 */
 	public function initializeObject() {
-		$this->injectObjectManager($this->objectManager);
-		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
-
-		$this->discoveryConfiguration = ArrayUtility::getValueByPath(
-			$GLOBALS,
-			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
-		);
+		try {
+			$this->discoveryConfiguration = ArrayUtility::getValueByPath(
+				$GLOBALS,
+				'TYPO3_CONF_VARS/EXTCONF/beautyofcode/BrushDiscovery'
+			);
+		} catch (\RuntimeException $e) {
+			$this->discoveryConfiguration = array();
+		}
 	}
 
 	/**
@@ -130,7 +103,9 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 *               as value where key is the name, value is an LLL alias
 	 */
 	public function discoverBrushes() {
-		$this->initializeObject();
+		if (!empty($this->brushStack)) {
+			return $this->brushStack;
+		}
 
 		foreach ($this->discoveryConfiguration as $library => $libraryConfiguration) {
 			$brushes = $this->findBrushes($libraryConfiguration);
@@ -208,8 +183,6 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return array
 	 */
 	public function discoverDependencies() {
-		$this->initializeObject();
-
 		if (!empty($this->dependencies)) {
 			return $this->dependencies;
 		}

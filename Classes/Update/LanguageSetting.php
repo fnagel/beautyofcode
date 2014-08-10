@@ -25,6 +25,7 @@ namespace TYPO3\Beautyofcode\Update;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\Beautyofcode\Service\BrushDiscoveryService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
@@ -55,6 +56,12 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
 	/**
 	 *
+	 * @var ObjectManagerInterface
+	 */
+	protected $objectManager;
+
+	/**
+	 *
 	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
 	 */
 	protected $brushDiscoveryService;
@@ -66,6 +73,22 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	protected $flexformTools;
 
 	/**
+	 * injectObjectManager
+	 *
+	 * @param ObjectManagerInterface $objectManager
+	 * @return void
+	 */
+	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
+		if (is_null($objectManager)) {
+			$objectManager = GeneralUtility::makeInstance(
+				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
+			);
+		}
+
+		$this->objectManager = $objectManager;
+	}
+
+	/**
 	 * injectBrushDiscoveryService
 	 *
 	 * @param BrushDiscoveryService $brushDiscoveryService
@@ -75,7 +98,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		BrushDiscoveryService $brushDiscoveryService = NULL
 	) {
 		if (is_null($brushDiscoveryService)) {
-			$brushDiscoveryService = GeneralUtility::makeInstance(
+			$brushDiscoveryService = $this->objectManager->get(
 				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 			);
 		}
@@ -91,7 +114,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 */
 	public function injectFlexformTools(FlexformTools $flexformTools = NULL) {
 		if (is_null($flexformTools)) {
-			$flexformTools = GeneralUtility::makeInstance(
+			$flexformTools = $this->objectManager->get(
 				'TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools'
 			);
 		}
@@ -104,8 +127,9 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @see \TYPO3\Beautyofcode\Update\AbstractUpdate::initializeObject()
 	 */
 	public function initializeObject() {
-		$this->injectBrushDiscoveryService();
-		$this->injectFlexformTools();
+		$this->injectObjectManager($this->objectManager);
+		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
+		$this->injectFlexformTools($this->flexformTools);
 
 		$this->plugins = $this->db->exec_SELECTquery(
 			'uid, header, pi_flexform',

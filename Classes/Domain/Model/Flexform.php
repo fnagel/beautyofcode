@@ -273,4 +273,3 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		return $this->highlighterConfiguration->getClassAttributeString($this);
 	}
 }
-?>

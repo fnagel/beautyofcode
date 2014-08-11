@@ -36,8 +36,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class SyntaxHighlighter
-	extends AbstractConfiguration {
+class SyntaxHighlighter extends AbstractConfiguration {
 
 	/**
 	 *
@@ -96,7 +95,7 @@ class SyntaxHighlighter
 	 * prepareRegisteredBrushes
 	 *
 	 * @param array $brushStack
-	 * @return void
+	 * @return array
 	 */
 	public function prepareRegisteredBrushes(array $brushStack = array()) {
 		$brushes = array();
@@ -146,4 +145,3 @@ class SyntaxHighlighter
 		return '; ' . implode('; ', $configurationItems);
 	}
 }
-?>

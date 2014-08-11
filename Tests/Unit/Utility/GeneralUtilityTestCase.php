@@ -4,7 +4,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2013 ...
+ * (c) 2014 Thomas Juhnke <typo3@van-tomas.de>
  *
  * All rights reserved
  *
@@ -30,34 +30,14 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
  *
  * @package \TYPO3\Beautyofcode\Tests\Unit\Utility
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
-
-	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
+class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	public function setUp() {
-		if (FALSE === defined('PATH_site')) {
-			define('PATH_site', '/home/foo/');
-		}
-
-		if (FALSE === defined('REQUIRED_EXTENSIONS')) {
-			define('REQUIRED_EXTENSIONS', 'foo,bar');
-		}
-
-		$GLOBALS['TYPO3_CONF_VARS'] = array(
-			'EXT' => array(
-				'extListArray' => array(
-					'beautyofcode'
-				),
-				'requiredExt' => array('foo', 'bar'),
-			),
-		);
-
-		$GLOBALS['TYPO3_LOADED_EXT']['beautyofcode'] = array(
-			'siteRelPath' => 'typo3conf/ext/beautyofcode/'
-		);
+		$this->createPackageManagerMock();
 	}
 
 	/**
@@ -65,6 +45,12 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
+		$this->packageManagerMock
+			->expects($this->any())
+			->method('isPackageActive')
+			->with($this->equalTo('beautyofcode'))
+			->will($this->returnValue(TRUE));
+
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('EXT:beautyofcode/ext_emconf.php');
 
 		$this->assertStringStartsWith('typo3conf/', $path);
@@ -98,6 +84,11 @@ class GeneralUtilityTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile() {
+		$this->packageManagerMock
+			->expects($this->any())
+			->method('isPackageActive')
+			->will($this->returnValue(TRUE));
+
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
 
 		$this->assertStringStartsWith('typo3conf/', $path);

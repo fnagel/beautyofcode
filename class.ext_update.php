@@ -115,4 +115,3 @@ class ext_update {
 		return $output;
 	}
 }
-?>

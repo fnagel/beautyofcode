@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
+namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -33,25 +33,31 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @runTestsInSeparateProcesses
  */
-class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Frontend\Page\PageRepository
+	 * @var \TYPO3\CMS\Extbase\Object\ObjectManager
 	 */
-	protected $pageRepositoryMock;
+	protected $objectManagerMock;
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
 	 */
-	protected $templateServiceMock;
+	protected $configurationManagerMock;
 
 	/**
 	 *
 	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
 	 */
 	protected $brushDiscoveryMock;
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Backend\Form\FormEngine
+	 */
+	protected $formEngineMock;
 
 	/**
 	 *
@@ -75,9 +81,13 @@ class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\B
 	 * @see PHPUnit_Framework_TestCase::setUp()
 	 */
 	public function setUp() {
-		$this->pageRepositoryMock = $this->getMock('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
+		$this->objectManagerMock = $this
+			->getMockBuilder('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')
+			->disableOriginalConstructor()
+			->getMock();
 
-		$this->templateServiceMock = $this->getMock('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+		$this->configurationManagerMock = $this
+			->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 
 		$this->brushDiscoveryMock = $this->getMock(
 			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService',
@@ -85,10 +95,15 @@ class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\B
 			array(),
 			'BrushDiscoveryService_SyntaxHighlighter'
 		);
+
+		$this->formEngineMock = $this
+			->getMockBuilder('TYPO3\\CMS\\Backend\\Form\\FormEngine')
+			->disableOriginalConstructor()
+			->getMock();
 	}
 
 	public function assertConfiguredSyntaxHighlighter() {
-		$this->templateServiceMock->setup = array(
+		$typoScriptSetup = array(
 			'plugin.' => array(
 				'tx_beautyofcode.' => array(
 					'settings.' => array(
@@ -97,6 +112,11 @@ class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\B
 				),
 			),
 		);
+
+		$this->configurationManagerMock
+			->expects($this->any())
+			->method('getConfiguration')
+			->will($this->returnValue($typoScriptSetup));
 
 		$this->brushDiscoveryMock
 			->expects($this->once())
@@ -115,25 +135,35 @@ class LanguageItemsSyntaxHighlighterTest extends \TYPO3\CMS\Extbase\Tests\Unit\B
 	}
 
 	/**
+	 * syntaxHighlighterBrushesOverrideTheReturnValue
+	 *
+	 * Some global object has problems with (un)serialization. Thus we need set
+	 * the preserveGlobalState flag to disabled.
 	 *
 	 * @test
+	 * @preserveGlobalState disabled
 	 */
 	public function syntaxHighlighterBrushesOverrideTheReturnValue() {
 		$this->assertConfiguredSyntaxHighlighter();
 
 		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
-		$sut->injectPageRepository($this->pageRepositoryMock);
-		$sut->injectTemplateService($this->templateServiceMock);
+		$sut->injectObjectManager($this->objectManagerMock);
+		$sut->injectConfigurationManager($this->configurationManagerMock);
 		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
 		$sut->initializeObject();
 
-		$newConfig = $sut->getConfiguredLanguages($this->flexformConfigurationFixture);
+		$newConfig = $sut->getDiscoveredBrushes(
+			$this->flexformConfigurationFixture,
+			$this->formEngineMock
+		);
 
-		$this->assertEquals('Bash', $newConfig['items'][0][1]);
-		$this->assertEquals('Php', $newConfig['items'][1][1]);
-		$this->assertEquals('Plain', $newConfig['items'][2][1]);
-		$this->assertEquals('Python', $newConfig['items'][3][1]);
-		$this->assertEquals('Sql', $newConfig['items'][4][1]);
+		// items.0 = label, items.1 = name/alias of brush identifier
+
+		$this->assertEquals('bash', $newConfig['items'][0][1]);
+		$this->assertEquals('php', $newConfig['items'][1][1]);
+		$this->assertEquals('plain', $newConfig['items'][2][1]);
+		$this->assertEquals('python', $newConfig['items'][3][1]);
+		$this->assertEquals('sql', $newConfig['items'][4][1]);
 	}
 }
 ?>

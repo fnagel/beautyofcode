@@ -67,6 +67,32 @@ Now, you have to configure beautyofcode to use the new template paths:
         templateRootPath = EXT:[YOUR_EXTENSION]/Resources/Private/Templates/
       }
 
+Unit test execution
+-------------------
+
+Simple method
+^^^^^^^^^^^^^
+
+Install ext:phpunit and run the test suites from the backend.
+
+Without a running TYPO3 instance
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(TODO)
+
+1. Install TYPO3.CMS via composer
+2.a. Within the extension directory issue
+
+   .. code-block:: bash
+
+      $~ php vendor/bin/phpunit -c ./Tests/Unit.xml
+
+2.b. Within a project directory structure
+
+   .. code-block:: bash
+
+      $~ TYPO3_PATH_WEB=/vagrant/vendor/typo3/cms php vendor/bin/phpunit -c src/beautyofcode/Tests/Unit.xml
+
 FAQ
 ---
 

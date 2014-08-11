@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="testreport" default="gen-report" basedir=".">
+  <target name="gen-report">
+    <phpunitreport infile="./build/junit.xml"
+      format="frames"
+      todir="./build/junit-html" />
+  </target>
+</project>

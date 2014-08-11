@@ -194,4 +194,3 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 		return $this->dependencies;
 	}
 }
-?>

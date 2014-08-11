@@ -34,4 +34,3 @@ namespace TYPO3\Beautyofcode\Domain\Repository;
  */
 class FlexformRepository {
 }
-?>

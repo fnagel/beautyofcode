@@ -69,11 +69,13 @@ class LanguageItems {
 	public function injectObjectManager(
 		\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager = NULL
 	) {
+		// @codeCoverageIgnoreStart
 		if (is_null($objectManager)) {
 			$objectManager = GeneralUtility::makeInstance(
 				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->objectManager = $objectManager;
 	}
@@ -87,11 +89,13 @@ class LanguageItems {
 	public function injectConfigurationManager(
 		\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager = NULL
 	) {
+		// @codeCoverageIgnoreStart
 		if (is_null($configurationManager)) {
 			$configurationManager = $this->objectManager->get(
 				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->configurationManager = $configurationManager;
 	}
@@ -105,11 +109,13 @@ class LanguageItems {
 	public function injectBrushDiscoveryService(
 		\TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService = NULL
 	) {
+		// @codeCoverageIgnoreStart
 		if (is_null($brushDiscoveryService)) {
 			$brushDiscoveryService = $this->objectManager->get(
 				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->brushDiscoveryService = $brushDiscoveryService;
 	}
@@ -178,4 +184,3 @@ class LanguageItems {
 		return $brushes[$this->settings['library']];
 	}
 }
-?>

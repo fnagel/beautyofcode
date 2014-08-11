@@ -1,0 +1,12 @@
+// -- lib.parseFunc* configuration
+
+// common parsed elements (e.g.header fields)
+lib.parseFunc.allowTags := addToList(star)
+lib.parseFunc.tags.star = &lt; lib.custom_tags.stars
+lib.parseFunc.nonTypoTagStdWrap.HTMLparser.tags.star = &lt; lib.custom_tags.stars
+
+// add custom tag to parse function of the RTE
+lib.parseFunc_RTE.allowTags := addToList(star)
+lib.parseFunc_RTE.tags.star = &lt; lib.custom_tags.stars
+// this line enables the &quot;passthrough&quot; of non-typo-tags to the HTML parser
+lib.parseFunc_RTE.nonTypoTagStdWrap.HTMLparser.tags.star = &lt; lib.custom_tags.stars

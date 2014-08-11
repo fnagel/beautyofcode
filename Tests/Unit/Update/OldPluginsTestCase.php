@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\ExtUpdate;
+namespace TYPO3\Beautyofcode\Tests\Unit\Update;
 
 /***************************************************************
  * Copyright notice
@@ -28,11 +28,12 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ExtUpdate;
 /**
  * Tests the OldPlugins updater
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\ExtUpdate
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
-class OldPluginsUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class OldPluginsTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	/**
 	 *
@@ -41,6 +42,8 @@ class OldPluginsUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	protected $db;
 
 	public function setUp() {
+		$this->createPackageManagerMock();
+
 		$this->db = $this->getMockBuilder('TYPO3\\CMS\\Core\\Database\\DatabaseConnection')
 			->getMock();
 	}

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\ExtUpdate;
+namespace TYPO3\Beautyofcode\Tests\Unit\Update;
 
 /***************************************************************
  * Copyright notice
@@ -28,13 +28,12 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ExtUpdate;
 /**
  * Tests the language setting updater
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\ExtUpdate
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
-class LanguageSettingUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
-
-	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'typo3CacheManager');
+class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	/**
 	 *
@@ -43,50 +42,14 @@ class LanguageSettingUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCa
 	protected $db;
 
 	public function setUp() {
+		$this->createPackageManagerMock();
+
 		$this->db = $this->getMockBuilder('TYPO3\\CMS\\Core\\Database\\DatabaseConnection')
 			->getMock();
 
-		$this->setUpConfigurationValuesForAbsoluteFileNameRetrieval();
-		$this->setUpConfigurationValuesForXml2ArrayUsage();
+		$GLOBALS['TYPO3_DB'] = $this->db;
+
 		$this->setUpConfigurationValuesForFlexformTools();
-	}
-
-	/**
-	 * GeneralUtility::getFileAbsFileName()
-	 *
-	 * Calls
-	 * - ExtensionManagementUtility::isLoaded()
-	 * - ExtensionManagementUtility::extPath()
-	 *
-	 * @return void
-	 */
-	protected function setUpConfigurationValuesForAbsoluteFileNameRetrieval() {
-		if (!defined('PATH_site')) {
-			define('PATH_site', './');
-		}
-
-		if (!defined('REQUIRED_EXTENSIONS')) {
-			define('REQUIRED_EXTENSIONS', 'foo, bar');
-		}
-
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['extListArray'] = array('foo', 'bar');
-		$GLOBALS['TYPO3_CONF_VARS']['EXT']['requiredExt'] = array('foo', 'bar');
-	}
-
-	/**
-	 * GeneralUtility::xml2array() uses PageRepository::getHash() which needs the CacheManager
-	 *
-	 * @return void
-	 */
-	protected function setUpConfigurationValuesForXml2ArrayUsage() {
-		$GLOBALS['typo3CacheManager'] = $this->getMockBuilder('TYPO3\\CMS\\Core\\Cache\\CacheManager')
-			->getMock();
-
-		$cacheMock = $this->getMockBuilder('TYPO3\\CMS\\Core\\Cache\\Backend\\NullBackend')
-			->disableOriginalConstructor()
-			->getMock();
-
-		$GLOBALS['typo3CacheManager']->expects($this->any())->method('getCache')->will($this->returnValue($cacheMock));
 	}
 
 	/**
@@ -178,11 +141,38 @@ class LanguageSettingUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCa
 				$this->equalTo(1)
 			);
 
-		$brushDiscoveryService = $this->getMockBuilder('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService')
-			->getMock();
-		$flexformTools = $this->getMockBuilder('TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools')
+		$objectManager = $this
+			->getMockBuilder('TYPO3\\CMS\\Extbase\\Object\\ObjectManager')
+			->disableOriginalConstructor()
 			->getMock();
 
+		$configurationManager = $this
+			->getMockBuilder('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager')
+			->getMock();
+		$configurationManager
+			->expects($this->any())
+			->method('getConfiguration')
+			->will(
+				$this->returnValue(
+					array(
+						'plugin.' => array(
+							'tx_beautyofcode.' => array(
+								'settings.' => array(
+									'library' => 'Prism',
+								)
+							),
+						),
+					)
+				)
+			);
+
+		$brushDiscoveryService = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService')
+			->getMock();
+
+		$flexformTools = $this
+			->getMockBuilder('TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools')
+			->getMock();
 		$flexformTools->expects($this->once())
 			->method('flexArray2Xml')
 			->will($this->returnValue(file_get_contents(__DIR__ . '/Fixtures/FlexformToolsFlexArray2XmlReturnValue.xml')));
@@ -190,8 +180,11 @@ class LanguageSettingUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCa
 		$sut = new \TYPO3\Beautyofcode\Update\LanguageSetting();
 		$sut->injectDatabaseConnection($this->db);
 		$sut->injectView($view);
+		$sut->injectObjectManager($objectManager);
+		$sut->injectConfigurationManager($configurationManager);
 		$sut->injectBrushDiscoveryService($brushDiscoveryService);
 		$sut->injectFlexformTools($flexformTools);
+
 		$sut->initializeObject();
 
 		$sut->execute();

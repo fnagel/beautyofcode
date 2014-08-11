@@ -62,4 +62,3 @@ class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractP
 		return NULL;
 	}
 }
-?>

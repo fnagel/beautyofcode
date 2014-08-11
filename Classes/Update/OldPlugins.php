@@ -25,12 +25,15 @@ namespace TYPO3\Beautyofcode\Update;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The old plugins update handling class
  *
  * @package \TYPO3\Beautyofode\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
 class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
@@ -46,6 +49,11 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 */
 	protected $template = 'EXT:beautyofcode/Resources/Private/Templates/Update/OldPlugins.html';
 
+	/**
+	 * initializeObject
+	 *
+	 * @return void
+	 */
 	public function initializeObject() {
 		$this->countOldPlugins = $this->db->exec_SELECTcountRows(
 			'*',
@@ -53,7 +61,7 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 			'list_type = "beautyofcode_pi1"'
 		);
 
-		$templatePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($this->template);
+		$templatePath = GeneralUtility::getFileAbsFileName($this->template);
 		$this->view->setTemplatePathAndFilename($templatePath);
 	}
 
@@ -96,4 +104,3 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		return $this->view->render();
 	}
 }
-?>

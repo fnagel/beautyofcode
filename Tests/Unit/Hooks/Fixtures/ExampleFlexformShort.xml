@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3FlexForms>
+    <data>
+        <sheet index="sDEF">
+            <language index="lDEF">
+                <field index="cLabel">
+                    <value index="vDEF"></value>
+                </field>
+                <field index="cLang">
+                    <value index="vDEF">typoscript</value>
+                </field>
+                <field index="cCode">
+                    <value index="vDEF">// -- lib.parseFunc* configuration
+
+// common parsed elements (e.g.header fields)
+lib.parseFunc.allowTags := addToList(star)
+lib.parseFunc.tags.star = &lt; lib.custom_tags.stars
+lib.parseFunc.nonTypoTagStdWrap.HTMLparser.tags.star = &lt; lib.custom_tags.stars
+
+// add custom tag to parse function of the RTE
+lib.parseFunc_RTE.allowTags := addToList(star)
+lib.parseFunc_RTE.tags.star = &lt; lib.custom_tags.stars
+// this line enables the &quot;passthrough&quot; of non-typo-tags to the HTML parser
+lib.parseFunc_RTE.nonTypoTagStdWrap.HTMLparser.tags.star = &lt; lib.custom_tags.stars</value>
+                </field>
+            </language>
+        </sheet>
+        <sheet index="sOPTIONS">
+            <language index="lDEF">
+                <field index="cHighlight">
+                    <value index="vDEF"></value>
+                </field>
+                <field index="cCollapse">
+                    <value index="vDEF">auto</value>
+                </field>
+                <field index="cGutter">
+                    <value index="vDEF">1</value>
+                </field>
+                <field index="cToolbar">
+                    <value index="vDEF">auto</value>
+                </field>
+            </language>
+        </sheet>
+    </data>
+</T3FlexForms>

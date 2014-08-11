@@ -35,4 +35,3 @@ namespace TYPO3\Beautyofcode\Configuration\Exception;
  */
 class UnableToLoadT3EditorException extends \TYPO3\CMS\Core\Exception {
 }
-?>

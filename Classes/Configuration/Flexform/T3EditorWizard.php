@@ -53,7 +53,7 @@ class T3EditorWizard {
 	 *
 	 * @var array
 	 */
-	protected $parameters;
+	protected $parameters = array();
 
 	/**
 	 *
@@ -87,12 +87,51 @@ class T3EditorWizard {
 	protected $t3editor;
 
 	/**
+	 * injectBackendDocumentTemplate
+	 *
+	 * @param \TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate
+	 * @return void
+	 */
+	public function injectBackendDocumentTemplate(
+		\TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate = NULL
+	) {
+		// @codeCoverageIgnoreStart
+		if (is_null($backendDocumentTemplate) && isset($GLOBALS['SOBE'])) {
+			$backendDocumentTemplate = $GLOBALS['SOBE']->doc;
+		}
+		// @codeCoverageIgnoreEnd
+
+		$this->backendDocumentTemplate = $backendDocumentTemplate;
+	}
+
+	/**
+	 * __construct
+	 *
+	 * GeneralUtility::callUserFunction() allows no constructor arguments, but
+	 * a constructor is necessary for Unit tests to test the public interface
+	 * of this class. The parameters comply with the actually called userFunc
+	 * method.
+	 *
+	 * @param array &$parameters
+	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
+	 */
+	public function __construct(
+		array &$parameters = array(),
+		\TYPO3\CMS\Backend\Form\FormEngine $formEngine = NULL
+	) {
+		if (!empty($parameters) && !is_null($formEngine)) {
+			$this->parameters = $parameters;
+			$this->formEngine = $formEngine;
+		}
+	}
+
+	/**
 	 * initalize
 	 *
 	 * @return void
 	 */
 	public function initialize() {
-		$this->backendDocumentTemplate = $GLOBALS['SOBE']->doc;
+		$this->injectBackendDocumentTemplate($this->backendDocumentTemplate);
 
 		$this->initializeExtensionConfiguration();
 
@@ -133,7 +172,6 @@ class T3EditorWizard {
 		}
 	}
 
-
 	/**
 	 * initializes the t3editor
 	 *
@@ -159,7 +197,7 @@ class T3EditorWizard {
 		}
 
 		$this->t3editor = GeneralUtility::makeInstance(
-			'\TYPO3\Beautyofcode\FlexformT3editor'
+			'TYPO3\\Beautyofcode\\FlexformT3editor'
 		);
 
 		if (!$this->t3editor->isEnabled()) {
@@ -195,25 +233,24 @@ class T3EditorWizard {
 	 *
 	 * @param array &$parameters Array of userFunc arguments
 	 * @param \TYPO3\CMS\Backend\Form\FormEngine &$formEngine
-	 * @return void|string
+	 * @return string
 	 */
 	public function main(
-		&$parameters,
+		array &$parameters,
 		\TYPO3\CMS\Backend\Form\FormEngine &$formEngine
 	) {
 		try {
-			$this->parameters = $parameters;
-			$this->formEngine = $formEngine;
+			$this->parameters = &$parameters;
+			$this->formEngine = &$formEngine;
 
 			$this->initialize();
+
+			$itemMarkup = $this->t3editor->render();
+			$itemMarkup .= $this->getDimensionsPatchMarkup();
+
+			$this->parameters['item'] = $itemMarkup;
 		} catch (UnableToLoadT3EditorException $e) {
-			return;
 		}
-
-		$itemMarkup = $this->t3editor->render();
-		$itemMarkup .= $this->getDimensionsPatchMarkup();
-
-		$this->parameters['item'] = $itemMarkup;
 
 		return '';
 	}
@@ -235,4 +272,3 @@ class T3EditorWizard {
 		);
 	}
 }
-?>

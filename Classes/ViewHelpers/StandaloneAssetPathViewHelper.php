@@ -30,7 +30,8 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
@@ -54,12 +55,39 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 	 */
 	protected $validTypes = array('scripts', 'styles');
 
+	/**
+	 * initializeArguments
+	 *
+	 * @return void
+	 */
 	public function initializeArguments() {
-		$this->registerArgument('baseUrl', 'string', 'baseUrl of the assets path', FALSE, self::DEFAULT_BASE_URL);
-		$this->registerArgument('resourcePath', 'string', 'The path of the resource, relative to baseUrl', FALSE, self::DEFAULT_RESOURCE_PATH_PREFIX);
-		$this->registerArgument('type', 'string', 'The type of the asset, must be either `scripts` or `styles`.', TRUE);
+		$this->registerArgument(
+			'baseUrl',
+			'string',
+			'baseUrl of the assets path',
+			FALSE,
+			self::DEFAULT_BASE_URL
+		);
+		$this->registerArgument(
+			'resourcePath',
+			'string',
+			'The path of the resource, relative to baseUrl',
+			FALSE,
+			self::DEFAULT_RESOURCE_PATH_PREFIX
+		);
+		$this->registerArgument(
+			'type',
+			'string',
+			'The type of the asset, must be either `scripts` or `styles`.',
+			TRUE
+		);
 	}
 
+	/**
+	 * initialize
+	 *
+	 * @return void
+	 */
 	public function initialize() {
 		if ('' === trim($this->arguments['baseUrl'])) {
 			$this->arguments['baseUrl'] = self::DEFAULT_BASE_URL;
@@ -75,6 +103,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 	}
 
 	/**
+	 * render
 	 *
 	 * @return string
 	 */
@@ -82,4 +111,3 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 		return $this->arguments['baseUrl'] . $this->arguments['resourcePath'];
 	}
 }
-?>

@@ -68,8 +68,10 @@ class ContentElement extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
 	}
 
 	/**
+	 * setHeader
 	 *
 	 * @param string $header
+	 * @return void
 	 */
 	public function setHeader($header) {
 		$this->header = $header;
@@ -111,4 +113,3 @@ class ContentElement extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
 		return $this->flexformObject;
 	}
 }
-?>

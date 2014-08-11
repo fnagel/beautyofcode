@@ -1,0 +1,29 @@
+{namespace boc=TYPO3\Beautyofcode\ViewHelpers}
+<f:if condition="{flexformData.data.sDEF.lDEF.cLabel.vDEF}">
+	<f:then>
+		<strong>{flexformData.data.sDEF.lDEF.cLabel.vDEF}</strong>
+	</f:then>
+	<f:else>
+		<em><f:translate id="LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:cms_layout.no_label" default="No label specified" /></em>
+	</f:else>
+</f:if>
+<br /><br />
+<strong><f:translate key="LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code" default="Code" /></strong> {flexformData.data.sDEF.lDEF.cLang.vDEF}<br />
+<f:if condition="{flexformData.data.sDEF.lDEF.cCode.vDEF}">
+	<f:then>
+		<textarea id="ta_hidden{row.uid}" style="display: none;" readonly="readonly">{flexformData.data.sDEF.lDEF.cCode.vDEF -> f:format.htmlspecialchars()}</textarea>
+		<textarea id="ta{row.uid}" style="height: {flexformData.data.sDEF.lDEF.cCode.vDEF -> boc:backend.pageLayoutView.calculateTextareaHeight()}; width: 98%; padding: 1%; margin: 0;" wrap="off" readonly="readonly"></textarea>
+		<script type="text/javascript">
+			var
+				ta_hidden{row.uid} = document.getElementById("ta_hidden{row.uid}"),
+				ta{row.uid} = document.getElementById("ta{row.uid}");
+
+			window.setTimeout(function() {
+				ta{row.uid}.value = ta_hidden{row.uid}.value;
+			}, 500);
+		</script>
+	</f:then>
+	<f:else>
+		<em><f:translate key="LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:cms_layout.no_code" default="No code" /></em>
+	</f:else>
+</f:if>

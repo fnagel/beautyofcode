@@ -30,10 +30,11 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  *
  * @package \TYPO3\Beautyofcode\Tests\Unit\Domain
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class FlexformTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
@@ -49,6 +50,15 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->sut->setCHighlight('1,2-3,8');
 		$this->sut->setCCollapse('1');
 		$this->sut->setCGutter('1');
+
+		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter */
+		$highlighterConfigurationMock = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter')
+			->disableOriginalConstructor()
+			->setMethods(array('prepareRegisteredBrushes'))
+			->getMock();
+
+		$this->sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 	}
 
 	/**
@@ -58,7 +68,7 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
 		$this->sut->setCCollapse('');
 
-		$this->assertNotContains('collapse', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertNotContains('collapse', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -68,7 +78,7 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
 		$this->sut->setCGutter('auto');
 
-		$this->assertNotContains('gutter', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertNotContains('gutter', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -76,7 +86,7 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
-		$this->assertContains('highlight: [', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertContains('highlight: [', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -84,7 +94,7 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 	 * @test
 	 */
 	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
-		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
 	}
 
 	/**

@@ -37,22 +37,6 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
 abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface {
 
 	/**
-	 *
-	 * @var array
-	 */
-	protected $settings;
-
-	/**
-	 * __construct
-	 *
-	 * @param array $settings
-	 * @return void
-	 */
-	public function __construct(array $settings) {
-		$this->settings = $settings;
-	}
-
-	/**
 	 * getFailSafeBrushAlias
 	 *
 	 * @param string $brushAlias
@@ -113,4 +97,3 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 		return $brushIdentifier;
 	}
 }
-?>

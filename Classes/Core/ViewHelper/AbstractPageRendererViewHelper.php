@@ -69,4 +69,3 @@ abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\View
 		$this->fe = $GLOBALS['TSFE'];
 	}
 }
-?>

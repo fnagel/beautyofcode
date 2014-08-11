@@ -58,8 +58,5 @@ class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\Abst
 			$excludeFromConcatenation,
 			$splitChar
 		);
-
-		return NULL;
 	}
 }
-?>

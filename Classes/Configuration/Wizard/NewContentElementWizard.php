@@ -29,8 +29,15 @@ namespace TYPO3\Beautyofcode\Configuration\Wizard;
  *
  * @author Felix Nagel <info@felixnagel.com>
  * @package \TYPO3\Beautyofcode\Configuration\Wizard
+ * @codeCoverageIgnore
  */
 class NewContentElementWizard {
+
+	/**
+	 *
+	 * @var \TYPO3\CMS\Lang\LanguageService
+	 */
+	protected $languageService;
 
 	/**
 	 * Processing the wizard items array
@@ -39,14 +46,14 @@ class NewContentElementWizard {
 	 * @return Modified array with wizard items
 	 */
 	public function proc($wizardItems) {
-		global $LANG;
+		$this->languageService = $GLOBALS['LANG'];
 
-		$LL = $this->includeLocalLang();
+		$translationArray = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_beautyofcode_pi1'] = array(
 			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
-			'title' => $LANG->getLLL('tt_content.list_type_pi1', $LL),
-			'description' => $LANG->getLLL('wiz_description', $LL),
+			'title' => $this->languageService->getLLL('tt_content.list_type_pi1', $translationArray),
+			'description' => $this->languageService->getLLL('wiz_description', $translationArray),
 			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_contentrenderer'
 		);
 
@@ -59,10 +66,9 @@ class NewContentElementWizard {
 	 * @return The array with language labels
 	 */
 	protected function includeLocalLang() {
-		$llFile = 'EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';
-		$LOCAL_LANG = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile($llFile, $GLOBALS['LANG']->lang);
+		$translationFile = 'EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';
+		$translationArray = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile($translationFile, $this->languageService->lang);
 
-		return $LOCAL_LANG;
+		return $translationArray;
 	}
 }
-?>

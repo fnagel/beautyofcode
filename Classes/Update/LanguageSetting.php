@@ -75,6 +75,12 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
 	/**
 	 *
+	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+	 */
+	protected $configurationManager;
+
+	/**
+	 *
 	 * @var array
 	 */
 	protected $settings = array();
@@ -86,11 +92,13 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @return void
 	 */
 	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
+		// @codeCoverageIgnoreStart
 		if (is_null($objectManager)) {
 			$objectManager = GeneralUtility::makeInstance(
 				'TYPO3\\CMS\\Extbase\\Object\\ObjectManager'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->objectManager = $objectManager;
 	}
@@ -104,11 +112,13 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	public function injectBrushDiscoveryService(
 		BrushDiscoveryService $brushDiscoveryService = NULL
 	) {
+		// @codeCoverageIgnoreStart
 		if (is_null($brushDiscoveryService)) {
 			$brushDiscoveryService = $this->objectManager->get(
 				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->brushDiscoveryService = $brushDiscoveryService;
 	}
@@ -120,11 +130,13 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @return void
 	 */
 	public function injectFlexformTools(FlexformTools $flexformTools = NULL) {
+		// @codeCoverageIgnoreStart
 		if (is_null($flexformTools)) {
 			$flexformTools = $this->objectManager->get(
 				'TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools'
 			);
 		}
+		// @codeCoverageIgnoreEnd
 
 		$this->flexformTools = $flexformTools;
 	}
@@ -136,12 +148,17 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 * @return void
 	 */
 	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager = NULL) {
+		// @codeCoverageIgnoreStart
 		if (is_null($configurationManager)) {
 			$configurationManager = $this->objectManager->get(
 				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface'
 			);
 		}
-		$configuration = $configurationManager->getConfiguration(
+		// @codeCoverageIgnoreEnd
+
+		$this->configurationManager = $configurationManager;
+
+		$configuration = $this->configurationManager->getConfiguration(
 			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
 		);
 		$this->settings = ArrayUtility::getValueByPath(
@@ -151,14 +168,15 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\Beautyofcode\Update\AbstractUpdate::initializeObject()
+	 * initializeObject
+	 *
+	 * @return void
 	 */
 	public function initializeObject() {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
 		$this->injectFlexformTools($this->flexformTools);
-		$this->injectConfigurationManager();
+		$this->injectConfigurationManager($this->configurationManager);
 
 		$this->plugins = $this->db->exec_SELECTquery(
 			'uid, header, pi_flexform',
@@ -183,7 +201,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	protected function expandFlexformData() {
 		$plugins = array();
 
-		while ($plugin = $this->db->sql_fetch_assoc($this->plugins)) {
+		while (($plugin = $this->db->sql_fetch_assoc($this->plugins))) {
 			$flexformData = GeneralUtility::xml2array($plugin['pi_flexform']);
 
 			$plugin['pi_flexform'] = $flexformData;
@@ -322,4 +340,3 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 		return $updateResult;
 	}
 }
-?>

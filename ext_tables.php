@@ -50,4 +50,3 @@ $TCA['tx_beautyofcode_domain_model_flexform'] = array(
 		'pid' => array('config' => array()),
 	),
 );
-?>

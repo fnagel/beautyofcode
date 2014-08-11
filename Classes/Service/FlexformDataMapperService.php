@@ -1,7 +1,6 @@
 <?php
 namespace TYPO3\Beautyofcode\Service;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 /***************************************************************
  * Copyright notice
  *
@@ -25,6 +24,8 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Provides a service to map the beautyofcode flexform string onto a proper DO
@@ -90,7 +91,7 @@ class FlexformDataMapperService {
 			$flexformString
 		);
 
-		$flexformValues = $this->getDataMapperToTCACompatiblePropertyArray(
+		$flexformValues = $this->getDataMapperToTcaCompatiblePropertyArray(
 			$flexformValues
 		);
 		// adds `identity` to the plugin configuration
@@ -100,7 +101,8 @@ class FlexformDataMapperService {
 			->dataMapper
 			->map(
 				'TYPO3\\Beautyofcode\\Domain\\Model\\Flexform',
-				array($flexformValues) // nested array as ::map() expects multiple rows
+				// nested array as ::map() expects multiple rows
+				array($flexformValues)
 			);
 
 		return $flexform[0];
@@ -114,7 +116,7 @@ class FlexformDataMapperService {
 	 * @param array $flexformValueArray
 	 * @return array
 	 */
-	protected function getDataMapperToTCACompatiblePropertyArray(
+	protected function getDataMapperToTcaCompatiblePropertyArray(
 		$flexformValueArray
 	) {
 		$flexformValues = array();
@@ -130,4 +132,3 @@ class FlexformDataMapperService {
 		return $flexformValues;
 	}
 }
-?>

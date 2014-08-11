@@ -64,4 +64,3 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array
 		),
 	),
 );
-?>

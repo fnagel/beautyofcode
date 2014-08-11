@@ -117,4 +117,3 @@ class Prism
 		return ' ' . implode(' ', $configurationItems);
 	}
 }
-?>

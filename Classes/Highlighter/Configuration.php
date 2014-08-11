@@ -89,8 +89,7 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function initializeObject() {
 		$this->configuration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library'],
-			$this->settings
+			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library']
 		);
 	}
 
@@ -135,4 +134,3 @@ class Configuration implements ConfigurationInterface {
 		return $this->configuration->getBrushAliasByIdentifier($brushIdentifier);
 	}
 }
-?>

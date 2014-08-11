@@ -71,4 +71,3 @@ interface ConfigurationInterface {
 	 */
 	public function getBrushAliasByIdentifier($brushIdentifier);
 }
-?>

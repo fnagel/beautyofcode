@@ -341,4 +341,3 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 		return sprintf($format, $this->tableName, $this->fieldName);
 	}
 }
-?>

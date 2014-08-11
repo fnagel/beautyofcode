@@ -61,4 +61,3 @@ class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\A
 		return NULL;
 	}
 }
-?>

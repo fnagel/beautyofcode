@@ -30,7 +30,8 @@ namespace TYPO3\Beautyofcode\Update;
  *
  * @package \TYPO3\Beautyofcode\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  */
 abstract class AbstractUpdate {
 
@@ -53,11 +54,17 @@ abstract class AbstractUpdate {
 	 */
 	protected $view;
 
+	/**
+	 * __construct
+	 *
+	 * @return void
+	 */
 	public function __construct() {
 		$this->updateInstructions = (array) \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
 	}
 
 	/**
+	 * injectDatabaseConnection
 	 *
 	 * @param \TYPO3\CMS\Core\Database\DatabaseConnection $db
 	 * @return void
@@ -67,6 +74,7 @@ abstract class AbstractUpdate {
 	}
 
 	/**
+	 * injectView
 	 *
 	 * @param \TYPO3\CMS\Extbase\Mvc\View\ViewInterface $view
 	 * @return void
@@ -76,6 +84,7 @@ abstract class AbstractUpdate {
 	}
 
 	/**
+	 * hasUpdateInstruction
 	 *
 	 * @param string $instructionKey
 	 * @return boolean
@@ -84,10 +93,24 @@ abstract class AbstractUpdate {
 		return array_key_exists($instructionKey, $this->updateInstructions) && TRUE === (boolean) $this->updateInstructions[$instructionKey];
 	}
 
+	/**
+	 * initializeObject
+	 *
+	 * @return void
+	 */
 	abstract public function initializeObject();
 
+	/**
+	 * getInformation
+	 *
+	 * @return string
+	 */
 	abstract public function getInformation();
 
+	/**
+	 * execute
+	 *
+	 * @return string
+	 */
 	abstract public function execute();
 }
-?>

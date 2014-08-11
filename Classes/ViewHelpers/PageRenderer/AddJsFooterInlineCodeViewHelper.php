@@ -51,4 +51,3 @@ class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelpe
 		return NULL;
 	}
 }
-?>

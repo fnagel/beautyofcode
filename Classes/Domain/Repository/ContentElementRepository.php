@@ -37,4 +37,3 @@ namespace TYPO3\Beautyofcode\Domain\Repository;
  */
 class ContentElementRepository extends \TYPO3\CMS\Extbase\Persistence\Repository {
 }
-?>

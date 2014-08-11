@@ -131,4 +131,3 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 		return $this->brushes;
 	}
 }
-?>

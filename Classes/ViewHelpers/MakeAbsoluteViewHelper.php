@@ -25,6 +25,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  ***************************************************************/
 
 /**
+ * MakeAbsoluteViewHelper
  *
  * @author Felix Nagel <info@felixnagel.com>
  * @package \TYPO3\Beautyofcode\ViewHelpers
@@ -40,4 +41,3 @@ class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 		return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
 	}
 }
-?>

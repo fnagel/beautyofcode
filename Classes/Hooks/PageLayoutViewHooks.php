@@ -39,7 +39,7 @@ class PageLayoutViewHooks {
 	 *
 	 * @var string
 	 */
-	const TEMPLATE_PATH_AND_FILENAME = 'EXT:beautyofcode/Resources/Private/Templates/PageLayoutViewHooks/ExtensionSummary.html';
+	const TEMPLATE = 'PageLayoutViewHooks/ExtensionSummary.html';
 
 	/**
 	 *
@@ -49,7 +49,7 @@ class PageLayoutViewHooks {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Fluid\View\StandaloneView
+	 * @var \TYPO3\Beautyofcode\Mvc\View\BackendStandaloneView
 	 */
 	protected $view;
 
@@ -76,22 +76,20 @@ class PageLayoutViewHooks {
 	/**
 	 * injectView
 	 *
-	 * @param \TYPO3\CMS\Fluid\View\StandaloneView $view
+	 * @param \TYPO3\Beautyofcode\Mvc\View\BackendStandaloneView $view
 	 * @return void
 	 */
-	public function injectView(\TYPO3\CMS\Fluid\View\StandaloneView $view = NULL) {
+	public function injectView(\TYPO3\Beautyofcode\Mvc\View\BackendStandaloneView $view = NULL) {
 		// @codeCoverageIgnoreStart
 		if (is_null($view)) {
 			$view = $this
 				->objectManager
-				->get('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+				->get('TYPO3\\Beautyofcode\\Mvc\\View\\BackendStandaloneView');
 		}
 		// @codeCoverageIgnoreEnd
 
 		$this->view = $view;
-		$this->view->setTemplatePathAndFilename(
-			GeneralUtility::getFileAbsFileName(self::TEMPLATE_PATH_AND_FILENAME)
-		);
+		$this->view->setTemplatePathAndFilename(self::TEMPLATE);
 	}
 
 	/**

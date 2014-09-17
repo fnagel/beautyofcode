@@ -47,7 +47,7 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 *
 	 * @var strng
 	 */
-	protected $template = 'EXT:beautyofcode/Resources/Private/Templates/Update/OldPlugins.html';
+	protected $template = 'Update/OldPlugins.html';
 
 	/**
 	 * initializeObject
@@ -61,8 +61,7 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 			'list_type = "beautyofcode_pi1"'
 		);
 
-		$templatePath = GeneralUtility::getFileAbsFileName($this->template);
-		$this->view->setTemplatePathAndFilename($templatePath);
+		$this->view->setTemplatePathAndFilename($this->template);
 	}
 
 	public function getInformation() {

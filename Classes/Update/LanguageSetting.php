@@ -53,7 +53,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 	 *
 	 * @var strng
 	 */
-	protected $template = 'EXT:beautyofcode/Resources/Private/Templates/Update/LanguageSetting.html';
+	protected $template = 'Update/LanguageSetting.html';
 
 	/**
 	 *
@@ -187,8 +187,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 			)
 		);
 
-		$templatePath = GeneralUtility::getFileAbsFileName($this->template);
-		$this->view->setTemplatePathAndFilename($templatePath);
+		$this->view->setTemplatePathAndFilename($this->template);
 
 		$this->expandFlexformData();
 	}

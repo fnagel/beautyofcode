@@ -74,7 +74,9 @@ class ext_update {
 
 		foreach ($this->updaters as $updater) {
 			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
-			$view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Fluid\\View\\StandaloneView');
+			$view = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+				'TYPO3\\Beautyofcode\\Mvc\\View\\BackendStandaloneView'
+			);
 
 			$updater->injectDatabaseConnection($GLOBALS['TYPO3_DB']);
 			$updater->injectView($view);

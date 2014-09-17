@@ -69,7 +69,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 			->getMock();
 
 		$this->viewMock = $this
-			->getMockBuilder('TYPO3\\CMS\\Fluid\\View\\StandaloneView')
+			->getMockBuilder('TYPO3\\Beautyofcode\\Mvc\\View\\BackendStandaloneView')
 			->disableOriginalConstructor()
 			->getMock();
 

@@ -1,4 +1,4 @@
-﻿.. ==================================================
+.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -92,6 +92,13 @@ Without a running TYPO3 instance
    .. code-block:: bash
 
       $~ TYPO3_PATH_WEB=/vagrant/vendor/typo3/cms php vendor/bin/phpunit -c src/beautyofcode/Tests/Unit.xml
+
+Checkstyle report generation
+----------------------------
+
+   .. code-block:: bash
+
+      $~ php vendor/bin/phpcs -np --report=checkstyle --report-checkstyle=./build/checkstyle.xml --standard=TYPO3CMS --ignore=**/vendor/**,**/Tests/** --extensions=php .
 
 FAQ
 ---

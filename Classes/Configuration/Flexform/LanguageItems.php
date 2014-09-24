@@ -61,6 +61,13 @@ class LanguageItems {
 	protected $settings;
 
 	/**
+	 * Holds the items from an earlier run of the instance
+	 *
+	 * @var array
+	 */
+	protected $items;
+
+	/**
 	 * injectObjectManager
 	 *
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
@@ -152,12 +159,10 @@ class LanguageItems {
 	) {
 		$this->initializeObject();
 
-		static $cachedFields = 0;
-
 		$tceFormItemLabelValueArray = array();
 
-		if ($cachedFields != 0) {
-			$config['items'] = $cachedFields;
+		if (!is_null($this->items)) {
+			$config['items'] = $this->items;
 		} else {
 			$brushesArray = $this->getBrushes();
 
@@ -166,9 +171,9 @@ class LanguageItems {
 			}
 
 			$config['items'] = $tceFormItemLabelValueArray;
-		}
 
-		$cachedFields = $config['items'];
+			$this->items = $config['items'];
+		}
 
 		return $config;
 	}

@@ -31,7 +31,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
  * Tests for the prism brushes
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @runTestsInSeparateProcesses
  */
 class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
@@ -91,10 +90,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->getMock();
 
 		$this->brushDiscoveryMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService',
-			array(),
-			array(),
-			'BrushDiscoveryService_Prism'
+			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 		);
 
 		$this->formEngineMock = $this
@@ -137,11 +133,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	/**
 	 * brushesOverrideTheReturnValue
 	 *
-	 * Some global object has problems with (un)serialization. Thus we need set
-	 * the preserveGlobalState flag to disabled.
-	 *
 	 * @test
-	 * @preserveGlobalState disabled
 	 */
 	public function brushesOverrideTheReturnValue() {
 		$this->assertConfiguredPrism();

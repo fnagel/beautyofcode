@@ -57,10 +57,10 @@ abstract class AbstractUpdate {
 	/**
 	 * __construct
 	 *
-	 * @return void
+	 * @return \TYPO3\Beautyofcode\Update\AbstractUpdate
 	 */
 	public function __construct() {
-		$this->updateInstructions = (array) \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
+		$this->updateInstructions = (array)\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
 	}
 
 	/**

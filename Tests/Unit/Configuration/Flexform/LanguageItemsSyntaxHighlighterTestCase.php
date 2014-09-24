@@ -31,7 +31,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
  * Tests for the SyntaxHighlighter brushes
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @runTestsInSeparateProcesses
  */
 class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
@@ -90,10 +89,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 			->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 
 		$this->brushDiscoveryMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService',
-			array(),
-			array(),
-			'BrushDiscoveryService_SyntaxHighlighter'
+			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 		);
 
 		$this->formEngineMock = $this
@@ -137,11 +133,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 	/**
 	 * syntaxHighlighterBrushesOverrideTheReturnValue
 	 *
-	 * Some global object has problems with (un)serialization. Thus we need set
-	 * the preserveGlobalState flag to disabled.
-	 *
 	 * @test
-	 * @preserveGlobalState disabled
 	 */
 	public function syntaxHighlighterBrushesOverrideTheReturnValue() {
 		$this->assertConfiguredSyntaxHighlighter();
@@ -164,6 +156,32 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		$this->assertEquals('plain', $newConfig['items'][2][1]);
 		$this->assertEquals('python', $newConfig['items'][3][1]);
 		$this->assertEquals('sql', $newConfig['items'][4][1]);
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function sutUsesInMemoryStorageIfBrushDiscoveryIsCalledMultipleTimesOnSameInstance() {
+		$this->assertConfiguredSyntaxHighlighter();
+
+		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
+		$sut->injectObjectManager($this->objectManagerMock);
+		$sut->injectConfigurationManager($this->configurationManagerMock);
+		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->initializeObject();
+
+		$configOne = $sut->getDiscoveredBrushes(
+			$this->flexformConfigurationFixture,
+			$this->formEngineMock
+		);
+
+		$configTwo = $sut->getDiscoveredBrushes(
+			$this->flexformConfigurationFixture,
+			$this->formEngineMock
+		);
+
+		$this->assertEquals($configOne, $configTwo);
 	}
 }
 ?>

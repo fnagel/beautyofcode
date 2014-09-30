@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Update;
+namespace TYPO3\Beautyofcode\Backend\Update;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Update;
 /**
  * The abstract update class
  *
- * @package \TYPO3\Beautyofcode\Update
+ * @package \TYPO3\Beautyofcode\Backend\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -57,7 +57,7 @@ abstract class AbstractUpdate {
 	/**
 	 * __construct
 	 *
-	 * @return \TYPO3\Beautyofcode\Update\AbstractUpdate
+	 * @return \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate
 	 */
 	public function __construct() {
 		$this->updateInstructions = (array)\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');

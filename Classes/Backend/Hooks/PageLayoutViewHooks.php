@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Hooks;
+namespace TYPO3\Beautyofcode\Backend\Hooks;
 
 /***************************************************************
  * Copyright notice
@@ -25,13 +25,12 @@ namespace TYPO3\Beautyofcode\Hooks;
  ***************************************************************/
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 
 /**
  * Hook class for PageLayoutView hook `list_type_Info`
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package \TYPO3\Beautyofcode\Hooks
+ * @package \TYPO3\Beautyofcode\Backend\Hooks
  */
 class PageLayoutViewHooks {
 

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Update;
+namespace TYPO3\Beautyofcode\Tests\Unit\Backend\Update;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Update;
 /**
  * Tests the OldPlugins updater
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\Update
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Backend\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -93,7 +93,7 @@ class OldPluginsTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 				$this->equalTo(1)
 			);
 
-		$sut = new \TYPO3\Beautyofcode\Update\OldPlugins();
+		$sut = new \TYPO3\Beautyofcode\Backend\Update\OldPlugins();
 		$sut->injectDatabaseConnection($this->db);
 		$sut->injectView($view);
 		$sut->initializeObject();
@@ -101,4 +101,3 @@ class OldPluginsTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$sut->execute();
 	}
 }
-?>

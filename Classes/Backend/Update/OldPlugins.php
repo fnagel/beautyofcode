@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Update;
+namespace TYPO3\Beautyofcode\Backend\Update;
 
 /***************************************************************
  * Copyright notice
@@ -25,17 +25,15 @@ namespace TYPO3\Beautyofcode\Update;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 /**
  * The old plugins update handling class
  *
- * @package \TYPO3\Beautyofode\Update
+ * @package \TYPO3\Beautyofode\Backend\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  */
-class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
+class OldPlugins extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate {
 
 	/**
 	 *
@@ -45,7 +43,7 @@ class OldPlugins extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
 	/**
 	 *
-	 * @var strng
+	 * @var string
 	 */
 	protected $template = 'Update/OldPlugins.html';
 

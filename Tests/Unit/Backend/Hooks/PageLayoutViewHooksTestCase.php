@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Hooks;
+namespace TYPO3\Beautyofcode\Tests\Unit\Backend\Hooks;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Hooks;
 /**
  * PageLayoutViewHooksTestCase
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\Hooks
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Backend\Hooks
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -38,7 +38,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks
+	 * @var \TYPO3\Beautyofcode\Backend\Hooks\PageLayoutViewHooks
 	 */
 	protected $sut;
 
@@ -77,7 +77,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 			->getMockBuilder('TYPO3\\CMS\\Backend\\View\\PageLayoutView')
 			->getMock();
 
-		$this->sut = new \TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks();
+		$this->sut = new \TYPO3\Beautyofcode\Backend\Hooks\PageLayoutViewHooks();
 		$this->sut->injectObjectManager($this->objectManagerMock);
 		$this->sut->injectView($this->viewMock);
 	}

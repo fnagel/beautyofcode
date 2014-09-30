@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
+namespace TYPO3\Beautyofcode\Tests\Unit\Backend\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -28,11 +28,11 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
  ***************************************************************/
 
 /**
- * Tests for the prism brushes
+ * Tests for the SyntaxHighlighter brushes
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
@@ -86,8 +86,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->getMock();
 
 		$this->configurationManagerMock = $this
-			->getMockBuilder('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager')
-			->getMock();
+			->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
 
 		$this->brushDiscoveryMock = $this->getMock(
 			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
@@ -99,12 +98,12 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->getMock();
 	}
 
-	public function assertConfiguredPrism() {
+	public function assertConfiguredSyntaxHighlighter() {
 		$typoScriptSetup = array(
 			'plugin.' => array(
 				'tx_beautyofcode.' => array(
 					'settings.' => array(
-						'library' => 'Prism',
+						'library' => 'SyntaxHighlighter',
 					),
 				),
 			),
@@ -120,9 +119,10 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->method('discoverBrushes')
 			->will($this->returnValue(
 				array(
-					'Prism' => array(
+					'SyntaxHighlighter' => array(
 						'bash' => 'Bash/Shell',
 						'php' => 'PHP',
+						'plain' => 'Text / Plain',
 						'python' => 'Python',
 						'sql' => 'SQL / MySQL',
 					),
@@ -131,14 +131,14 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 	/**
-	 * brushesOverrideTheReturnValue
+	 * syntaxHighlighterBrushesOverrideTheReturnValue
 	 *
 	 * @test
 	 */
-	public function brushesOverrideTheReturnValue() {
-		$this->assertConfiguredPrism();
+	public function syntaxHighlighterBrushesOverrideTheReturnValue() {
+		$this->assertConfiguredSyntaxHighlighter();
 
-		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
+		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($this->objectManagerMock);
 		$sut->injectConfigurationManager($this->configurationManagerMock);
 		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
@@ -149,10 +149,38 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			$this->formEngineMock
 		);
 
+		// items.0 = label, items.1 = name/alias of brush identifier
+
 		$this->assertEquals('bash', $newConfig['items'][0][1]);
 		$this->assertEquals('php', $newConfig['items'][1][1]);
-		$this->assertEquals('python', $newConfig['items'][2][1]);
-		$this->assertEquals('sql', $newConfig['items'][3][1]);
+		$this->assertEquals('plain', $newConfig['items'][2][1]);
+		$this->assertEquals('python', $newConfig['items'][3][1]);
+		$this->assertEquals('sql', $newConfig['items'][4][1]);
+	}
+
+	/**
+	 *
+	 * @test
+	 */
+	public function sutUsesInMemoryStorageIfBrushDiscoveryIsCalledMultipleTimesOnSameInstance() {
+		$this->assertConfiguredSyntaxHighlighter();
+
+		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
+		$sut->injectObjectManager($this->objectManagerMock);
+		$sut->injectConfigurationManager($this->configurationManagerMock);
+		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->initializeObject();
+
+		$configOne = $sut->getDiscoveredBrushes(
+			$this->flexformConfigurationFixture,
+			$this->formEngineMock
+		);
+
+		$configTwo = $sut->getDiscoveredBrushes(
+			$this->flexformConfigurationFixture,
+			$this->formEngineMock
+		);
+
+		$this->assertEquals($configOne, $configTwo);
 	}
 }
-?>

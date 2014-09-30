@@ -1,5 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
@@ -23,7 +23,7 @@ if (!defined ('TYPO3_MODE')) {
 );
 
 // BE preview
-$backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHooks.php:TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks->getExtensionSummary';
+$backendPreviewHook = 'EXT:beautyofcode/Classes/Backend/Hooks/PageLayoutViewHooks.php:TYPO3\Beautyofcode\Backend\Hooks\PageLayoutViewHooks->getExtensionSummary';
 $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_contentrenderer'][] = $backendPreviewHook;
 
 \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher')->connect(

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode;
+namespace TYPO3\Beautyofcode\Backend;
 
 /***************************************************************
  * Copyright notice
@@ -25,7 +25,6 @@ namespace TYPO3\Beautyofcode;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
@@ -35,7 +34,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
  * approach for setting necessary data for rendering the T3editor within
  * flexforms.
  *
- * @package \TYPO3\Beautyofcode
+ * @package \TYPO3\Beautyofcode\Backend
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -114,7 +113,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setBackendDocumentTemplate
 	 *
 	 * @param \TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setBackendDocumentTemplate(\TYPO3\CMS\Backend\Template\DocumentTemplate $backendDocumentTemplate) {
 		$this->backendDocumentTemplate = $backendDocumentTemplate;
@@ -126,7 +125,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setTextareaFieldName
 	 *
 	 * @param string $textareaFieldName
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setTextareaFieldName($textareaFieldName) {
 		$this->textareaFieldName = $textareaFieldName;
@@ -138,7 +137,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setTableName
 	 *
 	 * @param string $tableName
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setTableName($tableName) {
 		$this->tableName = $tableName;
@@ -150,7 +149,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setFieldName
 	 *
 	 * @param string $fieldName
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setFieldName($fieldName) {
 		$this->fieldName = $fieldName;
@@ -162,7 +161,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setFlexformFieldConfiguration
 	 *
 	 * @param array $flexformFieldConfiguration
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setFlexformFieldConfiguration($flexformFieldConfiguration) {
 		$this->flexformFieldConfiguration = (array) $flexformFieldConfiguration;
@@ -174,7 +173,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setFlexformData
 	 *
 	 * @param array $flexformData
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setFlexformData($flexformData = array()) {
 		$this->flexformData = $flexformData;
@@ -186,7 +185,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * determineHighlightingModeFromFlexformPath
 	 *
 	 * @param string $path E.g. 'data/sDEF/lDEF/cLang/vDEF'
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function determineHighlightingModeFromFlexformPath($path) {
 		try {
@@ -218,7 +217,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setTextareaContentFromFlexformPath
 	 *
 	 * @param string $path E.g. 'data/sDEF/lDEF/cCode/vDEF'
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setTextareaContentFromFlexformPath($path) {
 		try {
@@ -238,7 +237,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 *
 	 * @param string $fieldName
 	 * @param mixed $fieldValue
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function addHiddenField($fieldName, $fieldValue) {
 		$this->hiddenFields[$fieldName] = $fieldValue;
@@ -250,7 +249,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 	 * setTextareaOnChangeFunction
 	 *
 	 * @param string $textareaOnChangeFunction
-	 * @return \TYPO3\Beautyofcode\FlexformT3editor
+	 * @return \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	public function setTextareaOnChangeFunction($textareaOnChangeFunction = '') {
 		$this->textareaOnChangeFunction = $textareaOnChangeFunction;

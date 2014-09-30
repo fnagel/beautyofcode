@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Update;
+namespace TYPO3\Beautyofcode\Tests\Unit\Backend\Update;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Update;
 /**
  * Tests the language setting updater
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\Update
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Backend\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -177,7 +177,7 @@ class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->method('flexArray2Xml')
 			->will($this->returnValue(file_get_contents(__DIR__ . '/Fixtures/FlexformToolsFlexArray2XmlReturnValue.xml')));
 
-		$sut = new \TYPO3\Beautyofcode\Update\LanguageSetting();
+		$sut = new \TYPO3\Beautyofcode\Backend\Update\LanguageSetting();
 		$sut->injectDatabaseConnection($this->db);
 		$sut->injectView($view);
 		$sut->injectObjectManager($objectManager);
@@ -190,4 +190,3 @@ class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$sut->execute();
 	}
 }
-?>

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Configuration\Flexform;
+namespace TYPO3\Beautyofcode\Backend\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -32,7 +32,7 @@ use TYPO3\CMS\Core\Utility\ArrayUtility;
  * Function to add select options dynamically (loaded in flexform)
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package \TYPO3\Beautyofcode\Configuration\Flexform
+ * @package \TYPO3\Beautyofcode\Backend\Configuration\Flexform
  */
 class LanguageItems {
 

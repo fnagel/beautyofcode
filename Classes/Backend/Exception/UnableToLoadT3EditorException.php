@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Configuration\Exception;
+namespace TYPO3\Beautyofcode\Backend\Exception;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Configuration\Exception;
 /**
  * UnableToLoadT3EditorException
  *
- * @package \TYPO3\Beautyofcode\Configuration\Exception
+ * @package \TYPO3\Beautyofcode\Backend\Exception
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later

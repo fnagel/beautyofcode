@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Configuration\Flexform;
+namespace TYPO3\Beautyofcode\Backend\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -27,7 +27,7 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException;
+use TYPO3\Beautyofcode\Backend\Exception\UnableToLoadT3EditorException;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
@@ -37,7 +37,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  *
  * @author Felix Nagel <info@felixnagel.com>
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package	\TYPO3\Beautyofcode\Configuration\Flexform
+ * @package \TYPO3\Beautyofcode\Backend\Configuration\Flexform
  */
 class T3EditorWizard {
 
@@ -82,7 +82,7 @@ class T3EditorWizard {
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\FlexformT3editor
+	 * @var \TYPO3\Beautyofcode\Backend\FlexformT3editor
 	 */
 	protected $t3editor;
 
@@ -197,7 +197,7 @@ class T3EditorWizard {
 		}
 
 		$this->t3editor = GeneralUtility::makeInstance(
-			'TYPO3\\Beautyofcode\\FlexformT3editor'
+			'TYPO3\\Beautyofcode\\Backend\\FlexformT3editor'
 		);
 
 		if (!$this->t3editor->isEnabled()) {

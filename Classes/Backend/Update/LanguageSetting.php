@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Update;
+namespace TYPO3\Beautyofcode\Backend\Update;
 
 /***************************************************************
  * Copyright notice
@@ -35,12 +35,12 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 /**
  * The language setting update class
  *
- * @package \TYPO3\Beautyofcode\Update
+ * @package \TYPO3\Beautyofcode\Backend\Update
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  */
-class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
+class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate {
 
 	/**
 	 * Stack of all plugins on this TYPO3.CMS instance
@@ -51,7 +51,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Update\AbstractUpdate {
 
 	/**
 	 *
-	 * @var strng
+	 * @var string
 	 */
 	protected $template = 'Update/LanguageSetting.html';
 

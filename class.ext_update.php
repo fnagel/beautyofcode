@@ -34,7 +34,7 @@ class ext_update {
 
 	/**
 	 *
-	 * @var array<\TYPO3\Beautyofcode\Update\AbstractUpdate>
+	 * @var array<\TYPO3\Beautyofcode\Backend\Update\AbstractUpdate>
 	 */
 	protected $updaters = array();
 
@@ -69,8 +69,8 @@ class ext_update {
 	 * @return void
 	 */
 	protected function injectUpdaters() {
-		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\OldPlugins');
-		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Update\\LanguageSetting');
+		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Backend\\Update\\OldPlugins');
+		$this->updaters[] = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\Beautyofcode\\Backend\\Update\\LanguageSetting');
 
 		foreach ($this->updaters as $updater) {
 			/* @var $view \TYPO3\CMS\Fluid\View\StandaloneView */
@@ -93,7 +93,7 @@ class ext_update {
 		$output = '<form action="" method="post">';
 
 		foreach ($this->updaters as $updater) {
-			/* @var $updater \TYPO3\Beautyofcode\Update\AbstractUpdate */
+			/* @var $updater \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate */
 			$output .= $updater->getInformation();
 		}
 
@@ -106,7 +106,7 @@ class ext_update {
 		$output = '';
 
 		foreach ($this->updaters as $updater) {
-			/* @var $updater \TYPO3\Beautyofcode\Update\AbstractUpdate */
+			/* @var $updater \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate */
 			$output .= $updater->execute();
 		}
 

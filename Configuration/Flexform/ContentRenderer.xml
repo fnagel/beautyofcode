@@ -30,7 +30,7 @@
 										<numIndex index="1"></numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>EXT:beautyofcode/Classes/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Backend/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</cLang>
@@ -45,7 +45,7 @@
 								<wizards type="array">
 									<t3editor type="array">
 										<type>userFunc</type>
-										<userFunc>EXT:beautyofcode/Classes/Configuration/Flexform/T3EditorWizard.php:TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
+										<userFunc>EXT:beautyofcode/Classes/Backend/Configuration/Flexform/T3EditorWizard.php:TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
 									</t3editor>
 								</wizards>
 								<noTableWrapping>0</noTableWrapping>

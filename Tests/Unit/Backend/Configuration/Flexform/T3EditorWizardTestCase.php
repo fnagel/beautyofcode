@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
+namespace TYPO3\Beautyofcode\Tests\Unit\Backend\Configuration\Flexform;
 
 /***************************************************************
  * Copyright notice
@@ -28,7 +28,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform;
 /**
  * T3EditorWizardTest
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform
+ * @package \TYPO3\Beautyofcode\Tests\Unit\Backend\Configuration\Flexform
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
@@ -44,7 +44,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard
+	 * @var \TYPO3\Beautyofcode\Backend\Configuration\Flexform\T3EditorWizard
 	 */
 	protected $sut;
 
@@ -64,7 +64,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 	/**
 	 *
 	 * @test
-	 * @expectedException \TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException
+	 * @expectedException \TYPO3\Beautyofcode\Backend\Exception\UnableToLoadT3EditorException
 	 * @expectedExceptionMessage Cannot instantiate T3editor: ext:t3editor not installed.
 	 */
 	public function initializeThrowsExceptionIfExtensionIsNotLoaded() {
@@ -75,7 +75,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->with($this->equalto('t3editor'))
 			->will($this->returnValue(FALSE));
 
-		$this->sut = new \TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard();
+		$this->sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\T3EditorWizard();
 
 		$this->sut->initialize();
 	}
@@ -83,7 +83,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 	/**
 	 *
 	 * @test
-	 * @expectedException \TYPO3\Beautyofcode\Configuration\Exception\UnableToLoadT3EditorException
+	 * @expectedException \TYPO3\Beautyofcode\Backend\Exception\UnableToLoadT3EditorException
 	 * @expectedExceptionMessage Cannot instantiate T3editor: Feature disabled.
 	 */
 	public function initializeThrowsExceptionIfEditorIsNotEnabledInBeautyofcodeExtensionManagerConfiguration() {
@@ -94,7 +94,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->with($this->equalTo('t3editor'))
 			->will($this->returnValue(TRUE));
 
-		$this->sut = new \TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard();
+		$this->sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\T3EditorWizard();
 
 		$this->sut->initialize();
 	}
@@ -170,7 +170,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		);
 
 
-		$this->sut = new \TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard(
+		$this->sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\T3EditorWizard(
 			$parameters,
 			$this->formEngineMock
 		);

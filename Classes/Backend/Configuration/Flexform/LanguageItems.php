@@ -56,6 +56,12 @@ class LanguageItems {
 
 	/**
 	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
+
+	/**
+	 *
 	 * @var array
 	 */
 	protected $settings;
@@ -128,6 +134,26 @@ class LanguageItems {
 	}
 
 	/**
+	 * injectHighlighterConfiguration
+	 *
+	 * @param \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface $configuration
+	 * @return void
+	 */
+	public function injectHighlighterConfiguration(
+		\TYPO3\Beautyofcode\Highlighter\ConfigurationInterface $configuration = NULL
+	) {
+		// @codeCoverageIgnoreStart
+		if (is_null($configuration)) {
+			$configuration = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
+			);
+		}
+		// @codeCoverageIgnoreEnd
+
+		$this->highlighterConfiguration = $configuration;
+	}
+
+	/**
 	 * Initializes the object
 	 *
 	 * @return void
@@ -136,6 +162,7 @@ class LanguageItems {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectConfigurationManager($this->configurationManager);
 		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
+		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
 
 		$configuration = $this->configurationManager->getConfiguration(
 			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
@@ -166,8 +193,9 @@ class LanguageItems {
 		} else {
 			$brushesArray = $this->getBrushes();
 
-			foreach ($brushesArray as $brushName => $brushLabel) {
-				$tceFormItemLabelValueArray[] = array($brushLabel, $brushName);
+			foreach ($brushesArray as $brushIdentifier => $brushLabel) {
+				$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
+				$tceFormItemLabelValueArray[] = array($brushLabel, $brushAlias);
 			}
 
 			$config['items'] = $tceFormItemLabelValueArray;

@@ -54,6 +54,12 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\Configuration\Prism
+	 */
+	protected $highlighterConfigurationMock;
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Backend\Form\FormEngine
 	 */
 	protected $formEngineMock;
@@ -93,6 +99,10 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 		);
 
+		$this->highlighterConfigurationMock = $this->getMock(
+			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\Prism'
+		);
+
 		$this->formEngineMock = $this
 			->getMockBuilder('TYPO3\\CMS\\Backend\\Form\\FormEngine')
 			->disableOriginalConstructor()
@@ -128,6 +138,18 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 					),
 				)
 			));
+
+		$brushAliasIdentifierMap = array(
+			array('bash', 'bash'),
+			array('php', 'php'),
+			array('python', 'python'),
+			array('sql', 'sql'),
+		);
+
+		$this
+			->highlighterConfigurationMock
+			->method('getBrushAliasByIdentifier')
+			->will($this->returnValueMap($brushAliasIdentifierMap));
 	}
 
 	/**
@@ -142,6 +164,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectObjectManager($this->objectManagerMock);
 		$sut->injectConfigurationManager($this->configurationManagerMock);
 		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 
 		$newConfig = $sut->getDiscoveredBrushes(

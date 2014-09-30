@@ -54,6 +54,12 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 
 	/**
 	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter
+	 */
+	protected $highlighterConfigurationMock;
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Backend\Form\FormEngine
 	 */
 	protected $formEngineMock;
@@ -92,6 +98,10 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
 		);
 
+		$this->highlighterConfigurationMock = $this->getMock(
+			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter'
+		);
+
 		$this->formEngineMock = $this
 			->getMockBuilder('TYPO3\\CMS\\Backend\\Form\\FormEngine')
 			->disableOriginalConstructor()
@@ -120,14 +130,27 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 			->will($this->returnValue(
 				array(
 					'SyntaxHighlighter' => array(
-						'bash' => 'Bash/Shell',
-						'php' => 'PHP',
-						'plain' => 'Text / Plain',
-						'python' => 'Python',
-						'sql' => 'SQL / MySQL',
+						'Bash' => 'Bash/Shell',
+						'Php' => 'PHP',
+						'Plain' => 'Text / Plain',
+						'Python' => 'Python',
+						'Sql' => 'SQL / MySQL',
 					),
 				)
 			));
+
+		$brushAliasIdentifierMap = array(
+			array('Bash', 'bash'),
+			array('Php', 'php'),
+			array('Plain', 'plain'),
+			array('Python', 'python'),
+			array('Sql', 'sql'),
+		);
+
+		$this
+			->highlighterConfigurationMock
+			->method('getBrushAliasByIdentifier')
+			->will($this->returnValueMap($brushAliasIdentifierMap));
 	}
 
 	/**
@@ -142,6 +165,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		$sut->injectObjectManager($this->objectManagerMock);
 		$sut->injectConfigurationManager($this->configurationManagerMock);
 		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 
 		$newConfig = $sut->getDiscoveredBrushes(
@@ -169,6 +193,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		$sut->injectObjectManager($this->objectManagerMock);
 		$sut->injectConfigurationManager($this->configurationManagerMock);
 		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 
 		$configOne = $sut->getDiscoveredBrushes(

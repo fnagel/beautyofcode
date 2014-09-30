@@ -69,6 +69,12 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 
 	/**
 	 *
+	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
+
+	/**
+	 *
 	 * @var \TYPO3\CMS\Core\Configuration\Flexform\FlexformTools
 	 */
 	protected $flexformTools;
@@ -124,6 +130,26 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	}
 
 	/**
+	 * injectHighlighterConfiguration
+	 *
+	 * @param \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface $configuration
+	 * @return void
+	 */
+	public function injectHighlighterConfiguration(
+		\TYPO3\Beautyofcode\Highlighter\ConfigurationInterface $configuration = NULL
+	) {
+		// @codeCoverageIgnoreStart
+		if (is_null($configuration)) {
+			$configuration = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
+			);
+		}
+		// @codeCoverageIgnoreEnd
+
+		$this->highlighterConfiguration = $configuration;
+	}
+
+	/**
 	 * injectFlexformTools
 	 *
 	 * @param FlexFormTools $flexformTools
@@ -175,6 +201,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	public function initializeObject() {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
+		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
 		$this->injectFlexformTools($this->flexformTools);
 		$this->injectConfigurationManager($this->configurationManager);
 
@@ -263,8 +290,9 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 		$libraries = $this->brushDiscoveryService->getBrushes();
 		$brushes = $libraries[$this->settings['library']];
 
-		foreach ($brushes as $brushName => $brushAlias) {
-			$options[$brushName] = $brushAlias;
+		foreach ($brushes as $brushIdentifier => $brushLabel) {
+			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
+			$options[$brushAlias] = $brushLabel;
 		}
 
 		return $options;

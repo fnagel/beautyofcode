@@ -26,7 +26,6 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
  * The brush discovery service
@@ -49,12 +48,6 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @var \TYPO3\CMS\Lang\LanguageService
 	 */
 	protected $languageService;
-
-	/**
-	 *
-	 * @var ConfigurationInterface
-	 */
-	protected $highlighterConfiguration;
 
 	/**
 	 *
@@ -94,16 +87,6 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 		}
 
 		$this->languageService = $languageService;
-	}
-
-	/**
-	 * injectHighlighterConfiguration
-	 *
-	 * @param ConfigurationInterface $highlighterConfiguration
-	 * @return void
-	 */
-	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
-		$this->highlighterConfiguration = $highlighterConfiguration;
 	}
 
 	/**
@@ -180,11 +163,8 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	protected function sortBrushes($brushes) {
 		$filteredAndSortedBrushes = array();
 
-		foreach ($brushes as $brush) {
-			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brush);
-			$brushLabel = $this->getBrushLabel($brush);
-
-			$filteredAndSortedBrushes[$brushAlias] = $brushLabel;
+		foreach ($brushes as $brushIdentifier) {
+			$filteredAndSortedBrushes[$brushIdentifier] = $this->getBrushLabel($brushIdentifier);
 		}
 
 		asort($filteredAndSortedBrushes);

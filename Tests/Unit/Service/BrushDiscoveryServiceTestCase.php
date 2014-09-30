@@ -40,8 +40,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 
 	protected $languageServiceMock;
 
-	protected $highlighterConfigurationMock;
-
 	protected $fileFinderUtilityMock;
 
 	/**
@@ -51,10 +49,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 	 */
 	public function setUp() {
 		$this->languageServiceMock = $this->getMock('TYPO3\\CMS\\Lang\\LanguageService');
-
-		$this->highlighterConfigurationMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter'
-		);
 
 		$this->fileFinderUtilityMock = $this->getMock(
 			'TYPO3\\Beautyofcode\\Utility\\FileFinderUtility',
@@ -144,7 +138,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->assertBrushTranslationFixture();
 
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
@@ -163,7 +156,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->assertBrushTranslationFixture();
 
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
@@ -181,7 +173,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->assertBrushTranslationFixture();
 
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
@@ -196,7 +187,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 	 */
 	public function noBrushesOrDependenciesIfNoValidDiscoveryConfiguration() {
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
@@ -215,24 +205,14 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->assertValidBrushDiscoveryConfiguration();
 		$this->assertBrushTranslationFixture();
 
-		$map = array(
-			array('AppleScript', 'applescript'),
-			array('Bash', 'bash'),
-			array('Groovy', 'groovy'),
-			array('Perl', 'perl'),
-		);
-
-		$this->highlighterConfigurationMock->method('getBrushAliasByIdentifier')->will($this->returnValueMap($map));
-
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
 		$brushes = $sut->getBrushes();
 
-		$this->assertArrayHasKey('applescript', $brushes['HighlighterFoo']);
-		$this->assertEquals('a-brush-label', $brushes['HighlighterFoo']['applescript']);
+		$this->assertArrayHasKey('AppleScript', $brushes['HighlighterFoo']);
+		$this->assertEquals('a-brush-label', $brushes['HighlighterFoo']['AppleScript']);
 	}
 
 	/**
@@ -241,15 +221,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 	 */
 	public function brushesAreSortedAlphabeticallyByTheirTranslatedLabel() {
 		$this->assertValidBrushDiscoveryConfiguration();
-
-		$brushAliasMap = array(
-			array('AppleScript', 'applescript'),
-			array('Bash', 'bash'),
-			array('Groovy', 'groovy'),
-			array('Perl', 'perl'),
-		);
-
-		$this->highlighterConfigurationMock->method('getBrushAliasByIdentifier')->will($this->returnValueMap($brushAliasMap));
 
 		$brushTranslationMap = array(
 			array('LLL:EXT:beautyofcode/Resources/Private/Language/brush-aliases.xlf:AppleScript', FALSE, 'aaa-First'),
@@ -261,16 +232,15 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->languageServiceMock->method('sL')->will($this->returnValueMap($brushTranslationMap));
 
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
 		$brushes = $sut->getBrushes();
 
-		$this->assertArrayHasKey('applescript', $brushes['HighlighterFoo']);
-		$this->assertEquals('aaa-First', $brushes['HighlighterFoo']['applescript']);
+		$this->assertArrayHasKey('AppleScript', $brushes['HighlighterFoo']);
+		$this->assertEquals('aaa-First', $brushes['HighlighterFoo']['AppleScript']);
 
-		$expected = array('applescript' => 'aaa-First', 'groovy' => 'eee-Second', 'perl' => 'ooo-Third', 'bash' => 'zzz-Last');
+		$expected = array('AppleScript' => 'aaa-First', 'Groovy' => 'eee-Second', 'Perl' => 'ooo-Third', 'Bash' => 'zzz-Last');
 
 		$this->assertEquals($expected, $brushes['HighlighterFoo']);
 	}
@@ -282,15 +252,6 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 	public function brushLabelsAreSetToTheIncomingIdentifierIfNoEntryInTheLocalizationCatalogueCanBeFound() {
 		$this->assertValidBrushDiscoveryConfiguration();
 
-		$brushAliasMap = array(
-			array('AppleScript', 'applescript'),
-			array('Bash', 'bash'),
-			array('Groovy', 'groovy'),
-			array('Perl', 'perl'),
-		);
-
-		$this->highlighterConfigurationMock->method('getBrushAliasByIdentifier')->will($this->returnValueMap($brushAliasMap));
-
 		$brushTranslationMap = array(
 			array('LLL:EXT:beautyofcode/Resources/Private/Language/brush-aliases.xlf:AppleScript', FALSE, 'aaa-First'),
 			array('LLL:EXT:beautyofcode/Resources/Private/Language/brush-aliases.xlf:Bash', FALSE, ''),
@@ -301,12 +262,11 @@ class BrushDiscoveryServiceTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCa
 		$this->languageServiceMock->method('sL')->will($this->returnValueMap($brushTranslationMap));
 
 		$sut = new \TYPO3\Beautyofcode\Service\BrushDiscoveryService($this->languageServiceMock);
-		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
 		$brushes = $sut->getBrushes();
 
-		$this->assertEquals('Bash', $brushes['HighlighterFoo']['bash']);
+		$this->assertEquals('Bash', $brushes['HighlighterFoo']['Bash']);
 	}
 }

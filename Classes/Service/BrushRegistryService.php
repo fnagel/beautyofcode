@@ -93,7 +93,7 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 		BrushDiscoveryService $brushDiscoveryService
 	) {
 		$this->brushDiscoveryService = $brushDiscoveryService;
-		$dependencies = $this->brushDiscoveryService->discoverDependencies();
+		$dependencies = $this->brushDiscoveryService->getDependencies();
 
 		$this->dependencies = $dependencies[$this->settings['library']];
 	}

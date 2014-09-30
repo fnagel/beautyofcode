@@ -26,8 +26,6 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 use TYPO3\CMS\Core\Utility\ArrayUtility;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
@@ -48,9 +46,21 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 
 	/**
 	 *
+	 * @var \TYPO3\CMS\Lang\LanguageService
+	 */
+	protected $languageService;
+
+	/**
+	 *
 	 * @var ConfigurationInterface
 	 */
 	protected $highlighterConfiguration;
+
+	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\Utility\FileFinderUtility
+	 */
+	protected $fileFinderUtility;
 
 	/**
 	 *
@@ -59,6 +69,8 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $discoveryConfiguration = array();
 
 	/**
+	 * Multidimensional array with library as keys, brushes stack
+	 * as value where key is the name, value is an LLL alias
 	 *
 	 * @var array
 	 */
@@ -71,6 +83,20 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	protected $dependencies = array();
 
 	/**
+	 * __construct
+	 *
+	 * @param \TYPO3\CMS\Lang\LanguageService $languageService
+	 * @return \TYPO3\Beautyofcode\Service\BrushDiscoveryService
+	 */
+	public function __construct(\TYPO3\CMS\Lang\LanguageService $languageService = NULL) {
+		if (is_null($languageService)) {
+			$languageService = $GLOBALS['LANG'];
+		}
+
+		$this->languageService = $languageService;
+	}
+
+	/**
 	 * injectHighlighterConfiguration
 	 *
 	 * @param ConfigurationInterface $highlighterConfiguration
@@ -78,6 +104,16 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 */
 	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
 		$this->highlighterConfiguration = $highlighterConfiguration;
+	}
+
+	/**
+	 * injectFileFinderUtility
+	 *
+	 * @param \TYPO3\Beautyofcode\Utility\FileFinderUtility $fileFinderUtility
+	 * @return void
+	 */
+	public function injectFileFinderUtility(\TYPO3\Beautyofcode\Utility\FileFinderUtility $fileFinderUtility) {
+		$this->fileFinderUtility = $fileFinderUtility;
 	}
 
 	/**
@@ -94,81 +130,60 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 		} catch (\RuntimeException $e) {
 			$this->discoveryConfiguration = array();
 		}
+
+		$this->discoverBrushes();
+		$this->discoverDependencies();
 	}
 
 	/**
 	 * Discovers brushes and returns them
 	 *
-	 * @return array Multidimensional array with library as keys, brushes stack
-	 *               as value where key is the name, value is an LLL alias
+	 * @return void
 	 */
-	public function discoverBrushes() {
-		if (!empty($this->brushStack)) {
-			return $this->brushStack;
-		}
-
+	protected function discoverBrushes() {
 		foreach ($this->discoveryConfiguration as $library => $libraryConfiguration) {
-			$brushes = $this->findBrushes($libraryConfiguration);
+			$brushes = $this->fileFinderUtility
+				->in($libraryConfiguration['path'])
+				->absolutize()
+				->exclude($libraryConfiguration['excludePattern'])
+				->find('js');
 
-			$this->brushStack[$library] = $this->filterAndSortBrushes(
-				$brushes,
-				$libraryConfiguration
-			);
+			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['prefix']);
+			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['suffix']);
+
+			$this->brushStack[$library] = $this->sortBrushes($brushes);
 		}
-
-		return $this->brushStack;
 	}
 
 	/**
-	 * Finds brushes in the file system
+	 * Removes the given $search value from the given $fileName
 	 *
-	 * @param array $configuration Library brush discovery configuration array
-	 * @return array An array of brush file names
+	 * @param string $fileName
+	 * @param mixed $key
+	 * @param string $search
+	 * @return void
 	 */
-	protected function findBrushes($configuration) {
-		$absoluteBrushesPath = GeneralUtility::getFileAbsFileName(
-			$configuration['path']
-		);
-
-		return GeneralUtility::getFilesInDir(
-			$absoluteBrushesPath,
-			'js',
-			FALSE,
-			'1',
-			$configuration['excludePattern']
-		);
+	protected function removeFromFilename(&$fileName, $key, $search) {
+		$fileName = str_replace($search, '', $fileName);
 	}
 
 	/**
-	 * Filters and sorts the brushes
+	 * Sorts the brushes
 	 *
-	 * Filtering is done by stripping prefix & suffix according to discovery
-	 * configuration array. The TYPO3.CMS language service is used to fetch a
-	 * brush alias. After that, the (translated) brushes are sorted alphabetically.
+	 * The prefix & suffix according to discovery configuration array is stripped.
+	 * The TYPO3.CMS language service is used to fetch a brush alias. After that,
+	 * the (translated) brushes are sorted alphabetically.
 	 *
 	 * @param array $brushes
-	 * @param array $configuration The library brush discovery configuration array
 	 * @return array
 	 */
-	protected function filterAndSortBrushes($brushes, $configuration) {
+	protected function sortBrushes($brushes) {
 		$filteredAndSortedBrushes = array();
 
 		foreach ($brushes as $brush) {
-			$brushIdentifier = str_replace($configuration['prefix'], '', $brush);
-			$brushIdentifier = str_replace($configuration['suffix'], '', $brushIdentifier);
+			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brush);
+			$brushLabel = $this->getBrushLabel($brush);
 
-			/* @var $languageService \TYPO3\CMS\Lang\LanguageService */
-			$languageService = $GLOBALS['LANG'];
-
-			$brushLabel = $languageService->sL(
-				self::BRUSH_LABELS_CATALOGUE . ':' . $brushIdentifier
-			);
-
-			if ('' === $brushLabel) {
-				$brushLabel = $brushIdentifier;
-			}
-
-			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
 			$filteredAndSortedBrushes[$brushAlias] = $brushLabel;
 		}
 
@@ -178,19 +193,49 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * discoverDependencies
+	 * getBrushLabel
 	 *
-	 * @return array
+	 * @param string $brushIdentifier
+	 * @return string
 	 */
-	public function discoverDependencies() {
-		if (!empty($this->dependencies)) {
-			return $this->dependencies;
+	protected function getBrushLabel($brushIdentifier) {
+		$brushLabel = $this->languageService->sL(
+			self::BRUSH_LABELS_CATALOGUE . ':' . $brushIdentifier
+		);
+
+		if ('' === $brushLabel) {
+			$brushLabel = $brushIdentifier;
 		}
 
+		return $brushLabel;
+	}
+
+	/**
+	 * discoverDependencies
+	 *
+	 * @return void
+	 */
+	protected function discoverDependencies() {
 		foreach ($this->discoveryConfiguration as $library => $libraryConfiguration) {
 			$this->dependencies[$library] = $libraryConfiguration['dependencies'];
 		}
+	}
 
+	/**
+	 * getBrushes
+	 *
+	 * @return array
+	 */
+	public function getBrushes() {
+		return $this->brushStack;
+	}
+
+	/**
+	 * getDependencies
+	 *
+	 * @return array
+	 */
+	public function getDependencies() {
 		return $this->dependencies;
 	}
 }

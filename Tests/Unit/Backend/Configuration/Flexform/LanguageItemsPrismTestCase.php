@@ -117,7 +117,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$this->brushDiscoveryMock
 			->expects($this->once())
-			->method('discoverBrushes')
+			->method('getBrushes')
 			->will($this->returnValue(
 				array(
 					'Prism' => array(

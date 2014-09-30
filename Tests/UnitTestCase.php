@@ -25,6 +25,9 @@ namespace TYPO3\Beautyofcode\Tests;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use \org\bovigo\vfs\vfsStream;
+use \org\bovigo\vfs\vfsStreamWrapper;
+
 /**
  * UnitTestCase
  *
@@ -106,5 +109,37 @@ abstract class UnitTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->getMock();
 
 		$GLOBALS['TYPO3_DB'] = $this->dbMock;
+	}
+
+	/**
+	 * Helper method to create test directory.
+	 *
+	 * @param string $rootDirectoryName
+	 * @param array $structure
+	 * @return string A unique directory name prefixed with test_.
+	 */
+	protected function createTestDirectory($rootDirectoryName = 'test', array $structure = array()) {
+		if (!class_exists('org\\bovigo\\vfs\\vfsStreamWrapper')) {
+			$this->markTestSkipped('getFilesInDirCreateTestDirectory() helper method not available without vfsStream.');
+		}
+
+		vfsStream::setup($rootDirectoryName, NULL, $structure);
+		$vfsUrl = vfsStream::url($rootDirectoryName);
+
+		if (version_compare(PHP_VERSION, '5.4.0', '>=')) {
+			// set random values for mtime
+			foreach ($structure as $structureLevel1Key => $structureLevel1Content) {
+				$newModificationTime = rand();
+				if (is_array($structureLevel1Content)) {
+					foreach ($structureLevel1Content as $structureLevel2Key => $_) {
+						touch($vfsUrl . '/' . $structureLevel1Key . '/' . $structureLevel2Key, $newModificationTime);
+					}
+				} else {
+					touch($vfsUrl . '/' . $structureLevel1Key, $newModificationTime);
+				}
+			}
+		}
+
+		return $vfsUrl;
 	}
 }

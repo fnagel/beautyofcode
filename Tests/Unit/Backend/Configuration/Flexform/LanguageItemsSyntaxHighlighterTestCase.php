@@ -116,7 +116,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 
 		$this->brushDiscoveryMock
 			->expects($this->once())
-			->method('discoverBrushes')
+			->method('getBrushes')
 			->will($this->returnValue(
 				array(
 					'SyntaxHighlighter' => array(

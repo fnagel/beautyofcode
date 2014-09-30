@@ -184,7 +184,7 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getBrushes() {
-		$brushes = $this->brushDiscoveryService->discoverBrushes();
+		$brushes = $this->brushDiscoveryService->getBrushes();
 
 		return $brushes[$this->settings['library']];
 	}

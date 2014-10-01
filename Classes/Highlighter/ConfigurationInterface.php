@@ -45,17 +45,6 @@ interface ConfigurationInterface {
 	public function getFailSafeBrushAlias($brushAlias);
 
 	/**
-	 * prepareRegisteredBrushes
-	 *
-	 * Prepares registered brushes (detected during rendering a page in FE) for
-	 * adding them by the PageAssets controller into the PageRenderer instance.
-	 *
-	 * @param array $brushStack
-	 * @return array
-	 */
-	public function prepareRegisteredBrushes(array $brushStack = array());
-
-	/**
 	 * getClassAttributeString
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform
@@ -70,4 +59,28 @@ interface ConfigurationInterface {
 	 * @return string
 	 */
 	public function getBrushAliasByIdentifier($brushIdentifier);
+
+	/**
+	 * getBrushIdentifierByAlias
+	 *
+	 * @param string $brushAlias
+	 * @return string
+	 */
+	public function getBrushIdentifierByAlias($brushAlias);
+
+	/**
+	 * Flags if the active highlighter configuraiton has static brushes configured.
+	 *
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function hasStaticBrushes(array $settings = array());
+
+	/**
+	 * Returns the static brushes array, with added `plain` brush if not configured
+	 *
+	 * @param array $settings Is set by the Configuration implementation
+	 * @return array
+	 */
+	public function getStaticBrushesWithPlainFallback(array $settings = array());
 }

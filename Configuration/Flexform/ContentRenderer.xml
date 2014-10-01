@@ -30,7 +30,7 @@
 										<numIndex index="1"></numIndex>
 									</numIndex>
 								</items>
-								<itemsProcFunc>EXT:beautyofcode/Classes/Backend/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>
+								<itemsProcFunc>EXT:beautyofcode/Classes/Backend/Configuration/Flexform/LanguageItems.php:TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems->getDiscoveredBrushes</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</cLang>

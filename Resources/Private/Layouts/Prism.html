@@ -21,3 +21,6 @@
 	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.js" />
 </f:if>
 <boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.js" />
+<f:if condition="{settings.brushes}">
+	<f:render partial="PageAssets/Prism" section="Main" arguments="{ brushes: brushes }" />
+</f:if>

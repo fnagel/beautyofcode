@@ -27,7 +27,7 @@ namespace TYPO3\Beautyofcode\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Registry;
+use TYPO3\Beautyofcode\Service\BrushRegistryService;
 
 /**
  * The frontend plugin controller for the syntaxhighlighter
@@ -43,6 +43,12 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	protected $contentElementRepository;
 
 	/**
+	 *
+	 * @var \TYPO3\Beautyofcode\Service\BrushRegistryService
+	 */
+	protected $brushRegistryService;
+
+	/**
 	 * injectContentElementRepository
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository
@@ -52,6 +58,18 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 		\TYPO3\Beautyofcode\Domain\Repository\ContentElementRepository $contentElementRepository
 	) {
 		$this->contentElementRepository = $contentElementRepository;
+	}
+
+	/**
+	 * injectBrushRegistryService
+	 *
+	 * @param BrushRegistryService $brushRegistryService
+	 * @return void
+	 */
+	public function injectBrushRegistryService(
+		BrushRegistryService $brushRegistryService
+	) {
+		$this->brushRegistryService = $brushRegistryService;
 	}
 
 	/**
@@ -67,8 +85,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 				$contentElementRaw->data['uid']
 			);
 
-		$this->signalSlotDispatcher->dispatch(__CLASS__, 'preRenderSignal', array($contentElement));
+		$this->brushRegistryService->registerBrush($contentElement);
 
 		$this->view->assign('contentElement', $contentElement);
+		$this->view->assign('brushes', $this->brushRegistryService->getBrushes());
 	}
 }

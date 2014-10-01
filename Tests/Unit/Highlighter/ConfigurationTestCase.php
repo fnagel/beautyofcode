@@ -123,13 +123,6 @@ class ConfigurationTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 		$this->concreteConfigurationMock
 			->expects($this->at(0))
-			->method('prepareRegisteredBrushes')
-			->with(array());
-
-		$this->sut->prepareRegisteredBrushes(array());
-
-		$this->concreteConfigurationMock
-			->expects($this->at(0))
 			->method('getClassAttributeString');
 
 		$flexform = $this->getMock('TYPO3\\Beautyofcode\\Domain\\Model\\Flexform');

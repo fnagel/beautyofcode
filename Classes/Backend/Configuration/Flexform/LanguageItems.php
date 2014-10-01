@@ -190,18 +190,20 @@ class LanguageItems {
 
 		if (!is_null($this->items)) {
 			$config['items'] = $this->items;
-		} else {
-			$brushesArray = $this->getBrushes();
 
-			foreach ($brushesArray as $brushIdentifier => $brushLabel) {
-				$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
-				$tceFormItemLabelValueArray[] = array($brushLabel, $brushAlias);
-			}
-
-			$config['items'] = $tceFormItemLabelValueArray;
-
-			$this->items = $config['items'];
+			return $config;
 		}
+
+		$brushesArray = $this->getBrushes();
+
+		foreach ($brushesArray as $brushIdentifier => $brushLabel) {
+			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
+			$tceFormItemLabelValueArray[] = array($brushLabel, $brushAlias);
+		}
+
+		$config['items'] = $tceFormItemLabelValueArray;
+
+		$this->items = $config['items'];
 
 		return $config;
 	}
@@ -212,8 +214,14 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getBrushes() {
-		$brushes = $this->brushDiscoveryService->getBrushes();
+		if ($this->highlighterConfiguration->hasStaticBrushes()) {
+			$brushes = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
+			$brushesArray = $this->brushDiscoveryService->getSortedIdentifiersByTranslation($brushes);
+		} else {
+			$brushes = $this->brushDiscoveryService->getBrushes();
+			$brushesArray = $brushes[$this->settings['library']];
+		}
 
-		return $brushes[$this->settings['library']];
+		return $brushesArray;
 	}
 }

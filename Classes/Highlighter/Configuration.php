@@ -25,6 +25,7 @@ namespace TYPO3\Beautyofcode\Highlighter;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -105,16 +106,6 @@ class Configuration implements ConfigurationInterface {
 	}
 
 	/**
-	 * prepareRegisteredBrushes
-	 *
-	 * @param array $brushStack
-	 * @return array
-	 */
-	public function prepareRegisteredBrushes(array $brushStack = array()) {
-		return $this->configuration->prepareRegisteredBrushes($brushStack);
-	}
-
-	/**
 	 * getClassAttributeString
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform
@@ -132,5 +123,35 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function getBrushAliasByIdentifier($brushIdentifier) {
 		return $this->configuration->getBrushAliasByIdentifier($brushIdentifier);
+	}
+
+	/**
+	 * getBrushIdentifierByAlias
+	 *
+	 * @param string $brushAlias
+	 * @return string
+	 */
+	public function getBrushIdentifierByAlias($brushAlias) {
+		return $this->configuration->getBrushIdentifierByAlias($brushAlias);
+	}
+
+	/**
+	 * Flags if the active highlighter configuraiton has static brushes configured.
+	 *
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function hasStaticBrushes(array $settings = array()) {
+		return $this->configuration->hasStaticBrushes(array_merge($this->settings, $settings));
+	}
+
+	/**
+	 * Returns the static brushes array, with added `plain` brush if not configured
+	 *
+	 * @param array $settings
+	 * @return array
+	 */
+	public function getStaticBrushesWithPlainFallback(array $settings = array()) {
+		return $this->configuration->getStaticBrushesWithPlainFallback(array_merge($this->settings, $settings));
 	}
 }

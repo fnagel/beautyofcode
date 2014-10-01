@@ -15,10 +15,10 @@
 </f:comment>
 
 <f:section name="ContainerSyntaxHighlighter">
-	<pre class="brush: {flexform.language}{flexform.classAttributeString}">
+	<pre class="brush: {flexform.cLang}{flexform.classAttributeString}">
 <f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></pre>
 </f:section>
 
 <f:section name="ContainerPrism">
-	<pre<f:format.raw>{flexform.classAttributeString}</f:format.raw>{f:if(condition: '{flexform.isGutterActive}', then: ' class="line-numbers"', else: '')}><code class="language-{flexform.language}"><f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
+	<pre<f:format.raw>{flexform.classAttributeString}</f:format.raw>{f:if(condition: '{flexform.isGutterActive}', then: ' class="line-numbers"', else: '')}><code class="language-{flexform.cLang}"><f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
 </f:section>

@@ -12,3 +12,7 @@
 
 <boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shCore.js" />
 <boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
+
+<f:if condition="{settings.brushes}">
+	<f:render partial="PageAssets/SyntaxHighlighter" section="Main" arguments="{ settings: settings, brushes: brushes }" />
+</f:if>

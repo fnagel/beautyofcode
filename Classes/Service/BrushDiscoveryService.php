@@ -134,14 +134,16 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['prefix']);
 			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['suffix']);
 
-			$this->brushStack[$library] = $this->sortBrushes($brushes);
+			$brushes = $this->getSortedIdentifiersByTranslation($brushes);
+
+			$this->brushStack[$library] = $brushes;
 		}
 	}
 
 	/**
 	 * Removes the given $search value from the given $fileName
 	 *
-	 * @param string $fileName
+	 * @param string &$fileName
 	 * @param mixed $key
 	 * @param string $search
 	 * @return void
@@ -151,34 +153,39 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * Sorts the brushes
+	 * getSortedIdentifiersByTranslation
 	 *
-	 * The prefix & suffix according to discovery configuration array is stripped.
-	 * The TYPO3.CMS language service is used to fetch a brush alias. After that,
-	 * the (translated) brushes are sorted alphabetically.
-	 *
-	 * @param array $brushes
+	 * @param array $brushIdentifiers
 	 * @return array
 	 */
-	protected function sortBrushes($brushes) {
-		$filteredAndSortedBrushes = array();
+	public function getSortedIdentifiersByTranslation(array $brushIdentifiers) {
+		$brushIdentifiers = array_values($brushIdentifiers);
+		$brushLabels = $this->getBrushLabelsForIdentifiers($brushIdentifiers);
 
-		foreach ($brushes as $brushIdentifier) {
-			$filteredAndSortedBrushes[$brushIdentifier] = $this->getBrushLabel($brushIdentifier);
-		}
+		$brushes = array_combine($brushIdentifiers, $brushLabels);
+		asort($brushes);
 
-		asort($filteredAndSortedBrushes);
-
-		return $filteredAndSortedBrushes;
+		return $brushes;
 	}
 
 	/**
-	 * getBrushLabel
+	 * getBrushLabelsForIdentifiers
 	 *
-	 * @param string $brushIdentifier
-	 * @return string
+	 * @param array $brushIdentifiers
+	 * @return array
 	 */
-	protected function getBrushLabel($brushIdentifier) {
+	protected function getBrushLabelsForIdentifiers(array $brushIdentifiers) {
+		array_walk($brushIdentifiers, array($this, 'translateBrushIdentifier'));
+		return array_values($brushIdentifiers);
+	}
+
+	/**
+	 * translateBrushIdentifier
+	 *
+	 * @param string &$brushIdentifier
+	 * @return void
+	 */
+	protected function translateBrushIdentifier(&$brushIdentifier) {
 		$brushLabel = $this->languageService->sL(
 			self::BRUSH_LABELS_CATALOGUE . ':' . $brushIdentifier
 		);
@@ -187,7 +194,7 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 			$brushLabel = $brushIdentifier;
 		}
 
-		return $brushLabel;
+		$brushIdentifier = $brushLabel;
 	}
 
 	/**

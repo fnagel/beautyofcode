@@ -29,6 +29,7 @@ plugin.tx_beautyofcode {
 		onReadyCallback = {$plugin.tx_beautyofcode.settings.onReadyCallback}
 
 		theme = {$plugin.tx_beautyofcode.settings.theme}
+		brushes = {$plugin.tx_beautyofcode.settings.brushes}
 
 		defaults {
 			tab-size = {$plugin.tx_beautyofcode.settings.defaults.tab-size}
@@ -41,5 +42,3 @@ plugin.tx_beautyofcode {
 		.tx_beautyofcode pre { overflow: auto; }
 	)
 }
-
-page.1407710024 < tt_content.list.20.beautyofcode_pageassets

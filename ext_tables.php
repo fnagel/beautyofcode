@@ -1,5 +1,5 @@
 <?php
-if (!defined ('TYPO3_MODE')) {
+if (!defined('TYPO3_MODE')) {
 	die('Access denied.');
 }
 
@@ -13,6 +13,12 @@ if (!defined ('TYPO3_MODE')) {
 	$_EXTKEY,
 	'Configuration/TypoScript/Prism/',
 	'beautyOfCode (Prism)'
+);
+
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addStaticFile(
+	$_EXTKEY,
+	'Configuration/TypoScript/DynamicPageAssets/',
+	'beautyOfCode (Dynamic page assets)'
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(

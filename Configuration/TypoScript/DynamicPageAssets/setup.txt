@@ -1,0 +1,8 @@
+plugin.tx_beautyofcode {
+	settings {
+		// removal of static brushes configuration
+		brushes >
+	}
+}
+
+page.1407710024 < tt_content.list.20.beautyofcode_pageassets

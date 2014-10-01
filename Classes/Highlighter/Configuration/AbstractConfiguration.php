@@ -25,6 +25,8 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * AbstractConfiguration
  *
@@ -74,16 +76,6 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
-	 * prepareRegisteredBrushes
-	 *
-	 * @param array $brushStack
-	 * @return array
-	 */
-	public function prepareRegisteredBrushes(array $brushStack = array()) {
-		return $brushStack;
-	}
-
-	/**
 	 * getBrushAliasByIdentifier
 	 *
 	 * @param string $brushIdentifier
@@ -96,4 +88,52 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 
 		return $brushIdentifier;
 	}
+
+	/**
+	 * getBrushIdentifierByAlias
+	 *
+	 * @param string $brushAlias
+	 * @return string
+	 */
+	public function getBrushIdentifierByAlias($brushAlias) {
+		$flippedMap = array_flip($this->brushIdentifierAliasMap);
+
+		return isset($flippedMap[$brushAlias]) ? $flippedMap[$brushAlias] : $brushAlias;
+	}
+
+	/**
+	 * Flags if the active highlighter configuraiton has static brushes configured.
+	 *
+	 * @param array $settings
+	 * @return bool
+	 */
+	public function hasStaticBrushes(array $settings = array()) {
+		return isset($settings['brushes']) && '' !== trim($settings['brushes']);
+	}
+
+	/**
+	 * Returns the static brushes array, with added `plain` brush if not configured
+	 *
+	 * @param array $settings
+	 * @return array
+	 */
+	public function getStaticBrushesWithPlainFallback(array $settings = array()) {
+		$staticIdentifiers = GeneralUtility::trimExplode(',', $settings['brushes']);
+		$staticIdentifierKeys = array_flip($staticIdentifiers);
+
+		$plainIdentifier = $this->getPlainBrushIdentifier();
+
+		if (!isset($staticIdentifierKeys[$plainIdentifier])) {
+			$staticIdentifiers[] = $plainIdentifier;
+		}
+
+		return $staticIdentifiers;
+	}
+
+	/**
+	 * getPlainBrushIdentifier
+	 *
+	 * @return string
+	 */
+	abstract protected function getPlainBrushIdentifier();
 }

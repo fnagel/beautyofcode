@@ -26,13 +26,6 @@ if (!defined('TYPO3_MODE')) {
 $backendPreviewHook = 'EXT:beautyofcode/Classes/Backend/Hooks/PageLayoutViewHooks.php:TYPO3\Beautyofcode\Backend\Hooks\PageLayoutViewHooks->getExtensionSummary';
 $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['list_type_Info']['beautyofcode_contentrenderer'][] = $backendPreviewHook;
 
-\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\SignalSlot\\Dispatcher')->connect(
-	'TYPO3\\Beautyofcode\\Controller\\ContentController',
-	'preRenderSignal',
-	'TYPO3\\Beautyofcode\\Service\\BrushRegistryService',
-	'registerBrush'
-);
-
 // registry for available syntax highlighting libraries and their brushes
 $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(
 	'SyntaxHighlighter' => array(

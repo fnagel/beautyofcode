@@ -50,25 +50,6 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 *
 	 * @test
 	 */
-	public function brushStackWithAliasesWillBeResolvedToProperSyntaxHighlighterBrushIdentifiers() {
-
-		$brushStack = array(
-			'javascript',
-			'typoscript',
-			'bash',
-		);
-
-		$registeredBrushIdentifiers = $this->sut->prepareRegisteredBrushes($brushStack);
-
-		$this->assertContains('JScript', $registeredBrushIdentifiers);
-		$this->assertContains('Typoscript', $registeredBrushIdentifiers);
-		$this->assertContains('Bash', $registeredBrushIdentifiers);
-	}
-
-	/**
-	 *
-	 * @test
-	 */
 	public function failSafeBrushAliasRetrievalWorksForAllOtherKnownHighlighterLibraries() {
 		$brushAliasAfterLibrarySwitching = 'markup';
 

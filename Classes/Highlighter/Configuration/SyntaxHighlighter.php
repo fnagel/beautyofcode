@@ -92,26 +92,6 @@ class SyntaxHighlighter extends AbstractConfiguration {
 	);
 
 	/**
-	 * prepareRegisteredBrushes
-	 *
-	 * @param array $brushStack
-	 * @return array
-	 */
-	public function prepareRegisteredBrushes(array $brushStack = array()) {
-		$brushes = array();
-
-		$brushAliasIdentifierMap = array_flip($this->brushIdentifierAliasMap);
-
-		foreach ($brushStack as $brushAlias) {
-			$brushIdentifier = $brushAliasIdentifierMap[$brushAlias];
-
-			$brushes[$brushAlias] = $brushIdentifier;
-		}
-
-		return parent::prepareRegisteredBrushes($brushes);
-	}
-
-	/**
 	 * getClassAttributeString
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform
@@ -143,5 +123,14 @@ class SyntaxHighlighter extends AbstractConfiguration {
 		}
 
 		return '; ' . implode('; ', $configurationItems);
+	}
+
+	/**
+	 * getPlainBrushIdentifier
+	 *
+	 * @return string
+	 */
+	protected function getPlainBrushIdentifier() {
+		return 'Plain';
 	}
 }

@@ -18,6 +18,7 @@ plugin.tx_beautyofcode {
 
 		library = {$plugin.tx_beautyofcode.settings.library}
 
+		brushes = {$plugin.tx_beautyofcode.settings.brushes}
 		theme = {$plugin.tx_beautyofcode.settings.theme}
 
 		defaults {
@@ -29,5 +30,3 @@ plugin.tx_beautyofcode {
 		.tx_beautyofcode pre { overflow: auto; }
 	)
 }
-
-page.1407710024 < tt_content.list.20.beautyofcode_pageassets

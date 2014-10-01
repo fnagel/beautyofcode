@@ -116,4 +116,13 @@ class Prism
 
 		return ' ' . implode(' ', $configurationItems);
 	}
+
+	/**
+	 * getPlainBrushIdentifier
+	 *
+	 * @return string
+	 */
+	protected function getPlainBrushIdentifier() {
+		return 'plain';
+	}
 }

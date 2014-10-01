@@ -142,7 +142,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 * @return string
 	 */
 	public function getCLang() {
-		return $this->cLang;
+		return $this->cLang ? $this->cLang : $this->languageFallback;
 	}
 
 	/**
@@ -251,17 +251,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 */
 	public function setTyposcriptDefaults($typoscriptDefaults = array()) {
 		$this->typoscriptDefaults = $typoscriptDefaults;
-	}
-
-	/**
-	 * getLanguage
-	 *
-	 * @return string
-	 */
-	public function getLanguage() {
-		$language = $this->cLang ? $this->cLang : $this->languageFallback;
-
-		return $this->highlighterConfiguration->getFailSafeBrushAlias($language);
 	}
 
 	/**

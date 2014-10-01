@@ -26,8 +26,8 @@ namespace TYPO3\Beautyofcode\Service;
  ***************************************************************/
 
 use TYPO3\Beautyofcode\Domain\Model\ContentElement;
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 
@@ -47,6 +47,12 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @var BrushDiscoveryService
 	 */
 	protected $brushDiscoveryService;
+
+	/**
+	 *
+	 * @var ConfigurationInterface
+	 */
+	protected $highlighterConfiguration;
 
 	/**
 	 *
@@ -99,26 +105,82 @@ class BrushRegistryService implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
+	 * injectHighlighterConfiguration
+	 *
+	 * @param ConfigurationInterface $configuration
+	 * @return void
+	 */
+	public function injectHighlighterConfiguration(ConfigurationInterface $configuration) {
+		$this->highlighterConfiguration = $configuration;
+	}
+
+	/**
+	 * initializeObject
+	 *
+	 * @return void
+	 */
+	public function initializeObject() {
+		if ($this->highlighterConfiguration->hasStaticBrushes()) {
+			$this->initializeStaticBrushes();
+		}
+	}
+
+	/**
+	 * initializeStaticBrushes
+	 *
+	 * @return void
+	 */
+	protected function initializeStaticBrushes() {
+		$brushes = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
+		foreach ($brushes as $brushIdentifier) {
+			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
+
+			if (isset($this->brushes[$brushAlias])) {
+				continue;
+			}
+
+			$this->brushes[$brushAlias] = $brushIdentifier;
+			$this->registerDependencies($brushAlias);
+		}
+	}
+
+	/**
 	 * registerBrush
 	 *
 	 * @param ContentElement $contentElement
 	 * @return void
 	 */
 	public function registerBrush(ContentElement $contentElement) {
-		$brush = $contentElement->getFlexformObject()->getLanguage();
+		$brushAlias = $this->highlighterConfiguration->getFailSafeBrushAlias(
+			$contentElement->getFlexformObject()->getCLang()
+		);
+		$brushIdentifier = $this->highlighterConfiguration->getBrushIdentifierByAlias($brushAlias);
 
-		if (FALSE === in_array($brush, $this->brushes)) {
-			$this->brushes[] = $brush;
+		$contentElement->getFlexformObject()->setCLang($brushAlias);
+
+		if (FALSE === isset($this->brushes[$brushAlias])) {
+			$this->brushes[$brushAlias] = $brushIdentifier;
 		}
 
-		while (isset($this->dependencies[$brush])) {
-			$brush = $this->dependencies[$brush];
+		$this->registerDependencies($brushAlias);
+	}
 
-			if (in_array($brush, $this->brushes)) {
-				continue;
-			}
+	/**
+	 * registerDependencies
+	 *
+	 * @param string $brushAlias
+	 * @return void
+	 */
+	protected function registerDependencies($brushAlias) {
+		while (isset($this->dependencies[$brushAlias])) {
+			$brushAlias = $this->dependencies[$brushAlias];
 
-			array_unshift($this->brushes, $brush);
+			$brushIdentifier = $this->highlighterConfiguration->getBrushIdentifierByAlias($brushAlias);
+
+			$this->brushes = array_merge(
+				array($brushAlias => $brushIdentifier),
+				$this->brushes
+			);
 		}
 	}
 

@@ -31,7 +31,8 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
@@ -48,15 +49,27 @@ class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\Abst
 	 * @param string $splitChar The char used to split the allWrap value
 	 * @return void
 	 */
-	public function render($file, $type = 'text/javascript', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE, $splitChar = '|') {
-		$this->pageRenderer->addJsFooterFile(
-			$this->fe->tmpl->getFileName($file),
-			$type,
-			$compress,
-			$forceOnTop,
-			$allWrap,
-			$excludeFromConcatenation,
-			$splitChar
-		);
+	public function render(
+		$file,
+		$type = 'text/javascript',
+		$compress = TRUE,
+		$forceOnTop = FALSE,
+		$allWrap = '',
+		$excludeFromConcatenation = FALSE,
+		$splitChar = '|'
+	) {
+		if ($this->isAccessiblePath($file)) {
+			$this->pageRenderer->addJsFooterFile(
+				$this->fe->tmpl->getFileName($file),
+				$type,
+				$compress,
+				$forceOnTop,
+				$allWrap,
+				$excludeFromConcatenation,
+				$splitChar
+			);
+		}
+
+		return NULL;
 	}
 }

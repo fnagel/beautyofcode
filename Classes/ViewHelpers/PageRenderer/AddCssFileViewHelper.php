@@ -30,34 +30,47 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
+	 * Adds the given $file to the pageRender css file stack.
 	 *
 	 * @param string $file
 	 * @param string $rel
 	 * @param string $media
 	 * @param string $title
-	 * @param string $compress
-	 * @param string $forceOnTop
+	 * @param bool $compress
+	 * @param bool $forceOnTop
 	 * @param string $allWrap
-	 * @param string $excludeFromConcatenation
+	 * @param bool $excludeFromConcatenation
 	 * @return NULL
 	 */
-	public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
-		$this->pageRenderer->addCssFile(
-			$file,
-			$rel,
-			$media,
-			$title,
-			$compress,
-			$forceOnTop,
-			$allWrap,
-			$excludeFromConcatenation
-		);
+	public function render(
+		$file,
+		$rel = 'stylesheet',
+		$media = 'all',
+		$title = '',
+		$compress = TRUE,
+		$forceOnTop = FALSE,
+		$allWrap = '',
+		$excludeFromConcatenation = FALSE
+	) {
+		if ($this->isAccessiblePath($file)) {
+			$this->pageRenderer->addCssFile(
+				$file,
+				$rel,
+				$media,
+				$title,
+				$compress,
+				$forceOnTop,
+				$allWrap,
+				$excludeFromConcatenation
+			);
+		}
 
 		return NULL;
 	}

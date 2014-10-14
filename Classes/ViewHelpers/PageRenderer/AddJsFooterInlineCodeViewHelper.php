@@ -30,17 +30,20 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
-	 * render
+	 * Adds a code block to the page renderer javascript footer stack.
+	 *
+	 * The code block is fetched from the Fluid template children nodes.
 	 *
 	 * @param string $name
-	 * @param string $compress
-	 * @param string $forceOnTop
+	 * @param bool $compress
+	 * @param bool $forceOnTop
 	 * @return NULL
 	 */
 	public function render($name, $compress = TRUE, $forceOnTop = FALSE) {

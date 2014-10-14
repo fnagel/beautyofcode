@@ -30,33 +30,44 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  *
  * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ * @license http://www.gnu.org/licenses/gpl.html
+ *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
 class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
-	 * render
+	 * Adds the incoming file to the page renderer javascript footer library stack.
 	 *
 	 * @param string $name
 	 * @param string $file
 	 * @param string $type
-	 * @param string $compress
-	 * @param string $forceOnTop
+	 * @param bool $compress
+	 * @param bool $forceOnTop
 	 * @param string $allWrap
-	 * @param string $excludeFromConcatenation
+	 * @param bool $excludeFromConcatenation
 	 * @return NULL
 	 */
-	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
-		$this->pageRenderer->addJsFooterLibrary(
-			$name,
-			$this->fe->tmpl->getFileName($file),
-			$type,
-			$compress,
-			$forceOnTop,
-			$allWrap,
-			$excludeFromConcatenation
-		);
+	public function render(
+		$name,
+		$file,
+		$type = 'text/javascript',
+		$compress = FALSE,
+		$forceOnTop = FALSE,
+		$allWrap = '',
+		$excludeFromConcatenation = FALSE
+	) {
+		if ($this->isAccessiblePath($file)) {
+			$this->pageRenderer->addJsFooterLibrary(
+				$name,
+				$this->fe->tmpl->getFileName($file),
+				$type,
+				$compress,
+				$forceOnTop,
+				$allWrap,
+				$excludeFromConcatenation
+			);
+		}
 
 		return NULL;
 	}

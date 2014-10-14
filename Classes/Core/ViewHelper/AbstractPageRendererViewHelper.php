@@ -68,4 +68,52 @@ abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\View
 	public function initializeObject() {
 		$this->fe = $GLOBALS['TSFE'];
 	}
+
+	/**
+	 * Flags if the given path is accessible.
+	 *
+	 * Returns true if the given $path is deteced as a remote path
+	 * or is a local file and is accessible.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	protected function isAccessiblePath($path) {
+		return $this->isRemotePath($path) || $this->isLocalPath($path);
+	}
+
+	/**
+	 * Flags if the given path is a remote path.
+	 *
+	 * The check is very basic and done by using parse_url and checking
+	 * if `scheme` or `host` keys are set in the path info array.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private function isRemotePath($path) {
+		$host = parse_url($path, PHP_URL_HOST);
+
+		return $host !== NULL;
+	}
+
+	/**
+	 * Checks if the given path is locally accessible.
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private function isLocalPath($path) {
+		try {
+			$pathInfo = new \SplFileInfo($path);
+
+			$isLocalPath = $pathInfo->isFile() || $pathInfo->isLink() || $pathInfo->isReadable();
+
+			unset($pathInfo);
+		} catch (\Exception $e) {
+			$isLocalPath = FALSE;
+		}
+
+		return $isLocalPath;
+	}
 }

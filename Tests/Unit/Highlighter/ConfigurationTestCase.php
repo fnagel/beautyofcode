@@ -82,6 +82,15 @@ class ConfigurationTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function dependencyInjectionAndTypoScriptConfigurationGiveAConcreteHighlighterConfiguration() {
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['IdentifierAliases'] = array(
+			'Prism' => array(
+			),
+		);
+		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['FailsafeAliases'] = array(
+			'Prism' => array(
+			),
+		);
+
 		// after dependency injection...
 		$typoscriptConfiguration = array(
 			'plugin.' => array(

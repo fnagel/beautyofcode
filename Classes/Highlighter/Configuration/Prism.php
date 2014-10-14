@@ -36,63 +36,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class Prism
-	extends AbstractConfiguration {
-
-	/**
-	 *
-	 * @var array
-	 */
-	protected $failSafeBrushAliasMap = array(
-		'SyntaxHighlighter' => array(
-			'applescript' => 'javascript',
-			'actionscript3' => 'javascript',
-			'coldfusion' => 'markup',
-			'delphi' => 'plain',
-			'diff' => 'plain',
-			'erlang' => 'plain',
-			'javafx' => 'java',
-			'perl' => 'c',
-			'powershell' => 'bash',
-			'sass' => 'scss',
-			'scala' => 'java',
-			'vb' => 'plain',
-			'xml' => 'markup',
-		),
-	);
-
-
-	/**
-	 * A Brush identifier / alias map
-	 *
-	 * With Prism, the brush (component) identifier is the same as used in
-	 * the HTML element class attribute ("brush:" setting)
-	 *
-	 * @var array
-	 */
-	protected $brushIdentifierAliasMap = array(
-		'bash' => 'bash',
-		'c' => 'c',
-		'clike' => 'clike',
-		'coffeescript' => 'coffeescript',
-		'cpp' => 'cpp',
-		'csharp' => 'csharp',
-		'css' => 'css',
-		'gherkin' => 'gherkin',
-		'go' => 'go',
-		'groovy' => 'groovy',
-		'http' => 'http',
-		'java' => 'java',
-		'javascript' => 'javascript',
-		'markup' => 'markup',
-		'php' => 'php',
-		'plain' => 'plain',
-		'python' => 'python',
-		'ruby' => 'ruby',
-		'scss' => 'scss',
-		'sql' => 'sql',
-		'typoscript' => 'typoscript',
-	);
+class Prism extends AbstractConfiguration {
 
 	/**
 	 * getClassAttributeString

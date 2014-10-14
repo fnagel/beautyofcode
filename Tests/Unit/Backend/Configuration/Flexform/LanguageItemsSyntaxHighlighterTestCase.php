@@ -99,7 +99,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		);
 
 		$this->highlighterConfigurationMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter'
+			'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
 		);
 
 		$this->formEngineMock = $this

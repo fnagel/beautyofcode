@@ -43,7 +43,17 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected $sut;
 
 	public function setUp() {
-		$this->sut = new \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter();
+		$this->sut = new \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter(
+			array(
+				'ColdFusion' => 'coldfusion',
+				'TypoScript' => 'typoscript',
+			),
+			array(
+				'Prism' => array(
+					'markup' => 'xml',
+				),
+			)
+		);
 	}
 
 	/**

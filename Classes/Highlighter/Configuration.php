@@ -90,7 +90,9 @@ class Configuration implements ConfigurationInterface {
 	 */
 	public function initializeObject() {
 		$this->configuration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library']
+			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library'],
+			ArrayUtility::getValueByPath($GLOBALS, 'TYPO3_CONF_VARS/EXTCONF/beautyofcode/IdentifierAliases/' . $this->settings['library']),
+			ArrayUtility::getValueByPath($GLOBALS, 'TYPO3_CONF_VARS/EXTCONF/beautyofcode/FailsafeAliases/' . $this->settings['library'])
 		);
 	}
 

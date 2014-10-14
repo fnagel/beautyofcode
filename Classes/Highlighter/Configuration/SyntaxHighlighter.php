@@ -39,59 +39,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class SyntaxHighlighter extends AbstractConfiguration {
 
 	/**
-	 *
-	 * @var array
-	 */
-	protected $failSafeBrushAliasMap = array(
-		'Prism' => array(
-			'c' => 'cpp',
-			'coffeescript' => 'javascript',
-			'gherkin' => 'plain',
-			'go' => 'plain',
-			'http' => 'plain',
-			'markup' => 'xml',
-			'scss' => 'sass',
-		),
-	);
-
-	/**
-	 * A Brush identifier / alias map
-	 *
-	 * With SyntaxHighlighter, a Brush identifier may have a Brush alias which
-	 * is used in the class attribute of the HTML element and defined within
-	 * the JavaScript brush resource.
-	 *
-	 * @var array
-	 */
-	protected $brushIdentifierAliasMap = array(
-		'AppleScript' => 'applescript',
-		'AS3' => 'actionscript3',
-		'Bash' => 'bash',
-		'ColdFusion' => 'coldfusion',
-		'Cpp' => 'cpp',
-		'CSharp' => 'csharp',
-		'Css' => 'css',
-		'Delphi' => 'delphi',
-		'Diff' => 'diff',
-		'Erlang' => 'erlang',
-		'Groovy' => 'groovy',
-		'Java' => 'java',
-		'JavaFX' => 'javafx',
-		'JScript' => 'javascript',
-		'Perl' => 'perl',
-		'Php' => 'php',
-		'Plain' => 'plain',
-		'PowerShell' => 'powershell',
-		'Python' => 'python',
-		'Ruby' => 'ruby',
-		'Scala' => 'scala',
-		'Sql' => 'sql',
-		'Typoscript' => 'typoscript',
-		'Vb' => 'vbnet',
-		'Xml' => 'xml',
-	);
-
-	/**
 	 * getClassAttributeString
 	 *
 	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform

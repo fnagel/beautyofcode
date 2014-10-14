@@ -43,7 +43,7 @@ class PrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected $sut;
 
 	public function setUp() {
-		$this->sut = new \TYPO3\Beautyofcode\Highlighter\Configuration\Prism();
+		$this->sut = new \TYPO3\Beautyofcode\Highlighter\Configuration\Prism(array(), array());
 	}
 
 	/**

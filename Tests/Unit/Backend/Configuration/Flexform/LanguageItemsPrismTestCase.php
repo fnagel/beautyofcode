@@ -100,7 +100,7 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		);
 
 		$this->highlighterConfigurationMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\Prism'
+			'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
 		);
 
 		$this->formEngineMock = $this

@@ -39,6 +39,31 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface {
 
 	/**
+	 * @var array
+	 */
+	protected $identifierAliases = array();
+
+	/**
+	 * @var array
+	 */
+	protected $failsafeAliases = array();
+
+	/**
+	 * Constructor
+	 *
+	 * Receives the identifier-to-alias and failsafe alias maps for the
+	 * concrete configuration.
+	 *
+	 * @param array $identifierAliases
+	 * @param array $failsafeAliases
+	 * @return \TYPO3\Beautyofcode\Highlighter\Configuration\AbstractConfiguration
+	 */
+	public function __construct(array $identifierAliases, array $failsafeAliases) {
+		$this->identifierAliases = $identifierAliases;
+		$this->failsafeAliases = $failsafeAliases;
+	}
+
+	/**
 	 * getFailSafeBrushAlias
 	 *
 	 * @param string $brushAlias
@@ -49,7 +74,7 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 			return $brushAlias;
 		}
 
-		foreach ($this->failSafeBrushAliasMap as $foreignLibraryMap) {
+		foreach ($this->failsafeAliases as $foreignLibraryMap) {
 			if (isset($foreignLibraryMap[$brushAlias])) {
 				$failSafeBrushAlias = $foreignLibraryMap[$brushAlias];
 				break;
@@ -66,7 +91,7 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	 * @return boolean
 	 */
 	protected function hasBrushAlias($brushAlias) {
-		foreach ($this->brushIdentifierAliasMap as $alias) {
+		foreach ($this->identifierAliases as $alias) {
 			if ($alias === $brushAlias) {
 				return TRUE;
 			}
@@ -82,8 +107,8 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	 * @return string
 	 */
 	public function getBrushAliasByIdentifier($brushIdentifier) {
-		if (isset($this->brushIdentifierAliasMap[$brushIdentifier])) {
-			return $this->brushIdentifierAliasMap[$brushIdentifier];
+		if (isset($this->identifierAliases[$brushIdentifier])) {
+			return $this->identifierAliases[$brushIdentifier];
 		}
 
 		return $brushIdentifier;
@@ -96,13 +121,13 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	 * @return string
 	 */
 	public function getBrushIdentifierByAlias($brushAlias) {
-		$flippedMap = array_flip($this->brushIdentifierAliasMap);
+		$flippedMap = array_flip($this->identifierAliases);
 
 		return isset($flippedMap[$brushAlias]) ? $flippedMap[$brushAlias] : $brushAlias;
 	}
 
 	/**
-	 * Flags if the active highlighter configuraiton has static brushes configured.
+	 * Flags if the active highlighter configuration has static brushes configured.
 	 *
 	 * @param array $settings
 	 * @return bool

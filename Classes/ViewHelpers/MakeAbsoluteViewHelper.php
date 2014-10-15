@@ -24,6 +24,8 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * MakeAbsoluteViewHelper
  *
@@ -38,6 +40,6 @@ class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractVi
 	 * @return string
 	 */
 	public function render($url) {
-		return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
+		return GeneralUtility::makeAbsolutePath($url);
 	}
 }

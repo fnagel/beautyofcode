@@ -60,7 +60,7 @@ abstract class AbstractUpdate {
 	 * @return \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate
 	 */
 	public function __construct() {
-		$this->updateInstructions = (array)\TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
+		$this->updateInstructions = (array) \TYPO3\CMS\Core\Utility\GeneralUtility::_GP('update');
 	}
 
 	/**

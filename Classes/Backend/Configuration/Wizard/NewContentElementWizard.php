@@ -24,6 +24,9 @@ namespace TYPO3\Beautyofcode\Configuration\Wizard;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Class that adds the wizard icon.
  *
@@ -51,7 +54,7 @@ class NewContentElementWizard {
 		$translationArray = $this->includeLocalLang();
 
 		$wizardItems['plugins_tx_beautyofcode_pi1'] = array(
-			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
+			'icon' => ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
 			'title' => $this->languageService->getLLL('tt_content.list_type_pi1', $translationArray),
 			'description' => $this->languageService->getLLL('wiz_description', $translationArray),
 			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_contentrenderer'
@@ -63,11 +66,11 @@ class NewContentElementWizard {
 	/**
 	 * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file.
 	 *
-	 * @return The array with language labels
+	 * @return array The array with language labels
 	 */
 	protected function includeLocalLang() {
 		$translationFile = 'EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';
-		$translationArray = \TYPO3\CMS\Core\Utility\GeneralUtility::readLLfile($translationFile, $this->languageService->lang);
+		$translationArray = GeneralUtility::readLLfile($translationFile, $this->languageService->lang);
 
 		return $translationArray;
 	}

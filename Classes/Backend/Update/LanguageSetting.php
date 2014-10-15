@@ -304,26 +304,28 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	 */
 	public function execute() {
 		$this->view->assign('section', 'Execute');
+		$this->view->assign('totalUpdates', count($this->plugins));
 
 		$successfulUpdates = 0;
 
-		if ($this->hasUpdateInstruction('language')) {
-			$newLanguages = GeneralUtility::_GP('language');
+		if (!$this->hasUpdateInstruction('language')) {
+			$this->view->assign('successfulUpdates', $successfulUpdates);
 
-			foreach ($this->plugins as $plugin) {
-				try {
-					$updateResult = $this->updatePluginLanguage($plugin);
+			return $this->view->render();
+		}
 
-					if ($updateResult) {
-						$successfulUpdates = $successfulUpdates + 1;
-					}
-				} catch (\TYPO3\CMS\Core\Exception $e) {
-					continue;
+		foreach ($this->plugins as $plugin) {
+			try {
+				$updateResult = $this->updatePluginLanguage($plugin);
+
+				if ($updateResult) {
+					$successfulUpdates = $successfulUpdates + 1;
 				}
+			} catch (\TYPO3\CMS\Core\Exception $e) {
+				continue;
 			}
 		}
 
-		$this->view->assign('totalUpdates', count($this->plugins));
 		$this->view->assign('successfulUpdates', $successfulUpdates);
 
 		return $this->view->render();

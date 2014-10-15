@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
+namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers\Highlighter\SyntaxHighlighter;
 
 /***************************************************************
  * Copyright notice
@@ -28,13 +28,13 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
 /**
  * Tests the standalone asset path view helper
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\ViewHelpers
+ * @package \TYPO3\Beautyofcode\Tests\Unit\ViewHelpers\Highlighter\SyntaxHighlighter
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class AssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
@@ -43,7 +43,7 @@ class StandaloneAssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTe
 	 * @expectedExceptionMessage The type argument must be one of scripts, styles.
 	 */
 	public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet() {
-		$sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar'));
 		$sut->initializeArguments();
 		$sut->initialize();
@@ -55,7 +55,7 @@ class StandaloneAssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTe
 	 * @test
 	 */
 	public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet() {
-		$sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts'));
 		$sut->initializeArguments();
 		$sut->initialize();
@@ -69,7 +69,7 @@ class StandaloneAssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTe
 	 * @test
 	 */
 	public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet() {
-		$sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'styles'));
 		$sut->initializeArguments();
 		$sut->initialize();
@@ -83,7 +83,7 @@ class StandaloneAssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTe
 	 * @test
 	 */
 	public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet() {
-		$sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/scripts/', 'type' => 'scripts'));
 		$sut->initializeArguments();
 		$sut->initialize();

@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\ViewHelpers;
+namespace TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter;
 
 /***************************************************************
  * Copyright notice
@@ -26,15 +26,21 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  ***************************************************************/
 
 /**
- * VH for the standalone scripts/styles asset paths.
+ * VH for the SyntaxHighlighter scripts/styles asset paths.
  *
- * @package \TYPO3\Beautyofcode\ViewHelpers
+ * This highlighter library allows integration of CSS/JS assets from
+ * a CDN/external ressource. This view helper helps with the integration
+ * by analyzing the incoming configuration values and compiles either
+ * a local or remote asset path. - Basically, it prevents excessive usage
+ * of f:if-f:else VHs in your asset template ;).
+ *
+ * @package \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class AssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
 	 *
@@ -87,6 +93,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 	 * initialize
 	 *
 	 * @return void
+	 * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
 	 */
 	public function initialize() {
 		if ('' === trim($this->arguments['baseUrl'])) {
@@ -98,7 +105,10 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 		}
 
 		if (FALSE === in_array($this->arguments['type'], $this->validTypes)) {
-			throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('The type argument must be one of ' . implode(', ', $this->validTypes) . '.', 1389366818);
+			throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception(
+				'The type argument must be one of ' . implode(', ', $this->validTypes) . '.',
+				1389366818
+			);
 		}
 	}
 

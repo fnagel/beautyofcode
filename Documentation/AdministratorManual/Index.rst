@@ -136,6 +136,15 @@ your TYPO3.CMS instance. While no benchmarking / profiling was done, this is due
 fact that the additonal PAGE cObject added will bootstrap and run the Extbase framework
 and the Fluid template engine just for adding JavaScript and CSS assets to the page.
 
+Changed AssetPathViewHelper
+
+If you are using customized templates for rendering, you have to adjust a view helper reference
+if your are using SyntaxHighlighter. This change was necessary to introduce a better separation
+of namespaces for view helpers needed for specific highlighter libraries.
+
+Before: boc:standaloneAssetPath()
+After: boc:highlighter.syntaxHighlighter.assetPath()
+
 .. _admin-faq:
 
 FAQ

@@ -1,17 +1,17 @@
 {namespace boc=TYPO3\Beautyofcode\ViewHelpers}
 <f:layout name="Standalone" />
 
-<boc:pageRenderer.addCssFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shCore.css" />
-<boc:pageRenderer.addCssFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shCoreDefault.css" />
+<boc:pageRenderer.addCssFile file="{boc:highlighter.syntaxHighlighter.assetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shCore.css" />
+<boc:pageRenderer.addCssFile file="{boc:highlighter.syntaxHighlighter.assetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shCoreDefault.css" />
 
 <f:if condition="{settings.theme}">
-	<boc:pageRenderer.addCssFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shTheme{settings.theme}.css" />
+	<boc:pageRenderer.addCssFile file="{boc:highlighter.syntaxHighlighter.assetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.styles, type: 'styles')}shTheme{settings.theme}.css" />
 </f:if>
 
 <f:render section="Main" />
 
-<boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shCore.js" />
-<boc:pageRenderer.addJsFooterFile file="{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:highlighter.syntaxHighlighter.assetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shCore.js" />
+<boc:pageRenderer.addJsFooterFile file="{boc:highlighter.syntaxHighlighter.assetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}shAutoloader.js" />
 
 <f:if condition="{settings.brushes}">
 	<f:render partial="PageAssets/SyntaxHighlighter" section="Main" arguments="{ settings: settings, brushes: brushes }" />

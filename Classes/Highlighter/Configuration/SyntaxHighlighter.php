@@ -47,23 +47,23 @@ class SyntaxHighlighter extends AbstractConfiguration {
 	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
 		$configurationItems = array();
 
-		$classAttributeConfigurationStack = array(
+		$validClassAttributes = array(
 			'highlight' => GeneralUtility::expandList($flexform->getCHighlight()),
 			'gutter' => $flexform->getCGutter(),
 			'collapse' => $flexform->getCCollapse(),
 		);
 
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
+		foreach ($validClassAttributes as $attribute => $value) {
+			if (TRUE === in_array($value, array('', 'auto'))) {
 				continue;
 			}
 
-			if ($configurationKey === 'highlight') {
-				$key = $configurationKey;
-				$value = sprintf('[%s]', $configurationValue);
+			$key = $attribute;
+
+			if ($attribute === 'highlight') {
+				$value = sprintf('[%s]', $value);
 			} else {
-				$key = $configurationKey;
-				$value = var_export((boolean) $configurationValue, TRUE);
+				$value = var_export((boolean) $value, TRUE);
 			}
 
 			$configurationItems[] = sprintf('%s: %s', $key, $value);

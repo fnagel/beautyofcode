@@ -46,16 +46,16 @@ class Prism extends AbstractConfiguration {
 	 */
 	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
 		$configurationItems = array();
-		$classAttributeConfigurationStack = array(
+		$validClassAttributes = array(
 			'data-line' => GeneralUtility::expandList($flexform->getCHighlight()),
 		);
 
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
+		foreach ($validClassAttributes as $attribute => $value) {
+			if (TRUE === in_array($value, array('', 'auto'))) {
 				continue;
 			}
 
-			$configurationItems[] = sprintf('%s="%s"', $configurationKey, $configurationValue);
+			$configurationItems[] = sprintf('%s="%s"', $attribute, $value);
 		}
 
 		return ' ' . implode(' ', $configurationItems);

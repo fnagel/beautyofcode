@@ -25,7 +25,6 @@ namespace TYPO3\Beautyofcode\Highlighter;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -52,6 +51,18 @@ class Configuration implements ConfigurationInterface {
 	 * @var array
 	 */
 	protected $settings;
+
+	/**
+	 *
+	 * @var array
+	 */
+	private $identifierAliases = array();
+
+	/**
+	 *
+	 * @var array
+	 */
+	private $failsafeAliases = array();
 
 	/**
 	 *
@@ -89,10 +100,29 @@ class Configuration implements ConfigurationInterface {
 	 * @return void
 	 */
 	public function initializeObject() {
+		$this->initializeBrushMaps();
+
 		$this->configuration = $this->objectManager->get(
 			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library'],
-			ArrayUtility::getValueByPath($GLOBALS, 'TYPO3_CONF_VARS/EXTCONF/beautyofcode/IdentifierAliases/' . $this->settings['library']),
-			ArrayUtility::getValueByPath($GLOBALS, 'TYPO3_CONF_VARS/EXTCONF/beautyofcode/FailsafeAliases/' . $this->settings['library'])
+			$this->identifierAliases,
+			$this->failsafeAliases
+		);
+	}
+
+	/**
+	 * Initializes the identifier-to-alias and failsafe alias maps.
+	 *
+	 * @return void
+	 * @throws \RuntimeException
+	 */
+	protected function initializeBrushMaps() {
+		$this->identifierAliases = ArrayUtility::getValueByPath(
+			$GLOBALS,
+			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/IdentifierAliases/' . $this->settings['library']
+		);
+		$this->failsafeAliases = ArrayUtility::getValueByPath(
+			$GLOBALS,
+			'TYPO3_CONF_VARS/EXTCONF/beautyofcode/FailsafeAliases/' . $this->settings['library']
 		);
 	}
 

@@ -127,7 +127,7 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 
 		$this->brushDiscoveryMock
 			->expects($this->once())
-			->method('getSortedIdentifiersByTranslation')
+			->method('getIdentifiersSortedByTranslation')
 			->will($this->returnValue(
 				array(
 					'plain' => 'Plain',

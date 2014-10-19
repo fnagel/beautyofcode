@@ -216,7 +216,7 @@ class LanguageItems {
 	protected function getBrushes() {
 		if ($this->highlighterConfiguration->hasStaticBrushes()) {
 			$brushes = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
-			$brushesArray = $this->brushDiscoveryService->getSortedIdentifiersByTranslation($brushes);
+			$brushesArray = $this->brushDiscoveryService->getIdentifiersSortedByTranslation($brushes);
 		} else {
 			$brushes = $this->brushDiscoveryService->getBrushes();
 			$brushesArray = $brushes[$this->settings['library']];

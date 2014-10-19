@@ -134,7 +134,7 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['prefix']);
 			array_walk($brushes, array($this, 'removeFromFilename'), $libraryConfiguration['suffix']);
 
-			$brushes = $this->getSortedIdentifiersByTranslation($brushes);
+			$brushes = $this->getIdentifiersSortedByTranslation($brushes);
 
 			$this->brushStack[$library] = $brushes;
 		}
@@ -153,12 +153,12 @@ class BrushDiscoveryService implements \TYPO3\CMS\Core\SingletonInterface {
 	}
 
 	/**
-	 * getSortedIdentifiersByTranslation
+	 * getIdentifiersSortedByTranslation
 	 *
 	 * @param array $brushIdentifiers
 	 * @return array
 	 */
-	public function getSortedIdentifiersByTranslation(array $brushIdentifiers) {
+	public function getIdentifiersSortedByTranslation(array $brushIdentifiers) {
 		$brushIdentifiers = array_values($brushIdentifiers);
 		$brushLabels = $this->getBrushLabelsForIdentifiers($brushIdentifiers);
 

@@ -50,100 +50,35 @@ class FlexformTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->sut->setCHighlight('1,2-3,8');
 		$this->sut->setCCollapse('1');
 		$this->sut->setCGutter('1');
-
-		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter */
-		$highlighterConfigurationMock = $this
-			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter')
-			->disableOriginalConstructor()
-			->setMethods(array('prepareRegisteredBrushes'))
-			->getMock();
-
-		$this->sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->sut->setCCollapse('');
-
-		$this->assertNotContains('collapse', $this->sut->getClassAttributeString());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->sut->setCGutter('auto');
-
-		$this->assertNotContains('gutter', $this->sut->getClassAttributeString());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
-		$this->assertContains('highlight: [', $this->sut->getClassAttributeString());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
-		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
-	}
-
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToZero() {
+	public function testGetIsGutterActiveReturnsFalseIfInstanceIsSetToZero() {
 		$this->sut->setCGutter('0');
 
 		$this->assertFalse($this->sut->getIsGutterActive());
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToOne() {
+	public function testGetIsGutterActiveReturnsTrueIfInstanceIsSetToOne() {
 		$this->sut->setCGutter('1');
 
 		$this->assertTrue($this->sut->getIsGutterActive());
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy() {
+	public function testGetIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy() {
 		$this->sut->setCGutter('auto');
 		$this->sut->setTyposcriptDefaults(array('gutter' => ''));
 
 		$this->assertFalse($this->sut->getIsGutterActive());
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff() {
+	public function testGetIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff() {
 		$this->sut->setCGutter('auto');
 		$this->sut->setTyposcriptDefaults(array('gutter' => '0'));
 
 		$this->assertFalse($this->sut->getIsGutterActive());
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn() {
+	public function testGetIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn() {
 		$this->sut->setCGutter('auto');
 		$this->sut->setTyposcriptDefaults(array('gutter' => '1'));
 

@@ -25,7 +25,7 @@ namespace TYPO3\Beautyofcode\Controller;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\Beautyofcode\Service\BrushRegistryService;
+use TYPO3\Beautyofcode\Service\HighlighterService;
 
 /**
  * PageAssetsController
@@ -42,20 +42,20 @@ class PageAssetsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushRegistryService
+	 * @var \TYPO3\Beautyofcode\Service\HighlighterService
 	 */
-	protected $brushRegistryService;
+	protected $highlighterService;
 
 	/**
-	 * injectBrushRegistryService
+	 * injectHighlighterService
 	 *
-	 * @param BrushRegistryService $brushRegistryService
+	 * @param HighlighterService $highlighterService
 	 * @return void
 	 */
-	public function injectBrushRegistryService(
-		BrushRegistryService $brushRegistryService
+	public function injectHighlighterService(
+		HighlighterService $highlighterService
 	) {
-		$this->brushRegistryService = $brushRegistryService;
+		$this->highlighterService = $highlighterService;
 	}
 
 	/**
@@ -64,7 +64,7 @@ class PageAssetsController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionContr
 	 * @return void
 	 */
 	public function addAction() {
-		$brushes = $this->brushRegistryService->getBrushes();
+		$brushes = $this->highlighterService->getRegisteredBrushes();
 
 		$this->view->assign('brushes', $brushes);
 	}

@@ -77,11 +77,7 @@ class ConfigurationTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->getMock();
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function dependencyInjectionAndTypoScriptConfigurationGiveAConcreteHighlighterConfiguration() {
+	public function testDependencyInjectionAndTypoScriptConfigurationGiveAConcreteHighlighterConfiguration() {
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['IdentifierAliases'] = array(
 			'Prism' => array(
 			),

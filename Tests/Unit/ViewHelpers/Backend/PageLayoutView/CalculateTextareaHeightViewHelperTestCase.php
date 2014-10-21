@@ -46,11 +46,7 @@ class CalculateTextareaHeightViewHelperTestCase extends \TYPO3\CMS\Core\Tests\Un
 		$this->sut = new \TYPO3\Beautyofcode\ViewHelpers\Backend\PageLayoutView\CalculateTextareaHeightViewHelper();
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingInSmallContentWillMultiplyNumberOfLinesWithGivenSmallTextareaFactorAndAddAdditionalSpace() {
+	public function testPassingInSmallContentWillMultiplyNumberOfLinesWithGivenSmallTextareaFactorAndAddAdditionalSpace() {
 		// 12 lines...
 		$content = file_get_contents(__DIR__ . '/Fixtures/ShortCodeExample.txt');
 
@@ -59,11 +55,7 @@ class CalculateTextareaHeightViewHelperTestCase extends \TYPO3\CMS\Core\Tests\Un
 		$this->assertEquals('245px', $textareaHeight);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingInLargeContentWillFixHeightToGivenMaxTextareaHeight() {
+	public function testPassingInLargeContentWillFixHeightToGivenMaxTextareaHeight() {
 		// 22 lines...
 		$content = file_get_contents(__DIR__ . '/Fixtures/LongCodeExample.txt');
 
@@ -72,11 +64,7 @@ class CalculateTextareaHeightViewHelperTestCase extends \TYPO3\CMS\Core\Tests\Un
 		$this->assertEquals('150px', $textareaHeight);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function supportsInlineNotation() {
+	public function testSupportsInlineNotation() {
 		$shortCodeExample = file_get_contents(__DIR__ . '/Fixtures/ShortCodeExample.txt');
 
 		$renderingContextMock = $this

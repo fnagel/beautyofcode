@@ -42,15 +42,9 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
+	 * @var \TYPO3\Beautyofcode\Highlighter\BrushDiscovery
 	 */
-	protected $configurationManagerMock;
-
-	/**
-	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
-	 */
-	protected $brushDiscoveryMock;
+	protected $brushDiscovery;
 
 	/**
 	 *
@@ -91,12 +85,8 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->configurationManagerMock = $this
-			->getMockBuilder('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager')
-			->getMock();
-
-		$this->brushDiscoveryMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
+		$this->brushDiscovery = $this->getMock(
+			'TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery'
 		);
 
 		$this->highlighterConfigurationMock = $this->getMock(
@@ -110,24 +100,9 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 	}
 
 	public function assertConfiguredPrism() {
-		$typoScriptSetup = array(
-			'plugin.' => array(
-				'tx_beautyofcode.' => array(
-					'settings.' => array(
-						'library' => 'Prism',
-					),
-				),
-			),
-		);
-
-		$this->configurationManagerMock
-			->expects($this->any())
-			->method('getConfiguration')
-			->will($this->returnValue($typoScriptSetup));
-
-		$this->brushDiscoveryMock
+		$this->brushDiscovery
 			->expects($this->once())
-			->method('getIdentifiersSortedByTranslation')
+			->method('getBrushesSortedByIdentifiersLabels')
 			->will($this->returnValue(
 				array(
 					'plain' => 'Plain',
@@ -161,18 +136,12 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 			->will($this->returnValueMap($brushAliasIdentifierMap));
 	}
 
-	/**
-	 * brushesOverrideTheReturnValue
-	 *
-	 * @test
-	 */
-	public function staticBrushesOverrideTheReturnValue() {
+	public function testStaticBrushesOverrideTheReturnValue() {
 		$this->assertConfiguredPrism();
 
 		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($this->objectManagerMock);
-		$sut->injectConfigurationManager($this->configurationManagerMock);
-		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectBrushDiscovery($this->brushDiscovery);
 		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 

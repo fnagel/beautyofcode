@@ -42,15 +42,9 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManager
+	 * @var \TYPO3\Beautyofcode\Highlighter\BrushDiscovery
 	 */
-	protected $configurationManagerMock;
-
-	/**
-	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
-	 */
-	protected $brushDiscoveryMock;
+	protected $brushDiscovery;
 
 	/**
 	 *
@@ -91,11 +85,8 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->configurationManagerMock = $this
-			->getMock('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager');
-
-		$this->brushDiscoveryMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
+		$this->brushDiscovery = $this->getMock(
+			'TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery'
 		);
 
 		$this->highlighterConfigurationMock = $this->getMock(
@@ -109,33 +100,22 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 	}
 
 	public function assertConfiguredSyntaxHighlighter() {
-		$typoScriptSetup = array(
-			'plugin.' => array(
-				'tx_beautyofcode.' => array(
-					'settings.' => array(
-						'library' => 'SyntaxHighlighter',
-					),
-				),
-			),
-		);
-
-		$this->configurationManagerMock
+		$this->highlighterConfigurationMock
 			->expects($this->any())
-			->method('getConfiguration')
-			->will($this->returnValue($typoScriptSetup));
+			->method('getLibraryName')
+			->will($this->returnValue('SyntaxHighlighter'));
 
-		$this->brushDiscoveryMock
+		$this->brushDiscovery
 			->expects($this->once())
 			->method('getBrushes')
+			->with($this->equalTo('SyntaxHighlighter'))
 			->will($this->returnValue(
 				array(
-					'SyntaxHighlighter' => array(
-						'Bash' => 'Bash/Shell',
-						'Php' => 'PHP',
-						'Plain' => 'Text / Plain',
-						'Python' => 'Python',
-						'Sql' => 'SQL / MySQL',
-					),
+					'Bash' => 'Bash/Shell',
+					'Php' => 'PHP',
+					'Plain' => 'Text / Plain',
+					'Python' => 'Python',
+					'Sql' => 'SQL / MySQL',
 				)
 			));
 
@@ -153,18 +133,12 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 			->will($this->returnValueMap($brushAliasIdentifierMap));
 	}
 
-	/**
-	 * syntaxHighlighterBrushesOverrideTheReturnValue
-	 *
-	 * @test
-	 */
-	public function syntaxHighlighterBrushesOverrideTheReturnValue() {
+	public function testSyntaxHighlighterBrushesOverrideTheReturnValue() {
 		$this->assertConfiguredSyntaxHighlighter();
 
 		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($this->objectManagerMock);
-		$sut->injectConfigurationManager($this->configurationManagerMock);
-		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectBrushDiscovery($this->brushDiscovery);
 		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 
@@ -182,17 +156,12 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		$this->assertEquals('sql', $newConfig['items'][4][1]);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function sutUsesInMemoryStorageIfBrushDiscoveryIsCalledMultipleTimesOnSameInstance() {
+	public function testSutUsesInMemoryStorageIfBrushDiscoveryIsCalledMultipleTimesOnSameInstance() {
 		$this->assertConfiguredSyntaxHighlighter();
 
 		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($this->objectManagerMock);
-		$sut->injectConfigurationManager($this->configurationManagerMock);
-		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectBrushDiscovery($this->brushDiscovery);
 		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 

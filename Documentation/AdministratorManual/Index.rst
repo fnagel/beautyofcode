@@ -106,6 +106,11 @@ Please see the changelog for all changes in detail.
 2.0 to 2.1
 ^^^^^^^^^^
 
+What you need to know:
+
+- This release enables dynamic page assets and brush discovery without TypoScript configuration hazzle.
+- Some minor breaking changes were introduced. You have to update your (probably) adjusted Fluid templates.
+
 Introducing Dynamic page assets as feature.
 
 Why?

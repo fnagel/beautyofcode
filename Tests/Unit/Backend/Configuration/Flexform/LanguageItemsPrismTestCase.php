@@ -48,9 +48,9 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
+	 * @var \TYPO3\Beautyofcode\Highlighter\BrushDiscovery
 	 */
-	protected $brushDiscoveryMock;
+	protected $brushDiscovery;
 
 	/**
 	 *
@@ -91,12 +91,8 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$this->configurationManagerMock = $this
-			->getMockBuilder('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager')
-			->getMock();
-
-		$this->brushDiscoveryMock = $this->getMock(
-			'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
+		$this->brushDiscovery = $this->getMock(
+			'TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery'
 		);
 
 		$this->highlighterConfigurationMock = $this->getMock(
@@ -110,34 +106,24 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 	public function assertConfiguredPrism() {
-		$typoScriptSetup = array(
-			'plugin.' => array(
-				'tx_beautyofcode.' => array(
-					'settings.' => array(
-						'library' => 'Prism',
-					),
-				),
-			),
-		);
-
-		$this->configurationManagerMock
+		$this->highlighterConfigurationMock
 			->expects($this->any())
-			->method('getConfiguration')
-			->will($this->returnValue($typoScriptSetup));
+			->method('getLibraryName')
+			->will($this->returnValue('Prism'));
 
-		$this->brushDiscoveryMock
+		$this->brushDiscovery
 			->expects($this->once())
 			->method('getBrushes')
+			->with($this->equalTo('Prism'))
 			->will($this->returnValue(
 				array(
-					'Prism' => array(
-						'bash' => 'Bash/Shell',
-						'php' => 'PHP',
-						'python' => 'Python',
-						'sql' => 'SQL / MySQL',
-					),
+					'bash' => 'Bash/Shell',
+					'php' => 'PHP',
+					'python' => 'Python',
+					'sql' => 'SQL / MySQL',
 				)
-			));
+			)
+		);
 
 		$brushAliasIdentifierMap = array(
 			array('bash', 'bash'),
@@ -152,18 +138,12 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 			->will($this->returnValueMap($brushAliasIdentifierMap));
 	}
 
-	/**
-	 * brushesOverrideTheReturnValue
-	 *
-	 * @test
-	 */
-	public function brushesOverrideTheReturnValue() {
+	public function testBrushesOverrideTheReturnValue() {
 		$this->assertConfiguredPrism();
 
 		$sut = new \TYPO3\Beautyofcode\Backend\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($this->objectManagerMock);
-		$sut->injectConfigurationManager($this->configurationManagerMock);
-		$sut->injectBrushDiscoveryService($this->brushDiscoveryMock);
+		$sut->injectBrushDiscovery($this->brushDiscovery);
 		$sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 		$sut->initializeObject();
 

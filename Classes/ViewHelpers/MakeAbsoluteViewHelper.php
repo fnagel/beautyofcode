@@ -24,7 +24,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\Beautyofcode\Utility\GeneralUtility;
 
 /**
  * MakeAbsoluteViewHelper

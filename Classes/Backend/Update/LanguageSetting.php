@@ -26,7 +26,7 @@ namespace TYPO3\Beautyofcode\Backend\Update;
  ***************************************************************/
 
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use TYPO3\Beautyofcode\Service\BrushDiscoveryService;
+use TYPO3\Beautyofcode\Highlighter\BrushDiscovery;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
@@ -63,9 +63,9 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
+	 * @var \TYPO3\Beautyofcode\Highlighter\BrushDiscovery
 	 */
-	protected $brushDiscoveryService;
+	protected $brushDiscovery;
 
 	/**
 	 *
@@ -78,12 +78,6 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	 * @var \TYPO3\CMS\Core\Configuration\Flexform\FlexformTools
 	 */
 	protected $flexformTools;
-
-	/**
-	 *
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	 */
-	protected $configurationManager;
 
 	/**
 	 *
@@ -110,23 +104,23 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	}
 
 	/**
-	 * injectBrushDiscoveryService
+	 * injectBrushDiscovery
 	 *
-	 * @param BrushDiscoveryService $brushDiscoveryService
+	 * @param BrushDiscovery $brushDiscovery
 	 * @return void
 	 */
-	public function injectBrushDiscoveryService(
-		BrushDiscoveryService $brushDiscoveryService = NULL
+	public function injectBrushDiscovery(
+		BrushDiscovery $brushDiscovery = NULL
 	) {
 		// @codeCoverageIgnoreStart
-		if (is_null($brushDiscoveryService)) {
-			$brushDiscoveryService = $this->objectManager->get(
-				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
+		if (is_null($brushDiscovery)) {
+			$brushDiscovery = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery'
 			);
 		}
 		// @codeCoverageIgnoreEnd
 
-		$this->brushDiscoveryService = $brushDiscoveryService;
+		$this->brushDiscovery = $brushDiscovery;
 	}
 
 	/**
@@ -168,42 +162,15 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	}
 
 	/**
-	 * injectConfigurationManager
-	 *
-	 * @param ConfigurationManagerInterface $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager = NULL) {
-		// @codeCoverageIgnoreStart
-		if (is_null($configurationManager)) {
-			$configurationManager = $this->objectManager->get(
-				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface'
-			);
-		}
-		// @codeCoverageIgnoreEnd
-
-		$this->configurationManager = $configurationManager;
-
-		$configuration = $this->configurationManager->getConfiguration(
-			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-		);
-		$this->settings = ArrayUtility::getValueByPath(
-			$configuration,
-			'plugin./tx_beautyofcode./settings.'
-		);
-	}
-
-	/**
 	 * initializeObject
 	 *
 	 * @return void
 	 */
 	public function initializeObject() {
 		$this->injectObjectManager($this->objectManager);
-		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
+		$this->injectBrushDiscovery($this->brushDiscovery);
 		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
 		$this->injectFlexformTools($this->flexformTools);
-		$this->injectConfigurationManager($this->configurationManager);
 
 		$this->plugins = $this->db->exec_SELECTquery(
 			'uid, header, pi_flexform',
@@ -287,8 +254,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	protected function getAvailableBrushes() {
 		$options = array();
 
-		$libraries = $this->brushDiscoveryService->getBrushes();
-		$brushes = $libraries[$this->settings['library']];
+		$brushes = $this->brushDiscovery->getBrushes($this->highlighterConfiguration->getLibraryName());
 
 		foreach ($brushes as $brushIdentifier => $brushLabel) {
 			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);

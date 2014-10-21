@@ -44,15 +44,9 @@ class LanguageItems {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+	 * @var \TYPO3\Beautyofcode\Highlighter\BrushDiscovery
 	 */
-	protected $configurationManager;
-
-	/**
-	 *
-	 * @var \TYPO3\Beautyofcode\Service\BrushDiscoveryService
-	 */
-	protected $brushDiscoveryService;
+	protected $brushDiscovery;
 
 	/**
 	 *
@@ -94,43 +88,23 @@ class LanguageItems {
 	}
 
 	/**
-	 * injectConfigurationManager
+	 * injectBrushDiscovery
 	 *
-	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+	 * @param \TYPO3\Beautyofcode\Highlighter\BrushDiscovery $brushDiscovery
 	 * @return void
 	 */
-	public function injectConfigurationManager(
-		\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager = NULL
+	public function injectBrushDiscovery(
+		\TYPO3\Beautyofcode\Highlighter\BrushDiscovery $brushDiscovery = NULL
 	) {
 		// @codeCoverageIgnoreStart
-		if (is_null($configurationManager)) {
-			$configurationManager = $this->objectManager->get(
-				'TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManagerInterface'
+		if (is_null($brushDiscovery)) {
+			$brushDiscovery = $this->objectManager->get(
+				'TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery'
 			);
 		}
 		// @codeCoverageIgnoreEnd
 
-		$this->configurationManager = $configurationManager;
-	}
-
-	/**
-	 * injectBrushDiscoveryService
-	 *
-	 * @param \TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService
-	 * @return void
-	 */
-	public function injectBrushDiscoveryService(
-		\TYPO3\Beautyofcode\Service\BrushDiscoveryService $brushDiscoveryService = NULL
-	) {
-		// @codeCoverageIgnoreStart
-		if (is_null($brushDiscoveryService)) {
-			$brushDiscoveryService = $this->objectManager->get(
-				'TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService'
-			);
-		}
-		// @codeCoverageIgnoreEnd
-
-		$this->brushDiscoveryService = $brushDiscoveryService;
+		$this->brushDiscovery = $brushDiscovery;
 	}
 
 	/**
@@ -160,16 +134,8 @@ class LanguageItems {
 	 */
 	public function initializeObject() {
 		$this->injectObjectManager($this->objectManager);
-		$this->injectConfigurationManager($this->configurationManager);
-		$this->injectBrushDiscoveryService($this->brushDiscoveryService);
+		$this->injectBrushDiscovery($this->brushDiscovery);
 		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
-
-		$configuration = $this->configurationManager->getConfiguration(
-			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-		);
-		$this->settings = ArrayUtility::getValueByPath(
-			$configuration, 'plugin./tx_beautyofcode./settings.'
-		);
 	}
 
 	/**
@@ -215,11 +181,10 @@ class LanguageItems {
 	 */
 	protected function getBrushes() {
 		if ($this->highlighterConfiguration->hasStaticBrushes()) {
-			$brushes = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
-			$brushesArray = $this->brushDiscoveryService->getIdentifiersSortedByTranslation($brushes);
+			$identifiers = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
+			$brushesArray = $this->brushDiscovery->getBrushesSortedByIdentifiersLabels($identifiers);
 		} else {
-			$brushes = $this->brushDiscoveryService->getBrushes();
-			$brushesArray = $brushes[$this->settings['library']];
+			$brushesArray = $this->brushDiscovery->getBrushes($this->highlighterConfiguration->getLibraryName());
 		}
 
 		return $brushesArray;

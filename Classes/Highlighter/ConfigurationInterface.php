@@ -83,4 +83,11 @@ interface ConfigurationInterface {
 	 * @return array
 	 */
 	public function getStaticBrushesWithPlainFallback(array $settings = array());
+
+	/**
+	 * getLibraryName
+	 * 
+	 * @return string
+	 */
+	public function getLibraryName();
 }

@@ -96,11 +96,7 @@ class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->will($this->returnValue(FALSE));
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function theFlexformFieldGetsUpdatedInTheCLangField() {
+	public function testTheFlexformFieldGetsUpdatedInTheCLangField() {
 		$_POST = array(
 			'update' => array(
 				'language' => '1',
@@ -146,29 +142,18 @@ class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->disableOriginalConstructor()
 			->getMock();
 
-		$configurationManager = $this
-			->getMockBuilder('TYPO3\\CMS\\Extbase\\Configuration\\ConfigurationManager')
+		$brushDiscovery = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\BrushDiscovery')
 			->getMock();
-		$configurationManager
-			->expects($this->any())
-			->method('getConfiguration')
-			->will(
-				$this->returnValue(
-					array(
-						'plugin.' => array(
-							'tx_beautyofcode.' => array(
-								'settings.' => array(
-									'library' => 'Prism',
-								)
-							),
-						),
-					)
-				)
-			);
 
-		$brushDiscoveryService = $this
-			->getMockBuilder('TYPO3\\Beautyofcode\\Service\\BrushDiscoveryService')
+		$highlighterConfiguration = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface')
 			->getMock();
+
+		$highlighterConfiguration
+			->expects($this->any())
+			->method('getLibraryName')
+			->will($this->returnValue('Prism'));
 
 		$flexformTools = $this
 			->getMockBuilder('TYPO3\\CMS\\Core\\Configuration\\FlexForm\\FlexFormTools')
@@ -181,8 +166,8 @@ class LanguageSettingTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$sut->injectDatabaseConnection($this->db);
 		$sut->injectView($view);
 		$sut->injectObjectManager($objectManager);
-		$sut->injectConfigurationManager($configurationManager);
-		$sut->injectBrushDiscoveryService($brushDiscoveryService);
+		$sut->injectBrushDiscovery($brushDiscovery);
+		$sut->injectHighlighterConfiguration($highlighterConfiguration);
 		$sut->injectFlexformTools($flexformTools);
 
 		$sut->initializeObject();

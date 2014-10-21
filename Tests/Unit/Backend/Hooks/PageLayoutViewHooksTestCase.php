@@ -82,11 +82,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 		$this->sut->injectView($this->viewMock);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function hookReturnValueIsAnEmptyStringIfListTypeValueDoesNotMatch() {
+	public function testHookReturnValueIsAnEmptyStringIfListTypeValueDoesNotMatch() {
 		$parameters = array(
 			'row' => array(
 				'list_type' => 'tx_foo_bar',
@@ -101,11 +97,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 		$this->assertEmpty($hookReturnValue);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function hookReturnValueIsAnEmptyStringIfFlexformDataCannotBeExpandedIntoArray() {
+	public function testHookReturnValueIsAnEmptyStringIfFlexformDataCannotBeExpandedIntoArray() {
 		$parameters = array(
 			'row' => array(
 				'list_type' => 'beautyofcode_contentrenderer',
@@ -121,11 +113,7 @@ class PageLayoutViewHooksTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase
 		$this->assertEmpty($hookReturnValue);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function viewExpectsRowAndFlexformDataArrayForProperTemplating() {
+	public function testViewExpectsRowAndFlexformDataArrayForProperTemplating() {
 		$parameters = array(
 			'row' => array(
 				'list_type' => 'beautyofcode_contentrenderer',

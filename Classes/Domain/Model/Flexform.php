@@ -38,12 +38,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	/**
 	 *
-	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
-	 */
-	protected $highlighterConfiguration;
-
-	/**
-	 *
 	 * @var string
 	 */
 	protected $cLabel;
@@ -98,14 +92,9 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	protected $languageFallback = 'plain';
 
 	/**
-	 * injectHighlighterConfiguration
-	 *
-	 * @param ConfigurationInterface $highlighterConfiguration
-	 * @return void
+	 * @var string
 	 */
-	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
-		$this->highlighterConfiguration = $highlighterConfiguration;
-	}
+	protected $classAttributeString = '';
 
 	/**
 	 * setCLabel
@@ -254,11 +243,21 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
+	 * setClassAttributeString
+	 *
+	 * @param string $classAttributeString
+	 * @return void
+	 */
+	public function setClassAttributeString($classAttributeString) {
+		$this->classAttributeString = $classAttributeString;
+	}
+
+	/**
 	 * getClassAttributeString
 	 *
 	 * @return string
 	 */
 	public function getClassAttributeString() {
-		return $this->highlighterConfiguration->getClassAttributeString($this);
+		return $this->classAttributeString;
 	}
 }

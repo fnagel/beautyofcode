@@ -40,11 +40,7 @@ class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->createPackageManagerMock();
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
+	public function testPrefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
 		$this->packageManagerMock
 			->expects($this->any())
 			->method('isPackageActive')
@@ -56,22 +52,14 @@ class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->assertStringStartsWith('typo3conf/', $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function prefixingWithFileReturnsPathSiteAbsolutePathToFile() {
+	public function testPrefixingWithFileReturnsPathSiteAbsolutePathToFile() {
 		define('TYPO3_OS', !stristr(PHP_OS, 'darwin') && stristr(PHP_OS, 'win') ? 'WIN' : '');
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:fileadmin/test.js');
 
 		$this->assertStringStartsWith('fileadmin/', $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingInAnExternalUrlWillReturnItUntouched() {
+	public function testPassingInAnExternalUrlWillReturnItUntouched() {
 		$externalPath = 'http://www.example.org/test.js';
 
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($externalPath);
@@ -79,11 +67,7 @@ class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->assertEquals($externalPath, $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile() {
+	public function testPassingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile() {
 		$this->packageManagerMock
 			->expects($this->any())
 			->method('isPackageActive')
@@ -94,11 +78,7 @@ class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->assertStringStartsWith('typo3conf/', $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingInACompletelyInvalidPathLeavesItUntouched() {
+	public function testPassingInACompletelyInvalidPathLeavesItUntouched() {
 		$invalidPath = 'foo://bar.jpeg';
 
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidPath);
@@ -106,11 +86,7 @@ class GeneralUtilityTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->assertEquals($invalidPath, $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function passingFileNotationWithExternalUrlWillReturnAnEmptyString() {
+	public function testPassingFileNotationWithExternalUrlWillReturnAnEmptyString() {
 		$invalidExternalPath = 'FILE:http://example.org/test.js';
 
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidExternalPath);

@@ -186,4 +186,13 @@ class Configuration implements ConfigurationInterface {
 	public function getStaticBrushesWithPlainFallback(array $settings = array()) {
 		return $this->configuration->getStaticBrushesWithPlainFallback(array_merge($this->settings, $settings));
 	}
+
+	/**
+	 * getLibraryName
+	 *
+	 * @return string
+	 */
+	public function getLibraryName() {
+		return $this->configuration->getLibraryName();
+	}
 }

@@ -156,6 +156,17 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
 	}
 
 	/**
+	 * getLibraryNam
+	 *
+	 * @return string
+	 */
+	public function getLibraryName() {
+		$reflectionClass = new \ReflectionClass($this);
+
+		return $reflectionClass->getShortName();
+	}
+
+	/**
 	 * getPlainBrushIdentifier
 	 *
 	 * @return string

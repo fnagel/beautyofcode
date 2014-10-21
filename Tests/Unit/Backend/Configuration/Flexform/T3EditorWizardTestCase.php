@@ -63,11 +63,10 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @test
 	 * @expectedException \TYPO3\Beautyofcode\Backend\Exception\UnableToLoadT3EditorException
 	 * @expectedExceptionMessage Cannot instantiate T3editor: ext:t3editor not installed.
 	 */
-	public function initializeThrowsExceptionIfExtensionIsNotLoaded() {
+	public function testInitializationThrowsExceptionIfExtensionIsNotLoaded() {
 		$this
 			->packageManagerMock
 			->expects($this->any())
@@ -82,11 +81,10 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @test
 	 * @expectedException \TYPO3\Beautyofcode\Backend\Exception\UnableToLoadT3EditorException
 	 * @expectedExceptionMessage Cannot instantiate T3editor: Feature disabled.
 	 */
-	public function initializeThrowsExceptionIfEditorIsNotEnabledInBeautyofcodeExtensionManagerConfiguration() {
+	public function testInitializationThrowsExceptionIfEditorIsNotEnabledInBeautyofcodeExtensionManagerConfiguration() {
 		$this
 			->packageManagerMock
 			->expects($this->any())
@@ -99,11 +97,7 @@ class T3EditorWizardTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 		$this->sut->initialize();
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function initializeSuccessIfAllLoadingConditionsMet() {
+	public function testInitializationSucceedsIfAllLoadingConditionsMet() {
 		$this
 			->packageManagerMock
 			->expects($this->any())

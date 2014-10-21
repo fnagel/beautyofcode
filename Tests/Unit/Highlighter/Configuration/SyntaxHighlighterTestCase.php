@@ -56,11 +56,7 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function failSafeBrushAliasRetrievalWorksForAllOtherKnownHighlighterLibraries() {
+	public function testFailSafeBrushAliasRetrievalWorksForAllOtherKnownHighlighterLibraries() {
 		$brushAliasAfterLibrarySwitching = 'markup';
 
 		$failSafeBrushAlias = $this->sut->getFailSafeBrushAlias($brushAliasAfterLibrarySwitching);
@@ -68,11 +64,7 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertEquals('xml', $failSafeBrushAlias);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function failSafeBrushAliasReturnsIncomingValueIfHighlighterHasBrushAlias() {
+	public function testFailSafeBrushAliasReturnsIncomingValueIfHighlighterHasBrushAlias() {
 		$brushAlias = 'typoscript';
 
 		$failSafeBrushAlias = $this->sut->getFailSafeBrushAlias($brushAlias);
@@ -80,11 +72,7 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertEquals($brushAlias, $failSafeBrushAlias);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function brushAliasIsReturnedIfIdentifierIsFoundInMap() {
+	public function testBrushAliasIsReturnedIfIdentifierIsFoundInMap() {
 		$brushIdentifier = 'ColdFusion';
 
 		$brushAlias = $this->sut->getBrushAliasByIdentifier($brushIdentifier);
@@ -92,15 +80,47 @@ class SyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertEquals('coldfusion', $brushAlias);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function brushAliasEqualsBrushIdentifierIfNotFoundInMap() {
+	public function testBrushAliasEqualsBrushIdentifierIfNotFoundInMap() {
 		$brushIdentifier = 'WizardOfOz';
 
 		$brushAlias = $this->sut->getBrushAliasByIdentifier($brushIdentifier);
 
 		$this->assertEquals($brushIdentifier, $brushAlias);
+	}
+
+	private function getFlexformFixture() {
+		$flexform = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
+		$flexform->setCLabel('The label');
+		$flexform->setCLang('typoscript');
+		$flexform->setCCode('page = PAGE\npage.10 = TEXT\npage.10.value = Hello World!');
+		$flexform->setCHighlight('1,2-3,8');
+		$flexform->setCCollapse('1');
+		$flexform->setCGutter('1');
+
+		return $flexform;
+	}
+
+	public function testSettingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
+		$flexform = $this->getFlexformFixture();
+		$flexform->setCCollapse('');
+
+		$this->assertNotContains('collapse', $this->sut->getClassAttributeString($flexform));
+	}
+
+	public function testSettingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
+		$flexform = $this->getFlexformFixture();
+		$flexform->setCGutter('auto');
+
+		$this->assertNotContains('gutter', $this->sut->getClassAttributeString($flexform));
+	}
+
+	public function testHighlightSettingHasSpecialFormattingForSyntaxHighlighter() {
+		$flexform = $this->getFlexformFixture();
+		$this->assertContains('highlight: [', $this->sut->getClassAttributeString($flexform));
+	}
+
+	public function testHighlightSettingWilllBeExpandedForSyntaxHighlighter() {
+		$flexform = $this->getFlexformFixture();
+		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString($flexform));
 	}
 }

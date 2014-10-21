@@ -60,11 +60,7 @@ class OldPluginsTestCase extends \TYPO3\Beautyofcode\Tests\UnitTestCase {
 			->will($this->returnValue(1));
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function theListTypeFieldOfOldPluginContentElementsWillBeUpdated() {
+	public function testTheListTypeFieldOfOldPluginContentElementsWillBeUpdated() {
 		$_POST = array(
 			'update' => array(
 				'oldPlugins' => '1',

@@ -38,11 +38,10 @@ class AssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *
-	 * @test
 	 * @expectedException \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
 	 * @expectedExceptionMessage The type argument must be one of scripts, styles.
 	 */
-	public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet() {
+	public function testExceptionIsThrownDuringInitializationIfInvalidTypeIsSet() {
 		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar'));
 		$sut->initializeArguments();
@@ -50,11 +49,7 @@ class AssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->render();
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet() {
+	public function testItReturnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet() {
 		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts'));
 		$sut->initializeArguments();
@@ -64,11 +59,7 @@ class AssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertEquals('http://alexgorbatchev.com/pub/sh/current/scripts/', $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet() {
+	public function testItReturnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet() {
 		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'styles'));
 		$sut->initializeArguments();
@@ -78,11 +69,7 @@ class AssetPathViewHelperTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertEquals('http://alexgorbatchev.com/pub/sh/current/styles/', $path);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet() {
+	public function testItReturnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet() {
 		$sut = new \TYPO3\Beautyofcode\ViewHelpers\Highlighter\SyntaxHighlighter\AssetPathViewHelper();
 		$sut->setArguments(array('baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/scripts/', 'type' => 'scripts'));
 		$sut->initializeArguments();

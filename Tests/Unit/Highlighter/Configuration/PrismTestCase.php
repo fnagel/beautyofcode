@@ -46,11 +46,7 @@ class PrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->sut = new \TYPO3\Beautyofcode\Highlighter\Configuration\Prism(array(), array());
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function lineHighlightingIsAvailable() {
+	public function testLineHighlightingIsAvailable() {
 		$flexformMock = $this
 			->getMockBuilder('TYPO3\\Beautyofcode\\Domain\\Model\\Flexform')
 			->getMock();
@@ -66,11 +62,7 @@ class PrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this->assertContains('data-line="1,3,4,5,11"', $classAttributeString);
 	}
 
-	/**
-	 *
-	 * @test
-	 */
-	public function autoValueDisablesLineHighlighting() {
+	public function testAutoValueDisablesLineHighlighting() {
 		$flexformMock = $this
 			->getMockBuilder('TYPO3\\Beautyofcode\\Domain\\Model\\Flexform')
 			->getMock();

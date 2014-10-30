@@ -90,5 +90,8 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 
 		$this->view->assign('contentElement', $contentElement);
 		$this->view->assign('brushes', $this->highlighterService->getRegisteredBrushes());
+
+		/* @deprecated Will be removed in ext:beautyofcode 3.0 */
+		$this->view->assign('flexform', $contentElement->getFlexformObject());
 	}
 }

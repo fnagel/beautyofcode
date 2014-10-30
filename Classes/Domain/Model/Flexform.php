@@ -135,6 +135,16 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
+	 * getLanguage
+	 *
+	 * @return string
+	 * @deprecated Will be removed in ext:beautyofcode 3.0
+	 */
+	public function getLanguage() {
+		return $this->getCLang();
+	}
+
+	/**
 	 * setCCode
 	 *
 	 * @param string $cCode

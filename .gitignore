@@ -29,8 +29,7 @@ local.properties
 .buildpath
 
 # PhpStorm
-/.idea
-/.idea/*
+.idea
 
 
 #################

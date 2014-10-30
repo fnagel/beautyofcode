@@ -49,6 +49,11 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected $fileFinderUtilityMock;
 
 	/**
+	 * @var \PHPUnit_Framework_MockObject_MockObject|\TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+	 */
+	protected $configurationMock;
+
+	/**
 	 * setUp
 	 *
 	 * @return void
@@ -64,6 +69,29 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$this
 			->fileFinderUtilityMock
 			->expects($this->any())
+			->method('in')
+			->with($this->equalTo('EXT:beautyofcode/Foo/Bar/'));
+
+		$this
+			->fileFinderUtilityMock
+			->expects($this->any())
+			->method('exclude')
+			->with($this->equalTo('.*(-Foo|-FooBar|-Bar)\.js'));
+
+		$this
+			->fileFinderUtilityMock
+			->expects($this->any())
+			->method('stripFromFilename')
+			->with(
+				$this->logicalOr(
+					$this->equalTo('shBrush'),
+					$this->equalTo('.js')
+				)
+			);
+
+		$this
+			->fileFinderUtilityMock
+			->expects($this->any())
 			->method('find')
 			->will(
 				$this->returnValue(
@@ -75,6 +103,16 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 					)
 				)
 			);
+
+		$this->configurationMock = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface')
+			->getMock();
+
+		$this
+			->configurationMock
+			->expects($this->any())
+			->method('getLibraryName')
+			->will($this->returnValue('HighlighterFoo'));
 	}
 
 	/**
@@ -85,6 +123,8 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected function assertValidBrushDiscoveryConfiguration() {
 		$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['beautyofcode']['BrushDiscovery'] = array(
 			'HighlighterFoo' => array(
+				'path' => 'EXT:beautyofcode/Foo/Bar/',
+				'excludePattern' => '.*(-Foo|-FooBar|-Bar)\.js',
 				'prefix' => 'shBrush',
 				'suffix' => '.js',
 				'dependencies' => array(
@@ -129,7 +169,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$brushes = $sut->getBrushes('HighlighterFoo');
+		$brushes = $sut->getBrushes($this->configurationMock);
 		$this->assertArrayHasKey('AppleScript', $brushes);
 	}
 
@@ -141,7 +181,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$brushes = $sut->getBrushes('HighlighterFoo');
+		$brushes = $sut->getBrushes($this->configurationMock);
 
 		$this->assertGreaterThan(0, count($brushes));
 	}
@@ -154,7 +194,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$dependencies = $sut->getDependencies('HighlighterFoo');
+		$dependencies = $sut->getDependencies($this->configurationMock);
 
 		$this->assertGreaterThan(0, count($dependencies));
 	}
@@ -169,8 +209,8 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$sut->getBrushes('HighlighterFoo');
-		$sut->getDependencies('HighlighterFoo');
+		$sut->getBrushes($this->configurationMock);
+		$sut->getDependencies($this->configurationMock);
 	}
 
 	/**
@@ -183,7 +223,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$dependencies = $sut->getDependencies('HighlighterFoo');
+		$dependencies = $sut->getDependencies($this->configurationMock);
 	}
 
 	public function testABrushIsStoredWithItsIdentifierAndALabel() {
@@ -194,7 +234,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$brushes = $sut->getBrushes('HighlighterFoo');
+		$brushes = $sut->getBrushes($this->configurationMock);
 
 		$this->assertArrayHasKey('AppleScript', $brushes);
 		$this->assertEquals('a-brush-label', $brushes['AppleScript']);
@@ -216,7 +256,7 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$brushes = $sut->getBrushes('HighlighterFoo');
+		$brushes = $sut->getBrushes($this->configurationMock);
 
 		$this->assertArrayHasKey('AppleScript', $brushes);
 		$this->assertEquals('aaa-First', $brushes['AppleScript']);
@@ -242,8 +282,48 @@ class BrushDiscoveryTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
 		$sut->initializeObject();
 
-		$brushes = $sut->getBrushes('HighlighterFoo');
+		$brushes = $sut->getBrushes($this->configurationMock);
 
 		$this->assertEquals('Bash', $brushes['Bash']);
+	}
+
+	public function testBrushesFilteredByStaticIdentifiers() {
+		$this->assertValidBrushDiscoveryConfiguration();
+
+		$this
+			->configurationMock
+			->expects($this->once())
+			->method('hasStaticBrushes')
+			->will($this->returnValue(TRUE));
+
+		$this
+			->configurationMock
+			->expects($this->once())
+			->method('getStaticBrushesWithPlainFallback')
+			->will(
+				$this->returnValue(
+					array(
+						// these are valid
+						'Bash',
+						'AppleScript',
+						'Plain',
+						// nonsense because not returned by fileFinder
+						'Bash-Foo',
+						'TypoScript',
+						'Xml',
+					)
+				)
+			);
+
+		$sut = new \TYPO3\Beautyofcode\Highlighter\BrushDiscovery($this->languageServiceMock);
+		$sut->injectFileFinderUtility($this->fileFinderUtilityMock);
+		$sut->initializeObject();
+
+		$brushes = $sut->getBrushes($this->configurationMock);
+
+		$this->assertArrayNotHasKey('Bash-Foo', $brushes);
+		$this->assertArrayHasKey('Bash', $brushes);
+		$this->assertArrayHasKey('AppleScript', $brushes);
+		$this->assertCount(2, $brushes);
 	}
 }

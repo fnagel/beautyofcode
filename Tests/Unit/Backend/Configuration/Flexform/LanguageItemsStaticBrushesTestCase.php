@@ -102,7 +102,8 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 	public function assertConfiguredPrism() {
 		$this->brushDiscovery
 			->expects($this->once())
-			->method('getBrushesSortedByIdentifiersLabels')
+			->method('getBrushes')
+			->with($this->highlighterConfigurationMock)
 			->will($this->returnValue(
 				array(
 					'plain' => 'Plain',
@@ -111,24 +112,11 @@ class LanguageItemsStaticBrushesTestCase extends \TYPO3\CMS\Core\Tests\UnitTestC
 				)
 			));
 
-		$this
-			->highlighterConfigurationMock
-			->expects($this->once())
-			->method('hasStaticBrushes')
-			->will($this->returnValue(TRUE));
-
-		$this
-			->highlighterConfigurationMock
-			->expects($this->once())
-			->method('getStaticBrushesWithPlainFallback')
-			->will($this->returnValue(array('plain', 'php', 'sql')));
-
 		$brushAliasIdentifierMap = array(
 			array('plain', 'plain'),
 			array('php', 'php'),
 			array('sql', 'sql'),
 		);
-
 
 		$this
 			->highlighterConfigurationMock

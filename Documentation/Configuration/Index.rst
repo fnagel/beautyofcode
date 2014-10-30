@@ -10,8 +10,8 @@
 Configuration Reference
 =======================
 
-Feel free to use the constant editor (go to: module template, root page, 
-constant editor, beautyofcode) to edit this settings. Add a Typoscript 
+Feel free to use the constant editor (go to: module template, root page,
+constant editor, beautyofcode) to edit this settings. Add a Typoscript
 template to overwrite these settings at any point in your sitetree(s).
 
 
@@ -65,13 +65,13 @@ baseUrl
 
 :typoscript:`plugin.tx_beautyofcode.settings.baseUrl =` :ref:`t3tsref:data-type-string`
 
-Enter path to the resources directory by using EXT: or FILE: or absolute path 
-(http://your.domain.de/fileadmin/.../res/). Make sure the relative paths res/ 
+Enter path to the resources directory by using EXT: or FILE: or absolute path
+(http://your.domain.de/fileadmin/.../res/). Make sure the relative paths res/
 and styles/ exists.
 
-Leave empty to use online repository. If you use online repository you shall 
-not edit settings styles and scripts.  More info about online hosting see: 
-http://alexgorbatchev.com/wiki/SyntaxHighlighter:Hosting 
+Leave empty to use online repository. If you use online repository you shall
+not edit settings styles and scripts.  More info about online hosting see:
+http://alexgorbatchev.com/wiki/SyntaxHighlighter:Hosting
 
 .. _ts-plugin-tx-beautyofcode-scripts:
 
@@ -80,7 +80,7 @@ scripts
 
 :typoscript:`plugin.tx_beautyofcode.settings.scripts =` :ref:`t3tsref:data-type-string`
 
-Path to syntax highlighter core file and to the brushes (Java-Script files), 
+Path to syntax highlighter core file and to the brushes (Java-Script files),
 relative to the baseUrl. Leave empty or default when using online repository.
 
 
@@ -91,7 +91,7 @@ styles
 
 :typoscript:`plugin.tx_beautyofcode.settings.styles =` :ref:`t3tsref:data-type-string`
 
-Path to syntax highlighter css files (css themes), relative to the baseUrl_. 
+Path to syntax highlighter css files (css themes), relative to the baseUrl_.
 Leave empty or default when using online repository.
 
 includeAsDomReady
@@ -99,8 +99,8 @@ includeAsDomReady
 
 :typoscript:`plugin.tx_beautyofcode.settings.includeAsDomReady =` :ref:`t3tsref:data-type-boolean`
 
-If using standalone version it's possible to add a JS domReady instead of 
-injecting the code at the bottom of the body. Useful when using minification 
+If using standalone version it's possible to add a JS domReady instead of
+injecting the code at the bottom of the body. Useful when using minification
 scripts. Possible options: false, jquery or standalone
 
 brushes
@@ -108,16 +108,15 @@ brushes
 
 :typoscript:`plugin.tx_beautyofcode.settings.brushes =` :ref:`t3tsref:data-type-string`
 
-Loaded programming languages: Define which programming languages should be 
+Loaded programming languages: Define which programming languages should be
 available. Less is more: every brush is lazy loaded a single js file.
 
-**SyntaxHighlighter:** Add a separated list out of: AS3, Bash, ColdFusion, Cpp, 
-CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, 
+**SyntaxHighlighter:** Add a separated list out of: AS3, Bash, ColdFusion, Cpp,
+CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php,
 PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
 
 **Prism:** Add a separated list out of: markup, clike, csharp, javascript, plain,
-bash, c, coffeescript, cpp, css, css-extras, gherkin, go, groovy, http, java,
-php, php-extras, python, ruby, scss, sql, typoscript
+bash, c, coffeescript, cpp, css, gherkin, go, groovy, http, java, php, python, ruby, scss, sql, typoscript
 
 **Prism Note #1:** Prism uses its brushes in a dependency manner. For example the `clike`
 brush is necessary to load before `php`(and therefore must be defined *before*
@@ -126,7 +125,7 @@ brush is necessary to load before `php`(and therefore must be defined *before*
 **Prism Note #2:** Furthermore, there currently is a bug in Prism which prevents
 proper line numbering and line highlighting. We're aware of this issue and keep
 an eye on this and will provide an update to Prism once this issue is fixed. For
-more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_. 
+more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_.
 To ensure proper functionality, you **must** provide the `markup` brush after
 the `php` Prism component/brush (like in the default configuration).
 
@@ -135,8 +134,8 @@ theme
 
 :typoscript:`plugin.tx_beautyofcode.settings.theme =` :ref:`t3tsref:data-type-string`
 
-Define a theme (which is basically a CSS file). Following themes are avaiable: 
-Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 
+Define a theme (which is basically a CSS file). Following themes are avaiable:
+Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3
 (which is dark minimal).
 
 showLabel
@@ -165,7 +164,7 @@ defaults.collapse
 
 :typoscript:`plugin.tx_beautyofcode.settings.defaults.collapse =` :ref:`t3tsref:data-type-boolean`
 
-Allows you to force highlighted elements on the page to be collapsed. A link 
+Allows you to force highlighted elements on the page to be collapsed. A link
 "show source" is displayed instead (not customizable yet).
 
 .. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

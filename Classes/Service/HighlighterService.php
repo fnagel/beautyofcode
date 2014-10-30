@@ -101,7 +101,7 @@ class HighlighterService implements \TYPO3\CMS\Core\SingletonInterface {
 		$this->registry = $this->objectManager->get(
 			'TYPO3\\Beautyofcode\\Highlighter\\BrushRegistry',
 			$this->configuration,
-			$this->discovery->getDependencies($this->configuration->getLibraryName())
+			$this->discovery->getDependencies($this->configuration)
 		);
 	}
 
@@ -111,7 +111,7 @@ class HighlighterService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return array
 	 */
 	public function getDiscoveredBrushes() {
-		return $this->discovery->getBrushes($this->configuration->getLibraryName());
+		return $this->discovery->getBrushes($this->configuration);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class HighlighterService implements \TYPO3\CMS\Core\SingletonInterface {
 	 * @return array
 	 */
 	public function getDiscoveredDependencies() {
-		return $this->discovery->getDependencies($this->configuration->getLibraryName());
+		return $this->discovery->getDependencies($this->configuration);
 	}
 
 	/**

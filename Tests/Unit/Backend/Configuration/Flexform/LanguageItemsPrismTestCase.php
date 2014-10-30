@@ -106,15 +106,10 @@ class LanguageItemsPrismTestCase extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	}
 
 	public function assertConfiguredPrism() {
-		$this->highlighterConfigurationMock
-			->expects($this->any())
-			->method('getLibraryName')
-			->will($this->returnValue('Prism'));
-
 		$this->brushDiscovery
 			->expects($this->once())
 			->method('getBrushes')
-			->with($this->equalTo('Prism'))
+			->with($this->highlighterConfigurationMock)
 			->will($this->returnValue(
 				array(
 					'bash' => 'Bash/Shell',

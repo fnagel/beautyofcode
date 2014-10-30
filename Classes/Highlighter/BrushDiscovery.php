@@ -147,7 +147,7 @@ class BrushDiscovery {
 	 * @param array $identifiers
 	 * @return array
 	 */
-	public function getBrushesSortedByIdentifiersLabels(array $identifiers) {
+	protected function getBrushesSortedByIdentifiersLabels(array $identifiers) {
 		$labels = $this->getLabelsForIdentifiers($identifiers);
 
 		$brushes = array_combine($identifiers, $labels);
@@ -187,11 +187,13 @@ class BrushDiscovery {
 	/**
 	 * getBrushes
 	 *
-	 * @param string $library
+	 * @param ConfigurationInterface $configuration
 	 * @return array
 	 * @throws \InvalidArgumentException
 	 */
-	public function getBrushes($library) {
+	public function getBrushes(ConfigurationInterface $configuration) {
+		$library = $configuration->getLibraryName();
+
 		if (!isset($this->brushes[$library])) {
 			throw new \InvalidArgumentException(
 				sprintf('No brushes found for the given library %s!', $library),
@@ -199,17 +201,26 @@ class BrushDiscovery {
 			);
 		}
 
-		return $this->brushes[$library];
+		$brushes = $this->brushes[$library];
+
+		if ($configuration->hasStaticBrushes()) {
+			$staticBrushes = array_fill_keys($configuration->getStaticBrushesWithPlainFallback(), NULL);
+			$brushes = array_intersect_key($brushes, $staticBrushes);
+		}
+
+		return $brushes;
 	}
 
 	/**
 	 * getDependencies
 	 *
-	 * @param string $library
+	 * @param ConfigurationInterface $configuration
 	 * @return array
 	 * @throws \InvalidArgumentException
 	 */
-	public function getDependencies($library) {
+	public function getDependencies(ConfigurationInterface $configuration) {
+		$library = $configuration->getLibraryName();
+
 		if (!isset($this->dependencies[$library])) {
 			throw new \InvalidArgumentException(
 				sprintf('No dependencies found for the given library %s!', $library),

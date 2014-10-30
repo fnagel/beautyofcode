@@ -69,7 +69,7 @@ interface ConfigurationInterface {
 	public function getBrushIdentifierByAlias($brushAlias);
 
 	/**
-	 * Flags if the active highlighter configuraiton has static brushes configured.
+	 * Flags if the active highlighter configuration has static brushes configured.
 	 *
 	 * @param array $settings
 	 * @return bool
@@ -86,7 +86,7 @@ interface ConfigurationInterface {
 
 	/**
 	 * getLibraryName
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getLibraryName();

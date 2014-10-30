@@ -25,8 +25,6 @@ namespace TYPO3\Beautyofcode\Backend\Configuration\Flexform;
  ***************************************************************/
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
  * Function to add select options dynamically (loaded in flexform)
@@ -160,7 +158,7 @@ class LanguageItems {
 			return $config;
 		}
 
-		$brushesArray = $this->getBrushes();
+		$brushesArray = $this->brushDiscovery->getBrushes($this->highlighterConfiguration);
 
 		foreach ($brushesArray as $brushIdentifier => $brushLabel) {
 			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);
@@ -172,21 +170,5 @@ class LanguageItems {
 		$this->items = $config['items'];
 
 		return $config;
-	}
-
-	/**
-	 * Returns unique and sorted brushes
-	 *
-	 * @return array
-	 */
-	protected function getBrushes() {
-		if ($this->highlighterConfiguration->hasStaticBrushes()) {
-			$identifiers = $this->highlighterConfiguration->getStaticBrushesWithPlainFallback();
-			$brushesArray = $this->brushDiscovery->getBrushesSortedByIdentifiersLabels($identifiers);
-		} else {
-			$brushesArray = $this->brushDiscovery->getBrushes($this->highlighterConfiguration->getLibraryName());
-		}
-
-		return $brushesArray;
 	}
 }

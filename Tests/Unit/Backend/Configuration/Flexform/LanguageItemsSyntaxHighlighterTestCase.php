@@ -108,7 +108,7 @@ class LanguageItemsSyntaxHighlighterTestCase extends \TYPO3\CMS\Core\Tests\UnitT
 		$this->brushDiscovery
 			->expects($this->once())
 			->method('getBrushes')
-			->with($this->equalTo('SyntaxHighlighter'))
+			->with($this->highlighterConfigurationMock)
 			->will($this->returnValue(
 				array(
 					'Bash' => 'Bash/Shell',

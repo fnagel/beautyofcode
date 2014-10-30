@@ -254,7 +254,7 @@ class LanguageSetting extends \TYPO3\Beautyofcode\Backend\Update\AbstractUpdate 
 	protected function getAvailableBrushes() {
 		$options = array();
 
-		$brushes = $this->brushDiscovery->getBrushes($this->highlighterConfiguration->getLibraryName());
+		$brushes = $this->brushDiscovery->getBrushes($this->highlighterConfiguration);
 
 		foreach ($brushes as $brushIdentifier => $brushLabel) {
 			$brushAlias = $this->highlighterConfiguration->getBrushAliasByIdentifier($brushIdentifier);

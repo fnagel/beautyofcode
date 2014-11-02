@@ -115,9 +115,9 @@ Introducing Dynamic page assets as feature.
 
 Why?
 
-If you don't want to deploy your TYPO3.CMS project in order to activate new brushes,
-it is no possible to use dynamic brush discovery & brush registration. You just have
-to add the static TS template "beautyOfCode (Dynamic page assets)".
+If you don't want to modify TypoScript setup in order to activate new brushes and instantly want to use all
+available brushes of the activated library, it is now possible to use dynamic brush discovery & brush registration.
+You just have to add the static TS template "beautyOfCode (Dynamic page assets)".
 
 This will also help developers to easily add and test new JavaScript syntaxhighlighting
 libraries with a minimum configuration effort (see `BrushDiscovery` in ext_localconf.php).

@@ -143,12 +143,15 @@ and the Fluid template engine just for adding JavaScript and CSS assets to the p
 
 Changed AssetPathViewHelper
 
-If you are using customized templates for rendering, you have to adjust a view helper reference
+If you are using customized templates for rendering, you should adjust a view helper reference
 if your are using SyntaxHighlighter. This change was necessary to introduce a better separation
 of namespaces for view helpers needed for specific highlighter libraries.
 
 Before: boc:standaloneAssetPath()
 After: boc:highlighter.syntaxHighlighter.assetPath()
+
+Note: this change is not necessary, but the ViewHelper is now marked as deprecated and is subject
+for removal in ext:beautyofcode v3.0.
 
 .. _admin-faq:
 

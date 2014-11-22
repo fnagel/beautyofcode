@@ -70,9 +70,9 @@ What you need to know:
 
 - You'll need to change your TypoScript code
 
-   - paths for base, scripts and styles
-   - addjQuery and selector have been moved to the jquery. Array
-   - some variables have been slightly renamed
+  - paths for base, scripts and styles
+  - addjQuery and selector have been moved to the jquery. Array
+  - some variables have been slightly renamed
 
 - Extension Manager settings has been removed, use TS configuration instead
 - SyntaxHighlighter v3 changed some features (learn more: “Which version to choose”)

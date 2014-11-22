@@ -84,6 +84,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			->findByUid(
 				$contentElementRaw->data['uid']
 			);
+		$contentElement->getFlexformObject()->setTyposcriptDefaults(
+			$this->settings['defaults']
+		);
 
 		$this->highlighterService->registerBrushAlias($contentElement);
 		$this->highlighterService->generateClassAttributeString($contentElement);

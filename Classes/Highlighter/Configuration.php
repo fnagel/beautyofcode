@@ -56,13 +56,13 @@ class Configuration implements ConfigurationInterface {
 	 *
 	 * @var array
 	 */
-	private $identifierAliases = array();
+	protected $identifierAliases = array();
 
 	/**
 	 *
 	 * @var array
 	 */
-	private $failsafeAliases = array();
+	protected $failsafeAliases = array();
 
 	/**
 	 *

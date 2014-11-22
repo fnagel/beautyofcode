@@ -110,6 +110,14 @@ What you need to know:
 
 - This release enables dynamic page assets and brush discovery without TypoScript configuration hazzle.
 - Some minor breaking changes were introduced. You have to update your (probably) adjusted Fluid templates.
+- To use this feature, you have to include the additional static TypoScript template "DynamicPageAssets". Please
+  see this screenshot how it should look:
+
+.. figure:: ../Images/Screenshots/DynamicPageAssetsStaticTSTemplates.jpg
+      :width: 500px
+      :alt: DynamicPageAssets static TypoScript templates
+
+      Order and names of necessary static TypoScript templates for the DynamicPageAssets feature
 
 Introducing Dynamic page assets as feature.
 

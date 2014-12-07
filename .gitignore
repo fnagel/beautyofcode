@@ -168,4 +168,6 @@ pip-log.txt
 # composer
 vendor/**
 node_modules
-composer.*
+.vagrant
+.provision
+Vagrantfile

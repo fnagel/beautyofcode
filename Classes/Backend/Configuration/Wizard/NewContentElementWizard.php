@@ -1,5 +1,5 @@
 <?php
-namespace TYPO3\Beautyofcode\Configuration\Wizard;
+namespace TYPO3\Beautyofcode\Backend\Configuration\Wizard;
 
 /***************************************************************
  * Copyright notice

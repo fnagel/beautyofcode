@@ -23,7 +23,8 @@ if (!defined ('TYPO3_MODE')) {
 
 $extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($_EXTKEY);
 $pluginSignature = strtolower($extensionName) . '_contentrenderer';
-$TCA['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,recursive,pages';
+$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
 	$pluginSignature,
 	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/ContentRenderer.xml'

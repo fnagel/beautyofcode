@@ -135,13 +135,9 @@ class LanguageItems {
 	 * adds avaiable programming languages to the select options
 	 *
 	 * @param array $config flexform data
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine $formEngine
 	 * @return array
 	 */
-	public function getConfiguredLanguages(
-		$config,
-		\TYPO3\CMS\Backend\Form\FormEngine $formEngine
-	) {
+	public function getConfiguredLanguages($config) {
 		$this->initialize();
 
 		static $cachedFields = 0;

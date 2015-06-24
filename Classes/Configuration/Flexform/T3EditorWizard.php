@@ -159,7 +159,7 @@ class T3EditorWizard {
 		}
 
 		$this->t3editor = GeneralUtility::makeInstance(
-			'\TYPO3\Beautyofcode\FlexformT3editor'
+			'TYPO3\Beautyofcode\FlexformT3editor'
 		);
 
 		if (!$this->t3editor->isEnabled()) {

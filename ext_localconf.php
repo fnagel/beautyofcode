@@ -25,12 +25,4 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend'
 	);
 }
-
-// @see https://wiki.typo3.org/XCLASS#XCLASS_registration_since_TYPO3_CMS_6.0
-if (version_compare(TYPO3_version, '7.3.0', 'eq')) {
-	$overrideFluidTemplateCompiler = 'TYPO3\\Beautyofcode\\Fluid\\Core\\Compiler\\TemplateCompiler';
-	$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\Fluid\\Core\\Compiler\\TemplateCompiler'] = array(
-		'className' => $overrideFluidTemplateCompiler,
-	);
-}
 ?>

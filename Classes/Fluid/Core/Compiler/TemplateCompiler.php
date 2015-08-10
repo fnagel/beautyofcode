@@ -1,5 +1,6 @@
 <?php
-namespace Fluid\Core\Compiler;
+
+namespace TYPO3\Beautyofcode\Fluid\Core\Compiler;
 
 /*                                                                        *
  * This script is backported from the TYPO3 Flow package "TYPO3.Fluid".   *

@@ -150,7 +150,12 @@ class LanguageItems {
 			$optionList = array();
 
 			$recordPid = $config['row']['pid'];
-			if ($recordPid < 0) {
+
+			if (is_null($recordPid) && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {
+				$recordPid = $this->getPageUidByRecordUid($config['row']['uid']);
+			}
+
+			if ($recordPid < 0 || is_null($recordPid)) {
 				/* @var $editDocumentController \TYPO3\CMS\Backend\Controller\EditDocumentController */
 				$editDocumentController = $GLOBALS['SOBE'];
 				$recordPid = $editDocumentController->viewId;
@@ -179,6 +184,23 @@ class LanguageItems {
 		$cachedFields = $config['items'];
 
 		return $config;
+	}
+
+	/**
+	 * Returns the page uid by given record uid
+	 *
+	 * @param int $recordUid
+	 *
+	 * @return int
+	 */
+	private function getPageUidByRecordUid($recordUid) {
+		/* @var $databaseConnection \TYPO3\CMS\Core\Database\DatabaseConnection */
+		$databaseConnection = $GLOBALS['TYPO3_DB'];
+		$recordPid = $databaseConnection->exec_SELECTgetSingleRow(
+			'pid', 'tt_content', 'uid = ' . $recordUid
+		);
+
+		return $recordPid;
 	}
 
 	/**

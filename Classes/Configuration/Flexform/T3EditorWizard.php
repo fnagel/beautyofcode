@@ -57,9 +57,9 @@ class T3EditorWizard {
 
 	/**
 	 *
-	 * @var \TYPO3\CMS\Backend\Form\FormEngine
+	 * @var \TYPO3\CMS\Backend\Form\FormEngine|\TYPO3\CMS\Backend\Form\NodeInterface
 	 */
-	protected $formEngine;
+	protected $parentReference;
 
 	/**
 	 *
@@ -128,7 +128,9 @@ class T3EditorWizard {
 		$row = $this->parameters['row'];
 		$field = $this->parameters['field'];
 
-		if ('' !== trim($row[$field])) {
+		if (is_array($row[$field])) {
+			$this->flexformData = $row[$field];
+		} else if ('' !== trim($row[$field])) {
 			$this->flexformData = GeneralUtility::xml2array($row[$field]);
 		}
 	}
@@ -159,7 +161,7 @@ class T3EditorWizard {
 		}
 
 		$this->t3editor = GeneralUtility::makeInstance(
-			'TYPO3\Beautyofcode\FlexformT3editor'
+			'TYPO3\\Beautyofcode\\FlexformT3editor'
 		);
 
 		if (!$this->t3editor->isEnabled()) {
@@ -177,8 +179,17 @@ class T3EditorWizard {
 			->setFlexformFieldConfiguration($this->parameters['fieldConfig'])
 			->setFlexformData($this->flexformData)
 			->determineHighlightingModeFromFlexformPath('data/sDEF/lDEF/cLang/vDEF')
-			->setTextareaContentFromFlexformPath('data/sDEF/lDEF/cCode/vDEF')
-			->addHiddenField('target', intval($this->formEngine->target));
+			->setTextareaContentFromFlexformPath('data/sDEF/lDEF/cCode/vDEF');
+
+		if (
+			class_exists('TYPO3\\CMS\\Backend\\Form\\FormEngine')
+			&& $this->parentReference instanceof \TYPO3\CMS\Backend\Form\FormEngine
+		) {
+			$this->t3editor->addHiddenField(
+				'target',
+				intval($this->parentReference->target)
+			);
+		}
 
 		try {
 			$onChange = ArrayUtility::getValueByPath(
@@ -194,16 +205,18 @@ class T3EditorWizard {
 	 * Renders a T3editor instance and applies all necessary stuff for highlighting
 	 *
 	 * @param array &$parameters Array of userFunc arguments
-	 * @param \TYPO3\CMS\Backend\Form\FormEngine &$formEngine
+	 * @param mixed &$reference Either one of
+	 *                           \TYPO3\CMS\Backend\Form\FormEngine (TYPO3 < 7.5) or
+	 *                           \TYPO3\CMS\Backend\Form\NodeInterface (TYPO3 >= 7.5)
 	 * @return void|string
 	 */
 	public function main(
 		&$parameters,
-		\TYPO3\CMS\Backend\Form\FormEngine &$formEngine
+		&$reference
 	) {
 		try {
 			$this->parameters = $parameters;
-			$this->formEngine = $formEngine;
+			$this->parentReference = $reference;
 
 			$this->initialize();
 		} catch (UnableToLoadT3EditorException $e) {

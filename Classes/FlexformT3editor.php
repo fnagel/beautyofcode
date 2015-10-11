@@ -194,6 +194,7 @@ class FlexformT3editor extends \TYPO3\CMS\T3editor\T3editor {
 				$this->flexformData,
 				$path
 			);
+			$language = is_array($language) ? $language[0] : $language;
 		} catch (\RuntimeException $e) {
 			$language = 'mixed';
 		}

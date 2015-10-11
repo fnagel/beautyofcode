@@ -156,9 +156,7 @@ class LanguageItems {
 			}
 
 			if ($recordPid < 0 || is_null($recordPid)) {
-				/* @var $editDocumentController \TYPO3\CMS\Backend\Controller\EditDocumentController */
-				$editDocumentController = $GLOBALS['SOBE'];
-				$recordPid = $editDocumentController->viewId;
+				$recordPid = $this->getPageUidFromEditConfigurationRequestParameters();
 			}
 
 			$this->contentElementPid = $recordPid;
@@ -194,13 +192,48 @@ class LanguageItems {
 	 * @return int
 	 */
 	private function getPageUidByRecordUid($recordUid) {
-		/* @var $databaseConnection \TYPO3\CMS\Core\Database\DatabaseConnection */
-		$databaseConnection = $GLOBALS['TYPO3_DB'];
-		$recordPid = $databaseConnection->exec_SELECTgetSingleRow(
+		$recordPid = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
 			'pid', 'tt_content', 'uid = ' . $recordUid
 		);
 
 		return $recordPid;
+	}
+
+	/**
+	 * Returns the global DatabaseConnection instance
+	 *
+	 * @return \TYPO3\CMS\Core\Database\DatabaseConnection
+	 */
+	private function getDatabaseConnection() {
+		return $GLOBALS['TYPO3_DB'];
+	}
+
+	/**
+	 * Try to fetch the page uid of a record by investigating the edit configuration request parameter
+	 *
+	 * @return NULL|int The page uid
+	 */
+	private function getPageUidFromEditConfigurationRequestParameters() {
+		$pageUid = NULL;
+
+		$editConfiguration = GeneralUtility::_GP('edit');
+
+		foreach ($editConfiguration as $tableName => $records) {
+			foreach ($records as $recordUid => $command) {
+				$pageRecord = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
+					'*',
+					$tableName,
+					'uid = ' . abs($recordUid)
+				);
+
+				if (!(is_null($pageRecord) || FALSE === $pageRecord)) {
+					$pageUid = $pageRecord['uid'];
+					break 2;
+				}
+			}
+		}
+
+		return $pageUid;
 	}
 
 	/**

@@ -24,12 +24,19 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-/* Corrects dimenions of invisible T3editor instances 
+/* Corrects dimenions of invisible T3editor instances
  */
 ;(function () {
 	"use strict";
 
 	var
+		/**
+		 * Flag if jQuery is used
+		 *
+		 * @type {boolean}
+		 */
+		usesJquery = !!window.TYPO3.jQuery,
+
 		/**
 		 * Textarea -> CodeMirror wrap width correction
 		 * @type {integer}
@@ -48,13 +55,13 @@
 		 */
 		getRelevantElementsDimensions = function(t3editor) {
 			var
-				$textarea = t3editor.textarea,
+				$textarea = usesJquery ? window.TYPO3.jQuery(t3editor.textareaHack) : t3editor.textarea,
 
-				$outerdiv = t3editor.outerdiv;
+				$outerdiv = usesJquery ? window.TYPO3.jQuery(t3editor.wrapping) : t3editor.outerdiv;
 
 			return {
-				textarea: $textarea.getDimensions(),
-				outerdiv: $outerdiv.getDimensions()
+				textarea: usesJquery ? { width: $textarea.width(), height: $textarea.height() } : $textarea.getDimensions(),
+				outerdiv: usesJquery ? { width: $outerdiv.width(), height: $outerdiv.height() } : $outerdiv.getDimensions()
 			};
 		},
 
@@ -77,11 +84,11 @@
 		 */
 		resizeT3editorInstance = function (t3editor) {
 			var
-				dimensions = getRelevantElementsDimensions(t3editor);
+				dimensions = usesJquery ? getRelevantElementsDimensions(this) : getRelevantElementsDimensions(t3editor);
 
 			if (shouldDimensionCorrectionBeApplied(dimensions)) {
 				t3editor.resize(
-					dimensions.textarea.width - widthCorrection, 
+					dimensions.textarea.width - widthCorrection,
 					dimensions.textarea.height
 				);
 			}
@@ -92,9 +99,17 @@
 		 * @param {Event} event
 		 */
 		t3EditorDimensionsCorrection = function(event) {
-			Object.values(T3editor.instances).each(resizeT3editorInstance);
+			if (usesJquery) {
+				window.TYPO3.jQuery.each(TYPO3.T3editor.instances, resizeT3editorInstance);
+			} else {
+				Object.values(T3editor.instances).each(resizeT3editorInstance);
+			}
 		};
 
 	// bind the click event to correct dimensions of invisible T3editor instances
-	document.observe('click', t3EditorDimensionsCorrection);
+	if (usesJquery) {
+		window.TYPO3.jQuery(document).on('click', t3EditorDimensionsCorrection);
+	} else {
+		document.observe('click', t3EditorDimensionsCorrection);
+	}
 })();

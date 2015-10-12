@@ -15,7 +15,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism. t3editor enabled.',
 	'category' => 'plugin',
 	'shy' => 0,
-	'version' => '2.1.1-dev',
+	'version' => '3.0.0-dev',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -33,7 +33,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2.0-7.4.99',
+			'typo3' => '6.2.0-7.5.99',
 			'extbase' => '',
 			'fluid' => '',
 		),

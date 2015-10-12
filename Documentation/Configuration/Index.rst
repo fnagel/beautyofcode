@@ -130,6 +130,12 @@ more information please head over to the `corresponding github issue entry <Pris
 To ensure proper functionality, you **must** provide the `markup` brush after
 the `php` Prism component/brush (like in the default configuration).
 
+
+.. important::
+	The Make :code:`plugin.tx_beautyofcode.settings.brushes` settings are used in BE context.
+	Make sure to re-assign changed TS settings to the BE by using :code:`module.tx_beautyofcode < plugin.tx_beautyofcode`.
+
+
 theme
 """""
 

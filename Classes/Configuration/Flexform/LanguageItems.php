@@ -25,7 +25,11 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\Beautyofcode\Service\SettingsService;
+use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Function to add select options dynamically (loaded in flexform)
@@ -37,25 +41,26 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class LanguageItems {
 
 	/**
-	 *
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
-	 *
 	 * @var \TYPO3\CMS\Frontend\Page\PageRepository
 	 */
 	protected $pageRepository;
 
 	/**
-	 *
 	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
 	 */
 	protected $templateService;
 
 	/**
-	 *
+	 * @var SettingsService
+	 */
+	protected $settingsService;
+
+	/**
 	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
 	 */
 	protected $highlighterConfiguration;
@@ -75,7 +80,7 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
 	 * @return void
 	 */
-	public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager = NULL) {
+	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
 		if (is_null($objectManager)) {
 			$objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
 		}
@@ -89,13 +94,9 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository
 	 * @return void
 	 */
-	public function injectPageRepository(
-		\TYPO3\CMS\Frontend\Page\PageRepository $pageRepository = NULL
-	) {
+	public function injectPageRepository(PageRepository $pageRepository = NULL) {
 		if (is_null($pageRepository)) {
-			$pageRepository = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\Frontend\\Page\\PageRepository'
-			);
+			$pageRepository = $this->objectManager->get('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
 		}
 
 		$this->pageRepository = $pageRepository;
@@ -107,13 +108,9 @@ class LanguageItems {
 	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService
 	 * @return void
 	 */
-	public function injectTemplateService(
-		\TYPO3\CMS\Core\TypoScript\TemplateService $templateService = NULL
-	) {
+	public function injectTemplateService(TemplateService $templateService = NULL) {
 		if (is_null($templateService)) {
-			$templateService = GeneralUtility::makeInstance(
-				'TYPO3\\CMS\\Core\\TypoScript\\TemplateService'
-			);
+			$templateService = $this->objectManager->get('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
 		}
 
 		$this->templateService = $templateService;
@@ -214,13 +211,7 @@ class LanguageItems {
 	 * @return array
 	 */
 	protected function getUniqueAndSortedBrushes() {
-		$configArray = $this->getConfig();
-
-		$brushesArray = GeneralUtility::trimExplode(
-			',',
-			$configArray['brushes'],
-			TRUE
-		);
+		$brushesArray = GeneralUtility::trimExplode(',', $this->getBrushesConfig(), TRUE);
 
 		// make unique
 		foreach ($brushesArray as &$value) {
@@ -240,37 +231,23 @@ class LanguageItems {
 	}
 
 	/**
-	 * Generates TS Config of the plugin
+	 * Get brushes TS config per page
 	 *
 	 * @return array
 	 */
-	protected function getConfig() {
-		// create dummy TSFE for TemplateService
-		$GLOBALS['TSFE'] = new \stdClass();
+	protected function getBrushesConfig() {
+		return $this->getSettingsService($this->contentElementPid)->getTypoScriptByPath('brushes');
+	}
 
-		$this->pageRepository->init(TRUE);
-
-		$this->templateService->init();
-
-		// Avoid an error
-		$this->templateService->tt_track = 0;
-
-		// Get rootline for current PID
-		$rootline = $this
-			->pageRepository
-			->getRootLine(
-				$this->contentElementPid
-			);
-
-		// Start TS template
-		$this->templateService->start($rootline);
-
-		// Generate TS config
-		$this->templateService->generateConfig();
-
-		return $this
-			->templateService
-			->setup['plugin.']['tx_beautyofcode.']['settings.'];
+	/**
+	 * Get the settings service
+	 *
+	 * @todo Add caching per PID?
+	 *
+	 * @param int $pid PID of the page
+	 * @return \TYPO3\Beautyofcode\Service\SettingsService
+	 */
+	public function getSettingsService($pid = 0) {
+		return $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\SettingsService', $pid);
 	}
 }
-?>

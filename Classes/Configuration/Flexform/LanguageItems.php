@@ -4,7 +4,8 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
 /***************************************************************
  * Copyright notice
  *
- * (c) 2010-2013 Felix Nagel (info@felixnagel.com)
+ * (c) 2010-2015 Felix Nagel (info@felixnagel.com)
+ * (c) 2013-2015 Thomas Juhnke <typo3@van-tomas.de>
  * All rights reserved
  *
  * This script is part of the TYPO3 project. The TYPO3 project is
@@ -60,10 +61,13 @@ class LanguageItems {
 	protected $highlighterConfiguration;
 
 	/**
+	 * Page uid (PID) for TypoScript generation
+	 *
+	 * Fallback to root PID (0)
 	 *
 	 * @var integer
 	 */
-	protected $contentElementPid;
+	protected $contentElementPid = 0;
 
 	/**
 	 * injectObjectManager
@@ -149,17 +153,13 @@ class LanguageItems {
 			// make brushes list to flexform selectbox item array
 			$optionList = array();
 
-			$recordPid = $config['row']['pid'];
-
-			if (is_null($recordPid) && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {
-				$recordPid = $this->getPageUidByRecordUid($config['row']['uid']);
+			if (isset($config['row']['pid']) && is_numeric($config['row']['pid'])) {
+				$this->contentElementPid = (int) $config['row']['pid'];
 			}
 
-			if ($recordPid < 0 || is_null($recordPid)) {
-				$recordPid = $this->getPageUidFromEditConfigurationRequestParameters();
+			if ($this->contentElementPid === 0 && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {
+				$this->contentElementPid = $this->getPageUidByRecordUid($config['row']['uid']);
 			}
-
-			$this->contentElementPid = $recordPid;
 
 			$brushesArray = $this->getUniqueAndSortedBrushes();
 
@@ -196,7 +196,7 @@ class LanguageItems {
 			'pid', 'tt_content', 'uid = ' . $recordUid
 		);
 
-		return $recordPid;
+		return (int) $recordPid['pid'];
 	}
 
 	/**
@@ -206,34 +206,6 @@ class LanguageItems {
 	 */
 	private function getDatabaseConnection() {
 		return $GLOBALS['TYPO3_DB'];
-	}
-
-	/**
-	 * Try to fetch the page uid of a record by investigating the edit configuration request parameter
-	 *
-	 * @return NULL|int The page uid
-	 */
-	private function getPageUidFromEditConfigurationRequestParameters() {
-		$pageUid = NULL;
-
-		$editConfiguration = GeneralUtility::_GP('edit');
-
-		foreach ($editConfiguration as $tableName => $records) {
-			foreach ($records as $recordUid => $command) {
-				$pageRecord = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-					'*',
-					$tableName,
-					'uid = ' . abs($recordUid)
-				);
-
-				if (!(is_null($pageRecord) || FALSE === $pageRecord)) {
-					$pageUid = $pageRecord['uid'];
-					break 2;
-				}
-			}
-		}
-
-		return $pageUid;
 	}
 
 	/**

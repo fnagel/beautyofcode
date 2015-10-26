@@ -1,28 +1,18 @@
 <?php
 namespace TYPO3\Beautyofcode\Hooks;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- * (c) 2010-2013 Felix Nagel (info@felixnagel.com)
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
@@ -44,30 +34,35 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 	const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml';
 
 	/**
+	 * Maximum textarea lines
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	const MAX_TEXTAREA_LINES = 15;
 
 	/**
+	 * Maximum textarea height
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	const MAX_TEXTAREA_HEIGHT = 150;
 
 	/**
+	 * Small textarea factor
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	const SMALL_TEXTAREA_FACTOR = 20;
 
 	/**
+	 * Small textarea addition
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	const SMALL_TEXTAREA_ADDITION = 5;
 
 	/**
+	 * Flexform data
 	 *
 	 * @var array
 	 */
@@ -109,7 +104,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 	}
 
 	/**
-	 * builds a header by reading the label field
+	 * Builds a header by reading the label field
 	 *
 	 * Falls back to "no label" from l10n catalogue
 	 *
@@ -132,7 +127,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 	}
 
 	/**
-	 * builds the code language header
+	 * Builds the code language header
 	 *
 	 * @return string
 	 */
@@ -144,10 +139,10 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 	}
 
 	/**
-	 * builds a textarea code preview field
+	 * Builds a textarea code preview field
 	 *
 	 * @param int $uid The uid of the content record
-	 * @param string $codeBlock
+	 * @param string $codeBlock The code block
 	 *
 	 * @return string
 	 */
@@ -199,8 +194,9 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 	 * Newlines in $content be counted and then used to calculate the textarea
 	 * height.
 	 *
-	 * @param string $content
-	 * @param string $unit
+	 * @param string $content The content
+	 * @param string $unit CSS unit
+	 *
 	 * @return void
 	 */
 	protected function calculateTextareaHeight($content, $unit = 'px') {

@@ -1,31 +1,18 @@
 <?php
 namespace TYPO3\Beautyofcode\Domain\Model;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- * (c) 2013 Thomas Juhnke <typo3@van-tomas.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- * A copy is found in the textfile GPL.txt and important notices to the license
- * from the author is found in LICENSE.txt distributed with these scripts.
- *
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 
@@ -33,50 +20,51 @@ use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
  * Domain model object for the flexform configuration of a plugin instance
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
+ * @package \TYPO3\Beautyofcode\Domain\Model
  */
 class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 
 	/**
+	 * ConfigurationInterface
 	 *
 	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
 	 */
 	protected $highlighterConfiguration;
 
 	/**
+	 * Code label
 	 *
 	 * @var string
 	 */
 	protected $cLabel;
 
 	/**
+	 * Code language / brush
 	 *
 	 * @var string
 	 */
 	protected $cLang;
 
 	/**
+	 * Code highlight lines
 	 *
 	 * @var string
 	 */
 	protected $cHighlight;
 
 	/**
+	 * Code block collapse flag
 	 *
 	 * @var string
 	 */
 	protected $cCollapse;
 
 	/**
+	 * Code block show gutter flag
 	 *
 	 * @var string
 	 */
 	protected $cGutter;
-
-	/**
-	 *
-	 * @var array
-	 */
-	protected $brushes = array();
 
 	/**
 	 * Default settings from settings.defaults
@@ -86,15 +74,17 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	protected $typoscriptDefaults = array();
 
 	/**
+	 * Language / brush fallback
 	 *
 	 * @var string
 	 */
 	protected $languageFallback = 'plain';
 
 	/**
-	 * injectHighlighterConfiguration
+	 * InjectHighlighterConfiguration
 	 *
-	 * @param ConfigurationInterface $highlighterConfiguration
+	 * @param ConfigurationInterface $highlighterConfiguration ConfigurationInterface
+	 *
 	 * @return void
 	 */
 	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
@@ -102,9 +92,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setCLabel
+	 * SetCLabel
 	 *
-	 * @param string $cLabel
+	 * @param string $cLabel The label
+	 *
 	 * @return void
 	 */
 	public function setCLabel($cLabel) {
@@ -112,7 +103,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getCLabel
+	 * GetCLabel
 	 *
 	 * @return string
 	 */
@@ -121,9 +112,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setCLang
+	 * SetCLang
 	 *
-	 * @param string $cLang
+	 * @param string $cLang The language / brush
+	 *
 	 * @return void
 	 */
 	public function setCLang($cLang) {
@@ -131,7 +123,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getCLang
+	 * GetCLang
 	 *
 	 * @return string
 	 */
@@ -140,9 +132,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setCHihglight
+	 * SetCHihglight
 	 *
-	 * @param string $cHighlight
+	 * @param string $cHighlight The highlight-lines configuration string
+	 *
 	 * @return void
 	 */
 	public function setCHighlight($cHighlight) {
@@ -150,7 +143,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getCHighlight
+	 * GetCHighlight
 	 *
 	 * @return string
 	 */
@@ -159,9 +152,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setCCollapse
+	 * SetCCollapse
 	 *
-	 * @param string $cCollapse
+	 * @param string $cCollapse The code block collapse flag
+	 *
 	 * @return void
 	 */
 	public function setCCollapse($cCollapse) {
@@ -169,7 +163,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getCCollapse
+	 * GetCCollapse
 	 *
 	 * @return string
 	 */
@@ -178,9 +172,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setCGutter
+	 * SetCGutter
 	 *
-	 * @param string $cGutter
+	 * @param string $cGutter The code block show gutter flag
+	 *
 	 * @return void
 	 */
 	public function setCGutter($cGutter) {
@@ -188,7 +183,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getCGutter
+	 * GetCGutter
 	 *
 	 * @return string
 	 */
@@ -197,9 +192,9 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getIsGutterActive
+	 * GetIsGutterActive
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function getIsGutterActive() {
 		$isOffForInstance = '0' === $this->cGutter;
@@ -219,9 +214,10 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * setTyposcriptDefaults
+	 * SetTyposcriptDefaults
 	 *
-	 * @param array $typoscriptDefaults
+	 * @param array $typoscriptDefaults TypoScript defaults
+	 *
 	 * @return void
 	 */
 	public function setTyposcriptDefaults($typoscriptDefaults = array()) {
@@ -229,7 +225,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getLanguage
+	 * GetLanguage
 	 *
 	 * @return string
 	 */
@@ -240,7 +236,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	}
 
 	/**
-	 * getClassAttributeString
+	 * GetClassAttributeString
 	 *
 	 * @return string
 	 */
@@ -257,4 +253,3 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 		return $this->highlighterConfiguration->getAutoloaderBrushMap();
 	}
 }
-?>

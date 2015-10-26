@@ -1,47 +1,36 @@
 <?php
 namespace TYPO3\Beautyofcode\ViewHelpers;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- * (c) 2013 Thomas Juhnke <typo3@van-tomas.de>
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 /**
  * VH for the standalone scripts/styles asset paths.
  *
- * @package \TYPO3\Beautyofcode\ViewHelpers
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @link http://www.van-tomas.de/
+ * @package \TYPO3\Beautyofcode\ViewHelpers
  */
 class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
 	/**
+	 * Default base url
 	 *
 	 * @var string
 	 */
 	const DEFAULT_BASE_URL = 'http://alexgorbatchev.com/';
 
 	/**
+	 * Default resource path prefix
 	 *
 	 * @var string
 	 */
@@ -54,12 +43,24 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 	 */
 	protected $validTypes = array('scripts', 'styles');
 
+	/**
+	 * InitializeArguments
+	 *
+	 * @return void
+	 */
 	public function initializeArguments() {
 		$this->registerArgument('baseUrl', 'string', 'baseUrl of the assets path', FALSE, self::DEFAULT_BASE_URL);
 		$this->registerArgument('resourcePath', 'string', 'The path of the resource, relative to baseUrl', FALSE, self::DEFAULT_RESOURCE_PATH_PREFIX);
 		$this->registerArgument('type', 'string', 'The type of the asset, must be either `scripts` or `styles`.', TRUE);
 	}
 
+	/**
+	 * Initialize
+	 *
+	 * @return void
+	 *
+	 * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+	 */
 	public function initialize() {
 		if ('' === trim($this->arguments['baseUrl'])) {
 			$this->arguments['baseUrl'] = self::DEFAULT_BASE_URL;
@@ -75,6 +76,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 	}
 
 	/**
+	 * Renders the view helper
 	 *
 	 * @return string
 	 */
@@ -82,4 +84,3 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
 		return $this->arguments['baseUrl'] . $this->arguments['resourcePath'];
 	}
 }
-?>

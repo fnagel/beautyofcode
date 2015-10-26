@@ -1,41 +1,29 @@
 <?php
 namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- * (c) 2013 Thomas Juhnke <typo3@van-tomas.de>
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * All rights reserved
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 /**
  * Adds javascript libraries to the page footer
  *
- * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- * @link http://www.van-tomas.de/
+ * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  */
 class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
 
 	/**
+	 * TypoScriptFrontendController
 	 *
 	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
 	 */
@@ -50,14 +38,16 @@ class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\A
 	}
 
 	/**
+	 * Renders the view helper
 	 *
-	 * @param string $name
-	 * @param string $file
-	 * @param string $type
-	 * @param string $compress
-	 * @param string $forceOnTop
-	 * @param string $allWrap
-	 * @param string $excludeFromConcatenation
+	 * @param string $name Name of the library
+	 * @param string $file File reference
+	 * @param string $type Type attribute of the script tag
+	 * @param bool $compress TYPO3 compress flag
+	 * @param bool $forceOnTop TYPO3 force-on-top flag
+	 * @param string $allWrap TYPO3 allWrap configuration
+	 * @param bool $excludeFromConcatenation TYPO3 excl. from concat. flag
+	 *
 	 * @return NULL
 	 */
 	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
@@ -76,4 +66,3 @@ class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\A
 		return NULL;
 	}
 }
-?>

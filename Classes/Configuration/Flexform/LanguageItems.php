@@ -1,29 +1,18 @@
 <?php
 namespace TYPO3\Beautyofcode\Configuration\Flexform;
 
-/***************************************************************
- * Copyright notice
+/*
+ * This file is part of the TYPO3 CMS project.
  *
- * (c) 2010-2015 Felix Nagel (info@felixnagel.com)
- * (c) 2013-2015 Thomas Juhnke <typo3@van-tomas.de>
- * All rights reserved
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- * This script is part of the TYPO3 project. The TYPO3 project is
- * free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- * The GNU General Public License can be found at
- * http://www.gnu.org/copyleft/gpl.html.
- *
- * This script is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
@@ -41,26 +30,36 @@ use TYPO3\CMS\Frontend\Page\PageRepository;
 class LanguageItems {
 
 	/**
+	 * ObjectManager
+	 *
 	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
 	 */
 	protected $objectManager;
 
 	/**
+	 * PageRepository
+	 *
 	 * @var \TYPO3\CMS\Frontend\Page\PageRepository
 	 */
 	protected $pageRepository;
 
 	/**
+	 * TemplateSerice
+	 *
 	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
 	 */
 	protected $templateService;
 
 	/**
+	 * SettingsService
+	 *
 	 * @var SettingsService
 	 */
 	protected $settingsService;
 
 	/**
+	 * ConfigurationInterface
+	 *
 	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
 	 */
 	protected $highlighterConfiguration;
@@ -70,14 +69,15 @@ class LanguageItems {
 	 *
 	 * Fallback to root PID (0)
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $contentElementPid = 0;
 
 	/**
-	 * injectObjectManager
+	 * InjectObjectManager
 	 *
-	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager
+	 * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager ObjectManagerInterface
+	 *
 	 * @return void
 	 */
 	public function injectObjectManager(ObjectManagerInterface $objectManager = NULL) {
@@ -91,7 +91,8 @@ class LanguageItems {
 	/**
 	 * Injects the page repository
 	 *
-	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository
+	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository PageRepository
+	 *
 	 * @return void
 	 */
 	public function injectPageRepository(PageRepository $pageRepository = NULL) {
@@ -105,7 +106,8 @@ class LanguageItems {
 	/**
 	 * Injects the template service
 	 *
-	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService
+	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService TemplateService
+	 *
 	 * @return void
 	 */
 	public function injectTemplateService(TemplateService $templateService = NULL) {
@@ -117,7 +119,7 @@ class LanguageItems {
 	}
 
 	/**
-	 * initialize
+	 * Initialize
 	 *
 	 * @return void
 	 */
@@ -133,9 +135,10 @@ class LanguageItems {
 
 	/**
 	 * This function is called from the flexform and
-	 * adds avaiable programming languages to the select options
+	 * adds available programming languages to the select options
 	 *
 	 * @param array $config flexform data
+	 *
 	 * @return array
 	 */
 	public function getConfiguredLanguages($config) {
@@ -184,7 +187,7 @@ class LanguageItems {
 	/**
 	 * Returns the page uid by given record uid
 	 *
-	 * @param int $recordUid
+	 * @param int $recordUid Record uid
 	 *
 	 * @return int
 	 */
@@ -245,6 +248,7 @@ class LanguageItems {
 	 * @todo Add caching per PID?
 	 *
 	 * @param int $pid PID of the page
+	 *
 	 * @return \TYPO3\Beautyofcode\Service\SettingsService
 	 */
 	public function getSettingsService($pid = 0) {

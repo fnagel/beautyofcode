@@ -24,6 +24,12 @@ plugin.tx_beautyofcode {
 		}
 	}
 
+	view {
+		layoutRootPaths.0 = EXT:beautyofcode/Resources/Private/Layouts/
+		templateRootPaths.0 = EXT:beautyofcode/Resources/Private/Templates/
+		partialRootPaths.0 = EXT:beautyofcode/Resources/Private/Partials/
+	}
+
 	_CSS_DEFAULT_STYLE (
 		.tx_beautyofcode pre { overflow: auto; }
 	)

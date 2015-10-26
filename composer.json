@@ -1,0 +1,34 @@
+{
+  "name": "typo3-ter/beautyofcode",
+  "type": "typo3-cms-extension",
+  "description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "syntax highlighting",
+    "prism",
+    "syntaxhighlighter"
+  ],
+  "homepage": "https://github.com/fnagel/beautyofcode",
+  "authors": [
+    {
+      "name": "Felix Nagel",
+      "email": "info@felixnagel.com",
+      "role": "Project Leader, Developer"
+    },
+    {
+      "name": "Thomas Juhnke",
+      "email": "dev@van-tomas.de",
+      "role": "Project Co-Leader, Developer"
+    }
+  ],
+  "license": "GP-2.0+",
+  "require": {
+    "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "TYPO3\\Beautyofcode\\": "Classes"
+    }
+  }
+}

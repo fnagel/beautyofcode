@@ -33,19 +33,21 @@
 class ext_update {
 
 	/**
+	 * TYPO3.CMS global DatabaseConnection
 	 *
 	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
 	 */
 	protected $db;
 
 	/**
+	 * Amount of old plugins detected
 	 *
-	 * @var integer
+	 * @var int
 	 */
 	protected $countOldPlugins;
 
 	/**
-	 * initializes the updater
+	 * Initializes the updater
 	 *
 	 * @return void
 	 */
@@ -58,7 +60,7 @@ class ext_update {
 	/**
 	 * Checks if the update script must be run
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	public function access() {
 		$this->initialize();
@@ -71,10 +73,10 @@ class ext_update {
 	/**
 	 * Counts the amount of old plugin instances within tt_content records
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function hasInstanceOldPlugins() {
-		$this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_pi1"');
+		$this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_contentrenderer"');
 
 		return 0 < $this->countOldPlugins;
 	}
@@ -106,9 +108,41 @@ class ext_update {
 	 * @return string
 	 */
 	protected function updateOldPlugins() {
-		$this->db->exec_UPDATEquery('tt_content', 'list_type = "beautyofcode_pi1"', array('list_type' => 'beautyofcode_contentrenderer'));
+		// switch from CType = 'list' to custom CE
+		$this->db->exec_UPDATEquery(
+			'tt_content',
+			'list_type = "beautyofcode_contentrenderer"',
+			array(
+				'CType' => 'beautyofcode_contentrenderer',
+				'list_type' => '',
+			)
+		);
+
+		$contentElements = $this->db->exec_SELECTquery(
+			'uid, pi_flexform',
+			'tt_content',
+			'CType = "beautyofcode_contentrenderer" AND hidden = 0 AND deleted = 0'
+		);
+
+		while (($contentElement = $this->db->sql_fetch_assoc($contentElements))) {
+			$uid = (int) $contentElement['uid'];
+			$flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
+
+			try {
+				$codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath($flexformData, 'data/sDEF/lDEF/cCode/vDEF');
+			} catch (\Exception $exc) {
+				continue;
+			}
+
+			$this->db->exec_UPDATEquery(
+				'tt_content',
+				'uid = ' . $uid,
+				array(
+					'bodytext' => $codeBlock,
+				)
+			);
+		}
 
 		return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
 	}
 }
-?>

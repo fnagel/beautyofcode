@@ -34,24 +34,6 @@
 							</config>
 						</TCEforms>
 					</cLang>
-					<cCode>
-						<TCEforms>
-							<exclude>1</exclude>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:code</label>
-							<config type="array">
-								<type>text</type>
-								<cols>80</cols>
-								<rows>20</rows>
-								<wizards type="array">
-									<t3editor type="array">
-										<type>userFunc</type>
-										<userFunc>EXT:beautyofcode/Classes/Configuration/Flexform/T3EditorWizard.php:TYPO3\Beautyofcode\Configuration\Flexform\T3EditorWizard->main</userFunc>
-									</t3editor>
-								</wizards>
-								<noTableWrapping>0</noTableWrapping>
-							</config>
-						</TCEforms>
-					</cCode>
 				</el>
 			</ROOT>
 		</sDEF>

@@ -53,6 +53,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 	 * @return void
 	 */
 	public function renderAction() {
+		$ce = $this->configurationManager->getContentObject()->data;
 		$flexform = $this
 			->flexformRepository
 			->reconstituteByContentObject(
@@ -60,6 +61,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
 			);
 		$flexform->setTyposcriptDefaults($this->settings['defaults']);
 
+		$this->view->assign('ce', $ce);
 		$this->view->assign('flexform', $flexform);
 	}
 }

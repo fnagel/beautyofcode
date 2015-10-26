@@ -15,19 +15,38 @@ if (!defined ('TYPO3_MODE')) {
 	'beautyOfCode (Prism)'
 );
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-	'TYPO3.' . $_EXTKEY,
-	'ContentRenderer',
-	'beautyofcode - Syntaxhighlighter'
+$TCA['tt_content']['columns']['CType']['config']['items'][] = array(
+	'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
+	'beautyofcode_contentrenderer',
+	'EXT:beautyofcode/Resources/Public/Images/ce_wiz.gif'
 );
-
-$extensionName = \TYPO3\CMS\Core\Utility\GeneralUtility::underscoredToLowerCamelCase($_EXTKEY);
-$pluginSignature = strtolower($extensionName) . '_contentrenderer';
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$pluginSignature] = 'select_key,recursive,pages';
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$pluginSignature] = 'pi_flexform';
+$TCA['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
+		rowDescription,
+		bodytext,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
+		pi_flexform,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.visibility;visibility,
+		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.access;access,
+	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
+';
+$TCA['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
+	'bodytext' => array(
+		'config' => array(
+			'format' => 'mixed',
+			'renderType' => 't3editor',
+		),
+	),
+);
+$TCA['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
-	$pluginSignature,
-	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/ContentRenderer.xml'
+	'*',
+	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/ContentRenderer.xml',
+	'beautyofcode_contentrenderer'
 );
 
 if (TYPO3_MODE == 'BE') {
@@ -43,7 +62,6 @@ $TCA['tx_beautyofcode_domain_model_flexform'] = array(
 	'columns' => array(
 		'c_label' => array('config' => array()),
 		'c_lang' => array('config' => array()),
-		'c_code' => array('config' => array()),
 		'c_highlight' => array('config' => array()),
 		'c_collapse' => array('config' => array()),
 		'c_gutter' => array('config' => array()),

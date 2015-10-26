@@ -166,3 +166,5 @@ pip-log.txt
 vendor/**
 node_modules
 composer.*
+!composer.json
+!composer.lock

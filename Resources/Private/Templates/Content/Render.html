@@ -2,7 +2,7 @@
 
 <f:section name="Main">
 	<div class="tx_beautyofcode_pi1">
-		<f:render section="Container{settings.library}" arguments="{ flexform: flexform }" />
+		<f:render section="Container{settings.library}" arguments="{ flexform: flexform, ce: ce }" />
 		<f:if condition="{settings.showLabel} && {flexform.CLabel}">
 			<em>{flexform.CLabel}</em>
 		</f:if>
@@ -16,9 +16,9 @@
 
 <f:section name="ContainerSyntaxHighlighter">
 	<pre class="brush: {flexform.language}{flexform.classAttributeString}">
-<f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></pre>
+<f:format.htmlspecialchars>{ce.bodytext}</f:format.htmlspecialchars></pre>
 </f:section>
 
 <f:section name="ContainerPrism">
-	<pre<f:format.raw>{flexform.classAttributeString}</f:format.raw>{f:if(condition: '{flexform.isGutterActive}', then: ' class="line-numbers"', else: '')}><code class="language-{flexform.language}"><f:format.htmlspecialchars>{flexform.CCode}</f:format.htmlspecialchars></code></pre>
+	<pre<f:format.raw>{flexform.classAttributeString}</f:format.raw>{f:if(condition: '{flexform.isGutterActive}', then: ' class="line-numbers"', else: '')}><code class="language-{flexform.language}"><f:format.htmlspecialchars>{ce.bodytext}</f:format.htmlspecialchars></code></pre>
 </f:section>

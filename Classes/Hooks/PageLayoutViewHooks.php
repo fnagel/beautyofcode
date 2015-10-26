@@ -24,6 +24,8 @@ namespace TYPO3\Beautyofcode\Hooks;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Backend\View\PageLayoutView;
+use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -32,7 +34,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  * @author Felix Nagel <info@felixnagel.com>
  * @package \TYPO3\Beautyofcode\Hooks
  */
-class PageLayoutViewHooks {
+class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface {
 
 	/**
 	 * Reference to translation catalogue
@@ -78,30 +80,32 @@ class PageLayoutViewHooks {
 	protected $textareaHeight = '';
 
 	/**
-	 * Returns information about this extension's pi1 plugin
+	 * Preprocesses the preview rendering of a content element.
 	 *
-	 * @param array $params Parameters to the hook
-	 * @param object &$pObj A reference to calling object
-	 * @return string Information about pi1 plugin
+	 * @param PageLayoutView $parentObject Calling parent object
+	 * @param bool $drawItem Whether to draw the item using the default functionalities
+	 * @param string $headerContent Header content
+	 * @param string $itemContent Item content
+	 * @param array $row Record row of tt_content
+	 *
+	 * @return void
 	 */
-	public function getExtensionSummary($params, &$pObj) {
-		$result = '';
+	public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row) {
+		if ($row['CType'] == 'beautyofcode_contentrenderer') {
+			$drawItem = FALSE;
 
-		if ($params['row']['list_type'] == 'beautyofcode_contentrenderer') {
-			$this->flexformData = GeneralUtility::xml2array($params['row']['pi_flexform']);
+			$this->flexformData = GeneralUtility::xml2array($row['pi_flexform']);
 
-			$uid = $params['row']['uid'];
+			$uid = $row['uid'];
 
 			if (is_array($this->flexformData)) {
-				$result = $this->buildLabelHeader();
+				$headerContent = $this->buildLabelHeader();
 
-				$result .= $this->buildCodeLanguageHeader();
+				$itemContent = $this->buildCodeLanguageHeader();
 
-				$result .= $this->buildCodePreview($uid);
+				$itemContent .= $this->buildCodePreview($uid, $row['bodytext']);
 			}
 		}
-
-		return $result;
 	}
 
 	/**
@@ -142,11 +146,13 @@ class PageLayoutViewHooks {
 	/**
 	 * builds a textarea code preview field
 	 *
-	 * @param integer $uid The uid of the content record
+	 * @param int $uid The uid of the content record
+	 * @param string $codeBlock
+	 *
 	 * @return string
 	 */
-	protected function buildCodePreview($uid) {
-		$code = $this->flexformData['data']['sDEF']['lDEF']['cCode']['vDEF'];
+	protected function buildCodePreview($uid, $codeBlock) {
+		$code = $codeBlock;
 
 		$preview = sprintf("<em>%s</em>",
 			$GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':cms_layout.no_code')
@@ -158,7 +164,7 @@ class PageLayoutViewHooks {
 			$preview = sprintf(
 				'<textarea id="ta_hidden%s" style="display: none;" readonly="readonly">%s</textarea>',
 				$uid,
-				GeneralUtility::formatForTextarea($code)
+				chr(10) . htmlspecialchars($code)
 			);
 			$preview .= sprintf(
 				'<textarea id="ta%s" style="height: %s; width: 98%%; padding: 1%%; margin: 0;" wrap="off" readonly="readonly"></textarea>',
@@ -211,4 +217,3 @@ class PageLayoutViewHooks {
 		$this->textareaHeight = sprintf('%s%s', $textareaHeight, $unit);
 	}
 }
-?>

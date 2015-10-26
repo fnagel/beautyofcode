@@ -58,12 +58,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 *
 	 * @var string
 	 */
-	protected $cCode;
-
-	/**
-	 *
-	 * @var string
-	 */
 	protected $cHighlight;
 
 	/**
@@ -143,25 +137,6 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
 	 */
 	public function getCLang() {
 		return $this->cLang;
-	}
-
-	/**
-	 * setCCode
-	 *
-	 * @param string $cCode
-	 * @return void
-	 */
-	public function setCCode($cCode) {
-		$this->cCode = $cCode;
-	}
-
-	/**
-	 * getCCode
-	 *
-	 * @return string
-	 */
-	public function getCCode() {
-		return $this->cCode;
 	}
 
 	/**

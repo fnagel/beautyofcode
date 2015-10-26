@@ -15,7 +15,6 @@
 
 			<label index="label">Label</label>
 			<label index="lang">Programming Language</label>
-			<label index="code">Sourcecode</label>
 			<label index="plain">Default (Plain text)</label>
 
 			<label index="highlight">Highlight one or more lines (1,2,3,4-6...)</label>
@@ -28,6 +27,8 @@
 			<label index="tt_content.list_type_pi1">Sourcecode (beautyOfCode)</label>
 			<label index="wiz_description">This plugin provides state-of-the-art, feature rich syntax highlighting.</label>
 			<label index="enable_t3editor">Enable t3editor: Use syntax editor with syntax highlighting in Backend (t3editor)</label>
+
+			<label index="content_element.beautyofcode_contentrenderer">beautyofcode - Syntaxhighlighter</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="extlabel">beautyOfCode</label>
@@ -39,7 +40,6 @@
 
 			<label index="label">Beschriftung</label>
 			<label index="lang">Programmiersprache</label>
-			<label index="code">Quellcode</label>
 			<label index="plain">Standard (Plain Text)</label>
 
 			<label index="highlight">Markierung für bestimmte Zeilen (1,2,3,4-6...)</label>
@@ -52,6 +52,8 @@
 			<label index="tt_content.list_type_pi1">Quellcode (beautyOfCode)</label>
 			<label index="wiz_description">Dieses Plugin bietet umfangreiche Funktionen um Quellcode anzuzeigen.</label>
 			<label index="enable_t3editor">Benutze t3editor: Benutze Syntax Highlighting im Backend (t3editor)</label>
+
+			<label index="content_element.beautyofcode_contentrenderer">beautyofcode - Syntaxhighlighter</label>
 		</languageKey>
 	</data>
 </T3locallang>

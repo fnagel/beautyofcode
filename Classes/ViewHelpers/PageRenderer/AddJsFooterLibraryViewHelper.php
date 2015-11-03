@@ -51,6 +51,10 @@ class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\A
 	 * @return NULL
 	 */
 	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
+		if (!file_exists($file)) {
+			return NULL;
+		}
+
 		$this->pageRenderer->addJsFooterLibrary(
 			$name,
 			$this->typoscriptFrontendController

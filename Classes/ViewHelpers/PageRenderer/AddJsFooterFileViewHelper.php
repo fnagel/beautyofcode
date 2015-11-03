@@ -52,6 +52,10 @@ class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\Abst
 	 * @return void
 	 */
 	public function render($file, $type = 'text/javascript', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE, $splitChar = '|') {
+		if (!file_exists($file)) {
+			return NULL;
+		}
+
 		$this->pageRenderer->addJsFooterFile(
 			$this->typoscriptFrontendController
 				->tmpl

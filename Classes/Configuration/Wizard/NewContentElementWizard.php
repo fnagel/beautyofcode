@@ -38,7 +38,7 @@ class NewContentElementWizard {
 			'icon' => \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extRelPath('beautyofcode') . 'Resources/Public/Images/ce_wiz.gif',
 			'title' => $LANG->getLLL('tt_content.list_type_pi1', $LL),
 			'description' => $LANG->getLLL('wiz_description', $LL),
-			'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=beautyofcode_contentrenderer'
+			'params' => '&defVals[tt_content][CType]=beautyofcode_contentrenderer'
 		);
 
 		return $wizardItems;

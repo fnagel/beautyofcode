@@ -23,10 +23,9 @@ $TCA['tt_content']['columns']['CType']['config']['items'][] = array(
 $TCA['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
-		rowDescription,
-		bodytext,
 	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
 		pi_flexform,
+		bodytext,
 	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
 	--div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
@@ -36,6 +35,7 @@ $TCA['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
 ';
 $TCA['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
 	'bodytext' => array(
+		'label' => 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code',
 		'config' => array(
 			'format' => 'mixed',
 			'renderType' => 't3editor',

@@ -26,4 +26,12 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend'
 	);
 }
+
+// Dynamic changing of t3editor format for TYPO3 7
+if (version_compare(TYPO3_branch, '7.4', '>=')) {
+	$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\T3editor\\Form\\Element\\T3editorElement'] = array(
+		'className' => 'TYPO3\\Beautyofcode\\Form\\Element\\T3editorElement'
+	);
+}
+
 ?>

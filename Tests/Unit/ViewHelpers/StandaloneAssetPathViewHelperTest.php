@@ -91,4 +91,3 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\CMS\Extbase\Tests\Unit\Ba
 		$this->assertEquals('/typo3conf/ext/beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', $path);
 	}
 }
-?>

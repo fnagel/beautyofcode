@@ -164,4 +164,3 @@ class FlexformTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->assertTrue($this->sut->getIsGutterActive());
 	}
 }
-?>

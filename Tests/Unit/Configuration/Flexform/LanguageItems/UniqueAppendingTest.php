@@ -81,4 +81,3 @@ class UniqueAppendingTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->assertEquals(4, count($newConfig['items']));
 	}
 }
-?>

@@ -106,4 +106,3 @@ class ExtUpdateTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
 		$this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
 	}
 }
-?>

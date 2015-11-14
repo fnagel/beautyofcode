@@ -51,12 +51,12 @@ changes for yourself.
 0.5 to 0.6
 ^^^^^^^^^^
 
-This version introduces HTML templating. That's why some TS options are not 
+This version introduces HTML templating. That's why some TS options are not
 longer available or renamed:
 
-- plugin.tx_beautyofcode_pi1.label.wrap is removed as it's now configured via template
-- plugin.tx_beautyofcode_pi1.label.show is renamed to showLabel
-- plugin.tx_beautyofcode_pi1.wrap is removed as it's now configured via template
+- `plugin.tx_beautyofcode_pi1.label.wrap` is removed as it's now configured via template
+- `plugin.tx_beautyofcode_pi1.label.show` is renamed to showLabel
+- `plugin.tx_beautyofcode_pi1.wrap` is removed as it's now configured via template
 
 0.6 to 0.7
 ^^^^^^^^^^
@@ -103,6 +103,20 @@ What you need to know:
 
 Please see the changelog for all changes in detail.
 
+2.x to 3.0
+^^^^^^^^^^
+
+In order to make this extension work best possible in TYPO3 7.5 and to make maintaining
+more easier (especially the t3editor implementation) this version introduces usage of the
+default `tt_content` `bodytext` field.
+
+What you need to know:
+
+- There is a update wizard available trough Extension Manager to migrate your existing records.
+- No visible changes in backend user interface.
+- Make sure to adopt your TypoScript (assigning your settings to `module.` for backend context)
+- Added a composer.json file
+
 .. _admin-faq:
 
 FAQ
@@ -140,6 +154,8 @@ Input is encoded and saved without “<”,  “>”, etc.
 
 This is a server side problem within PHP 5 respective in the libxml module 
 (1.6.32 and higher) with an existing work around.
+
+_Please note: this issue is no longer relevant in version 3.x_
 
 **Solution:**
 

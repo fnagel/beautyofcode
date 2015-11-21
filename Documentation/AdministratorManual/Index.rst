@@ -16,16 +16,16 @@ Installation
 ------------
 
 - Install the extension via extension manager.
-- Add the static template in your main typoscript (go to: list module, root 
-  page, edit your root TS template, tab: includes, add one of the static 
+- Add the static template in your main typoscript (go to: list module, root
+  page, edit your root TS template, tab: includes, add one of the static
   templates named “beautyOfCode”).
-- You must add the jQuery core file yourself or by installing ext:t3jquery 
-  and make usage of the shipped backend module to compile your necessary jQuery 
-  library. Since version 2.0.0 it's possible to use syntax highlighting 
+- You must add the jQuery core file yourself or by installing ext:t3jquery
+  and make usage of the shipped backend module to compile your necessary jQuery
+  library. Since version 2.0.0 it's possible to use syntax highlighting
   without using jQuery.
 
-**Please note**: It's strongly recommended to add one line in your 
-localconf.php to force CDATA escaping within the flexforms in TYPO3. Please see 
+**Please note**: It's strongly recommended to add one line in your
+localconf.php to force CDATA escaping within the flexforms in TYPO3. Please see
 know FAQ section.
 
 .. _admin-configuration:
@@ -33,10 +33,10 @@ know FAQ section.
 Configuration
 -------------
 
-Enable syntax highlighting (install EXT: t3editor) in BE by using 
+Enable syntax highlighting (install EXT: t3editor) in BE by using
 enable_t3editor option.
 
-**Please note**: Some extension manager settings have been removed in version 
+**Please note**: Some extension manager settings have been removed in version
 0.7.0. Use TypoScript instead.
 
 .. _admin-upgrade-guide:
@@ -44,8 +44,8 @@ enable_t3editor option.
 Upgrade Guide
 -------------
 
-If there's no upgrade guide, there' s no need to change anything. This guide 
-does not covering extending via PHP (aka XCLASS or Hooks) – you need to check 
+If there's no upgrade guide, there' s no need to change anything. This guide
+does not covering extending via PHP (aka XCLASS or Hooks) – you need to check
 changes for yourself.
 
 0.5 to 0.6
@@ -61,9 +61,9 @@ longer available or renamed:
 0.6 to 0.7
 ^^^^^^^^^^
 
-Big update: finally its possible to use this extension without jQuery. Massive 
-remanufacturing and code changes. Please consider this release as a beta 
-version as I did test every feature the best I can but not sure if everything 
+Big update: finally its possible to use this extension without jQuery. Massive
+remanufacturing and code changes. Please consider this release as a beta
+version as I did test every feature the best I can but not sure if everything
 will work out on every TYPO3 installation.
 
 What you need to know:
@@ -86,7 +86,7 @@ Rewritten for Extbase/Fluid.
 
 What you need to know:
 
-- Execute update script within extension manager to update adjusted plugin names 
+- Execute update script within extension manager to update adjusted plugin names
   in database
 - You'll need to change your TypoScript code
 
@@ -97,7 +97,7 @@ What you need to know:
     - jquery.scriptUrl (adapt template if you need to adjust)
     - jQueryNoConflict (inline JS is wrapped in module pattern style code)
     - config.strings (<f:translate /> vhs in templates)
-    - addjQuery (please make sure to include jQuery by yourself if you want to 
+    - addjQuery (please make sure to include jQuery by yourself if you want to
       use the `includeAsDomReady` / `onReadyCallback` configuration settings
     - selector
 
@@ -112,7 +112,7 @@ default `tt_content` `bodytext` field.
 
 What you need to know:
 
-- There is a update wizard available trough Extension Manager to migrate your existing records.
+- There is an update wizard available through Extension Manager to migrate your existing records.
 - No visible changes in backend user interface.
 - Make sure to adopt your TypoScript (assigning your settings to `module.` for backend context)
 - Added a composer.json file
@@ -127,11 +127,11 @@ Which version to choose?
 
 This extension ships with two syntax highlighting libraries.
 
-Choose either SyntaxHighlighter which supports lazyloading of the necessary CSS 
-and JS files  after the DOM ready event has fired. It runs standalone using an 
+Choose either SyntaxHighlighter which supports lazyloading of the necessary CSS
+and JS files  after the DOM ready event has fired. It runs standalone using an
 autoloading feature.
 
-Prism is also a standalone library without any dependencies. There are some 
+Prism is also a standalone library without any dependencies. There are some
 benefits and disadvantages by using each version:
 
 SyntaxHighlighter
@@ -152,7 +152,7 @@ Prism
 Input is encoded and saved without “<”,  “>”, etc.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This is a server side problem within PHP 5 respective in the libxml module 
+This is a server side problem within PHP 5 respective in the libxml module
 (1.6.32 and higher) with an existing work around.
 
 _Please note: this issue is no longer relevant in version 3.x_
@@ -165,8 +165,8 @@ Add this line in your localconf.php in typo3conf directory.
 
       $TYPO3_CONF_VARS['BE']['flexformForceCDATA']  = '1';
 
-This fix is non breaking and works only for new added elements. Older flexform 
-values should / could be fixed manually. This is a recommended default setting 
+This fix is non breaking and works only for new added elements. Older flexform
+values should / could be fixed manually. This is a recommended default setting
 for every TYPO3 installation (see mailing list why).
 
 **Bug**:
@@ -180,8 +180,8 @@ http://bugs.typo3.org/view.php?id=9359
 I don't like my users to overwrite my default TS configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Take a look at the extension sp_betterflex: “Exclude static flexform fields 
-made by extensions like normal table fields in backend group configuration or 
+Take a look at the extension sp_betterflex: “Exclude static flexform fields
+made by extensions like normal table fields in backend group configuration or
 via TSConfig.”
 
 http://typo3.org/extensions/repository/view/sp_betterflex/current/
@@ -198,7 +198,7 @@ Install the extension and add these lines to your TSconfig:
 “Missing Ext. Manager configuration” error in FE
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-You forgot to save the extension manager configuration. Please go to Extension 
+You forgot to save the extension manager configuration. Please go to Extension
 Manager → beautyOfCode → click Update
 
 “t3lib_div::array_merge_recursive_overrule()” error in BE
@@ -206,13 +206,13 @@ Manager → beautyOfCode → click Update
 
 This error could look like this:
 
-`PHP Catchable Fatal Error: Argument 1 passed to t3lib_div::array_merge_recursive_overrule() 
-must be an array, null given, called in /html/typo3/typo3_src-4.4.2/typo3/sysext/rtehtmlarea/class.tx_rtehtmlareaapi.php 
+`PHP Catchable Fatal Error: Argument 1 passed to t3lib_div::array_merge_recursive_overrule()
+must be an array, null given, called in /html/typo3/typo3_src-4.4.2/typo3/sysext/rtehtmlarea/class.tx_rtehtmlareaapi.php
 on line 80 and defined in /html/typo3/typo3_src-4.4.2/t3lib/class.t3lib_div.php line 2059`
 
-This issue was already patched but seems to be introduced again in specific 
-TYPO3 version. Some kind of regression I guess. Sadly Im not able to reproduce 
-the issue and it even seems to be an Core / RTE problem, so please take a look 
+This issue was already patched but seems to be introduced again in specific
+TYPO3 version. Some kind of regression I guess. Sadly Im not able to reproduce
+the issue and it even seems to be an Core / RTE problem, so please take a look
 at these bugtracker issues which should help you to solve the problem:
 
 - http://bugs.typo3.org/view.php?id=15864
@@ -221,23 +221,23 @@ at these bugtracker issues which should help you to solve the problem:
 Enable t3editor in BE
 ^^^^^^^^^^^^^^^^^^^^^
 
-You need to enable the *enable_t3editor* option in Extension Manager and check 
+You need to enable the *enable_t3editor* option in Extension Manager and check
 your user settings.
 
 "TypeError: lang is undefined" when using PRISM
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This JavaScript console error is caused by wrong order or missing language 
-component files. Some Prism languages depend on each other and need to be added 
+This JavaScript console error is caused by wrong order or missing language
+component files. Some Prism languages depend on each other and need to be added
 in correct order. Please check your TypoScript. Take a look in the Prism
 component JS files to check language dependencies.
 
 No highlighting in FE
 ^^^^^^^^^^^^^^^^^^^^^
 
-If you're using the SyntaxHighlighter library, and decided to make usage of the 
-includeAsDomReady setting set to "jquery", you must ensure to either install the 
-extension t3jquery and compile a suitable jQuery libary on your own or include a 
+If you're using the SyntaxHighlighter library, and decided to make usage of the
+includeAsDomReady setting set to "jquery", you must ensure to either install the
+extension t3jquery and compile a suitable jQuery libary on your own or include a
 jQuery core file by yourself. You need to add the jQuery Core file manually.
 
 I get a Java-Script error in FE
@@ -250,16 +250,16 @@ Do you use other JavaScript frameworks? Please see down below.
 I'm using MooTools, ExtJS or similar
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-No problem, the generated inline javascript code uses the module pattern and 
+No problem, the generated inline javascript code uses the module pattern and
 therefore doesn't need the noConflict option to be set.
 
-Please note and keep in mind if jQuery must be loaded (minified about 56KB) 
+Please note and keep in mind if jQuery must be loaded (minified about 56KB)
 this will lead to more traffic and less performance for your users.
 
 How to change language strings
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Adjust the templates according to your needs. Please follow the Fluid 
+Adjust the templates according to your needs. Please follow the Fluid
 templating guides for how to use your own templates for a specific extension.
 
 Also have a look at the following article:
@@ -269,5 +269,5 @@ http://xavier.perseguers.ch/tutoriels/typo3/articles/managing-localization-files
 Where to post improvements or bugs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Please feel free add questions, bugs and improvements at 
+Please feel free add questions, bugs and improvements at
 http://forge.typo3.org/projects/extension-beautyofcode/issues

@@ -23,17 +23,26 @@ namespace TYPO3\Beautyofcode\Form\Element;
 class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement {
 
 	/**
-	 * Map fails safe brush alias to t3editor mode keys
+	 * Map ext:t3editor modes on boc brush aliases
 	 *
 	 * @var array
 	 */
-	protected $beautyOfCodeT3editorBrushAliasMap = array(
+	protected $brushModeMap = array(
 		'markup' => self::MODE_XML,
+		'css' => self::MODE_CSS,
+		'javascript' => self::MODE_JAVASCRIPT,
+		'php' => self::MODE_PHP,
+		'typoscript' => self::MODE_TYPOSCRIPT,
 	);
 
 	/**
-	 * @inheritdoc
+	 * Sets the type of code to edit, use one of the predefined constants.
+	 *
+	 * @param string $mode Expects one of the predefined constants
+	 *
 	 * @return void
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function setMode($mode) {
 		$mode = $this->setModeDynamic($mode);
@@ -60,15 +69,19 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement {
 			return $flexformLanguageKey;
 		}
 
-		if (array_key_exists($flexformLanguageKey, $this->beautyOfCodeT3editorBrushAliasMap)) {
-			return $this->beautyOfCodeT3editorBrushAliasMap[$flexformLanguageKey];
+		if (array_key_exists($flexformLanguageKey, $this->brushModeMap)) {
+			return $this->brushModeMap[$flexformLanguageKey];
 		}
+
+		$mode = self::MODE_MIXED;
 
 		return $mode;
 	}
 
 	/**
-	 * @return boolean
+	 * Flags if the current element is a boc plugin
+	 *
+	 * @return bool
 	 */
 	protected function isBeautyOfCodeElement() {
 		return (

@@ -25,6 +25,8 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+
 /**
  * Tests the standalone asset path view helper
  *
@@ -33,7 +35,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelperTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class StandaloneAssetPathViewHelperTest extends UnitTestCase {
 
 	/**
 	 *

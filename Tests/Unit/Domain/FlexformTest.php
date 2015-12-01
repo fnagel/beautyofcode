@@ -25,6 +25,9 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+
 /**
  * Tests the flexform domain object
  *
@@ -33,7 +36,14 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class FlexformTest extends UnitTestCase {
+
+	/**
+	 * ConfigurationInterface
+	 *
+	 * @var ConfigurationInterface|\PHPUnit_Framework_MockObject_MockObject
+	 */
+	protected $highlighterConfigurationMock;
 
 	/**
 	 *
@@ -42,7 +52,12 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	protected $sut;
 
 	public function setUp() {
+		$this->highlighterConfigurationMock = $this->getMock(ConfigurationInterface::class);
+
 		$this->sut = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
+
+		$this->sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
+
 		$this->sut->setCLabel('The label');
 		$this->sut->setCLang('typoscript');
 		$this->sut->setCHighlight('1,2-3,8');
@@ -55,10 +70,11 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->markTestSkipped("needs adjustment");
+		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+
 		$this->sut->setCCollapse('');
 
-		$this->assertNotContains('collapse', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertNotContains('collapse', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -66,10 +82,9 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->markTestSkipped("needs adjustment");
 		$this->sut->setCGutter('auto');
 
-		$this->assertNotContains('gutter', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertNotContains('gutter', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -77,8 +92,7 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
-		$this->markTestSkipped("needs adjustment");
-		$this->assertContains('highlight: [', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertContains('highlight: [', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -86,8 +100,7 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
-		$this->markTestSkipped("needs adjustment");
-		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getSyntaxHighlighterClassAttributeConfiguration());
+		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
 	}
 
 	/**
@@ -95,8 +108,11 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForSyntaxHighlighter() {
-		$this->markTestSkipped("needs adjustment");
-		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
+		$this->highlighterConfigurationMock
+			->expects($this->once())->method('getAutoloaderBrushMap')
+			->will($this->returnValue(array('plain' => 'Plain')));
+
+		$brushes = $this->sut->getAutoloaderBrushMap();
 
 		$this->assertArrayHasKey('plain', $brushes);
 	}
@@ -106,10 +122,11 @@ class FlexformTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function brushesForSyntaxHighlighterAreMappedToASuitableCssTagString() {
-		$this->markTestSkipped("needs adjustment");
-		$this->sut->setBrushes('Typoscript,AS3');
+		$this->highlighterConfigurationMock
+			->expects($this->once())->method('getAutoloaderBrushMap')
+			->will($this->returnValue(array('typoscript' => 'Typoscript', 'actionscript3' => 'AS3')));
 
-		$brushes = $this->sut->getSyntaxHighlighterBrushesForAutoloader();
+		$brushes = $this->sut->getAutoloaderBrushMap();
 
 		$this->assertArrayHasKey('typoscript', $brushes);
 		$this->assertArrayHasKey('actionscript3', $brushes);

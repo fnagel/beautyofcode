@@ -26,6 +26,9 @@ namespace TYPO3\Beautyofcode\Tests\Unit;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+
 /**
  * Class short description
  *
@@ -33,7 +36,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExtUpdateTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class ExtUpdateTest extends UnitTestCase {
 
 	protected $backupGlobalsBlacklist = array('TYPO3_DB');
 
@@ -64,7 +67,6 @@ class ExtUpdateTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function accessReturnsTrueIfListTypesWithOldPluginSignatureWereFound() {
-		$this->markTestSkipped("needs adjustment");
 		$this->assertOldPluginInstancesExist();
 
 		$sut = new \ext_update();
@@ -99,7 +101,6 @@ class ExtUpdateTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 				$this->equalTo('list_type = "beautyofcode_pi1"'),
 				$this->equalTo(array('list_type' => 'beautyofcode_contentrenderer'))
 			);
-		$this->markTestSkipped("needs adjustment");
 
 		$sut = new \ext_update();
 

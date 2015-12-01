@@ -25,6 +25,10 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Package\PackageManager;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+
 /**
  * Tests the general utility class
  *
@@ -33,11 +37,20 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class GeneralUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class GeneralUtilityTest extends UnitTestCase {
 
 	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
 
 	public function setUp() {
+		$packageManagerMock = $this->getMock(PackageManager::class);
+
+		ExtensionManagementUtility::setPackageManager($packageManagerMock);
+
+		$packageManagerMock
+			->expects($this->any())->method('isPackageActive')
+			->with($this->equalTo('beautyofcode'))
+			->will($this->returnValue(TRUE));
+
 		if (FALSE === defined('PATH_site')) {
 			define('PATH_site', '/home/foo/');
 		}
@@ -65,7 +78,6 @@ class GeneralUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
-		$this->markTestSkipped("needs adjustment");
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('EXT:beautyofcode/ext_emconf.php');
 
 		$this->assertStringStartsWith('typo3conf/', $path);
@@ -99,7 +111,6 @@ class GeneralUtilityTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 	 * @test
 	 */
 	public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile() {
-		$this->markTestSkipped("needs adjustment");
 		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
 
 		$this->assertStringStartsWith('typo3conf/', $path);

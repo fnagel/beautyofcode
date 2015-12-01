@@ -168,3 +168,5 @@ node_modules
 composer.*
 !composer.json
 !composer.lock
+typo3
+typo3_src

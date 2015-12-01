@@ -27,19 +27,32 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\Beautyofcode\Service\SettingsService;
+use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+
 /**
  * Tests the sorted appending of configured brushes to the list of flexform items
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class SortedAppendingTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
+class SortedAppendingTest extends UnitTestCase {
 
 	/**
 	 *
 	 * @test
 	 */
 	public function configuredBrushesAreAppendedSortedToTheReturnValue() {
-		$this->markTestSkipped("needs adjustment");
+		/* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
+		$settingsServiceMock = $this->getMock(SettingsService::class);
+
+		/* @var $objectManagerMock \TYPO3\CMS\Extbase\Object\ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+		$objectManagerMock = $this->getMock(ObjectManagerInterface::class);
+		$objectManagerMock
+			->expects($this->once())->method('get')
+			->with($this->equalTo('TYPO3\\Beautyofcode\\Service\\SettingsService'), $this->equalTo(0))
+			->will($this->returnValue($settingsServiceMock));
+
 		/* @var $pageRepositoryMock \TYPO3\CMS\Frontend\Page\PageRepository */
 		$pageRepositoryMock = $this->getMock('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
 
@@ -47,6 +60,7 @@ class SortedAppendingTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 		$templateServiceMock = $this->getMock('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
 
 		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
+		$sut->injectObjectManager($objectManagerMock);
 		$sut->injectPageRepository($pageRepositoryMock);
 		$sut->injectTemplateService($templateServiceMock);
 

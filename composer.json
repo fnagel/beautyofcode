@@ -26,6 +26,9 @@
   "require": {
     "typo3/cms-core": "~6.2.14|>=7.4.0,<8.0"
   },
+  "require-dev": {
+    "fluidtypo3/development": "*"
+  },
   "autoload": {
     "psr-4": {
       "TYPO3\\Beautyofcode\\": "Classes"

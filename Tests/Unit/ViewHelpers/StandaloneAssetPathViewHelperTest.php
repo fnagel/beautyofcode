@@ -33,7 +33,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelperTest extends \TYPO3\CMS\Extbase\Tests\Unit\BaseTestCase {
+class StandaloneAssetPathViewHelperTest extends \TYPO3\CMS\Core\Tests\UnitTestCase {
 
 	/**
 	 *

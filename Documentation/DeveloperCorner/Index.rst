@@ -95,3 +95,15 @@ multiple times until no output is displayed. Then uncomment the last line.
         fi
       done
       for file in $(ls -R Documentation/*.rst Documentation/*/*.rst Documentation/*.txt); do sed -i '1s/^/\xef\xbb\xbf/' "$file"; done
+
+
+Run unit tests
+^^^^^^^^^^^^^^
+
+   .. code-block:: bash
+
+      cd typoconf/ext/beautyofcode
+
+      composer install
+
+      ./vendor/bin/runtests

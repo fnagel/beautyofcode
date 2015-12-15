@@ -62,8 +62,13 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement {
 			return $mode;
 		}
 
+		$mode = self::MODE_MIXED;
 		// Get current flexform language value
 		$flexformLanguageKey = current($this->data['databaseRow']['pi_flexform']['data']['sDEF']['lDEF']['cLang']['vDEF']);
+
+		if (empty($flexformLanguageKey)) {
+			return $mode;
+		}
 
 		if (array_search($flexformLanguageKey, $this->allowedModes) !== FALSE) {
 			return $flexformLanguageKey;
@@ -72,8 +77,6 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement {
 		if (array_key_exists($flexformLanguageKey, $this->brushModeMap)) {
 			return $this->brushModeMap[$flexformLanguageKey];
 		}
-
-		$mode = self::MODE_MIXED;
 
 		return $mode;
 	}

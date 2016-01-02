@@ -82,6 +82,8 @@ class FlexformTest extends UnitTestCase {
 	 * @test
 	 */
 	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
+		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+
 		$this->sut->setCGutter('auto');
 
 		$this->assertNotContains('gutter', $this->sut->getClassAttributeString());
@@ -92,6 +94,8 @@ class FlexformTest extends UnitTestCase {
 	 * @test
 	 */
 	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
+		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
+
 		$this->assertContains('highlight: [', $this->sut->getClassAttributeString());
 	}
 
@@ -100,6 +104,8 @@ class FlexformTest extends UnitTestCase {
 	 * @test
 	 */
 	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
+		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
+
 		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
 	}
 

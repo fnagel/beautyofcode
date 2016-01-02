@@ -16,6 +16,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Form\Element;
 use TYPO3\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\CMS\T3editor\T3editor;
 
 /**
  * T3editorElementTest
@@ -44,6 +45,15 @@ class T3editorElementTest extends UnitTestCase {
 	 * @return void
 	 */
 	public function setUp() {
+		$GLOBALS['TYPO3_CONF_VARS'] = array(
+			'SYS' => array(
+				'formEngine' => array(
+					'nodeRegistry' => array(),
+					'nodeResolver' => array(),
+				),
+			),
+		);
+
 		$this->nodeFactoryMock = $this->getMock(NodeFactory::class);
 	}
 
@@ -56,13 +66,26 @@ class T3editorElementTest extends UnitTestCase {
 		$data = array(
 			'tableName' => 'tt_content',
 			'databaseRow' => array(
-				'CType' => 'text',
+				'CType' => array('text'),
+				'pi_flexform' => array(
+					'data' => array(
+						'sDEF' => array(
+							'lDEF' => array(
+								'cLang' => array(
+									'vDEF' => array(
+										'php',
+									),
+								)
+							)
+						)
+					)
+				)
 			),
 		);
 
 		$t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
-		$t3EditorElement->setMode('foo');
+		$t3EditorElement->setMode(T3editor::MODE_MIXED);
 
-		$this->assertSame('foo', $t3EditorElement->getMode());
+		$this->assertSame(T3editor::MODE_MIXED, $t3EditorElement->getMode());
 	}
 }

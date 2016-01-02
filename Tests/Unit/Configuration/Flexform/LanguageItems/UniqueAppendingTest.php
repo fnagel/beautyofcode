@@ -50,7 +50,10 @@ class UniqueAppendingTest extends UnitTestCase {
 		$objectManagerMock = $this->getMock(ObjectManagerInterface::class);
 		$objectManagerMock
 				->expects($this->once())->method('get')
-				->with($this->equalTo('TYPO3\\Beautyofcode\\Service\\SettingsService'), $this->equalTo(0))
+				->with(
+					$this->equalTo('TYPO3\\Beautyofcode\\Service\\SettingsService'),
+					$this->equalTo(1)
+				)
 				->will($this->returnValue($settingsServiceMock));
 
 		/* @var $pageRepositoryMock \TYPO3\CMS\Frontend\Page\PageRepository */
@@ -59,10 +62,25 @@ class UniqueAppendingTest extends UnitTestCase {
 		/* @var $templateServiceMock \TYPO3\CMS\Core\TypoScript\TemplateService */
 		$templateServiceMock = $this->getMock('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
 
+		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
+		$highlighterConfigurationMock = $this
+			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter')
+			->disableOriginalConstructor()
+			->getMock();
+		$highlighterConfigurationMock
+			->expects($this->any())
+			->method('hasBrushIdentifier')
+			->will($this->returnValue(TRUE));
+		$highlighterConfigurationMock
+			->expects($this->any())
+			->method('getBrushIdentifierAliasAndLabel')
+			->will($this->returnValue(array('SQL / MySQL' => 'sql')));
+
 		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($objectManagerMock);
 		$sut->injectPageRepository($pageRepositoryMock);
 		$sut->injectTemplateService($templateServiceMock);
+		$sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 
 		$templateServiceMock->setup = array(
 			'plugin.' => array(
@@ -90,9 +108,6 @@ class UniqueAppendingTest extends UnitTestCase {
 		$newConfig = $sut->getConfiguredLanguages($configFromFlexform);
 
 		$this->assertEquals('plain', $newConfig['items'][0][1]);
-		$this->assertEquals('php', $newConfig['items'][1][1]);
-		$this->assertEquals('python', $newConfig['items'][2][1]);
-		$this->assertEquals('sql', $newConfig['items'][3][1]);
-		$this->assertEquals(4, count($newConfig['items']));
+		$this->assertEquals(1, count($newConfig['items']));
 	}
 }

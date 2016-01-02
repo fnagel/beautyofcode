@@ -14,6 +14,7 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -119,6 +120,21 @@ class LanguageItems {
 	}
 
 	/**
+	 * Injects the highlighter configuration
+	 *
+	 * @param ConfigurationInterface $configuration
+	 *
+	 * @return void
+	 */
+	public function injectHighlighterConfiguration(ConfigurationInterface $configuration) {
+		if (is_null($configuration)) {
+			$configuration = $this->objectManager->get('TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface');
+		}
+
+		$this->highlighterConfiguration = $configuration;
+	}
+
+	/**
 	 * Initialize
 	 *
 	 * @return void
@@ -127,10 +143,7 @@ class LanguageItems {
 		$this->injectObjectManager($this->objectManager);
 		$this->injectPageRepository($this->pageRepository);
 		$this->injectTemplateService($this->templateService);
-
-		$this->highlighterConfiguration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface'
-		);
+		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
 	}
 
 	/**

@@ -81,7 +81,7 @@ class ExtUpdateTest extends UnitTestCase {
 			->with(
 				$this->equalTo('*'),
 				$this->equalTo('tt_content'),
-				$this->equalTo('list_type = "beautyofcode_pi1"')
+				$this->equalTo('list_type = "beautyofcode_contentrenderer"')
 			)
 			->will($this->returnValue(1));
 	}
@@ -98,8 +98,8 @@ class ExtUpdateTest extends UnitTestCase {
 			->method('exec_UPDATEquery')
 			->with(
 				$this->equalTo('tt_content'),
-				$this->equalTo('list_type = "beautyofcode_pi1"'),
-				$this->equalTo(array('list_type' => 'beautyofcode_contentrenderer'))
+				$this->equalTo('list_type = "beautyofcode_contentrenderer"'),
+				$this->equalTo(array('CType' => 'beautyofcode_contentrenderer', 'list_type' => ''))
 			);
 
 		$sut = new \ext_update();

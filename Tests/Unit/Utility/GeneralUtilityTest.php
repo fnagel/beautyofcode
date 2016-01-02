@@ -25,6 +25,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Package\Package;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -42,15 +43,6 @@ class GeneralUtilityTest extends UnitTestCase {
 	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
 
 	public function setUp() {
-		$packageManagerMock = $this->getMock(PackageManager::class);
-
-		ExtensionManagementUtility::setPackageManager($packageManagerMock);
-
-		$packageManagerMock
-			->expects($this->any())->method('isPackageActive')
-			->with($this->equalTo('beautyofcode'))
-			->will($this->returnValue(TRUE));
-
 		if (FALSE === defined('PATH_site')) {
 			define('PATH_site', '/home/foo/');
 		}
@@ -58,6 +50,40 @@ class GeneralUtilityTest extends UnitTestCase {
 		if (FALSE === defined('REQUIRED_EXTENSIONS')) {
 			define('REQUIRED_EXTENSIONS', 'foo,bar');
 		}
+
+		if (FALSE === defined('PATH_typo3conf')) {
+			define('PATH_typo3conf', '/home/foo/typo3conf/');
+		}
+
+		if (FALSE === defined('PATH_typo3')) {
+			define('PATH_typo3', '/home/foo/typo3/');
+		}
+
+		/* @var $packageManagerMock PackageManager|\PHPUnit_Framework_MockObject_MockObject */
+		$packageManagerMock = $this->getMock(PackageManager::class);
+
+		ExtensionManagementUtility::setPackageManager($packageManagerMock);
+
+		$packageMock = $this->getMockBuilder(Package::class)
+			->disableOriginalConstructor()
+			->getMock();
+
+		$packageMock
+			->expects($this->any())
+			->method('getPackagePath')
+			->will($this->returnValue('/home/foo/typo3conf/ext/beautyofcode'));
+
+		$packageManagerMock
+			->expects($this->any())
+			->method('isPackageActive')
+			->with($this->equalTo('beautyofcode'))
+			->will($this->returnValue(TRUE));
+
+		$packageManagerMock
+			->expects($this->any())
+			->method('getPackage')
+			->with($this->equalTo('beautyofcode'))
+			->will($this->returnValue($packageMock));
 
 		$GLOBALS['TYPO3_CONF_VARS'] = array(
 			'EXT' => array(
@@ -78,7 +104,9 @@ class GeneralUtilityTest extends UnitTestCase {
 	 * @test
 	 */
 	public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile() {
-		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('EXT:beautyofcode/ext_emconf.php');
+		$path = \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath(
+			'EXT:beautyofcode/ext_emconf.php'
+		);
 
 		$this->assertStringStartsWith('typo3conf/', $path);
 	}

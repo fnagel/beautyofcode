@@ -27,7 +27,7 @@ if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_b
 	);
 }
 
-// Dynamic changing of t3editor format for TYPO3 7
+// Dynamic changing of t3editor format for TYPO3 7.x
 if (version_compare(TYPO3_branch, '7.4', '>=')) {
 	$GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\T3editor\\Form\\Element\\T3editorElement'] = array(
 		'className' => 'TYPO3\\Beautyofcode\\Form\\Element\\T3editorElement'

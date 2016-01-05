@@ -16,8 +16,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'category' => 'plugin',
 	'shy' => 0,
 	'version' => '3.0.0-dev',
-	'dependencies' => '',
-	'conflicts' => '',
 	'priority' => '',
 	'loadOrder' => '',
 	'module' => '',
@@ -29,22 +27,17 @@ $EM_CONF[$_EXTKEY] = array(
 	'lockType' => '',
 	'author' => 'Felix Nagel',
 	'author_email' => 'info@felixnagel.com',
-	'CGLcompliance' => '',
-	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
-			'typo3' => '6.2.0-7.5.99',
+			'typo3' => '7.3.1-7.6.99',
 			'extbase' => '',
 			'fluid' => '',
 		),
 		'conflicts' => array(
-			'typo3' => '7.3.0',
 		),
 		'suggests' => array(
 			't3editor' => '',
 		),
-	),
-	'suggests' => array(
 	),
 	'autoload' => array(
 		'psr-4' => array(

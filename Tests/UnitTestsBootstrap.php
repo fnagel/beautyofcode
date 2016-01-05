@@ -49,9 +49,15 @@ class UnitTestsBootstrap {
 	 */
 	protected function getWebRoot() {
 		if (getenv('TYPO3_PATH_WEB')) {
+			// Use environment variable
 			$webRoot = getenv('TYPO3_PATH_WEB');
 		} else {
-			return FALSE;
+			// Is there a parent TYPO3 installation?
+			$webRoot = preg_replace('/typo3conf\/ext\/beautyofcode/', '', getcwd());
+
+			if (!(file_exists($webRoot) && file_exists($webRoot . 'typo3'))) {
+				return FALSE;
+			}
 		}
 
 		return rtrim(strtr($webRoot, '\\', '/'), '/') . '/';

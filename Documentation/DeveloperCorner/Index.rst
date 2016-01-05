@@ -107,3 +107,14 @@ Run unit tests
       composer install
 
       ./vendor/bin/runtests
+
+
+One could add a a php env node into the `phpunit.xml.dist` xml file:
+
+   .. code-block:: xml
+
+      <phpunit>
+          <php>
+              <env name="TYPO3_PATH_WEB" value="/var/www/path-to-typo3"/>
+          </php>
+      </phpunit>

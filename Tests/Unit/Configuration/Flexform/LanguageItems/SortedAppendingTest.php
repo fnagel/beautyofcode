@@ -43,6 +43,9 @@ class SortedAppendingTest extends UnitTestCase {
 	 * @test
 	 */
 	public function configuredBrushesAreAppendedSortedToTheReturnValue() {
+		$this->markTestSkipped('This test can not run with UniqueAppendingTest at the moment due to a chaching issue.
+			See #10 for more information. Move this markTestSkipped call to run this test.');
+
 		/* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
 		$settingsServiceMock = $this->getMock(SettingsService::class);
 		$settingsServiceMock

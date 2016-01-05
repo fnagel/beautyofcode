@@ -40,65 +40,6 @@ use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
  */
 class GeneralUtilityTest extends UnitTestCase {
 
-	protected $backupGlobalsBlacklist = array('TYPO3_CONF_VARS', 'TYPO3_LOADED_EXT');
-
-	public function setUp() {
-		if (FALSE === defined('PATH_site')) {
-			define('PATH_site', '/home/foo/');
-		}
-
-		if (FALSE === defined('REQUIRED_EXTENSIONS')) {
-			define('REQUIRED_EXTENSIONS', 'foo,bar');
-		}
-
-		if (FALSE === defined('PATH_typo3conf')) {
-			define('PATH_typo3conf', '/home/foo/typo3conf/');
-		}
-
-		if (FALSE === defined('PATH_typo3')) {
-			define('PATH_typo3', '/home/foo/typo3/');
-		}
-
-		/* @var $packageManagerMock PackageManager|\PHPUnit_Framework_MockObject_MockObject */
-		$packageManagerMock = $this->getMock(PackageManager::class);
-
-		ExtensionManagementUtility::setPackageManager($packageManagerMock);
-
-		$packageMock = $this->getMockBuilder(Package::class)
-			->disableOriginalConstructor()
-			->getMock();
-
-		$packageMock
-			->expects($this->any())
-			->method('getPackagePath')
-			->will($this->returnValue('/home/foo/typo3conf/ext/beautyofcode'));
-
-		$packageManagerMock
-			->expects($this->any())
-			->method('isPackageActive')
-			->with($this->equalTo('beautyofcode'))
-			->will($this->returnValue(TRUE));
-
-		$packageManagerMock
-			->expects($this->any())
-			->method('getPackage')
-			->with($this->equalTo('beautyofcode'))
-			->will($this->returnValue($packageMock));
-
-		$GLOBALS['TYPO3_CONF_VARS'] = array(
-			'EXT' => array(
-				'extListArray' => array(
-					'beautyofcode'
-				),
-				'requiredExt' => array('foo', 'bar'),
-			),
-		);
-
-		$GLOBALS['TYPO3_LOADED_EXT']['beautyofcode'] = array(
-			'siteRelPath' => 'typo3conf/ext/beautyofcode/'
-		);
-	}
-
 	/**
 	 *
 	 * @test

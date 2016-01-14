@@ -19,12 +19,17 @@ if (!defined ('TYPO3_MODE')) {
 $backendPreviewHook = 'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHooks.php:TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks';
 $TYPO3_CONF_VARS['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] = $backendPreviewHook;
 
-// cache registration
+// Cache registration
 if (!is_array($TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {
-	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = array(
-		'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\SimpleFileBackend',
-		'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\StringFrontend'
-	);
+	$TYPO3_CONF_VARS['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = array();
+}
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'] =
+		'TYPO3\\CMS\\Core\\Cache\\Backend\\TransientMemoryBackend';
+}
+if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'])) {
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'] =
+		'TYPO3\\CMS\\Core\\Cache\\Frontend\\VariableFrontend';
 }
 
 // Dynamic changing of t3editor format for TYPO3 7.x

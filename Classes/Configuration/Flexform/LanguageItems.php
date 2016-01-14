@@ -16,10 +16,9 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
 
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\Beautyofcode\Service\SettingsService;
-use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Function to add select options dynamically (loaded in flexform)
@@ -38,18 +37,9 @@ class LanguageItems {
 	protected $objectManager;
 
 	/**
-	 * PageRepository
-	 *
-	 * @var \TYPO3\CMS\Frontend\Page\PageRepository
+	 * @var \TYPO3\CMS\Core\Cache\CacheManager
 	 */
-	protected $pageRepository;
-
-	/**
-	 * TemplateSerice
-	 *
-	 * @var \TYPO3\CMS\Core\TypoScript\TemplateService
-	 */
-	protected $templateService;
+	protected $cacheManager;
 
 	/**
 	 * SettingsService
@@ -88,35 +78,19 @@ class LanguageItems {
 
 		$this->objectManager = $objectManager;
 	}
-
 	/**
-	 * Injects the page repository
+	 * InjectCacheManager
 	 *
-	 * @param \TYPO3\CMS\Frontend\Page\PageRepository $pageRepository PageRepository
+	 * @param \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
 	 *
 	 * @return void
 	 */
-	public function injectPageRepository(PageRepository $pageRepository = NULL) {
-		if (is_null($pageRepository)) {
-			$pageRepository = $this->objectManager->get('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
+	public function injectCacheManager(CacheManager $cacheManager = NULL) {
+		if (is_null($cacheManager)) {
+			$cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
 		}
 
-		$this->pageRepository = $pageRepository;
-	}
-
-	/**
-	 * Injects the template service
-	 *
-	 * @param \TYPO3\CMS\Core\TypoScript\TemplateService $templateService TemplateService
-	 *
-	 * @return void
-	 */
-	public function injectTemplateService(TemplateService $templateService = NULL) {
-		if (is_null($templateService)) {
-			$templateService = $this->objectManager->get('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
-		}
-
-		$this->templateService = $templateService;
+		$this->cacheManager = $cacheManager;
 	}
 
 	/**
@@ -126,7 +100,7 @@ class LanguageItems {
 	 *
 	 * @return void
 	 */
-	public function injectHighlighterConfiguration(ConfigurationInterface $configuration) {
+	public function injectHighlighterConfiguration(ConfigurationInterface $configuration = NULL) {
 		if (is_null($configuration)) {
 			$configuration = $this->objectManager->get('TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface');
 		}
@@ -141,8 +115,7 @@ class LanguageItems {
 	 */
 	public function initialize() {
 		$this->injectObjectManager($this->objectManager);
-		$this->injectPageRepository($this->pageRepository);
-		$this->injectTemplateService($this->templateService);
+		$this->injectCacheManager($this->cacheManager);
 		$this->injectHighlighterConfiguration($this->highlighterConfiguration);
 	}
 
@@ -157,9 +130,7 @@ class LanguageItems {
 	public function getConfiguredLanguages($config) {
 		$this->initialize();
 
-		static $cachedFields = 0;
-
-		if ($cachedFields != 0) {
+		if (($cachedFields = $this->getCache()->get('language-items')) !== FALSE) {
 			$config['items'] = $cachedFields;
 		} else {
 
@@ -192,7 +163,8 @@ class LanguageItems {
 
 			$config['items'] = array_merge($config['items'], $optionList);
 		}
-		$cachedFields = $config['items'];
+
+		$this->getCache()->set('language-items', $config['items'], array('beautyofcode'));
 
 		return $config;
 	}
@@ -258,8 +230,6 @@ class LanguageItems {
 	/**
 	 * Get the settings service
 	 *
-	 * @todo Add caching per PID?
-	 *
 	 * @param int $pid PID of the page
 	 *
 	 * @return \TYPO3\Beautyofcode\Service\SettingsService
@@ -267,4 +237,14 @@ class LanguageItems {
 	public function getSettingsService($pid = 0) {
 		return $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\SettingsService', $pid);
 	}
+
+	/**
+	 * Get the wiki constants cache
+	 *
+	 * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+	 */
+	protected function getCache() {
+		return $this->cacheManager->getCache('cache_beautyofcode');
+	}
+
 }

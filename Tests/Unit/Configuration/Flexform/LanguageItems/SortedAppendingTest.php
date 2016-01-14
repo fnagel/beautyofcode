@@ -28,6 +28,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
  ***************************************************************/
 
 use TYPO3\Beautyofcode\Service\SettingsService;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -43,9 +44,6 @@ class SortedAppendingTest extends UnitTestCase {
 	 * @test
 	 */
 	public function configuredBrushesAreAppendedSortedToTheReturnValue() {
-		$this->markTestSkipped('This test can not run with UniqueAppendingTest at the moment due to a chaching issue.
-			See #10 for more information. Move this markTestSkipped call to run this test.');
-
 		/* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
 		$settingsServiceMock = $this->getMock(SettingsService::class);
 		$settingsServiceMock
@@ -64,11 +62,14 @@ class SortedAppendingTest extends UnitTestCase {
 			)
 			->will($this->returnValue($settingsServiceMock));
 
-		/* @var $pageRepositoryMock \TYPO3\CMS\Frontend\Page\PageRepository */
-		$pageRepositoryMock = $this->getMock('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
-
-		/* @var $templateServiceMock \TYPO3\CMS\Core\TypoScript\TemplateService */
-		$templateServiceMock = $this->getMock('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+		$cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
+		$cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend('cache_beautyofcode', $cacheBackendMock);
+		$cacheManagerMock = $this->getMock(CacheManager::class);
+		$cacheManagerMock
+			->expects($this->any())
+			->method('getCache')
+			->with($this->equalTo('cache_beautyofcode'))
+			->willReturn($cacheFrontendMock);
 
 		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
 		$highlighterConfigurationMock = $this
@@ -86,19 +87,8 @@ class SortedAppendingTest extends UnitTestCase {
 
 		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($objectManagerMock);
-		$sut->injectPageRepository($pageRepositoryMock);
-		$sut->injectTemplateService($templateServiceMock);
+		$sut->injectCacheManager($cacheManagerMock);
 		$sut->injectHighlighterConfiguration($highlighterConfigurationMock);
-
-		$templateServiceMock->setup = array(
-			'plugin.' => array(
-				'tx_beautyofcode.' => array(
-					'settings.' => array(
-						'brushes' => 'Sql, Python, Php',
-					),
-				),
-			),
-		);
 
 		$configFromFlexform = array(
 			'row' => array(

@@ -28,6 +28,7 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems;
  ***************************************************************/
 
 use TYPO3\Beautyofcode\Service\SettingsService;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -56,11 +57,14 @@ class UniqueAppendingTest extends UnitTestCase {
 				)
 				->will($this->returnValue($settingsServiceMock));
 
-		/* @var $pageRepositoryMock \TYPO3\CMS\Frontend\Page\PageRepository */
-		$pageRepositoryMock = $this->getMock('TYPO3\\CMS\\Frontend\\Page\\PageRepository');
-
-		/* @var $templateServiceMock \TYPO3\CMS\Core\TypoScript\TemplateService */
-		$templateServiceMock = $this->getMock('TYPO3\\CMS\\Core\\TypoScript\\TemplateService');
+		$cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
+		$cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend('cache_beautyofcode', $cacheBackendMock);
+		$cacheManagerMock = $this->getMock(CacheManager::class);
+		$cacheManagerMock
+			->expects($this->any())
+			->method('getCache')
+			->with($this->equalTo('cache_beautyofcode'))
+			->willReturn($cacheFrontendMock);
 
 		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
 		$highlighterConfigurationMock = $this
@@ -78,19 +82,8 @@ class UniqueAppendingTest extends UnitTestCase {
 
 		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
 		$sut->injectObjectManager($objectManagerMock);
-		$sut->injectPageRepository($pageRepositoryMock);
-		$sut->injectTemplateService($templateServiceMock);
+		$sut->injectCacheManager($cacheManagerMock);
 		$sut->injectHighlighterConfiguration($highlighterConfigurationMock);
-
-		$templateServiceMock->setup = array(
-			'plugin.' => array(
-				'tx_beautyofcode.' => array(
-					'settings.' => array(
-						'brushes' => 'Php, Sql, Python, Sql',
-					),
-				),
-			),
-		);
 
 		$configFromFlexform = array(
 			'row' => array(

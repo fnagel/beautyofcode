@@ -63,11 +63,14 @@ class Prism extends AbstractConfiguration {
 		'diff' => array('diff', 'Diff / Patch'),
 		'erlang' => array('erlang', 'Erlang'),
 		'gherkin' => array('gherkin', 'Gherkin'),
+		'git' => array('git', 'Git'),
 		'go' => array('go', 'Go'),
 		'groovy' => array('groovy', 'Groovy'),
 		'http' => array('http', 'HTTP'),
 		'java' => array('java', 'Java'),
 		'javascript' => array('javascript', 'JavaScript'),
+		'less' => array('less', 'LESS'),
+		'markdown' => array('markdown', 'Markdown'),
 		'markup' => array('markup', 'XML / XSLT / XHTML / HTML'),
 		'php' => array('php', 'PHP'),
 		'powershell' => array('powershell', 'Power-Shell'),
@@ -77,7 +80,9 @@ class Prism extends AbstractConfiguration {
 		'scala' => array('scala', 'Scala'),
 		'scss' => array('scss', 'SCSS'),
 		'sql' => array('sql', 'SQL'),
+		'twig' => array('twig', 'Twig'),
 		'typoscript' => array('typoscript', 'TypoScript'),
+		'yaml' => array('yaml', 'Yaml'),
 	);
 
 	/**

@@ -36,10 +36,15 @@ class SyntaxHighlighter extends AbstractConfiguration {
 			'c' => 'cpp',
 			'coffeescript' => 'javascript',
 			'gherkin' => 'plain',
+			'git' => 'plain',
 			'go' => 'plain',
 			'http' => 'plain',
+			'less' => 'plain',
+			'markdown' => 'plain',
 			'markup' => 'xml',
 			'scss' => 'sass',
+			'twig' => 'plain',
+			'yaml' => 'plain',
 		),
 	);
 

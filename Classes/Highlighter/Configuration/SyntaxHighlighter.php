@@ -25,10 +25,14 @@ class SyntaxHighlighter extends AbstractConfiguration {
 	/**
 	 * Failsafe brush alias map
 	 *
+	 * Fallback from one highlighter engine to another.
+	 * Key Prism SH CSS class and value is SH CSS class.
+	 *
 	 * @var array
 	 */
 	protected $failSafeBrushAliasMap = array(
 		'Prism' => array(
+			'actionscript' => 'actionscript3',
 			'c' => 'cpp',
 			'coffeescript' => 'javascript',
 			'gherkin' => 'plain',
@@ -67,6 +71,7 @@ class SyntaxHighlighter extends AbstractConfiguration {
 		'PowerShell' => array('powershell', 'Power-Shell'),
 		'Python' => array('python', 'Python'),
 		'Ruby' => array('ruby', 'Ruby on Rails'),
+		'Sass' => array('sass', 'Sass'),
 		'Scala' => array('scala', 'Scala'),
 		'Sql' => array('sql', 'SQL / MySQL'),
 		'Typoscript' => array('typoscript', 'Typoscript'),

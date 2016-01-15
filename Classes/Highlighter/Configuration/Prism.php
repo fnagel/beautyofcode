@@ -25,26 +25,22 @@ class Prism extends AbstractConfiguration {
 	/**
 	 * Failsafe brush alias map
 	 *
+	 * Fallback from one highlighter engine to another.
+	 * Key is SH CSS class and value is Prism CSS class.
+	 *
 	 * @var array
 	 */
 	protected $failSafeBrushAliasMap = array(
 		'SyntaxHighlighter' => array(
-			'applescript' => 'javascript',
-			'actionscript3' => 'javascript',
+			'actionscript3' => 'actionscript',
 			'coldfusion' => 'markup',
 			'delphi' => 'plain',
-			'diff' => 'plain',
-			'erlang' => 'plain',
 			'javafx' => 'java',
 			'perl' => 'c',
-			'powershell' => 'bash',
-			'sass' => 'scss',
-			'scala' => 'java',
 			'vb' => 'plain',
 			'xml' => 'markup',
 		),
 	);
-
 
 	/**
 	 * A CSS class/label map for the select box
@@ -55,6 +51,8 @@ class Prism extends AbstractConfiguration {
 	 * @var array
 	 */
 	protected $brushIdentifierAliasLabelMap = array(
+		'applescript' => array('applescript', 'AppleScript'),
+		'actionscript' => array('actionscript', 'Actionscript 3'),
 		'bash' => array('bash', 'Bash / Shell'),
 		'c' => array('c', 'C / C++'),
 		'clike' => array('clike', 'C-Like'),
@@ -62,6 +60,8 @@ class Prism extends AbstractConfiguration {
 		'cpp' => array('cpp', 'C / C++'),
 		'csharp' => array('csharp', 'C#'),
 		'css' => array('css', 'CSS'),
+		'diff' => array('diff', 'Diff / Patch'),
+		'erlang' => array('erlang', 'Erlang'),
 		'gherkin' => array('gherkin', 'Gherkin'),
 		'go' => array('go', 'Go'),
 		'groovy' => array('groovy', 'Groovy'),
@@ -70,8 +70,11 @@ class Prism extends AbstractConfiguration {
 		'javascript' => array('javascript', 'JavaScript'),
 		'markup' => array('markup', 'XML / XSLT / XHTML / HTML'),
 		'php' => array('php', 'PHP'),
+		'powershell' => array('powershell', 'Power-Shell'),
 		'python' => array('python', 'Python'),
 		'ruby' => array('ruby', 'Ruby'),
+		'sass' => array('sass', 'Sass'),
+		'scala' => array('scala', 'Scala'),
 		'scss' => array('scss', 'SCSS'),
 		'sql' => array('sql', 'SQL'),
 		'typoscript' => array('typoscript', 'TypoScript'),

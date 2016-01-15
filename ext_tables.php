@@ -15,10 +15,14 @@ if (!defined ('TYPO3_MODE')) {
 	'beautyOfCode (Prism)'
 );
 
+\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+	'<INCLUDE_TYPOSCRIPT: source="FILE:EXT:beautyofcode/Configuration/TypoScript/pageTsConfig.ts">'
+);
+
 $TCA['tt_content']['columns']['CType']['config']['items'][] = array(
 	'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
 	'beautyofcode_contentrenderer',
-	'EXT:beautyofcode/Resources/Public/Images/ce_wiz.gif'
+	'content-special-html'
 );
 $TCA['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
@@ -48,11 +52,6 @@ $TCA['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentren
 	'FILE:EXT:' . $_EXTKEY . '/Configuration/Flexform/ContentRenderer.xml',
 	'beautyofcode_contentrenderer'
 );
-
-if (TYPO3_MODE == 'BE') {
-	$newContentElementWizardItem = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath($_EXTKEY) . 'Classes/Configuration/Wizard/NewContentElementWizard.php';
-	$TBE_MODULES_EXT['xMOD_db_new_content_el']['addElClasses']['TYPO3\\Beautyofcode\\Configuration\\Wizard\\NewContentElementWizard'] = $newContentElementWizardItem;
-}
 
 // this dummy data is necessary to allow the extbase data mapper to work
 $TCA['tx_beautyofcode_domain_model_flexform'] = array(

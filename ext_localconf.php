@@ -9,9 +9,7 @@ if (!defined ('TYPO3_MODE')) {
 	array(
 		'Content' => 'render'
 	),
-	// non-cacheable actions
-	array(
-	),
+	array(),
 	\TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
 

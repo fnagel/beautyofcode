@@ -172,6 +172,6 @@ defaults.collapse
 :typoscript:`plugin.tx_beautyofcode.settings.defaults.collapse =` :ref:`t3tsref:data-type-boolean`
 
 Allows you to force highlighted elements on the page to be collapsed. A link 
-"show source" is displayed instead (not customizable yet).
+"show source" is displayed instead (not customizable yet). Not available in Prism.
 
 .. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

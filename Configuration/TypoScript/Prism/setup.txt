@@ -9,6 +9,7 @@ plugin.tx_beautyofcode {
 
 		defaults {
 			gutter = {$plugin.tx_beautyofcode.settings.defaults.gutter}
+			# collapse is not available for Prism
 		}
 	}
 

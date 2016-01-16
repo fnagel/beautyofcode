@@ -98,16 +98,21 @@ Please see the changelog for all changes in detail.
 2.x to 3.0
 ^^^^^^^^^^
 
-In order to make this extension work best possible in TYPO3 7.5 and to make maintaining
+In order to make this extension work best possible in TYPO3 7.x and to make maintaining
 more easier (especially the t3editor implementation) this version introduces usage of the
 default `tt_content` `bodytext` field.
 
 What you need to know:
 
+- Removed TYPO3 6.x support
 - There is an update wizard available through Extension Manager to migrate your existing records.
-- No visible changes in backend user interface.
+- Almost no visible changes in backend user interface.
 - Make sure to adopt your TypoScript (assigning your settings to `module.` for backend context)
-- Added a composer.json file
+- Update PrimJS to version 1.3.0
+- Add some new PrimsJS languages (Actionscript, Applescript, Diff, Erlang, Git, Sass, Scala, Twig, Less, MarkDown, Powershell, Yaml)
+- Use core icon for plugin and wizard
+- Added a composer.json and a bower.json file
+- Imporved code style
 
 .. _admin-faq:
 

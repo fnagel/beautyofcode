@@ -19,14 +19,8 @@ Installation
 - Add the static template in your main typoscript (go to: list module, root
   page, edit your root TS template, tab: includes, add one of the static
   templates named “beautyOfCode”).
-- You must add the jQuery core file yourself or by installing ext:t3jquery
-  and make usage of the shipped backend module to compile your necessary jQuery
-  library. Since version 2.0.0 it's possible to use syntax highlighting
-  without using jQuery.
+- Depending on your configuration you must add the jQuery core file yourself.
 
-**Please note**: It's strongly recommended to add one line in your
-localconf.php to force CDATA escaping within the flexforms in TYPO3. Please see
-know FAQ section.
 
 .. _admin-configuration:
 
@@ -36,8 +30,6 @@ Configuration
 Enable syntax highlighting (install EXT: t3editor) in BE by using
 enable_t3editor option.
 
-**Please note**: Some extension manager settings have been removed in version
-0.7.0. Use TypoScript instead.
 
 .. _admin-upgrade-guide:
 

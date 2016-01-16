@@ -120,17 +120,9 @@ coffeescript, cpp, csharp, css, css-extras, diff, erlang, gherkin, git, go, groo
 http, java, javascript, less, markdown, markup, powershell, php, php-extras, plain,
 python, ruby, sass, scala, scss, sql, twig, typoscript, yaml.
 
-**Prism Note #1:** Prism uses its brushes in a dependency manner. For example the `clike`
+**Prism Note:** Prism uses its brushes in a dependency manner. For example the `clike`
 brush is necessary to load before `php`(and therefore must be defined *before*
 `php` in the `brushes` configuration.
-
-**Prism Note #2:** Furthermore, there currently is a bug in Prism which prevents
-proper line numbering and line highlighting. We're aware of this issue and keep
-an eye on this and will provide an update to Prism once this issue is fixed. For
-more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_. 
-To ensure proper functionality, you **must** provide the `markup` brush after
-the `php` Prism component/brush (like in the default configuration).
-
 
 .. important::
 	The Make :code:`plugin.tx_beautyofcode.settings.brushes` settings are used in BE context.
@@ -174,5 +166,3 @@ defaults.collapse
 
 Allows you to force highlighted elements on the page to be collapsed. A link 
 "show source" is displayed instead (not customizable yet). Not available in Prism.
-
-.. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

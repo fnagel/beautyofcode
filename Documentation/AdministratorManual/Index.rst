@@ -271,3 +271,15 @@ Where to post improvements or bugs
 
 Please feel free add questions, bugs and improvements at
 http://forge.typo3.org/projects/extension-beautyofcode/issues
+
+
+Problems with line numbering and line highlighting in Prism
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There was a bug in Prism which prevented proper line numbering and line highlighting.
+This issue should be fixed in beautyofcode v 3.0.0 as we updated PrimsJS.
+For more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_.
+To ensure proper functionality, you **must** provide the `markup` brush after
+the `php` Prism component/brush (like in the default configuration).
+
+.. _PrismLineNumberingIssue: https://github.com/LeaVerou/prism/issues/149

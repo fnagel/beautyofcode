@@ -17,7 +17,7 @@ What does it do?
 ----------------
 
 This plugin provides state-of-the-art syntax highlighting by using JavaScript 
-by using  SyntaxHighlighting 3.0 by Alex Gorbatchev or the `prism syntax 
+by using  SyntaxHighlighting 3.x by Alex Gorbatchev or the `prism syntax
 highlighter`_ written by Lea Verou.
 
 Use the constant editor or TS to define needed programming languages. These 
@@ -31,22 +31,19 @@ The following programming languages are available:
 SyntaxHighlighter
 ^^^^^^^^^^^^^^^^^
 
-Actionscript 3, Bash, Shell,  ColdFusion", C, C++, C#, CSS, Delphi, Pas, Pascal, 
+Actionscript 3, Bash, Shell,  ColdFusion, C, C++, C#, CSS, Delphi, Pas, Pascal,
 Diff, Patch, Erlang, Groovy,  Java, Java FX, Java-Script, Perl, PHP, Power-Shell, 
-Python, Ruby on Rails, Scala, SQL, Typoscript, MySQL, Virtual Basic, .Net, XML, 
+Python, Ruby on Rails, Sass, Scala, SQL, Typoscript, MySQL, Virtual Basic, .Net, XML,
 XSLT, XHTML and HTML. 
-
-There are even more available, please check out `The syntax highlighter online 
-help for brushes <SyntaxhighlighterOnlineHelpBrushes_>`_.
 
 The newly added TypoScript brush is based upon a `user language for Notepad++ 
 <TypoScriptUserLanguageNotepadPP_>`_.
 
 Prism
 ^^^^^
-
-Bash, C, C-Like, Coffeescript, C++, C#, CSS, Gherkin, Go, Groovy, HTTP, Java, 
-JavaScript, Markup (HTML/XML, etc.), PHP, Python, Ruby, SCSS, SQL, TypoScript.
+AppleScript, Actionscript 3, Bash, C, C-Like, Coffeescript, C++, C#, CSS, Diff, Erlang, Gherkin, Git, Go, Groovy, HTTP,
+Java, JavaScript, Less, Markdown, Markup (HTML/XML, etc.), PHP, Power-Shell, Python, Ruby, Sass, Scala, SCSS, SQL, Twig,
+TypoScript and Yaml.
 
 .. _features:
 

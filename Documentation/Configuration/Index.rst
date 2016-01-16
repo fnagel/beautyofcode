@@ -111,13 +111,14 @@ brushes
 Loaded programming languages: Define which programming languages should be 
 available. Less is more: every brush is lazy loaded a single js file.
 
-**SyntaxHighlighter:** Add a separated list out of: AS3, Bash, ColdFusion, Cpp, 
-CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php, 
-PowerShell, Python, Ruby, Scala, Typoscript, Sql, Vb, Xml.
+**SyntaxHighlighter:** Add a separated list out of: AS3, Bash, ColdFusion, Cpp,
+CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php,
+PowerShell, Python, Ruby, Sass, Scala, Typoscript, Sql, Vb, Xml.
 
-**Prism:** Add a separated list out of: markup, clike, csharp, javascript, plain,
-bash, c, coffeescript, cpp, css, css-extras, gherkin, go, groovy, http, java,
-php, php-extras, python, ruby, scss, sql, typoscript
+**Prism:** Add a separated list out of: actionscript, applescript, bash, c, clike,
+coffeescript, cpp, csharp, css, css-extras, diff, erlang, gherkin, git, go, groovy,
+http, java, javascript, less, markdown, markup, powershell, php, php-extras, plain,
+python, ruby, sass, scala, scss, sql, twig, typoscript, yaml.
 
 **Prism Note #1:** Prism uses its brushes in a dependency manner. For example the `clike`
 brush is necessary to load before `php`(and therefore must be defined *before*

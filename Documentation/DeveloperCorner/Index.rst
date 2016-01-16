@@ -40,36 +40,21 @@ Prism
 FAQ
 ---
 
-Howto install prism
-^^^^^^^^^^^^^^^^^^^
+Howto install JS vendors
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-1. Download node.js binaries from http://nodejs.org/download/
-2. extract tar.gz
-3. edit ~/.bashrc and extend $PATH
-
-   .. code-block:: bash
-
-      export PATH=${PATH}:/path/to/extracted/targz/content/bin
-   
-4. install bower
+1. Download amd install node.js from http://nodejs.org/download/
+2. Install bower
 
    .. code-block:: bash
 
-      /path/to/extracted/targz/content/bin/npm install bower
-   
-5. create .bowerrc to install package within Resources/Public/Javascript/vendor
+      npm install bower
 
-   .. code-block:: js
-
-      {
-         "directory": "./Resources/Public/Javascript/vendor/"
-      }
-
-6. install prism from CLI
+3. Install vendors from CLI
 
    .. code-block:: bash
 
-      ./node_modules/.bin/bower install prism#gh-pages
+      bower install prism#gh-pages
 
 Howto add BOM to all reStructuredText files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -105,14 +105,14 @@ default `tt_content` `bodytext` field.
 What you need to know:
 
 - Removed TYPO3 6.x support
-- There is an update wizard available through Extension Manager to migrate your existing records.
-- Almost no visible changes in backend user interface.
+- There is an update wizard available through Extension Manager to migrate your existing records
+- Almost no visible changes in backend user interface
 - Make sure to adopt your TypoScript (assigning your settings to `module.` for backend context)
-- Update PrimJS to version 1.3.0
-- Add some new PrimsJS languages (Actionscript, Applescript, Diff, Erlang, Git, Sass, Scala, Twig, Less, MarkDown, Powershell, Yaml)
+- Updated PrimJs vendor to version 1.3.0
+- Add some new PrimsJs languages (Actionscript, Applescript, Diff, Erlang, Git, Sass, Scala, Twig, Less, MarkDown, Powershell, Yaml)
 - Use core icon for plugin and wizard
 - Added a composer.json and a bower.json file
-- Imporved code style
+- Improved code style
 
 .. _admin-faq:
 

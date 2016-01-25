@@ -4,8 +4,8 @@
 
 ---
 conf.py:
-  copyright: 2015
+  copyright: 2016
   project: beautyofcode
-  version: 2.1.0
-  release: 2.1.0
+  version: 3.0.0
+  release: 3.0.0
 ...

@@ -1,3 +1,13 @@
+2016-01-25 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
+
+	3.0.0 released (Migration needed see documentation)
+	* TYPO3 7.6 compatibility, removed 6.2 support
+	* Changed TypoScript processing
+	* Added and fixed some languages for PrismJs
+	* Update PrismJs vendor
+	* Add composer and bower file
+	* Now using default tt_content bodytext field for code
+
 2015-08-10 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
 
 	2.1.0 released (no changes required)

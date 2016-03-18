@@ -29,9 +29,8 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_email' => 'info@felixnagel.com',
 	'constraints' => array(
 		'depends' => array(
+			'php' => '5.4.0-7.0.99',
 			'typo3' => '7.3.1-7.6.99',
-			'extbase' => '',
-			'fluid' => '',
 		),
 		'conflicts' => array(
 		),

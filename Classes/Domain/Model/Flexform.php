@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Domain\Model;
 
 /*
@@ -17,239 +18,240 @@ namespace TYPO3\Beautyofcode\Domain\Model;
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
- * Domain model object for the flexform configuration of a plugin instance
+ * Domain model object for the flexform configuration of a plugin instance.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Domain\Model
  */
-class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject {
+class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
+{
+    /**
+     * ConfigurationInterface.
+     *
+     * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+     */
+    protected $highlighterConfiguration;
 
-	/**
-	 * ConfigurationInterface
-	 *
-	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
-	 */
-	protected $highlighterConfiguration;
+    /**
+     * Code label.
+     *
+     * @var string
+     */
+    protected $cLabel;
 
-	/**
-	 * Code label
-	 *
-	 * @var string
-	 */
-	protected $cLabel;
+    /**
+     * Code language / brush.
+     *
+     * @var string
+     */
+    protected $cLang;
 
-	/**
-	 * Code language / brush
-	 *
-	 * @var string
-	 */
-	protected $cLang;
+    /**
+     * Code highlight lines.
+     *
+     * @var string
+     */
+    protected $cHighlight;
 
-	/**
-	 * Code highlight lines
-	 *
-	 * @var string
-	 */
-	protected $cHighlight;
+    /**
+     * Code block collapse flag.
+     *
+     * @var string
+     */
+    protected $cCollapse;
 
-	/**
-	 * Code block collapse flag
-	 *
-	 * @var string
-	 */
-	protected $cCollapse;
+    /**
+     * Code block show gutter flag.
+     *
+     * @var string
+     */
+    protected $cGutter;
 
-	/**
-	 * Code block show gutter flag
-	 *
-	 * @var string
-	 */
-	protected $cGutter;
+    /**
+     * Default settings from settings.defaults.
+     *
+     * @var array
+     */
+    protected $typoscriptDefaults = array();
 
-	/**
-	 * Default settings from settings.defaults
-	 *
-	 * @var array
-	 */
-	protected $typoscriptDefaults = array();
+    /**
+     * Language / brush fallback.
+     *
+     * @var string
+     */
+    protected $languageFallback = 'plain';
 
-	/**
-	 * Language / brush fallback
-	 *
-	 * @var string
-	 */
-	protected $languageFallback = 'plain';
+    /**
+     * InjectHighlighterConfiguration.
+     *
+     * @param ConfigurationInterface $highlighterConfiguration ConfigurationInterface
+     */
+    public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration)
+    {
+        $this->highlighterConfiguration = $highlighterConfiguration;
+    }
 
-	/**
-	 * InjectHighlighterConfiguration
-	 *
-	 * @param ConfigurationInterface $highlighterConfiguration ConfigurationInterface
-	 *
-	 * @return void
-	 */
-	public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration) {
-		$this->highlighterConfiguration = $highlighterConfiguration;
-	}
+    /**
+     * SetCLabel.
+     *
+     * @param string $cLabel The label
+     */
+    public function setCLabel($cLabel)
+    {
+        $this->cLabel = $cLabel;
+    }
 
-	/**
-	 * SetCLabel
-	 *
-	 * @param string $cLabel The label
-	 *
-	 * @return void
-	 */
-	public function setCLabel($cLabel) {
-		$this->cLabel = $cLabel;
-	}
+    /**
+     * GetCLabel.
+     *
+     * @return string
+     */
+    public function getCLabel()
+    {
+        return $this->cLabel;
+    }
 
-	/**
-	 * GetCLabel
-	 *
-	 * @return string
-	 */
-	public function getCLabel() {
-		return $this->cLabel;
-	}
+    /**
+     * SetCLang.
+     *
+     * @param string $cLang The language / brush
+     */
+    public function setCLang($cLang)
+    {
+        $this->cLang = $cLang;
+    }
 
-	/**
-	 * SetCLang
-	 *
-	 * @param string $cLang The language / brush
-	 *
-	 * @return void
-	 */
-	public function setCLang($cLang) {
-		$this->cLang = $cLang;
-	}
+    /**
+     * GetCLang.
+     *
+     * @return string
+     */
+    public function getCLang()
+    {
+        return $this->cLang;
+    }
 
-	/**
-	 * GetCLang
-	 *
-	 * @return string
-	 */
-	public function getCLang() {
-		return $this->cLang;
-	}
+    /**
+     * SetCHihglight.
+     *
+     * @param string $cHighlight The highlight-lines configuration string
+     */
+    public function setCHighlight($cHighlight)
+    {
+        $this->cHighlight = $cHighlight;
+    }
 
-	/**
-	 * SetCHihglight
-	 *
-	 * @param string $cHighlight The highlight-lines configuration string
-	 *
-	 * @return void
-	 */
-	public function setCHighlight($cHighlight) {
-		$this->cHighlight = $cHighlight;
-	}
+    /**
+     * GetCHighlight.
+     *
+     * @return string
+     */
+    public function getCHighlight()
+    {
+        return $this->cHighlight;
+    }
 
-	/**
-	 * GetCHighlight
-	 *
-	 * @return string
-	 */
-	public function getCHighlight() {
-		return $this->cHighlight;
-	}
+    /**
+     * SetCCollapse.
+     *
+     * @param string $cCollapse The code block collapse flag
+     */
+    public function setCCollapse($cCollapse)
+    {
+        $this->cCollapse = $cCollapse;
+    }
 
-	/**
-	 * SetCCollapse
-	 *
-	 * @param string $cCollapse The code block collapse flag
-	 *
-	 * @return void
-	 */
-	public function setCCollapse($cCollapse) {
-		$this->cCollapse = $cCollapse;
-	}
+    /**
+     * GetCCollapse.
+     *
+     * @return string
+     */
+    public function getCCollapse()
+    {
+        return $this->cCollapse;
+    }
 
-	/**
-	 * GetCCollapse
-	 *
-	 * @return string
-	 */
-	public function getCCollapse() {
-		return $this->cCollapse;
-	}
+    /**
+     * SetCGutter.
+     *
+     * @param string $cGutter The code block show gutter flag
+     */
+    public function setCGutter($cGutter)
+    {
+        $this->cGutter = $cGutter;
+    }
 
-	/**
-	 * SetCGutter
-	 *
-	 * @param string $cGutter The code block show gutter flag
-	 *
-	 * @return void
-	 */
-	public function setCGutter($cGutter) {
-		$this->cGutter = $cGutter;
-	}
+    /**
+     * GetCGutter.
+     *
+     * @return string
+     */
+    public function getCGutter()
+    {
+        return $this->cGutter;
+    }
 
-	/**
-	 * GetCGutter
-	 *
-	 * @return string
-	 */
-	public function getCGutter() {
-		return $this->cGutter;
-	}
+    /**
+     * GetIsGutterActive.
+     *
+     * @return bool
+     */
+    public function getIsGutterActive()
+    {
+        $isOffForInstance = '0' === $this->cGutter;
+        $isOnForInstance = '1' === $this->cGutter;
+        $useDefault = 'auto' === $this->cGutter;
+        $isDefaultSet = isset($this->typoscriptDefaults['gutter']);
 
-	/**
-	 * GetIsGutterActive
-	 *
-	 * @return bool
-	 */
-	public function getIsGutterActive() {
-		$isOffForInstance = '0' === $this->cGutter;
-		$isOnForInstance = '1' === $this->cGutter;
-		$useDefault = 'auto' === $this->cGutter;
-		$isDefaultSet = isset($this->typoscriptDefaults['gutter']);
+        if ($isOffForInstance) {
+            return false;
+        } elseif ($isOnForInstance) {
+            return true;
+        } elseif ($useDefault && $isDefaultSet) {
+            return (bool) $this->typoscriptDefaults['gutter'];
+        }
 
-		if ($isOffForInstance) {
-			return FALSE;
-		} elseif ($isOnForInstance) {
-			return TRUE;
-		} elseif ($useDefault && $isDefaultSet) {
-			return (bool) $this->typoscriptDefaults['gutter'];
-		}
+        return false;
+    }
 
-		return FALSE;
-	}
+    /**
+     * SetTyposcriptDefaults.
+     *
+     * @param array $typoscriptDefaults TypoScript defaults
+     */
+    public function setTyposcriptDefaults($typoscriptDefaults = array())
+    {
+        $this->typoscriptDefaults = $typoscriptDefaults;
+    }
 
-	/**
-	 * SetTyposcriptDefaults
-	 *
-	 * @param array $typoscriptDefaults TypoScript defaults
-	 *
-	 * @return void
-	 */
-	public function setTyposcriptDefaults($typoscriptDefaults = array()) {
-		$this->typoscriptDefaults = $typoscriptDefaults;
-	}
+    /**
+     * GetLanguage.
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        $language = $this->cLang ? $this->cLang : $this->languageFallback;
 
-	/**
-	 * GetLanguage
-	 *
-	 * @return string
-	 */
-	public function getLanguage() {
-		$language = $this->cLang ? $this->cLang : $this->languageFallback;
+        return $this->highlighterConfiguration->getFailSafeBrushAlias($language);
+    }
 
-		return $this->highlighterConfiguration->getFailSafeBrushAlias($language);
-	}
+    /**
+     * GetClassAttributeString.
+     *
+     * @return string
+     */
+    public function getClassAttributeString()
+    {
+        return $this->highlighterConfiguration->getClassAttributeString($this);
+    }
 
-	/**
-	 * GetClassAttributeString
-	 *
-	 * @return string
-	 */
-	public function getClassAttributeString() {
-		return $this->highlighterConfiguration->getClassAttributeString($this);
-	}
-
-	/**
-	 * Returns an array of brush CSS name + ressource file name
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap() {
-		return $this->highlighterConfiguration->getAutoloaderBrushMap();
-	}
+    /**
+     * Returns an array of brush CSS name + ressource file name.
+     *
+     * @return array
+     */
+    public function getAutoloaderBrushMap()
+    {
+        return $this->highlighterConfiguration->getAutoloaderBrushMap();
+    }
 }

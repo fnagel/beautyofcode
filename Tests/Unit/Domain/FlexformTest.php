@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
 
 /***************************************************************
@@ -29,165 +30,165 @@ use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- * Tests the flexform domain object
+ * Tests the flexform domain object.
  *
- * @package \TYPO3\Beautyofcode\Tests\Unit\Domain
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
+ *
  * @link http://www.van-tomas.de/
  */
-class FlexformTest extends UnitTestCase {
+class FlexformTest extends UnitTestCase
+{
+    /**
+     * ConfigurationInterface.
+     *
+     * @var ConfigurationInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $highlighterConfigurationMock;
 
-	/**
-	 * ConfigurationInterface
-	 *
-	 * @var ConfigurationInterface|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected $highlighterConfigurationMock;
+    /**
+     * @var \TYPO3\Beautyofcode\Domain\Model\Flexform
+     */
+    protected $sut;
 
-	/**
-	 *
-	 * @var \TYPO3\Beautyofcode\Domain\Model\Flexform
-	 */
-	protected $sut;
+    public function setUp()
+    {
+        $this->highlighterConfigurationMock = $this->getMock(ConfigurationInterface::class);
 
-	public function setUp() {
-		$this->highlighterConfigurationMock = $this->getMock(ConfigurationInterface::class);
+        $this->sut = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
 
-		$this->sut = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
+        $this->sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 
-		$this->sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
+        $this->sut->setCLabel('The label');
+        $this->sut->setCLang('typoscript');
+        $this->sut->setCHighlight('1,2-3,8');
+        $this->sut->setCCollapse('1');
+        $this->sut->setCGutter('1');
+    }
 
-		$this->sut->setCLabel('The label');
-		$this->sut->setCLang('typoscript');
-		$this->sut->setCHighlight('1,2-3,8');
-		$this->sut->setCCollapse('1');
-		$this->sut->setCGutter('1');
-	}
+    /**
+     * @test
+     */
+    public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting()
+    {
+        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+        $this->sut->setCCollapse('');
 
-		$this->sut->setCCollapse('');
+        $this->assertNotContains('collapse', $this->sut->getClassAttributeString());
+    }
 
-		$this->assertNotContains('collapse', $this->sut->getClassAttributeString());
-	}
+    /**
+     * @test
+     */
+    public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting()
+    {
+        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting() {
-		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+        $this->sut->setCGutter('auto');
 
-		$this->sut->setCGutter('auto');
+        $this->assertNotContains('gutter', $this->sut->getClassAttributeString());
+    }
 
-		$this->assertNotContains('gutter', $this->sut->getClassAttributeString());
-	}
+    /**
+     * @test
+     */
+    public function highlightSettingHasSpecialFormattingForSyntaxHighlighter()
+    {
+        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingHasSpecialFormattingForSyntaxHighlighter() {
-		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
+        $this->assertContains('highlight: [', $this->sut->getClassAttributeString());
+    }
 
-		$this->assertContains('highlight: [', $this->sut->getClassAttributeString());
-	}
+    /**
+     * @test
+     */
+    public function highlightSettingWilllBeExpandedForSyntaxHighlighter()
+    {
+        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function highlightSettingWilllBeExpandedForSyntaxHighlighter() {
-		$this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
+        $this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
+    }
 
-		$this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
-	}
+    /**
+     * @test
+     */
+    public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForSyntaxHighlighter()
+    {
+        $this->highlighterConfigurationMock
+            ->expects($this->once())->method('getAutoloaderBrushMap')
+            ->will($this->returnValue(array('plain' => 'Plain')));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function plainBrushIsAlwaysAvailableInAutoloaderBrushesStackForSyntaxHighlighter() {
-		$this->highlighterConfigurationMock
-			->expects($this->once())->method('getAutoloaderBrushMap')
-			->will($this->returnValue(array('plain' => 'Plain')));
+        $brushes = $this->sut->getAutoloaderBrushMap();
 
-		$brushes = $this->sut->getAutoloaderBrushMap();
+        $this->assertArrayHasKey('plain', $brushes);
+    }
 
-		$this->assertArrayHasKey('plain', $brushes);
-	}
+    /**
+     * @test
+     */
+    public function brushesForSyntaxHighlighterAreMappedToASuitableCssTagString()
+    {
+        $this->highlighterConfigurationMock
+            ->expects($this->once())->method('getAutoloaderBrushMap')
+            ->will($this->returnValue(array('typoscript' => 'Typoscript', 'actionscript3' => 'AS3')));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function brushesForSyntaxHighlighterAreMappedToASuitableCssTagString() {
-		$this->highlighterConfigurationMock
-			->expects($this->once())->method('getAutoloaderBrushMap')
-			->will($this->returnValue(array('typoscript' => 'Typoscript', 'actionscript3' => 'AS3')));
+        $brushes = $this->sut->getAutoloaderBrushMap();
 
-		$brushes = $this->sut->getAutoloaderBrushMap();
+        $this->assertArrayHasKey('typoscript', $brushes);
+        $this->assertArrayHasKey('actionscript3', $brushes);
+    }
 
-		$this->assertArrayHasKey('typoscript', $brushes);
-		$this->assertArrayHasKey('actionscript3', $brushes);
-	}
+    /**
+     * @test
+     */
+    public function getIsGutterActiveReturnsFalseIfInstanceIsSetToZero()
+    {
+        $this->sut->setCGutter('0');
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToZero() {
-		$this->sut->setCGutter('0');
+        $this->assertFalse($this->sut->getIsGutterActive());
+    }
 
-		$this->assertFalse($this->sut->getIsGutterActive());
-	}
+    /**
+     * @test
+     */
+    public function getIsGutterActiveReturnsTrueIfInstanceIsSetToOne()
+    {
+        $this->sut->setCGutter('1');
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToOne() {
-		$this->sut->setCGutter('1');
+        $this->assertTrue($this->sut->getIsGutterActive());
+    }
 
-		$this->assertTrue($this->sut->getIsGutterActive());
-	}
+    /**
+     * @test
+     */
+    public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy()
+    {
+        $this->sut->setCGutter('auto');
+        $this->sut->setTyposcriptDefaults(array('gutter' => ''));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy() {
-		$this->sut->setCGutter('auto');
-		$this->sut->setTyposcriptDefaults(array('gutter' => ''));
+        $this->assertFalse($this->sut->getIsGutterActive());
+    }
 
-		$this->assertFalse($this->sut->getIsGutterActive());
-	}
+    /**
+     * @test
+     */
+    public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff()
+    {
+        $this->sut->setCGutter('auto');
+        $this->sut->setTyposcriptDefaults(array('gutter' => '0'));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff() {
-		$this->sut->setCGutter('auto');
-		$this->sut->setTyposcriptDefaults(array('gutter' => '0'));
+        $this->assertFalse($this->sut->getIsGutterActive());
+    }
 
-		$this->assertFalse($this->sut->getIsGutterActive());
-	}
+    /**
+     * @test
+     */
+    public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn()
+    {
+        $this->sut->setCGutter('auto');
+        $this->sut->setTyposcriptDefaults(array('gutter' => '1'));
 
-	/**
-	 *
-	 * @test
-	 */
-	public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn() {
-		$this->sut->setCGutter('auto');
-		$this->sut->setTyposcriptDefaults(array('gutter' => '1'));
-
-		$this->assertTrue($this->sut->getIsGutterActive());
-	}
+        $this->assertTrue($this->sut->getIsGutterActive());
+    }
 }

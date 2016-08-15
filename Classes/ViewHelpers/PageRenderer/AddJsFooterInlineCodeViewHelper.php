@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 
 /*
@@ -15,27 +16,25 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  */
 
 /**
- * Adds javascript inline code to the page footer
+ * Adds javascript inline code to the page footer.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  */
-class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
+class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+{
+    /**
+     * Renders the view helper.
+     *
+     * @param string $name       Name of the inline block
+     * @param bool   $compress   TYPO3 compress flag
+     * @param bool   $forceOnTop TYPO3 force-on-top flag
+     */
+    public function render($name, $compress = true, $forceOnTop = false)
+    {
+        $block = $this->renderChildren();
 
-	/**
-	 * Renders the view helper
-	 *
-	 * @param string $name Name of the inline block
-	 * @param bool $compress TYPO3 compress flag
-	 * @param bool $forceOnTop TYPO3 force-on-top flag
-	 *
-	 * @return NULL
-	 */
-	public function render($name, $compress = TRUE, $forceOnTop = FALSE) {
-		$block = $this->renderChildren();
+        $this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop);
 
-		$this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop);
-
-		return NULL;
-	}
+        return;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 
 /*
@@ -15,58 +16,58 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  */
 
 /**
- * Adds javascript libraries to the page footer
+ * Adds javascript libraries to the page footer.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  */
-class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
+class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+{
+    /**
+     * TypoScriptFrontendController.
+     *
+     * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     */
+    protected $typoscriptFrontendController;
 
-	/**
-	 * TypoScriptFrontendController
-	 *
-	 * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
-	 */
-	protected $typoscriptFrontendController;
+    /**
+     * (non-PHPdoc).
+     *
+     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
+     */
+    public function initialize()
+    {
+        $this->typoscriptFrontendController = $GLOBALS['TSFE'];
+    }
 
-	/**
-	 * (non-PHPdoc)
-	 * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-	 */
-	public function initialize() {
-		$this->typoscriptFrontendController = $GLOBALS['TSFE'];
-	}
+    /**
+     * Renders the view helper.
+     *
+     * @param string $name                     Name of the library
+     * @param string $file                     File reference
+     * @param string $type                     Type attribute of the script tag
+     * @param bool   $compress                 TYPO3 compress flag
+     * @param bool   $forceOnTop               TYPO3 force-on-top flag
+     * @param string $allWrap                  TYPO3 allWrap configuration
+     * @param bool   $excludeFromConcatenation TYPO3 excl. from concat. flag
+     */
+    public function render($name, $file, $type = 'text/javascript', $compress = false, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false)
+    {
+        if (!file_exists($file)) {
+            return;
+        }
 
-	/**
-	 * Renders the view helper
-	 *
-	 * @param string $name Name of the library
-	 * @param string $file File reference
-	 * @param string $type Type attribute of the script tag
-	 * @param bool $compress TYPO3 compress flag
-	 * @param bool $forceOnTop TYPO3 force-on-top flag
-	 * @param string $allWrap TYPO3 allWrap configuration
-	 * @param bool $excludeFromConcatenation TYPO3 excl. from concat. flag
-	 *
-	 * @return NULL
-	 */
-	public function render($name, $file, $type = 'text/javascript', $compress = FALSE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
-		if (!file_exists($file)) {
-			return NULL;
-		}
+        $this->pageRenderer->addJsFooterLibrary(
+            $name,
+            $this->typoscriptFrontendController
+                ->tmpl
+                ->getFileName($file),
+            $type,
+            $compress,
+            $forceOnTop,
+            $allWrap,
+            $excludeFromConcatenation
+        );
 
-		$this->pageRenderer->addJsFooterLibrary(
-			$name,
-			$this->typoscriptFrontendController
-				->tmpl
-				->getFileName($file),
-			$type,
-			$compress,
-			$forceOnTop,
-			$allWrap,
-			$excludeFromConcatenation
-		);
-
-		return NULL;
-	}
+        return;
+    }
 }

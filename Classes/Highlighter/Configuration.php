@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Highlighter;
 
 /*
@@ -19,134 +20,134 @@ use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
- * Configuration
+ * Configuration.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Highlighter
  */
-class Configuration implements ConfigurationInterface {
+class Configuration implements ConfigurationInterface
+{
+    /**
+     * ObjectManager.
+     *
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     */
+    protected $objectManager;
 
-	/**
-	 * ObjectManager
-	 *
-	 * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
-	 */
-	protected $objectManager;
+    /**
+     * Settings array.
+     *
+     * @var array
+     */
+    protected $settings;
 
-	/**
-	 * Settings array
-	 *
-	 * @var array
-	 */
-	protected $settings;
+    /**
+     * ConfigurationInterface.
+     *
+     * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+     */
+    protected $configuration;
 
-	/**
-	 * ConfigurationInterface
-	 *
-	 * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
-	 */
-	protected $configuration;
+    /**
+     * InjectObjectManager.
+     *
+     * @param ObjectManagerInterface $objectManager ObjectManagerInterface
+     */
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
+    {
+        $this->objectManager = $objectManager;
+    }
 
+    /**
+     * InjectConfiguration.
+     *
+     * @param ConfigurationManagerInterface $configurationManager ConfigurationManagerInterface
+     */
+    public function injectConfiguration(ConfigurationManagerInterface $configurationManager)
+    {
+        $configuration = $configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+        );
+        $this->settings = ArrayUtility::getValueByPath($configuration, 'plugin./tx_beautyofcode./settings.');
+    }
 
-	/**
-	 * InjectObjectManager
-	 *
-	 * @param ObjectManagerInterface $objectManager ObjectManagerInterface
-	 *
-	 * @return void
-	 */
-	public function injectObjectManager(ObjectManagerInterface $objectManager) {
-		$this->objectManager = $objectManager;
-	}
+    /**
+     * InitializeObject.
+     */
+    public function initializeObject()
+    {
+        $this->configuration = $this->objectManager->get(
+            'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
+            $this->settings
+        );
+    }
 
-	/**
-	 * InjectConfiguration
-	 *
-	 * @param ConfigurationManagerInterface $configurationManager ConfigurationManagerInterface
-	 *
-	 * @return void
-	 */
-	public function injectConfiguration(ConfigurationManagerInterface $configurationManager) {
-		$configuration = $configurationManager->getConfiguration(
-			ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-		);
-		$this->settings = ArrayUtility::getValueByPath($configuration, 'plugin./tx_beautyofcode./settings.');
-	}
+    /**
+     * GetFailSafeBrushAlias.
+     *
+     * @param string $brushAlias Brush alias
+     *
+     * @return string
+     */
+    public function getFailSafeBrushAlias($brushAlias)
+    {
+        return $this->configuration->getFailSafeBrushAlias($brushAlias);
+    }
 
-	/**
-	 * InitializeObject
-	 *
-	 * @return void
-	 */
-	public function initializeObject() {
-		$this->configuration = $this->objectManager->get(
-			'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library'],
-			$this->settings
-		);
-	}
+    /**
+     * HasBrushIdentifier.
+     *
+     * @param string $brushIdentifier Brush identifier
+     *
+     * @return bool
+     */
+    public function hasBrushIdentifier($brushIdentifier)
+    {
+        return $this->configuration->hasBrushIdentifier($brushIdentifier);
+    }
 
+    /**
+     * HasBrushAlias.
+     *
+     * @param string $brushAlias Brush alias
+     *
+     * @return bool
+     */
+    public function hasBrushAlias($brushAlias)
+    {
+        return $this->configuration->hasBrushAlias($brushAlias);
+    }
 
-	/**
-	 * GetFailSafeBrushAlias
-	 *
-	 * @param string $brushAlias Brush alias
-	 *
-	 * @return string
-	 */
-	public function getFailSafeBrushAlias($brushAlias) {
-		return $this->configuration->getFailSafeBrushAlias($brushAlias);
-	}
+    /**
+     * GetBrushIdentifierAliasAndLabel.
+     *
+     * @param string $brushIdentifier Brush identifier
+     *
+     * @return array
+     */
+    public function getBrushIdentifierAliasAndLabel($brushIdentifier)
+    {
+        return $this->configuration->getBrushIdentifierAliasAndLabel($brushIdentifier);
+    }
 
-	/**
-	 * HasBrushIdentifier
-	 *
-	 * @param string $brushIdentifier Brush identifier
-	 *
-	 * @return bool
-	 */
-	public function hasBrushIdentifier($brushIdentifier) {
-		return $this->configuration->hasBrushIdentifier($brushIdentifier);
-	}
+    /**
+     * GetAutoloaderBrushMap.
+     *
+     * @return array
+     */
+    public function getAutoloaderBrushMap()
+    {
+        return $this->configuration->getAutoloaderBrushMap();
+    }
 
-	/**
-	 * HasBrushAlias
-	 *
-	 * @param string $brushAlias Brush alias
-	 *
-	 * @return bool
-	 */
-	public function hasBrushAlias($brushAlias) {
-		return $this->configuration->hasBrushAlias($brushAlias);
-	}
-
-	/**
-	 * GetBrushIdentifierAliasAndLabel
-	 *
-	 * @param string $brushIdentifier Brush identifier
-	 *
-	 * @return array
-	 */
-	public function getBrushIdentifierAliasAndLabel($brushIdentifier) {
-		return $this->configuration->getBrushIdentifierAliasAndLabel($brushIdentifier);
-	}
-
-	/**
-	 * GetAutoloaderBrushMap
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap() {
-		return $this->configuration->getAutoloaderBrushMap();
-	}
-
-	/**
-	 * GetClassAttributeString
-	 *
-	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
-	 *
-	 * @return string
-	 */
-	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
-		return $this->configuration->getClassAttributeString($flexform);
-	}
+    /**
+     * GetClassAttributeString.
+     *
+     * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     *
+     * @return string
+     */
+    public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform)
+    {
+        return $this->configuration->getClassAttributeString($flexform);
+    }
 }

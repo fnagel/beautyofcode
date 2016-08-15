@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Controller;
 
 /*
@@ -15,46 +16,43 @@ namespace TYPO3\Beautyofcode\Controller;
  */
 
 /**
- * The frontend plugin controller for the syntaxhighlighter
+ * The frontend plugin controller for the syntaxhighlighter.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Controller
  */
-class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController {
+class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+{
+    /**
+     * FlexformRepository.
+     *
+     * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
+     */
+    protected $flexformRepository;
 
-	/**
-	 * FlexformRepository
-	 *
-	 * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
-	 */
-	protected $flexformRepository;
+    /**
+     * InjectFlexformRepository.
+     *
+     * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
+     */
+    public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository)
+    {
+        $this->flexformRepository = $flexformRepository;
+    }
 
-	/**
-	 * InjectFlexformRepository
-	 *
-	 * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
-	 *
-	 * @return void
-	 */
-	public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository) {
-		$this->flexformRepository = $flexformRepository;
-	}
+    /**
+     * Render.
+     */
+    public function renderAction()
+    {
+        $contentElement = $this->configurationManager->getContentObject()->data;
+        $flexform = $this
+            ->flexformRepository
+            ->reconstituteByContentObject(
+                $this->configurationManager->getContentObject()
+            );
+        $flexform->setTyposcriptDefaults($this->settings['defaults']);
 
-	/**
-	 * Render
-	 *
-	 * @return void
-	 */
-	public function renderAction() {
-		$contentElement = $this->configurationManager->getContentObject()->data;
-		$flexform = $this
-			->flexformRepository
-			->reconstituteByContentObject(
-				$this->configurationManager->getContentObject()
-			);
-		$flexform->setTyposcriptDefaults($this->settings['defaults']);
-
-		$this->view->assign('ce', $contentElement);
-		$this->view->assign('flexform', $flexform);
-	}
+        $this->view->assign('ce', $contentElement);
+        $this->view->assign('flexform', $flexform);
+    }
 }

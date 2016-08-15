@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Highlighter;
 
 /*
@@ -15,62 +16,61 @@ namespace TYPO3\Beautyofcode\Highlighter;
  */
 
 /**
- * ConfigurationInterface
+ * ConfigurationInterface.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Highlighter
  */
-interface ConfigurationInterface {
+interface ConfigurationInterface
+{
+    /**
+     * GetFailSafeBrushAlias.
+     *
+     * @param string $brushAlias Brush alias
+     *
+     * @return string
+     */
+    public function getFailSafeBrushAlias($brushAlias);
 
-	/**
-	 * GetFailSafeBrushAlias
-	 *
-	 * @param string $brushAlias Brush alias
-	 *
-	 * @return string
-	 */
-	public function getFailSafeBrushAlias($brushAlias);
+    /**
+     * HasBrushIdentifier.
+     *
+     * @param string $brushIdentifier Brush identifier
+     *
+     * @return bool
+     */
+    public function hasBrushIdentifier($brushIdentifier);
 
-	/**
-	 * HasBrushIdentifier
-	 *
-	 * @param string $brushIdentifier Brush identifier
-	 *
-	 * @return bool
-	 */
-	public function hasBrushIdentifier($brushIdentifier);
+    /**
+     * HasBrushAlias.
+     *
+     * @param string $brushAlias Brush alias
+     *
+     * @return bool
+     */
+    public function hasBrushAlias($brushAlias);
 
-	/**
-	 * HasBrushAlias
-	 *
-	 * @param string $brushAlias Brush alias
-	 *
-	 * @return bool
-	 */
-	public function hasBrushAlias($brushAlias);
+    /**
+     * GetBrushIdentifierAliasAndLabel.
+     *
+     * @param string $brushIdentifier Brush identifier
+     *
+     * @return array
+     */
+    public function getBrushIdentifierAliasAndLabel($brushIdentifier);
 
-	/**
-	 * GetBrushIdentifierAliasAndLabel
-	 *
-	 * @param string $brushIdentifier Brush identifier
-	 *
-	 * @return array
-	 */
-	public function getBrushIdentifierAliasAndLabel($brushIdentifier);
+    /**
+     * GetAutoloaderBrushMap.
+     *
+     * @return array
+     */
+    public function getAutoloaderBrushMap();
 
-	/**
-	 * GetAutoloaderBrushMap
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap();
-
-	/**
-	 * GetClassAttributeString
-	 *
-	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
-	 *
-	 * @return string
-	 */
-	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform);
+    /**
+     * GetClassAttributeString.
+     *
+     * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     *
+     * @return string
+     */
+    public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform);
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Highlighter\Configuration;
 
 /*
@@ -15,132 +16,133 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  */
 
 /**
- * SyntaxHighlighter
+ * SyntaxHighlighter.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Highlighter\Configuration
  */
-class SyntaxHighlighter extends AbstractConfiguration {
+class SyntaxHighlighter extends AbstractConfiguration
+{
+    /**
+     * Failsafe brush alias map.
+     *
+     * Fallback from one highlighter engine to another.
+     * Key Prism SH CSS class and value is SH CSS class.
+     *
+     * @var array
+     */
+    protected $failSafeBrushAliasMap = array(
+        'Prism' => array(
+            'actionscript' => 'actionscript3',
+            'c' => 'cpp',
+            'coffeescript' => 'javascript',
+            'gherkin' => 'plain',
+            'git' => 'plain',
+            'go' => 'plain',
+            'http' => 'plain',
+            'less' => 'plain',
+            'markdown' => 'plain',
+            'markup' => 'xml',
+            'scss' => 'sass',
+            'twig' => 'plain',
+            'yaml' => 'plain',
+        ),
+    );
 
-	/**
-	 * Failsafe brush alias map
-	 *
-	 * Fallback from one highlighter engine to another.
-	 * Key Prism SH CSS class and value is SH CSS class.
-	 *
-	 * @var array
-	 */
-	protected $failSafeBrushAliasMap = array(
-		'Prism' => array(
-			'actionscript' => 'actionscript3',
-			'c' => 'cpp',
-			'coffeescript' => 'javascript',
-			'gherkin' => 'plain',
-			'git' => 'plain',
-			'go' => 'plain',
-			'http' => 'plain',
-			'less' => 'plain',
-			'markdown' => 'plain',
-			'markup' => 'xml',
-			'scss' => 'sass',
-			'twig' => 'plain',
-			'yaml' => 'plain',
-		),
-	);
+    /**
+     * A CSS class/label map for the select box.
+     *
+     * Key is the brush string from TS Setup; Value is an array with the CSS
+     * class in key 0 and the label for the select box in key 1
+     *
+     * @var array
+     */
+    protected $brushIdentifierAliasLabelMap = array(
+        'AppleScript' => array('applescript', 'AppleScript'),
+        'AS3' => array('actionscript3', 'Actionscript 3'),
+        'Bash' => array('bash', 'Bash / Shell'),
+        'ColdFusion' => array('coldfusion', 'ColdFusion'),
+        'Cpp' => array('cpp', 'C / C++'),
+        'CSharp' => array('csharp', 'C#'),
+        'Css' => array('css', 'CSS'),
+        'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
+        'Diff' => array('diff', 'Diff / Patch'),
+        'Erlang' => array('erlang', 'Erlang'),
+        'Groovy' => array('groovy', 'Groovy'),
+        'Java' => array('java', 'Java'),
+        'JavaFX' => array('javafx', 'Java FX'),
+        'JScript' => array('javascript', 'Java-Script'),
+        'Perl' => array('perl', 'Perl'),
+        'Php' => array('php', 'PHP'),
+        'PowerShell' => array('powershell', 'Power-Shell'),
+        'Python' => array('python', 'Python'),
+        'Ruby' => array('ruby', 'Ruby on Rails'),
+        'Sass' => array('sass', 'Sass'),
+        'Scala' => array('scala', 'Scala'),
+        'Sql' => array('sql', 'SQL / MySQL'),
+        'Typoscript' => array('typoscript', 'Typoscript'),
+        'Vb' => array('vbnet', 'Virtual Basic / .Net'),
+        'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
+    );
 
-	/**
-	 * A CSS class/label map for the select box
-	 *
-	 * Key is the brush string from TS Setup; Value is an array with the CSS
-	 * class in key 0 and the label for the select box in key 1
-	 *
-	 * @var array
-	 */
-	protected $brushIdentifierAliasLabelMap = array(
-		'AppleScript' => array('applescript', 'AppleScript'),
-		'AS3' => array('actionscript3', 'Actionscript 3'),
-		'Bash' => array('bash', 'Bash / Shell'),
-		'ColdFusion' => array('coldfusion', 'ColdFusion'),
-		'Cpp' => array('cpp', 'C / C++'),
-		'CSharp' => array('csharp', 'C#'),
-		'Css' => array('css', 'CSS'),
-		'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
-		'Diff' => array('diff', 'Diff / Patch'),
-		'Erlang' => array('erlang', 'Erlang'),
-		'Groovy' => array('groovy', 'Groovy'),
-		'Java' => array('java', 'Java'),
-		'JavaFX' => array('javafx', 'Java FX'),
-		'JScript' => array('javascript', 'Java-Script'),
-		'Perl' => array('perl', 'Perl'),
-		'Php' => array('php', 'PHP'),
-		'PowerShell' => array('powershell', 'Power-Shell'),
-		'Python' => array('python', 'Python'),
-		'Ruby' => array('ruby', 'Ruby on Rails'),
-		'Sass' => array('sass', 'Sass'),
-		'Scala' => array('scala', 'Scala'),
-		'Sql' => array('sql', 'SQL / MySQL'),
-		'Typoscript' => array('typoscript', 'Typoscript'),
-		'Vb' => array('vbnet', 'Virtual Basic / .Net'),
-		'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
-	);
+    /**
+     * GetAutoloaderBrushMap.
+     *
+     * @return array
+     */
+    public function getAutoloaderBrushMap()
+    {
+        $brushes = array();
 
-	/**
-	 * GetAutoloaderBrushMap
-	 *
-	 * @return array
-	 */
-	public function getAutoloaderBrushMap() {
-		$brushes = array();
+        $configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
+            ',',
+            $this->settings['brushes']
+        );
 
-		$configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
-			',',
-			$this->settings['brushes']
-		);
+        $brushes['plain'] = 'shBrushPlain.js';
 
-		$brushes['plain'] = 'shBrushPlain.js';
+        foreach ($configuredBrushes as $brush) {
+            list($cssTag) = $this->brushIdentifierAliasLabelMap[$brush];
+            $brushPath = 'shBrush'.$brush.'.js';
 
-		foreach ($configuredBrushes as $brush) {
-			list($cssTag, ) = $this->brushIdentifierAliasLabelMap[$brush];
-			$brushPath = 'shBrush' . $brush . '.js';
+            $brushes[$cssTag] = $brushPath;
+        }
 
-			$brushes[$cssTag] = $brushPath;
-		}
+        return $brushes;
+    }
 
-		return $brushes;
-	}
+    /**
+     * GetClassAttributeString.
+     *
+     * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     *
+     * @return string
+     */
+    public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform)
+    {
+        $configurationItems = array();
 
-	/**
-	 * GetClassAttributeString
-	 *
-	 * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
-	 *
-	 * @return string
-	 */
-	public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform) {
-		$configurationItems = array();
+        $classAttributeConfigurationStack = array(
+            'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
+            'gutter' => $flexform->getCGutter(),
+            'collapse' => $flexform->getCCollapse(),
+        );
 
-		$classAttributeConfigurationStack = array(
-			'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
-			'gutter' => $flexform->getCGutter(),
-			'collapse' => $flexform->getCCollapse(),
-		);
+        foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
+            if (true === in_array($configurationValue, array('', 'auto'))) {
+                continue;
+            }
 
-		foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-			if (TRUE === in_array($configurationValue, array('', 'auto'))) {
-				continue;
-			}
+            if ($configurationKey === 'highlight') {
+                $key = $configurationKey;
+                $value = sprintf('[%s]', $configurationValue);
+            } else {
+                $key = $configurationKey;
+                $value = var_export((boolean) $configurationValue, true);
+            }
 
-			if ($configurationKey === 'highlight') {
-				$key = $configurationKey;
-				$value = sprintf('[%s]', $configurationValue);
-			} else {
-				$key = $configurationKey;
-				$value = var_export((boolean) $configurationValue, TRUE);
-			}
+            $configurationItems[] = sprintf('%s: %s', $key, $value);
+        }
 
-			$configurationItems[] = sprintf('%s: %s', $key, $value);
-		}
-
-		return '; ' . implode('; ', $configurationItems);
-	}
+        return '; '.implode('; ', $configurationItems);
+    }
 }

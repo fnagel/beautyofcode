@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems;
 
 /***************************************************************
@@ -33,74 +34,74 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
- * Tests the unique addition of brushes to the flexform items array
+ * Tests the unique addition of brushes to the flexform items array.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class UniqueAppendingTest extends UnitTestCase {
+class UniqueAppendingTest extends UnitTestCase
+{
+    /**
+     * @test
+     */
+    public function configuredBrushesAreUniquelyAddedToTheReturnValue()
+    {
+        /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
+        $settingsServiceMock = $this->getMock(SettingsService::class);
 
-	/**
-	 *
-	 * @test
-	 */
-	public function configuredBrushesAreUniquelyAddedToTheReturnValue() {
-		/* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
-		$settingsServiceMock = $this->getMock(SettingsService::class);
+        /* @var $objectManagerMock \TYPO3\CMS\Extbase\Object\ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
+        $objectManagerMock = $this->getMock(ObjectManagerInterface::class);
+        $objectManagerMock
+                ->expects($this->once())->method('get')
+                ->with(
+                    $this->equalTo('TYPO3\\Beautyofcode\\Service\\SettingsService'),
+                    $this->equalTo(1)
+                )
+                ->will($this->returnValue($settingsServiceMock));
 
-		/* @var $objectManagerMock \TYPO3\CMS\Extbase\Object\ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-		$objectManagerMock = $this->getMock(ObjectManagerInterface::class);
-		$objectManagerMock
-				->expects($this->once())->method('get')
-				->with(
-					$this->equalTo('TYPO3\\Beautyofcode\\Service\\SettingsService'),
-					$this->equalTo(1)
-				)
-				->will($this->returnValue($settingsServiceMock));
+        $cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
+        $cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend('cache_beautyofcode', $cacheBackendMock);
+        $cacheManagerMock = $this->getMock(CacheManager::class);
+        $cacheManagerMock
+            ->expects($this->any())
+            ->method('getCache')
+            ->with($this->equalTo('cache_beautyofcode'))
+            ->willReturn($cacheFrontendMock);
 
-		$cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
-		$cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend('cache_beautyofcode', $cacheBackendMock);
-		$cacheManagerMock = $this->getMock(CacheManager::class);
-		$cacheManagerMock
-			->expects($this->any())
-			->method('getCache')
-			->with($this->equalTo('cache_beautyofcode'))
-			->willReturn($cacheFrontendMock);
+        /* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
+        $highlighterConfigurationMock = $this
+            ->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $highlighterConfigurationMock
+            ->expects($this->any())
+            ->method('hasBrushIdentifier')
+            ->will($this->returnValue(true));
+        $highlighterConfigurationMock
+            ->expects($this->any())
+            ->method('getBrushIdentifierAliasAndLabel')
+            ->will($this->returnValue(array('SQL / MySQL' => 'sql')));
 
-		/* @var $highlighterConfigurationMock \TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
-		$highlighterConfigurationMock = $this
-			->getMockBuilder('TYPO3\\Beautyofcode\\Highlighter\\Configuration\\SyntaxHighlighter')
-			->disableOriginalConstructor()
-			->getMock();
-		$highlighterConfigurationMock
-			->expects($this->any())
-			->method('hasBrushIdentifier')
-			->will($this->returnValue(TRUE));
-		$highlighterConfigurationMock
-			->expects($this->any())
-			->method('getBrushIdentifierAliasAndLabel')
-			->will($this->returnValue(array('SQL / MySQL' => 'sql')));
+        $sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
+        $sut->injectObjectManager($objectManagerMock);
+        $sut->injectCacheManager($cacheManagerMock);
+        $sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 
-		$sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
-		$sut->injectObjectManager($objectManagerMock);
-		$sut->injectCacheManager($cacheManagerMock);
-		$sut->injectHighlighterConfiguration($highlighterConfigurationMock);
+        $configFromFlexform = array(
+            'row' => array(
+                'uid' => 1,
+                'pid' => 1,
+            ),
+            'items' => array(
+                array(
+                    'Plain', // TCEforms: label
+                    'plain', // TCEforms: key
+                ),
+            ),
+        );
 
-		$configFromFlexform = array(
-			'row' => array(
-				'uid' => 1,
-				'pid' => 1,
-			),
-			'items' => array(
-				array(
-					'Plain', // TCEforms: label
-					'plain' // TCEforms: key
-				),
-			),
-		);
+        $newConfig = $sut->getConfiguredLanguages($configFromFlexform);
 
-		$newConfig = $sut->getConfiguredLanguages($configFromFlexform);
-
-		$this->assertEquals('plain', $newConfig['items'][0][1]);
-		$this->assertEquals(1, count($newConfig['items']));
-	}
+        $this->assertEquals('plain', $newConfig['items'][0][1]);
+        $this->assertEquals(1, count($newConfig['items']));
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Domain\Repository;
 
 /*
@@ -15,93 +16,92 @@ namespace TYPO3\Beautyofcode\Domain\Repository;
  */
 
 /**
- * The repository for the plugin flexform domain model object
+ * The repository for the plugin flexform domain model object.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Domain\Repository
  */
-class FlexformRepository {
+class FlexformRepository
+{
+    /**
+     * FlexFormService.
+     *
+     * @var \TYPO3\CMS\Extbase\Service\FlexFormService
+     */
+    protected $flexformService;
 
-	/**
-	 * FlexFormService
-	 *
-	 * @var \TYPO3\CMS\Extbase\Service\FlexFormService
-	 */
-	protected $flexformService;
+    /**
+     * DataMapper.
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper
+     */
+    protected $dataMapper;
 
-	/**
-	 * DataMapper
-	 *
-	 * @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper
-	 */
-	protected $dataMapper;
+    /**
+     * Injects the flexform service and populates flexform values from `pi_flexform`.
+     *
+     * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService FlexFormService
+     */
+    public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService)
+    {
+        $this->flexformService = $flexformService;
+    }
 
-	/**
-	 * Injects the flexform service and populates flexform values from `pi_flexform`
-	 *
-	 * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService FlexFormService
-	 *
-	 * @return void
-	 */
-	public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService) {
-		$this->flexformService = $flexformService;
-	}
+    /**
+     * InjectDataMapper.
+     *
+     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper DataMapper
+     */
+    public function injectDataMapper(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper)
+    {
+        $this->dataMapper = $dataMapper;
+    }
 
-	/**
-	 * InjectDataMapper
-	 *
-	 * @param \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper DataMapper
-	 *
-	 * @return void
-	 */
-	public function injectDataMapper(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper) {
-		$this->dataMapper = $dataMapper;
-	}
+    /**
+     * ReconstituteByContentObject.
+     *
+     * @param \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject ContentObjectRenderer
+     *
+     * @return \TYPO3\Beautyofcode\Domain\Model\Flexform
+     */
+    public function reconstituteByContentObject(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject)
+    {
+        $flexformString = $contentObject->data['pi_flexform'];
 
-	/**
-	 * ReconstituteByContentObject
-	 *
-	 * @param \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject ContentObjectRenderer
-	 *
-	 * @return \TYPO3\Beautyofcode\Domain\Model\Flexform
-	 */
-	public function reconstituteByContentObject(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject) {
-		$flexformString = $contentObject->data['pi_flexform'];
+        $flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
-		$flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
+        $flexformValues = $this->getDataMapperToTCACompatiblePropertyArray($flexformValues);
+        // adds `identity` to the plugin configuration
+        $flexformValues['uid'] = $contentObject->data['uid'];
 
-		$flexformValues = $this->getDataMapperToTCACompatiblePropertyArray($flexformValues);
-		// adds `identity` to the plugin configuration
-		$flexformValues['uid'] = $contentObject->data['uid'];
+        $flexform = $this
+            ->dataMapper
+            ->map(
+                'TYPO3\\Beautyofcode\\Domain\\Model\\Flexform',
+                array($flexformValues) // nested array as ::map() expects multiple rows
+            );
 
-		$flexform = $this
-			->dataMapper
-			->map(
-				'TYPO3\\Beautyofcode\\Domain\\Model\\Flexform',
-				array($flexformValues) // nested array as ::map() expects multiple rows
-			);
+        return $flexform[0];
+    }
 
-		return $flexform[0];
-	}
+    /**
+     * Returns a DataMapper-to-TCA compatible property array out of flexform values.
+     *
+     * Basically, this transforms CamelCased property names into camel_cased ones.
+     *
+     * @param array $flexformValueArray Flexform value array
+     *
+     * @return array
+     */
+    protected function getDataMapperToTCACompatiblePropertyArray($flexformValueArray)
+    {
+        $flexformValues = array();
 
-	/**
-	 * Returns a DataMapper-to-TCA compatible property array out of flexform values
-	 *
-	 * Basically, this transforms CamelCased property names into camel_cased ones.
-	 *
-	 * @param array $flexformValueArray Flexform value array
-	 *
-	 * @return array
-	 */
-	protected function getDataMapperToTCACompatiblePropertyArray($flexformValueArray) {
-		$flexformValues = array();
+        foreach ($flexformValueArray as $propertyName => $propertyValue) {
+            $propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
 
-		foreach ($flexformValueArray as $propertyName => $propertyValue) {
-			$propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
+            $flexformValues[$propertyNameLowerCaseUnderscored] = $propertyValue;
+        }
 
-			$flexformValues[$propertyNameLowerCaseUnderscored] = $propertyValue;
-		}
-
-		return $flexformValues;
-	}
+        return $flexformValues;
+    }
 }

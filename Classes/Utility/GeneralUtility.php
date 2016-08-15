@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Utility;
 
 /*
@@ -15,41 +16,41 @@ namespace TYPO3\Beautyofcode\Utility;
  */
 
 /**
- * Utility class for beautyofcode
+ * Utility class for beautyofcode.
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package	\TYPO3\Beautyofcode\Utility
  */
-class GeneralUtility {
+class GeneralUtility
+{
+    /**
+     * Resolves a path prefixed with FILE: and EXT:.
+     *
+     * If the path can successfully be resolved to an internal (relative to PATH_site)
+     * path, the PATH_site part is removed and the resulting path is returned.
+     * If its an external path, the input parameter is returned unchanged.
+     *
+     * @param string $dir Path to directory
+     *
+     * @return string
+     */
+    public static function makeAbsolutePath($dir)
+    {
+        $absolutePath = '';
 
-	/**
-	 * Resolves a path prefixed with FILE: and EXT:
-	 *
-	 * If the path can successfully be resolved to an internal (relative to PATH_site)
-	 * path, the PATH_site part is removed and the resulting path is returned.
-	 * If its an external path, the input parameter is returned unchanged.
-	 *
-	 * @param string $dir Path to directory
-	 *
-	 * @return string
-	 */
-	public static function makeAbsolutePath($dir) {
-		$absolutePath = '';
+        $isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
+        $isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
 
-		$isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
-		$isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
+        if ($isFileNotation) {
+            $dir = substr($dir, 5);
+        }
 
-		if ($isFileNotation) {
-			$dir = substr($dir, 5);
-		}
+        if ($isExtensionNotation || $isFileNotation) {
+            $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, true, false);
+            $absolutePath = is_null($absolutePath) ? '' : substr($absolutePath, strlen(PATH_site));
+        } elseif (false !== parse_url($dir)) {
+            $absolutePath = $dir;
+        }
 
-		if ($isExtensionNotation || $isFileNotation) {
-			$absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, TRUE, FALSE);
-			$absolutePath = is_null($absolutePath) ? '' : substr($absolutePath, strlen(PATH_site));
-		} elseif (FALSE !== parse_url($dir)) {
-			$absolutePath = $dir;
-		}
-
-		return $absolutePath;
-	}
+        return $absolutePath;
+    }
 }

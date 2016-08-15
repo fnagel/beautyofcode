@@ -26,123 +26,126 @@
  ***************************************************************/
 
 /**
- * Updates tt_content records
+ * Updates tt_content records.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ext_update {
+class ext_update
+{
+    /**
+     * TYPO3.CMS global DatabaseConnection.
+     *
+     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected $db;
 
-	/**
-	 * TYPO3.CMS global DatabaseConnection
-	 *
-	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected $db;
+    /**
+     * Amount of old plugins detected.
+     *
+     * @var int
+     */
+    protected $countOldPlugins;
 
-	/**
-	 * Amount of old plugins detected
-	 *
-	 * @var int
-	 */
-	protected $countOldPlugins;
+    /**
+     * Initializes the updater.
+     */
+    protected function initialize()
+    {
+        if (false === isset($this->db)) {
+            $this->db = $GLOBALS['TYPO3_DB'];
+        }
+    }
 
-	/**
-	 * Initializes the updater
-	 *
-	 * @return void
-	 */
-	protected function initialize() {
-		if (FALSE === isset($this->db)) {
-			$this->db = $GLOBALS['TYPO3_DB'];
-		}
-	}
+    /**
+     * Checks if the update script must be run.
+     *
+     * @return bool
+     */
+    public function access()
+    {
+        $this->initialize();
 
-	/**
-	 * Checks if the update script must be run
-	 *
-	 * @return bool
-	 */
-	public function access() {
-		$this->initialize();
+        $hasOldPlugins = $this->hasInstanceOldPlugins();
 
-		$hasOldPlugins = $this->hasInstanceOldPlugins();
+        return $hasOldPlugins;
+    }
 
-		return $hasOldPlugins;
-	}
+    /**
+     * Counts the amount of old plugin instances within tt_content records.
+     *
+     * @return bool
+     */
+    protected function hasInstanceOldPlugins()
+    {
+        $this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_contentrenderer"');
 
-	/**
-	 * Counts the amount of old plugin instances within tt_content records
-	 *
-	 * @return bool
-	 */
-	protected function hasInstanceOldPlugins() {
-		$this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_contentrenderer"');
+        return 0 < $this->countOldPlugins;
+    }
 
-		return 0 < $this->countOldPlugins;
-	}
+    /**
+     * Executes the update script.
+     *
+     * @return string
+     */
+    public function main()
+    {
+        $this->initialize();
 
-	/**
-	 * Executes the update script
-	 *
-	 * @return string
-	 */
-	public function main() {
-		$this->initialize();
+        $output = '';
 
-		$output = '';
+        if ($this->hasInstanceOldPlugins()) {
+            $output .= $this->updateOldPlugins();
+        }
 
-		if ($this->hasInstanceOldPlugins()) {
-			$output .= $this->updateOldPlugins();
-		}
+        if ($output === '') {
+            $output = 'Nothing needs to be updated.';
+        }
 
-		if ($output === '') {
-			$output = 'Nothing needs to be updated.';
-		}
+        return $output;
+    }
 
-		return $output;
-	}
+    /**
+     * Updates tt_content records by setting `list_type` to new plugin signature.
+     *
+     * @return string
+     */
+    protected function updateOldPlugins()
+    {
+        // switch from CType = 'list' to custom CE
+        $this->db->exec_UPDATEquery(
+            'tt_content',
+            'list_type = "beautyofcode_contentrenderer"',
+            array(
+                'CType' => 'beautyofcode_contentrenderer',
+                'list_type' => '',
+            )
+        );
 
-	/**
-	 * Updates tt_content records by setting `list_type` to new plugin signature
-	 *
-	 * @return string
-	 */
-	protected function updateOldPlugins() {
-		// switch from CType = 'list' to custom CE
-		$this->db->exec_UPDATEquery(
-			'tt_content',
-			'list_type = "beautyofcode_contentrenderer"',
-			array(
-				'CType' => 'beautyofcode_contentrenderer',
-				'list_type' => '',
-			)
-		);
+        $contentElements = $this->db->exec_SELECTquery(
+            'uid, pi_flexform',
+            'tt_content',
+            'CType = "beautyofcode_contentrenderer" AND hidden = 0 AND deleted = 0'
+        );
 
-		$contentElements = $this->db->exec_SELECTquery(
-			'uid, pi_flexform',
-			'tt_content',
-			'CType = "beautyofcode_contentrenderer" AND hidden = 0 AND deleted = 0'
-		);
+        while (($contentElement = $this->db->sql_fetch_assoc($contentElements))) {
+            $uid = (int) $contentElement['uid'];
+            $flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
 
-		while (($contentElement = $this->db->sql_fetch_assoc($contentElements))) {
-			$uid = (int) $contentElement['uid'];
-			$flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
+            try {
+                $codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath($flexformData, 'data/sDEF/lDEF/cCode/vDEF');
+            } catch (\Exception $exc) {
+                continue;
+            }
 
-			try {
-				$codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath($flexformData, 'data/sDEF/lDEF/cCode/vDEF');
-			} catch (\Exception $exc) {
-				continue;
-			}
+            $this->db->exec_UPDATEquery(
+                'tt_content',
+                'uid = '.$uid,
+                array(
+                    'bodytext' => $codeBlock,
+                )
+            );
+        }
 
-			$this->db->exec_UPDATEquery(
-				'tt_content',
-				'uid = ' . $uid,
-				array(
-					'bodytext' => $codeBlock,
-				)
-			);
-		}
-
-		return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
-	}
+        return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
+    }
 }

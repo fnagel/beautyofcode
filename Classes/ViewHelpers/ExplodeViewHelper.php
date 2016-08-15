@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\ViewHelpers;
 
 /*
@@ -15,28 +16,27 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  */
 
 /**
- * Fluid view helper around GeneralUtility::trimExplode()
+ * Fluid view helper around GeneralUtility::trimExplode().
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\ViewHelpers
  */
-class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Renders the view helper.
+     *
+     * @param string $value             CSV list string
+     * @param string $delimiter         Delimiter, defaults to ,
+     * @param bool   $removeEmptyValues Flags if empty values should be removed
+     *
+     * @return array
+     */
+    protected function render($value = null, $delimiter = ',', $removeEmptyValues = false)
+    {
+        if (true === is_null($value)) {
+            $value = $this->renderChildren();
+        }
 
-	/**
-	 * Renders the view helper
-	 *
-	 * @param string $value CSV list string
-	 * @param string $delimiter Delimiter, defaults to ,
-	 * @param bool $removeEmptyValues Flags if empty values should be removed
-	 *
-	 * @return array
-	 */
-	protected function render($value = NULL, $delimiter = ',', $removeEmptyValues = FALSE) {
-		if (TRUE === is_null($value)) {
-			$value = $this->renderChildren();
-		}
-
-		return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);
-	}
-
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);
+    }
 }

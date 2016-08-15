@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Core\ViewHelper;
 
 /*
@@ -15,26 +16,26 @@ namespace TYPO3\Beautyofcode\Core\ViewHelper;
  */
 
 /**
- * Abstract page renderer based view helper
+ * Abstract page renderer based view helper.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\Core\ViewHelper
  */
-abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
+abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * PageRenderer.
+     *
+     * @var \TYPO3\CMS\Core\Page\PageRenderer
+     */
+    protected $pageRenderer;
 
-	/**
-	 * PageRenderer
-	 *
-	 * @var \TYPO3\CMS\Core\Page\PageRenderer
-	 */
-	protected $pageRenderer;
-
-	/**
-	 * InjectPageRenderer
-	 *
-	 * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer PageRenderer
-	 */
-	public function injectPageRenderer(\TYPO3\CMS\Core\Page\PageRenderer $pageRenderer) {
-		$this->pageRenderer = $pageRenderer;
-	}
+    /**
+     * InjectPageRenderer.
+     *
+     * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer PageRenderer
+     */
+    public function injectPageRenderer(\TYPO3\CMS\Core\Page\PageRenderer $pageRenderer)
+    {
+        $this->pageRenderer = $pageRenderer;
+    }
 }

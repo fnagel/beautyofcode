@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Tests\Unit;
 
 /***************************************************************
@@ -30,82 +31,85 @@ namespace TYPO3\Beautyofcode\Tests\Unit;
 use TYPO3\CMS\Core\Tests\UnitTestCase;
 
 /**
- * Class short description
+ * Class short description.
  *
  * Class long description
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExtUpdateTest extends UnitTestCase {
+class ExtUpdateTest extends UnitTestCase
+{
+    protected $backupGlobalsBlacklist = array('TYPO3_DB');
 
-	protected $backupGlobalsBlacklist = array('TYPO3_DB');
+    /**
+     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+     */
+    protected $db;
 
-	/**
-	 *
-	 * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-	 */
-	protected $db;
+    public function setUp()
+    {
+        $this->db = $this->getMockBuilder('TYPO3\\CMS\\Core\\Database\\DatabaseConnection')
+            ->getMock();
 
-	public function setUp() {
-		$this->db = $this->getMockBuilder('TYPO3\\CMS\\Core\\Database\\DatabaseConnection')
-			->getMock();
+        $GLOBALS['TYPO3_DB'] = $this->db;
+    }
 
-		$GLOBALS['TYPO3_DB'] = $this->db;
-	}
+    /**
+     * (non-PHPdoc).
+     *
+     * @see PHPUnit_Framework_TestCase::tearDown()
+     */
+    public function tearDown()
+    {
+        // tearing down TYPO3_DB global; otherwise causes serialization errors
+        $GLOBALS['TYPO3_DB'] = null;
+    }
 
-	/**
-	 * (non-PHPdoc)
-	 * @see PHPUnit_Framework_TestCase::tearDown()
-	 */
-	public function tearDown() {
-		// tearing down TYPO3_DB global; otherwise causes serialization errors
-		$GLOBALS['TYPO3_DB'] = NULL;
-	}
+    /**
+     * @test
+     */
+    public function accessReturnsTrueIfListTypesWithOldPluginSignatureWereFound()
+    {
+        $this->assertOldPluginInstancesExist();
 
-	/**
-	 *
-	 * @test
-	 */
-	public function accessReturnsTrueIfListTypesWithOldPluginSignatureWereFound() {
-		$this->assertOldPluginInstancesExist();
+        $sut = new \ext_update();
 
-		$sut = new \ext_update();
+        $this->assertTrue($sut->access());
+    }
 
-		$this->assertTrue($sut->access());
-	}
+    protected function assertOldPluginInstancesExist()
+    {
+        $this->db
+            ->expects($this->at(0))
+            ->method('exec_SELECTcountRows')
+            ->with(
+                $this->equalTo('*'),
+                $this->equalTo('tt_content'),
+                $this->equalTo('list_type = "beautyofcode_contentrenderer"')
+            )
+            ->will($this->returnValue(1));
+    }
 
-	protected function assertOldPluginInstancesExist() {
-		$this->db
-			->expects($this->at(0))
-			->method('exec_SELECTcountRows')
-			->with(
-				$this->equalTo('*'),
-				$this->equalTo('tt_content'),
-				$this->equalTo('list_type = "beautyofcode_contentrenderer"')
-			)
-			->will($this->returnValue(1));
-	}
+    /**
+     * @test
+     */
+    public function mainWillUpdateTheListTypeFieldOfOldPluginContentElements()
+    {
+        $this->assertOldPluginInstancesExist();
 
-	/**
-	 *
-	 * @test
-	 */
-	public function mainWillUpdateTheListTypeFieldOfOldPluginContentElements() {
-		$this->assertOldPluginInstancesExist();
+        $this->db
+            ->expects($this->at(1))
+            ->method('exec_UPDATEquery')
+            ->with(
+                $this->equalTo('tt_content'),
+                $this->equalTo('list_type = "beautyofcode_contentrenderer"'),
+                $this->equalTo(array('CType' => 'beautyofcode_contentrenderer', 'list_type' => ''))
+            );
 
-		$this->db
-			->expects($this->at(1))
-			->method('exec_UPDATEquery')
-			->with(
-				$this->equalTo('tt_content'),
-				$this->equalTo('list_type = "beautyofcode_contentrenderer"'),
-				$this->equalTo(array('CType' => 'beautyofcode_contentrenderer', 'list_type' => ''))
-			);
+        $sut = new \ext_update();
 
-		$sut = new \ext_update();
+        $updateOutput = $sut->main();
 
-		$updateOutput = $sut->main();
-
-		$this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
-	}
+        $this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
+    }
 }

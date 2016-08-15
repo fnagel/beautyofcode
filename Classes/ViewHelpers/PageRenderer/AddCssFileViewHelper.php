@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 
 /*
@@ -15,39 +16,37 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  */
 
 /**
- * Adds a css file resources to the page
+ * Adds a css file resources to the page.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @package \TYPO3\Beautyofcode\ViewHelpers\PageRenderer
  */
-class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper {
+class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+{
+    /**
+     * Renders the view helper.
+     *
+     * @param string $file                     File reference
+     * @param string $rel                      rel-attribute value
+     * @param string $media                    Css media attribute value
+     * @param string $title                    Title of the link element
+     * @param string $compress                 TYPO3 compress flag
+     * @param string $forceOnTop               TYPO3 force-on-top flag
+     * @param string $allWrap                  TYPO3 allWrap configuration
+     * @param string $excludeFromConcatenation TYPO3 excl. from concat. flag
+     */
+    public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = true, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false)
+    {
+        $this->pageRenderer->addCssFile(
+            $file,
+            $rel,
+            $media,
+            $title,
+            $compress,
+            $forceOnTop,
+            $allWrap,
+            $excludeFromConcatenation
+        );
 
-	/**
-	 * Renders the view helper
-	 *
-	 * @param string $file File reference
-	 * @param string $rel rel-attribute value
-	 * @param string $media Css media attribute value
-	 * @param string $title Title of the link element
-	 * @param string $compress TYPO3 compress flag
-	 * @param string $forceOnTop TYPO3 force-on-top flag
-	 * @param string $allWrap TYPO3 allWrap configuration
-	 * @param string $excludeFromConcatenation TYPO3 excl. from concat. flag
-	 *
-	 * @return NULL
-	 */
-	public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = TRUE, $forceOnTop = FALSE, $allWrap = '', $excludeFromConcatenation = FALSE) {
-		$this->pageRenderer->addCssFile(
-			$file,
-			$rel,
-			$media,
-			$title,
-			$compress,
-			$forceOnTop,
-			$allWrap,
-			$excludeFromConcatenation
-		);
-
-		return NULL;
-	}
+        return;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\ViewHelpers;
 
 /*
@@ -15,21 +16,21 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  */
 
 /**
- * MakeAbsoluteViewHelper
+ * MakeAbsoluteViewHelper.
  *
  * @author Felix Nagel <info@felixnagel.com>
- * @package \TYPO3\Beautyofcode\ViewHelpers
  */
-class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-
-	/**
-	 * Renders the view helper
-	 *
-	 * @param string $url The url
-	 *
-	 * @return string
-	 */
-	public function render($url) {
-		return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
-	}
+class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+{
+    /**
+     * Renders the view helper.
+     *
+     * @param string $url The url
+     *
+     * @return string
+     */
+    public function render($url)
+    {
+        return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
+    }
 }

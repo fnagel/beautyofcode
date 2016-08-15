@@ -1,4 +1,5 @@
 <?php
+
 namespace TYPO3\Beautyofcode\Tests\Unit\Form\Element;
 
 /*
@@ -19,73 +20,70 @@ use TYPO3\CMS\Core\Tests\UnitTestCase;
 use TYPO3\CMS\T3editor\T3editor;
 
 /**
- * T3editorElementTest
+ * T3editorElementTest.
  *
- * @package TYPO3\Beautyofcode\Tests\Unit\Form\Element
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  */
-class T3editorElementTest extends UnitTestCase {
+class T3editorElementTest extends UnitTestCase
+{
+    /**
+     * @var NodeFactory|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $nodeFactoryMock;
 
-	/**
-	 * @var NodeFactory|\PHPUnit_Framework_MockObject_MockObject
-	 */
-	protected $nodeFactoryMock;
+    /**
+     * T3editorElement.
+     *
+     * @var T3editorElement
+     */
+    protected $t3EditorElement;
 
-	/**
-	 * T3editorElement
-	 *
-	 * @var T3editorElement
-	 */
-	protected $t3EditorElement;
+    /**
+     * SetUp.
+     */
+    public function setUp()
+    {
+        $GLOBALS['TYPO3_CONF_VARS'] = array(
+            'SYS' => array(
+                'formEngine' => array(
+                    'nodeRegistry' => array(),
+                    'nodeResolver' => array(),
+                ),
+            ),
+        );
 
-	/**
-	 * SetUp
-	 *
-	 * @return void
-	 */
-	public function setUp() {
-		$GLOBALS['TYPO3_CONF_VARS'] = array(
-			'SYS' => array(
-				'formEngine' => array(
-					'nodeRegistry' => array(),
-					'nodeResolver' => array(),
-				),
-			),
-		);
+        $this->nodeFactoryMock = $this->getMock(NodeFactory::class);
+    }
 
-		$this->nodeFactoryMock = $this->getMock(NodeFactory::class);
-	}
+    /**
+     * ItLeavesModeUntouchedIfNotBeautyofcodeContentElement.
+     */
+    public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement()
+    {
+        $data = array(
+            'tableName' => 'tt_content',
+            'databaseRow' => array(
+                'CType' => array('text'),
+                'pi_flexform' => array(
+                    'data' => array(
+                        'sDEF' => array(
+                            'lDEF' => array(
+                                'cLang' => array(
+                                    'vDEF' => array(
+                                        'php',
+                                    ),
+                                ),
+                            ),
+                        ),
+                    ),
+                ),
+            ),
+        );
 
-	/**
-	 * ItLeavesModeUntouchedIfNotBeautyofcodeContentElement
-	 *
-	 * @return void
-	 */
-	public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement() {
-		$data = array(
-			'tableName' => 'tt_content',
-			'databaseRow' => array(
-				'CType' => array('text'),
-				'pi_flexform' => array(
-					'data' => array(
-						'sDEF' => array(
-							'lDEF' => array(
-								'cLang' => array(
-									'vDEF' => array(
-										'php',
-									),
-								)
-							)
-						)
-					)
-				)
-			),
-		);
+        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+        $t3EditorElement->setMode(T3editor::MODE_MIXED);
 
-		$t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
-		$t3EditorElement->setMode(T3editor::MODE_MIXED);
-
-		$this->assertSame(T3editor::MODE_MIXED, $t3EditorElement->getMode());
-	}
+        $this->assertSame(T3editor::MODE_MIXED, $t3EditorElement->getMode());
+    }
 }

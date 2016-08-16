@@ -53,7 +53,7 @@ class T3editorElementTest extends UnitTestCase
             ),
         );
 
-        $this->nodeFactoryMock = $this->getMock(NodeFactory::class);
+        $this->nodeFactoryMock = $this->createMock(NodeFactory::class);
     }
 
     /**

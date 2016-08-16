@@ -46,10 +46,10 @@ class UniqueAppendingTest extends UnitTestCase
     public function configuredBrushesAreUniquelyAddedToTheReturnValue()
     {
         /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
-        $settingsServiceMock = $this->getMock(SettingsService::class);
+        $settingsServiceMock = $this->createMock(SettingsService::class);
 
         /* @var $objectManagerMock \TYPO3\CMS\Extbase\Object\ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $objectManagerMock = $this->getMock(ObjectManagerInterface::class);
+        $objectManagerMock = $this->createMock(ObjectManagerInterface::class);
         $objectManagerMock
                 ->expects($this->once())->method('get')
                 ->with(
@@ -60,7 +60,7 @@ class UniqueAppendingTest extends UnitTestCase
 
         $cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
         $cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend('cache_beautyofcode', $cacheBackendMock);
-        $cacheManagerMock = $this->getMock(CacheManager::class);
+        $cacheManagerMock = $this->createMock(CacheManager::class);
         $cacheManagerMock
             ->expects($this->any())
             ->method('getCache')

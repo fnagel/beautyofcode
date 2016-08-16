@@ -53,7 +53,7 @@ class FlexformTest extends UnitTestCase
 
     public function setUp()
     {
-        $this->highlighterConfigurationMock = $this->getMock(ConfigurationInterface::class);
+        $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
         $this->sut = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
 

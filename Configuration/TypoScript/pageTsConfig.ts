@@ -5,6 +5,4 @@ mod.wizards.newContentElement.wizardItems.plugins {
 	    description = LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:wiz_description
 	    tt_content_defValues.CType = beautyofcode_contentrenderer
 	}
-
-	show := addToList(beautyofcode)
 }

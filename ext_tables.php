@@ -32,7 +32,7 @@ call_user_func(function ($packageKey) {
 		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
             pi_flexform,
-            bodytext,
+            bodytext;LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,
             --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.frames;frames,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.access,
@@ -41,15 +41,23 @@ call_user_func(function ($packageKey) {
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
     ';
 
-    $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
-        'bodytext' => array(
-            'label' => 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code',
-            'config' => array(
-                'format' => 'mixed',
-                'renderType' => 't3editor',
+    $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode'];
+    if (is_string($configuration)) {
+        $configuration = (array)@unserialize($configuration);
+    } else {
+        $configuration = array();
+    }
+
+    if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1) {
+        $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
+            'bodytext' => array(
+                'config' => array(
+                    'format'     => 'mixed',
+                    'renderType' => 't3editor',
+                ),
             ),
-        ),
-    );
+        );
+    };
 
     $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(

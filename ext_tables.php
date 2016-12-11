@@ -48,7 +48,9 @@ call_user_func(function ($packageKey) {
         $configuration = array();
     }
 
-    if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1) {
+    if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1 &&
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')
+    ) {
         $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
             'bodytext' => array(
                 'config' => array(

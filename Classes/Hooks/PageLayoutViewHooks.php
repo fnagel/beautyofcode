@@ -15,6 +15,7 @@ namespace TYPO3\Beautyofcode\Hooks;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -92,18 +93,30 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
             $uid = $row['uid'];
 
             if (is_array($this->flexformData)) {
-                $label = $this->buildLabelHeader();
-
-                if (empty($headerContent)) {
-                    $headerContent = sprintf('<strong>%s</strong>', $label);
-                } else {
-                    $headerContent .= $label;
-                }
+                $this->buildHeaderContent($headerContent, $uid);
 
                 $itemContent = $this->buildCodeLanguageHeader();
 
                 $itemContent .= $this->buildCodePreview($uid, $row['bodytext']);
             }
+        }
+    }
+
+    /**
+     * Builds the header content
+     *
+     * @param string $headerContent
+     * @param int $uid
+     */
+    protected function buildHeaderContent(&$headerContent, $uid)
+    {
+        $label = $this->buildLabelHeader();
+
+        if (empty($headerContent)) {
+            $editLink = BackendUtility::editOnClick('&edit[tt_content]['.(int) $uid.']=edit', $GLOBALS['BACK_PATH']);
+            $headerContent = sprintf('<strong><a href="#" onclick="%s">%s</strong></a>', $editLink, $label);
+        } else {
+            $headerContent .= $label;
         }
     }
 

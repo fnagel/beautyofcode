@@ -1,3 +1,11 @@
+2016-12-11 Felix Nagel <info@felixnagel.com>
+
+	3.1.0 released (no changes required)
+	* TYPO3 8.4 compatibility
+	* Bugfixes for t3editor EM configuration
+	* Bugfix for new content element wizard
+	* Code is now PSR-2 standard compliant
+
 2016-01-25 Felix Nagel <info@felixnagel.com> & Thomas Juhnke <typo3@van-tomas.de>
 
 	3.0.0 released (Migration needed see documentation)

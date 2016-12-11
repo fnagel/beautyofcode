@@ -118,6 +118,16 @@ What you need to know:
 - Added a composer.json and a bower.json file
 - Improved code style
 
+3.0 to 3.1
+^^^^^^^^^^
+
+What you need to know:
+
+- Now compatible with TYPO3 8.4 (please make sure to use root template for adding static TS when using 8.x)
+- Bugfix for t3editor EM configuration (thanks to Thomas Kieslich!)
+- Bugfix for new content element wizard configuration
+- Code is now PSR-2 standard compliant
+
 .. _admin-faq:
 
 FAQ

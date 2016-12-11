@@ -281,7 +281,7 @@ Where to post improvements or bugs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Please feel free add questions, bugs and improvements at
-http://forge.typo3.org/projects/extension-beautyofcode/issues
+https://github.com/fnagel/beautyofcode/issues
 
 
 Problems with line numbering and line highlighting in Prism

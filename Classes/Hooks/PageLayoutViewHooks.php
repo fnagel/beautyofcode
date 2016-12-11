@@ -92,7 +92,13 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
             $uid = $row['uid'];
 
             if (is_array($this->flexformData)) {
-                $headerContent = $this->buildLabelHeader();
+                $label = $this->buildLabelHeader();
+
+                if (empty($headerContent)) {
+                    $headerContent = sprintf('<strong>%s</strong>', $label);
+                } else {
+                    $headerContent .= $label;
+                }
 
                 $itemContent = $this->buildCodeLanguageHeader();
 
@@ -110,16 +116,15 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      */
     protected function buildLabelHeader()
     {
-        $header = sprintf('<em>%s</em>',
-            $GLOBALS['LANG']->sL(
-                self::TRANSLATION_CATALOGUE.':cms_layout.no_label'
-            )
+        $header = sprintf(
+            '<em>%s</em>',
+            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_label')
         );
 
         $label = $this->flexformData['data']['sDEF']['lDEF']['cLabel']['vDEF'];
 
         if (strlen(trim($label)) > 0) {
-            $header = '<strong>'.htmlspecialchars($label).'</strong>';
+            $header = htmlspecialchars($label);
         }
 
         return $header;

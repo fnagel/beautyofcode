@@ -17,7 +17,7 @@ call_user_func(function ($packageKey) {
 
     // BE preview
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
-        'EXT:beautyofcode/Classes/Hooks/PageLayoutViewHooks.php:TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks';
+        'TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks';
 
     // Cache registration
     if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {

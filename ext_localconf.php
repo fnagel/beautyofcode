@@ -32,11 +32,11 @@ call_user_func(function ($packageKey) {
             'TYPO3\\CMS\\Core\\Cache\\Frontend\\VariableFrontend';
     }
 
-    // Dynamic changing of t3editor format for TYPO3 7.x
-    if (version_compare(TYPO3_branch, '7.4', '>=')) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects']['TYPO3\\CMS\\T3editor\\Form\\Element\\T3editorElement'] = array(
-            'className' => 'TYPO3\\Beautyofcode\\Form\\Element\\T3editorElement',
-        );
-    }
+    // Dynamic changing of t3editor format
+    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1491758504] = [
+        'nodeName' => 't3editor',
+        'priority' => '70',
+        'class' => \TYPO3\Beautyofcode\Form\Element\T3editorElement::class,
+    ];
 }, $_EXTKEY);
 

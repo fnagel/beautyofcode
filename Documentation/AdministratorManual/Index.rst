@@ -128,14 +128,21 @@ What you need to know:
 - Bugfix for new content element wizard configuration
 - Code is now PSR-2 standard compliant
 
-3.1 to 3.1.1
-^^^^^^^^^^^^
+3.1 to 3.2
+^^^^^^^^^^
 
 What you need to know:
 
 - Now compatible with TYPO3 8.7
 - Show default header in BE preview
 - Use FormEngine NodeFactory API instead if XCLASS
+- Update Prism to 1.6.0
+
+
+Note:
+
+SyntaxHighlighter is available as 4.x now, but it seems the new version is no longer dynamic
+when it comes to brushes, themes, etc and needs a built process using Gulp.
 
 
 .. _admin-faq:

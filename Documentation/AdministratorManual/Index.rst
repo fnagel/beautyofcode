@@ -128,6 +128,16 @@ What you need to know:
 - Bugfix for new content element wizard configuration
 - Code is now PSR-2 standard compliant
 
+3.1 to 3.1.1
+^^^^^^^^^^^^
+
+What you need to know:
+
+- Now compatible with TYPO3 8.7
+- Show default header in BE preview
+- Use FormEngine NodeFactory API instead if XCLASS
+
+
 .. _admin-faq:
 
 FAQ

@@ -120,6 +120,9 @@ coffeescript, cpp, csharp, css, css-extras, diff, erlang, gherkin, git, go, groo
 http, java, javascript, less, markdown, markup, powershell, php, php-extras, plain,
 python, ruby, sass, scala, scss, sql, twig, typoscript, yaml.
 
+There are much more brushed available for Prism. You might want to extend the brushes
+files bundled with this extension.
+
 **Prism Note:** Prism uses its brushes in a dependency manner. For example the `clike`
 brush is necessary to load before `php`(and therefore must be defined *before*
 `php` in the `brushes` configuration.
@@ -134,9 +137,15 @@ theme
 
 :typoscript:`plugin.tx_beautyofcode.settings.theme =` :ref:`t3tsref:data-type-string`
 
-Define a theme (which is basically a CSS file). Following themes are avaiable: 
-Midnight, RDark, Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 
-(which is dark minimal).
+Define a theme (which is basically a CSS file). Following themes are avaiable:
+
+**SyntaxHighlighter:**
+Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3(which is dark minimal), MDUltra,
+Midnight, RDark.
+
+**Prism:**
+coy, okaidia, dark, funky, okaidia, solarizedlight, tomorrow, twilight.
+
 
 showLabel
 """""""""

@@ -16,7 +16,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Form\Element;
  */
 use TYPO3\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\T3editor\T3editor;
 
 /**

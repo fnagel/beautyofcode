@@ -27,7 +27,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  ***************************************************************/
 
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Tests the flexform domain object.

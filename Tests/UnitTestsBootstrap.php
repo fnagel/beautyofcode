@@ -37,7 +37,7 @@ class UnitTestsBootstrap
         $webRoot = $this->getWebRoot();
 
         if ($webRoot !== false) {
-            define('PATH_site', $webRoot);
+            putenv('TYPO3_PATH_ROOT=' . $webRoot);
         }
     }
 

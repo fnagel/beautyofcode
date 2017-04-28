@@ -30,7 +30,7 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems;
 
 use TYPO3\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Tests\UnitTestCase;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**

@@ -54,7 +54,7 @@ Howto install JS vendors
 
    .. code-block:: bash
 
-      bower install prism#gh-pages
+      bower install
 
 Howto add BOM to all reStructuredText files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

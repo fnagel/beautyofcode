@@ -21,25 +21,23 @@
 	</f:section>
 
 	<f:section name="StandaloneOnReady">
-		<![CDATA[
-			window.onDomReady = initReady;
+		window.onDomReady = initReady;
 
-			function initReady(fn) {
-				if (document.addEventListener) {
-					document.addEventListener('DOMContentLoaded', fn, false);
-				} else {
-					document.onreadystatechange = function () { readyState(fn) };
-				}
+		function initReady(fn) {
+			if (document.addEventListener) {
+				document.addEventListener('DOMContentLoaded', fn, false);
+			} else {
+				document.onreadystatechange = function () { readyState(fn) };
 			}
+		}
 
-			function readyState(func) {
-				if (document.readyState == 'interactive' || document.readyState == 'complete') {
-					func();
-				}
+		function readyState(func) {
+			if (document.readyState == 'interactive' || document.readyState == 'complete') {
+				func();
 			}
+		}
 
-			window.onDomReady(onReady);
-		]]>
+		window.onDomReady(onReady);
 
 		function onReady() {
 			<f:render section="Syntaxhighlighter" arguments="{_all}" />

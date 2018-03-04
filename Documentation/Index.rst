@@ -29,7 +29,7 @@ beautyOfCode
       syntax highlighting, jquery, javascript, prism, syntaxhighlighter
 
    :Copyright:
-      2013
+      2018
 
    :Author:
       Felix Nagel, Thomas Juhnke
@@ -59,6 +59,7 @@ beautyOfCode
    UserManual/Index
    AdministratorManual/Index
    Configuration/Index
+   UpgradeGuide/Index
    DeveloperCorner/Index
    KnownProblems/Index
    ToDoList/Index

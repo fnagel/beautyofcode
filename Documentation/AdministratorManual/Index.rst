@@ -20,11 +20,6 @@ Installation
   add one of the static templates named “beautyOfCode”).
 - Depending on your configuration you must add the jQuery core file yourself.
 
-.. Hint::
-
-	In TYPO3 8.x you need to add the TS to your root template! Using additional templates will result in an TS fetching
-   error when opening the plugin content element in backend. See issue #13 for more info.
-
 
 .. _admin-configuration:
 

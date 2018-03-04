@@ -127,9 +127,6 @@ files bundled with this extension.
 brush is necessary to load before `php`(and therefore must be defined *before*
 `php` in the `brushes` configuration.
 
-.. important::
-	The Make :code:`plugin.tx_beautyofcode.settings.brushes` settings are used in BE context.
-	Make sure to re-assign changed TS settings to the BE by using :code:`module.tx_beautyofcode < plugin.tx_beautyofcode`.
 
 
 theme

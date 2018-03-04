@@ -23,5 +23,3 @@ plugin.tx_beautyofcode {
 		.tx_beautyofcode pre { overflow: auto; }
 	)
 }
-
-module.tx_beautyofcode < plugin.tx_beautyofcode

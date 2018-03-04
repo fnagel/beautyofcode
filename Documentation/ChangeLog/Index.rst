@@ -13,7 +13,6 @@ ChangeLog
 Please see ChangeLog file in extension directory: typo3conf/ext/beautyofcode/
 
 .. tip::
-   See our roadmap_ & the `commit log`_
+   Since version 3.1.0 the changelog can be found here: `commit log`_
 
-.. _roadmap: http://forge.typo3.org/projects/extension-beautyofcode/roadmap
 .. _commit log: https://github.com/fnagel/beautyofcode/commits/master

@@ -1,6 +1,6 @@
 {
   "name": "typo3-ter/beautyofcode",
-  "version": "3.1.0",
+  "version": "3.3.0",
   "authors": [
     "Felix Nagel <info@felixnagel.com>"
   ],
@@ -14,7 +14,7 @@
     "tests"
   ],
   "dependencies": {
-    "syntax_highlighter ": "https://github.com/syntaxhighlighter/syntaxhighlighter.git#3.0.9",
-    "prism": "1.6.0"
+    "syntax_highlighter ": "https://github.com/syntaxhighlighter/syntaxhighlighter.git#3.0.90",
+    "prism": "1.11.0"
   }
 }

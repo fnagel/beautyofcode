@@ -83,6 +83,7 @@ class SettingsService
      * @param string $path
      *
      * @return mixed
+     * @throws Exception
      */
     public function getTypoScriptByPath($path)
     {

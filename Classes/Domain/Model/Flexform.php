@@ -46,6 +46,13 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
     protected $cLang;
 
     /**
+     * Code URL / File
+     *
+     * @var string
+     */
+    protected $cFile;
+
+    /**
      * Code highlight lines.
      *
      * @var string
@@ -128,6 +135,26 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
     public function getCLang()
     {
         return $this->cLang;
+    }
+
+    /**
+     * SetCFile.
+     *
+     * @param string $cFile The URL / File
+     */
+    public function setCFile($cFile)
+    {
+        $this->cFile = $cFile;
+    }
+
+    /**
+     * GetCFile.
+     *
+     * @return string
+     */
+    public function getCFile()
+    {
+        return $this->cFile;
     }
 
     /**

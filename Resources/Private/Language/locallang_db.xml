@@ -15,6 +15,7 @@
 
 			<label index="label">Label</label>
 			<label index="lang">Programming Language</label>
+			<label index="file">URL / File</label>
 			<label index="code">Sourcecode</label>
 			<label index="plain">Default (Plain text)</label>
 
@@ -41,6 +42,7 @@
 
 			<label index="label">Beschriftung</label>
 			<label index="lang">Programmiersprache</label>
+			<label index="file">URL / Datei</label>
 			<label index="code">Quellcode</label>
 			<label index="plain">Standard (Plain Text)</label>
 

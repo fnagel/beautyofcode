@@ -22,6 +22,7 @@ These fields should be self explanatory.
 
 - Description (not necessary, if empty no description is displayed)
 - Programming language (available languages configured by your admin)
+- File (source url / file to read the code from when 'Code' is empty)
 - Code
 
 Tab: Options

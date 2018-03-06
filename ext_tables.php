@@ -28,8 +28,8 @@ call_user_func(function ($packageKey) {
     );
 
     $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
-		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
-		--palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
+        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
+        --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
         --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
             pi_flexform,
             bodytext;LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code,
@@ -81,6 +81,7 @@ call_user_func(function ($packageKey) {
             'columns' => array(
                 'c_label' => array('config' => array()),
                 'c_lang' => array('config' => array()),
+                'c_file' => array('config' => array()),
                 'c_highlight' => array('config' => array()),
                 'c_collapse' => array('config' => array()),
                 'c_gutter' => array('config' => array()),

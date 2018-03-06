@@ -15,6 +15,9 @@ namespace TYPO3\Beautyofcode\Controller;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\LinkHandling\LinkService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The frontend plugin controller for the syntaxhighlighter.
  *
@@ -51,6 +54,22 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $this->configurationManager->getContentObject()
             );
         $flexform->setTyposcriptDefaults($this->settings['defaults']);
+
+        if (empty(str_replace("\r\n", '', $contentElement['bodytext']))) {
+            $file = $flexform->getCFile();
+            $linkService = GeneralUtility::makeInstance(LinkService::class);
+            $data = $linkService->resolveByStringRepresentation($file);
+            $content = '';
+            if ($data['type'] === 'url') {
+                $content = file_get_contents($data['url']);
+            } elseif ($data['type'] === 'file') {
+                /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
+                $fileObject = $data['file'];
+                $content = $fileObject->getContents();
+            }
+
+            $contentElement['bodytext'] = $content;
+        }
 
         $this->view->assign('ce', $contentElement);
         $this->view->assign('flexform', $flexform);

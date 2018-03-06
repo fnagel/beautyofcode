@@ -29,10 +29,10 @@ class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractP
      * @param string $rel                      rel-attribute value
      * @param string $media                    Css media attribute value
      * @param string $title                    Title of the link element
-     * @param string $compress                 TYPO3 compress flag
-     * @param string $forceOnTop               TYPO3 force-on-top flag
+     * @param bool   $compress                 TYPO3 compress flag
+     * @param bool   $forceOnTop               TYPO3 force-on-top flag
      * @param string $allWrap                  TYPO3 allWrap configuration
-     * @param string $excludeFromConcatenation TYPO3 excl. from concat. flag
+     * @param bool   $excludeFromConcatenation TYPO3 excl. from concat. flag
      */
     public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = true, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false)
     {

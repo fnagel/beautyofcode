@@ -122,6 +122,7 @@ class LanguageItems
      * @param array $config flexform data
      *
      * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception
      */
     public function getConfiguredLanguages($config)
     {
@@ -196,6 +197,7 @@ class LanguageItems
      * Returns unique and sorted brushes.
      *
      * @return array
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception
      */
     protected function getUniqueAndSortedBrushes()
     {
@@ -221,7 +223,8 @@ class LanguageItems
     /**
      * Get brushes TS config per page.
      *
-     * @return array
+     * @return string
+     * @throws \TYPO3\CMS\Extbase\Configuration\Exception
      */
     protected function getBrushesConfig()
     {

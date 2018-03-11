@@ -62,10 +62,15 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
             $content = '';
             if ($data['type'] === 'url') {
                 $content = file_get_contents($data['url']);
+                if ($content === false) {
+                    $content = '';
+                }
             } elseif ($data['type'] === 'file') {
                 /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
                 $fileObject = $data['file'];
-                $content = $fileObject->getContents();
+                if ($fileObject !== null) {
+                    $content = $fileObject->getContents();
+                }
             }
 
             $contentElement['bodytext'] = $content;

@@ -131,7 +131,6 @@ class LanguageItems
         if (($cachedFields = $this->getCache()->get('language-items')) !== false) {
             $config['items'] = $cachedFields;
         } else {
-
             // make brushes list to flexform selectbox item array
             $optionList = array();
 
@@ -224,7 +223,6 @@ class LanguageItems
      * Get brushes TS config per page.
      *
      * @return string
-     * @throws \TYPO3\CMS\Extbase\Configuration\Exception
      */
     protected function getBrushesConfig()
     {
@@ -244,7 +242,7 @@ class LanguageItems
     }
 
     /**
-     * Get the wiki constants cache.
+     * Get the constants cache.
      *
      * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
      */

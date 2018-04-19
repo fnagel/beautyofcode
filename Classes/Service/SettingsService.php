@@ -15,16 +15,19 @@ namespace TYPO3\Beautyofcode\Service;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\TypoScript\TemplateService;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Provide a way to get the configuration just everywhere.
  *
  * @author (c) 2010 Sebastian Schreiber <me@schreibersebastian.de >
  * @author (c) 2010 Georg Ringer <typo3@ringerge.org>
- * @author (c) 2013-2015 Felix Nagel <info@felixnagel.com>
+ * @author (c) 2013-2018 Felix Nagel <info@felixnagel.com>
  */
 class SettingsService
 {
@@ -39,6 +42,14 @@ class SettingsService
     protected $extensionName = 'beautyofcode';
 
     /**
+     * Extension key.
+     *
+     * @var string
+     */
+    protected $extensionKey = 'tx_beautyofcode';
+
+
+    /**
      * @var mixed
      */
     protected $typoScriptSettings = null;
@@ -50,6 +61,31 @@ class SettingsService
     protected $configurationManager;
 
     /**
+     * Legacy alias of \TYPO3\CMS\Extbase\Service\TypoScriptService
+     *
+     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
+     * @inject
+     */
+    protected $typoScriptService;
+
+    /**
+     * Page uid for TS generation in BE context
+     *
+     * @var int
+     */
+    protected $pid = 0;
+
+    /**
+     * SettingsService constructor.
+     *
+     * @param int $pid
+     */
+    public function __construct(int $pid)
+    {
+        $this->pid = $pid;
+    }
+
+    /**
      * Returns all TS settings.
      *
      * @return array
@@ -59,11 +95,15 @@ class SettingsService
     public function getTypoScriptSettings()
     {
         if ($this->typoScriptSettings === null) {
-            $this->typoScriptSettings = $this->configurationManager->getConfiguration(
-                ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
-                $this->extensionName,
-                ''
-            );
+            if (TYPO3_MODE === 'FE') {
+                $this->typoScriptSettings = $this->configurationManager->getConfiguration(
+                    ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
+                    $this->extensionName,
+                    $this->extensionKey
+                );
+            } else {
+                $this->typoScriptSettings = $this->generateTypoScript($this->pid)['settings'];
+            }
         }
 
         if ($this->typoScriptSettings === null) {
@@ -88,5 +128,33 @@ class SettingsService
     public function getTypoScriptByPath($path)
     {
         return ObjectAccess::getPropertyPath($this->getTypoScriptSettings(), $path);
+    }
+
+    /**
+     * Returns all TS settings.
+     *
+     * @param int $pid
+     * @return array
+     */
+    protected function generateTypoScript($pid)
+    {
+        /* @var $pageRepository PageRepository */
+        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
+        $rootLine = $pageRepository->getRootLine($pid);
+
+        /* @var $templateService TemplateService */
+        $templateService = GeneralUtility::makeInstance(TemplateService::class);
+        $templateService->tt_track = 0;
+        $templateService->init();
+        $templateService->runThroughTemplates($rootLine);
+        $templateService->generateConfig();
+
+        if (!empty($templateService->setup['plugin.'][$this->extensionKey.'.'])) {
+            return $this->typoScriptService->convertTypoScriptArrayToPlainArray(
+                $templateService->setup['plugin.'][$this->extensionKey.'.']
+            );
+        }
+
+        return null;
     }
 }

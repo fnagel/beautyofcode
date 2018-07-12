@@ -11,9 +11,21 @@ Upgrade Guide
 =============
 
 
-If there's no upgrade guide, there' s no need to change anything. This guide
-does not covering extending via PHP (aka XCLASS or Hooks) – you need to check
-changes for yourself.
+If there's no upgrade guide, there' s no need to change anything.
+This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
+
+
+3.2 to 3.3
+^^^^^^^^^^
+
+What you need to know:
+
+- Now compatible with PHP 7.2
+- Improved TS generation in backend context
+   - it's now possible to use TS templates on sub pages
+   - No more usage of :code:`module.tx_beautyofcode < plugin.tx_beautyofcode`
+- Update Prism to 1.11.0
+- Bugfix for TYPO3 >= 8.5
 
 
 3.1 to 3.2

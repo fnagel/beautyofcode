@@ -131,10 +131,10 @@ class LanguageItems
             $config['items'] = $cachedFields;
         } else {
             // make brushes list to flexform selectbox item array
-            $optionList = array();
+            $optionList = [];
 
             if (isset($config['row']['pid']) && is_numeric($config['row']['pid'])) {
-                $this->contentElementPid = (int) $config['row']['pid'];
+                $this->contentElementPid = (int)$config['row']['pid'];
             }
 
             if ($this->contentElementPid === 0 && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {
@@ -160,7 +160,7 @@ class LanguageItems
             $config['items'] = array_merge($config['items'], $optionList);
         }
 
-        $this->getCache()->set('language-items', $config['items'], array('beautyofcode'));
+        $this->getCache()->set('language-items', $config['items'], ['beautyofcode']);
 
         return $config;
     }
@@ -175,10 +175,12 @@ class LanguageItems
     private function getPageUidByRecordUid($recordUid)
     {
         $recordPid = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-            'pid', 'tt_content', 'uid = '.$recordUid
+            'pid',
+            'tt_content',
+            'uid = ' . $recordUid
         );
 
-        return (int) $recordPid['pid'];
+        return (int)$recordPid['pid'];
     }
 
     /**

@@ -30,8 +30,8 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
 
 use TYPO3\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Tests the sorted appending of configured brushes to the list of flexform items.
@@ -84,25 +84,25 @@ class SortedAppendingTest extends UnitTestCase
         $highlighterConfigurationMock
             ->expects($this->any())
             ->method('getBrushIdentifierAliasAndLabel')
-            ->will($this->returnValue(array('SQL / MySQL' => 'sql')));
+            ->will($this->returnValue(['SQL / MySQL' => 'sql']));
 
         $sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
         $sut->injectObjectManager($objectManagerMock);
         $sut->injectCacheManager($cacheManagerMock);
         $sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 
-        $configFromFlexform = array(
-            'row' => array(
+        $configFromFlexform = [
+            'row' => [
                 'uid' => 1,
                 'pid' => 1,
-            ),
-            'items' => array(
-                array(
+            ],
+            'items' => [
+                [
                     'Plain', // TCEforms: label
                     'plain', // TCEforms: key
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $newConfig = $sut->getConfiguredLanguages($configFromFlexform);
 

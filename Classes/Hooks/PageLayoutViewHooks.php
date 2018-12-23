@@ -67,7 +67,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      *
      * @var array
      */
-    protected $flexformData = array();
+    protected $flexformData = [];
 
     /**
      * @var string
@@ -113,7 +113,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
         $label = $this->buildLabelHeader();
 
         if (empty($headerContent)) {
-            $editLink = BackendUtility::editOnClick('&edit[tt_content]['.(int) $uid.']=edit', $GLOBALS['BACK_PATH']);
+            $editLink = BackendUtility::editOnClick('&edit[tt_content][' . (int)$uid . ']=edit', $GLOBALS['BACK_PATH']);
             $headerContent = sprintf('<strong><a href="#" onclick="%s">%s</strong></a>', $editLink, $label);
         } else {
             $headerContent .= $label;
@@ -131,7 +131,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     {
         $header = sprintf(
             '<em>%s</em>',
-            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_label')
+            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':cms_layout.no_label')
         );
 
         $label = $this->flexformData['data']['sDEF']['lDEF']['cLabel']['vDEF'];
@@ -150,8 +150,9 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      */
     protected function buildCodeLanguageHeader()
     {
-        return sprintf('<br /><br /><strong>%s</strong> (%s)<br />',
-            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':code'),
+        return sprintf(
+            '<br /><br /><strong>%s</strong> (%s)<br />',
+            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':code'),
             htmlspecialchars($this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'])
         );
     }
@@ -168,8 +169,9 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     {
         $code = $codeBlock;
 
-        $preview = sprintf('<em>%s</em>',
-            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_code')
+        $preview = sprintf(
+            '<em>%s</em>',
+            $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE . ':cms_layout.no_code')
         );
 
         if (strlen($code) > 0) {
@@ -178,14 +180,15 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
             $preview = sprintf(
                 '<textarea id="ta_hidden%s" style="display: none;" readonly="readonly">%s</textarea>',
                 $uid,
-                chr(10).htmlspecialchars($code)
+                chr(10) . htmlspecialchars($code)
             );
             $preview .= sprintf(
                 '<textarea id="ta%s" style="height: %s; width: 98%%; padding: 1%%; margin: 0;" wrap="off" readonly="readonly"></textarea>',
                 $uid,
                 $this->textareaHeight
             );
-            $preview .= sprintf('
+            $preview .= sprintf(
+                '
 				<script type="text/javascript">
 					var
 						ta_hidden%s = document.getElementById("ta_hidden%s"),
@@ -219,7 +222,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     protected function calculateTextareaHeight($content, $unit = 'px')
     {
         $lines = preg_split("/(\n)/", $content);
-        $proxyLines = sizeof($lines);
+        $proxyLines = count($lines);
 
         if ($proxyLines > self::MAX_TEXTAREA_LINES) {
             $textareaHeight = self::MAX_TEXTAREA_HEIGHT;

@@ -9,21 +9,21 @@ call_user_func(function ($packageKey) {
     // See https://github.com/fnagel/beautyofcode/issues/14
     if (TYPO3_MODE !== 'BE') {
         // This dummy TCA is necessary to allow the Extbase data mapper to work
-        $GLOBALS['TCA']['tx_beautyofcode_domain_model_flexform'] = array(
-            'ctrl' => array(
+        $GLOBALS['TCA']['tx_beautyofcode_domain_model_flexform'] = [
+            'ctrl' => [
                 'hideTable' => 1,
                 'is_static' => 1,
                 'readOnly' => 1,
-            ),
-            'columns' => array(
-                'c_label' => array('config' => array()),
-                'c_lang' => array('config' => array()),
-                'c_highlight' => array('config' => array()),
-                'c_collapse' => array('config' => array()),
-                'c_gutter' => array('config' => array()),
-                'uid' => array('config' => array()),
-                'pid' => array('config' => array()),
-            ),
-        );
+            ],
+            'columns' => [
+                'c_label' => ['config' => []],
+                'c_lang' => ['config' => []],
+                'c_highlight' => ['config' => []],
+                'c_collapse' => ['config' => []],
+                'c_gutter' => ['config' => []],
+                'uid' => ['config' => []],
+                'pid' => ['config' => []],
+            ],
+        ];
     }
 }, $_EXTKEY);

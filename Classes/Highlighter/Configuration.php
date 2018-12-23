@@ -15,9 +15,9 @@ namespace TYPO3\Beautyofcode\Highlighter;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
 /**
  * Configuration.
@@ -76,7 +76,7 @@ class Configuration implements ConfigurationInterface
     public function initializeObject()
     {
         $this->configuration = $this->objectManager->get(
-            'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
+            'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\' . $this->settings['library'],
             $this->settings
         );
     }

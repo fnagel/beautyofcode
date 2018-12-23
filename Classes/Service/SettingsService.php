@@ -48,7 +48,6 @@ class SettingsService
      */
     protected $extensionKey = 'tx_beautyofcode';
 
-
     /**
      * @var mixed
      */
@@ -107,7 +106,7 @@ class SettingsService
         }
 
         if ($this->typoScriptSettings === null) {
-            throw new Exception('No TypoScript settings for EXT:'.$this->extensionName.' available.');
+            throw new Exception('No TypoScript settings for EXT:' . $this->extensionName . ' available.');
         }
 
         return $this->typoScriptSettings;
@@ -148,9 +147,9 @@ class SettingsService
         $templateService->runThroughTemplates($rootLine);
         $templateService->generateConfig();
 
-        if (!empty($templateService->setup['plugin.'][$this->extensionKey.'.'])) {
+        if (!empty($templateService->setup['plugin.'][$this->extensionKey . '.'])) {
             return $this->typoScriptService->convertTypoScriptArrayToPlainArray(
-                $templateService->setup['plugin.'][$this->extensionKey.'.']
+                $templateService->setup['plugin.'][$this->extensionKey . '.']
             );
         }
 

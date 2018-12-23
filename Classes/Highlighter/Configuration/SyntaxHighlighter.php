@@ -30,8 +30,8 @@ class SyntaxHighlighter extends AbstractConfiguration
      *
      * @var array
      */
-    protected $failSafeBrushAliasMap = array(
-        'Prism' => array(
+    protected $failSafeBrushAliasMap = [
+        'Prism' => [
             'actionscript' => 'actionscript3',
             'c' => 'cpp',
             'coffeescript' => 'javascript',
@@ -45,8 +45,8 @@ class SyntaxHighlighter extends AbstractConfiguration
             'scss' => 'sass',
             'twig' => 'plain',
             'yaml' => 'plain',
-        ),
-    );
+        ],
+    ];
 
     /**
      * A CSS class/label map for the select box.
@@ -56,33 +56,33 @@ class SyntaxHighlighter extends AbstractConfiguration
      *
      * @var array
      */
-    protected $brushIdentifierAliasLabelMap = array(
-        'AppleScript' => array('applescript', 'AppleScript'),
-        'AS3' => array('actionscript3', 'Actionscript 3'),
-        'Bash' => array('bash', 'Bash / Shell'),
-        'ColdFusion' => array('coldfusion', 'ColdFusion'),
-        'Cpp' => array('cpp', 'C / C++'),
-        'CSharp' => array('csharp', 'C#'),
-        'Css' => array('css', 'CSS'),
-        'Delphi' => array('delphi', 'Delphi / Pas / Pascal'),
-        'Diff' => array('diff', 'Diff / Patch'),
-        'Erlang' => array('erlang', 'Erlang'),
-        'Groovy' => array('groovy', 'Groovy'),
-        'Java' => array('java', 'Java'),
-        'JavaFX' => array('javafx', 'Java FX'),
-        'JScript' => array('javascript', 'Java-Script'),
-        'Perl' => array('perl', 'Perl'),
-        'Php' => array('php', 'PHP'),
-        'PowerShell' => array('powershell', 'Power-Shell'),
-        'Python' => array('python', 'Python'),
-        'Ruby' => array('ruby', 'Ruby on Rails'),
-        'Sass' => array('sass', 'Sass'),
-        'Scala' => array('scala', 'Scala'),
-        'Sql' => array('sql', 'SQL / MySQL'),
-        'Typoscript' => array('typoscript', 'Typoscript'),
-        'Vb' => array('vbnet', 'Virtual Basic / .Net'),
-        'Xml' => array('xml', 'XML / XSLT / XHTML / HTML'),
-    );
+    protected $brushIdentifierAliasLabelMap = [
+        'AppleScript' => ['applescript', 'AppleScript'],
+        'AS3' => ['actionscript3', 'Actionscript 3'],
+        'Bash' => ['bash', 'Bash / Shell'],
+        'ColdFusion' => ['coldfusion', 'ColdFusion'],
+        'Cpp' => ['cpp', 'C / C++'],
+        'CSharp' => ['csharp', 'C#'],
+        'Css' => ['css', 'CSS'],
+        'Delphi' => ['delphi', 'Delphi / Pas / Pascal'],
+        'Diff' => ['diff', 'Diff / Patch'],
+        'Erlang' => ['erlang', 'Erlang'],
+        'Groovy' => ['groovy', 'Groovy'],
+        'Java' => ['java', 'Java'],
+        'JavaFX' => ['javafx', 'Java FX'],
+        'JScript' => ['javascript', 'Java-Script'],
+        'Perl' => ['perl', 'Perl'],
+        'Php' => ['php', 'PHP'],
+        'PowerShell' => ['powershell', 'Power-Shell'],
+        'Python' => ['python', 'Python'],
+        'Ruby' => ['ruby', 'Ruby on Rails'],
+        'Sass' => ['sass', 'Sass'],
+        'Scala' => ['scala', 'Scala'],
+        'Sql' => ['sql', 'SQL / MySQL'],
+        'Typoscript' => ['typoscript', 'Typoscript'],
+        'Vb' => ['vbnet', 'Virtual Basic / .Net'],
+        'Xml' => ['xml', 'XML / XSLT / XHTML / HTML'],
+    ];
 
     /**
      * GetAutoloaderBrushMap.
@@ -91,7 +91,7 @@ class SyntaxHighlighter extends AbstractConfiguration
      */
     public function getAutoloaderBrushMap()
     {
-        $brushes = array();
+        $brushes = [];
 
         $configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
             ',',
@@ -102,7 +102,7 @@ class SyntaxHighlighter extends AbstractConfiguration
 
         foreach ($configuredBrushes as $brush) {
             list($cssTag) = $this->brushIdentifierAliasLabelMap[$brush];
-            $brushPath = 'shBrush'.$brush.'.js';
+            $brushPath = 'shBrush' . $brush . '.js';
 
             $brushes[$cssTag] = $brushPath;
         }
@@ -119,16 +119,16 @@ class SyntaxHighlighter extends AbstractConfiguration
      */
     public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform)
     {
-        $configurationItems = array();
+        $configurationItems = [];
 
-        $classAttributeConfigurationStack = array(
+        $classAttributeConfigurationStack = [
             'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
             'gutter' => $flexform->getCGutter(),
             'collapse' => $flexform->getCCollapse(),
-        );
+        ];
 
         foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-            if (true === in_array($configurationValue, array('', 'auto'))) {
+            if (true === in_array($configurationValue, ['', 'auto'])) {
                 continue;
             }
 
@@ -137,12 +137,12 @@ class SyntaxHighlighter extends AbstractConfiguration
                 $value = sprintf('[%s]', $configurationValue);
             } else {
                 $key = $configurationKey;
-                $value = var_export((boolean) $configurationValue, true);
+                $value = var_export((boolean)$configurationValue, true);
             }
 
             $configurationItems[] = sprintf('%s: %s', $key, $value);
         }
 
-        return '; '.implode('; ', $configurationItems);
+        return '; ' . implode('; ', $configurationItems);
     }
 }

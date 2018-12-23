@@ -30,8 +30,8 @@ class Prism extends AbstractConfiguration
      *
      * @var array
      */
-    protected $failSafeBrushAliasMap = array(
-        'SyntaxHighlighter' => array(
+    protected $failSafeBrushAliasMap = [
+        'SyntaxHighlighter' => [
             'actionscript3' => 'actionscript',
             'coldfusion' => 'markup',
             'delphi' => 'plain',
@@ -39,8 +39,8 @@ class Prism extends AbstractConfiguration
             'perl' => 'c',
             'vb' => 'plain',
             'xml' => 'markup',
-        ),
-    );
+        ],
+    ];
 
     /**
      * A CSS class/label map for the select box.
@@ -50,40 +50,40 @@ class Prism extends AbstractConfiguration
      *
      * @var array
      */
-    protected $brushIdentifierAliasLabelMap = array(
-        'applescript' => array('applescript', 'AppleScript'),
-        'actionscript' => array('actionscript', 'Actionscript 3'),
-        'bash' => array('bash', 'Bash / Shell'),
-        'c' => array('c', 'C / C++'),
-        'clike' => array('clike', 'C-Like'),
-        'coffeescript' => array('coffeescript', 'Coffeescript'),
-        'cpp' => array('cpp', 'C / C++'),
-        'csharp' => array('csharp', 'C#'),
-        'css' => array('css', 'CSS'),
-        'diff' => array('diff', 'Diff / Patch'),
-        'erlang' => array('erlang', 'Erlang'),
-        'gherkin' => array('gherkin', 'Gherkin'),
-        'git' => array('git', 'Git'),
-        'go' => array('go', 'Go'),
-        'groovy' => array('groovy', 'Groovy'),
-        'http' => array('http', 'HTTP'),
-        'java' => array('java', 'Java'),
-        'javascript' => array('javascript', 'JavaScript'),
-        'less' => array('less', 'LESS'),
-        'markdown' => array('markdown', 'Markdown'),
-        'markup' => array('markup', 'XML / XSLT / XHTML / HTML'),
-        'php' => array('php', 'PHP'),
-        'powershell' => array('powershell', 'Power-Shell'),
-        'python' => array('python', 'Python'),
-        'ruby' => array('ruby', 'Ruby'),
-        'sass' => array('sass', 'Sass'),
-        'scala' => array('scala', 'Scala'),
-        'scss' => array('scss', 'SCSS'),
-        'sql' => array('sql', 'SQL'),
-        'twig' => array('twig', 'Twig'),
-        'typoscript' => array('typoscript', 'TypoScript'),
-        'yaml' => array('yaml', 'Yaml'),
-    );
+    protected $brushIdentifierAliasLabelMap = [
+        'applescript' => ['applescript', 'AppleScript'],
+        'actionscript' => ['actionscript', 'Actionscript 3'],
+        'bash' => ['bash', 'Bash / Shell'],
+        'c' => ['c', 'C / C++'],
+        'clike' => ['clike', 'C-Like'],
+        'coffeescript' => ['coffeescript', 'Coffeescript'],
+        'cpp' => ['cpp', 'C / C++'],
+        'csharp' => ['csharp', 'C#'],
+        'css' => ['css', 'CSS'],
+        'diff' => ['diff', 'Diff / Patch'],
+        'erlang' => ['erlang', 'Erlang'],
+        'gherkin' => ['gherkin', 'Gherkin'],
+        'git' => ['git', 'Git'],
+        'go' => ['go', 'Go'],
+        'groovy' => ['groovy', 'Groovy'],
+        'http' => ['http', 'HTTP'],
+        'java' => ['java', 'Java'],
+        'javascript' => ['javascript', 'JavaScript'],
+        'less' => ['less', 'LESS'],
+        'markdown' => ['markdown', 'Markdown'],
+        'markup' => ['markup', 'XML / XSLT / XHTML / HTML'],
+        'php' => ['php', 'PHP'],
+        'powershell' => ['powershell', 'Power-Shell'],
+        'python' => ['python', 'Python'],
+        'ruby' => ['ruby', 'Ruby'],
+        'sass' => ['sass', 'Sass'],
+        'scala' => ['scala', 'Scala'],
+        'scss' => ['scss', 'SCSS'],
+        'sql' => ['sql', 'SQL'],
+        'twig' => ['twig', 'Twig'],
+        'typoscript' => ['typoscript', 'TypoScript'],
+        'yaml' => ['yaml', 'Yaml'],
+    ];
 
     /**
      * GetAutoloaderBrushMap.
@@ -95,7 +95,7 @@ class Prism extends AbstractConfiguration
      */
     public function getAutoloaderBrushMap()
     {
-        return array();
+        return [];
     }
 
     /**
@@ -107,19 +107,19 @@ class Prism extends AbstractConfiguration
      */
     public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform)
     {
-        $configurationItems = array();
-        $classAttributeConfigurationStack = array(
+        $configurationItems = [];
+        $classAttributeConfigurationStack = [
             'data-line' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
-        );
+        ];
 
         foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-            if (true === in_array($configurationValue, array('', 'auto'))) {
+            if (true === in_array($configurationValue, ['', 'auto'])) {
                 continue;
             }
 
             $configurationItems[] = sprintf('%s="%s"', $configurationKey, $configurationValue);
         }
 
-        return ' '.implode(' ', $configurationItems);
+        return ' ' . implode(' ', $configurationItems);
     }
 }

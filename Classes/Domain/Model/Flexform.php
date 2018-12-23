@@ -71,7 +71,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
      *
      * @var array
      */
-    protected $typoscriptDefaults = array();
+    protected $typoscriptDefaults = [];
 
     /**
      * Language / brush fallback.
@@ -204,10 +204,12 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
 
         if ($isOffForInstance) {
             return false;
-        } elseif ($isOnForInstance) {
+        }
+        if ($isOnForInstance) {
             return true;
-        } elseif ($useDefault && $isDefaultSet) {
-            return (bool) $this->typoscriptDefaults['gutter'];
+        }
+        if ($useDefault && $isDefaultSet) {
+            return (bool)$this->typoscriptDefaults['gutter'];
         }
 
         return false;
@@ -218,7 +220,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
      *
      * @param array $typoscriptDefaults TypoScript defaults
      */
-    public function setTyposcriptDefaults($typoscriptDefaults = array())
+    public function setTyposcriptDefaults($typoscriptDefaults = [])
     {
         $this->typoscriptDefaults = $typoscriptDefaults;
     }

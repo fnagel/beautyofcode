@@ -46,7 +46,7 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()
     {
         $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar'));
+        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
         $sut->initializeArguments();
         $sut->initialize();
         $sut->render();
@@ -58,7 +58,7 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
     public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet()
     {
         $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts'));
+        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts']);
         $sut->initializeArguments();
         $sut->initialize();
         $path = $sut->render();
@@ -72,7 +72,7 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
     public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet()
     {
         $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(array('baseUrl' => '', 'resourcePath' => '', 'type' => 'styles'));
+        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'styles']);
         $sut->initializeArguments();
         $sut->initialize();
         $path = $sut->render();
@@ -86,7 +86,7 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
     public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet()
     {
         $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(array('baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', 'type' => 'scripts'));
+        $sut->setArguments(['baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', 'type' => 'scripts']);
         $sut->initializeArguments();
         $sut->initialize();
         $path = $sut->render();

@@ -117,7 +117,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())->method('getAutoloaderBrushMap')
-            ->will($this->returnValue(array('plain' => 'Plain')));
+            ->will($this->returnValue(['plain' => 'Plain']));
 
         $brushes = $this->sut->getAutoloaderBrushMap();
 
@@ -131,7 +131,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())->method('getAutoloaderBrushMap')
-            ->will($this->returnValue(array('typoscript' => 'Typoscript', 'actionscript3' => 'AS3')));
+            ->will($this->returnValue(['typoscript' => 'Typoscript', 'actionscript3' => 'AS3']));
 
         $brushes = $this->sut->getAutoloaderBrushMap();
 
@@ -165,7 +165,7 @@ class FlexformTest extends UnitTestCase
     public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy()
     {
         $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(array('gutter' => ''));
+        $this->sut->setTyposcriptDefaults(['gutter' => '']);
 
         $this->assertFalse($this->sut->getIsGutterActive());
     }
@@ -176,7 +176,7 @@ class FlexformTest extends UnitTestCase
     public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff()
     {
         $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(array('gutter' => '0'));
+        $this->sut->setTyposcriptDefaults(['gutter' => '0']);
 
         $this->assertFalse($this->sut->getIsGutterActive());
     }
@@ -187,7 +187,7 @@ class FlexformTest extends UnitTestCase
     public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn()
     {
         $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(array('gutter' => '1'));
+        $this->sut->setTyposcriptDefaults(['gutter' => '1']);
 
         $this->assertTrue($this->sut->getIsGutterActive());
     }

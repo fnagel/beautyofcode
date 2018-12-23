@@ -6,12 +6,12 @@ if (!defined('TYPO3_MODE')) {
 
 call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'TYPO3.'.$packageKey,
+        'TYPO3.' . $packageKey,
         'ContentRenderer',
-        array(
+        [
             'Content' => 'render',
-        ),
-        array(),
+        ],
+        [],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
@@ -21,7 +21,7 @@ call_user_func(function ($packageKey) {
 
     // Cache registration
     if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = array();
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = [];
     }
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'] =
@@ -39,4 +39,3 @@ call_user_func(function ($packageKey) {
         'class' => \TYPO3\Beautyofcode\Form\Element\T3editorElement::class,
     ];
 }, $_EXTKEY);
-

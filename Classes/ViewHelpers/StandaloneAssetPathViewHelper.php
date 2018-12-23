@@ -41,7 +41,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
      *
      * @var array
      */
-    protected $validTypes = array('scripts', 'styles');
+    protected $validTypes = ['scripts', 'styles'];
 
     /**
      * InitializeArguments.
@@ -66,11 +66,11 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
         }
 
         if ('' === trim($this->arguments['resourcePath'])) {
-            $this->arguments['resourcePath'] = self::DEFAULT_RESOURCE_PATH_PREFIX.$this->arguments['type'].'/';
+            $this->arguments['resourcePath'] = self::DEFAULT_RESOURCE_PATH_PREFIX . $this->arguments['type'] . '/';
         }
 
         if (false === in_array($this->arguments['type'], $this->validTypes)) {
-            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('The type argument must be one of '.implode(', ', $this->validTypes).'.', 1389366818);
+            throw new \TYPO3\CMS\Fluid\Core\ViewHelper\Exception('The type argument must be one of ' . implode(', ', $this->validTypes) . '.', 1389366818);
         }
     }
 
@@ -81,6 +81,6 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
      */
     public function render()
     {
-        return $this->arguments['baseUrl'].$this->arguments['resourcePath'];
+        return $this->arguments['baseUrl'] . $this->arguments['resourcePath'];
     }
 }

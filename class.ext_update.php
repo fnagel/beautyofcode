@@ -115,10 +115,10 @@ class ext_update
         $this->db->exec_UPDATEquery(
             'tt_content',
             'list_type = "beautyofcode_contentrenderer"',
-            array(
+            [
                 'CType' => 'beautyofcode_contentrenderer',
                 'list_type' => '',
-            )
+            ]
         );
 
         $contentElements = $this->db->exec_SELECTquery(
@@ -128,7 +128,7 @@ class ext_update
         );
 
         while (($contentElement = $this->db->sql_fetch_assoc($contentElements))) {
-            $uid = (int) $contentElement['uid'];
+            $uid = (int)$contentElement['uid'];
             $flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
 
             try {
@@ -139,10 +139,10 @@ class ext_update
 
             $this->db->exec_UPDATEquery(
                 'tt_content',
-                'uid = '.$uid,
-                array(
+                'uid = ' . $uid,
+                [
                     'bodytext' => $codeBlock,
-                )
+                ]
             );
         }
 

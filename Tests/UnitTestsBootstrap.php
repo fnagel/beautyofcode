@@ -55,12 +55,12 @@ class UnitTestsBootstrap
             // Is there a parent TYPO3 installation?
             $webRoot = preg_replace('/typo3conf\/ext\/beautyofcode/', '', getcwd());
 
-            if (!(file_exists($webRoot) && file_exists($webRoot.'typo3'))) {
+            if (!(file_exists($webRoot) && file_exists($webRoot . 'typo3'))) {
                 return false;
             }
         }
 
-        return rtrim(strtr($webRoot, '\\', '/'), '/').'/';
+        return rtrim(strtr($webRoot, '\\', '/'), '/') . '/';
     }
 
     /**
@@ -71,17 +71,17 @@ class UnitTestsBootstrap
     protected function finishCoreBootstrap()
     {
         /** @var \Composer\Autoload\ClassLoader $autoloader */
-        $autoloader = require __DIR__.'/../vendor/autoload.php';
-        $autoloader->addPsr4('TYPO3\\CMS\\Core\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/core/Classes/');
-        $autoloader->addPsr4('TYPO3\\CMS\\Core\\Tests\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/core/Tests/');
-        $autoloader->addPsr4('TYPO3\\CMS\\Extbase\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/extbase/Classes/');
-        $autoloader->addPsr4('TYPO3\\CMS\\Fluid\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/fluid/Classes/');
-        $autoloader->addPsr4('TYPO3\\CMS\\Backend\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/backend/Classes/');
-        $autoloader->addPsr4('TYPO3\\CMS\\Frontend\\', __DIR__.'/../vendor/typo3/cms/typo3/sysext/frontend/Classes/');
+        $autoloader = require __DIR__ . '/../vendor/autoload.php';
+        $autoloader->addPsr4('TYPO3\\CMS\\Core\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/core/Classes/');
+        $autoloader->addPsr4('TYPO3\\CMS\\Core\\Tests\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/core/Tests/');
+        $autoloader->addPsr4('TYPO3\\CMS\\Extbase\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/extbase/Classes/');
+        $autoloader->addPsr4('TYPO3\\CMS\\Fluid\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/fluid/Classes/');
+        $autoloader->addPsr4('TYPO3\\CMS\\Backend\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/backend/Classes/');
+        $autoloader->addPsr4('TYPO3\\CMS\\Frontend\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/frontend/Classes/');
 
         \FluidTYPO3\Development\Bootstrap::initialize(
             $autoloader,
-            array(
+            [
                 'fluid_template' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
                 'cache_core' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
                 'cache_rootline' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
@@ -91,7 +91,7 @@ class UnitTestsBootstrap
                 'extbase_typo3dbbackend_tablecolumns' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
                 'extbase_typo3dbbackend_queries' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
                 'l10n' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
-            )
+            ]
         );
     }
 }

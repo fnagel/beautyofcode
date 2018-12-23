@@ -16,8 +16,8 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Form\Element;
  */
 use TYPO3\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\T3editor\T3editor;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * T3editorElementTest.
@@ -44,14 +44,14 @@ class T3editorElementTest extends UnitTestCase
      */
     public function setUp()
     {
-        $GLOBALS['TYPO3_CONF_VARS'] = array(
-            'SYS' => array(
-                'formEngine' => array(
-                    'nodeRegistry' => array(),
-                    'nodeResolver' => array(),
-                ),
-            ),
-        );
+        $GLOBALS['TYPO3_CONF_VARS'] = [
+            'SYS' => [
+                'formEngine' => [
+                    'nodeRegistry' => [],
+                    'nodeResolver' => [],
+                ],
+            ],
+        ];
 
         $this->nodeFactoryMock = $this->createMock(NodeFactory::class);
     }
@@ -61,25 +61,25 @@ class T3editorElementTest extends UnitTestCase
      */
     public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement()
     {
-        $data = array(
+        $data = [
             'tableName' => 'tt_content',
-            'databaseRow' => array(
-                'CType' => array('text'),
-                'pi_flexform' => array(
-                    'data' => array(
-                        'sDEF' => array(
-                            'lDEF' => array(
-                                'cLang' => array(
-                                    'vDEF' => array(
+            'databaseRow' => [
+                'CType' => ['text'],
+                'pi_flexform' => [
+                    'data' => [
+                        'sDEF' => [
+                            'lDEF' => [
+                                'cLang' => [
+                                    'vDEF' => [
                                         'php',
-                                    ),
-                                ),
-                            ),
-                        ),
-                    ),
-                ),
-            ),
-        );
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
 
         $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
         $t3EditorElement->setMode(T3editor::MODE_MIXED);

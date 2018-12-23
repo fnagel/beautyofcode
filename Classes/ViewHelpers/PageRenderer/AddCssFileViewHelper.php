@@ -23,28 +23,34 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
-     * Renders the view helper.
-     *
-     * @param string $file                     File reference
-     * @param string $rel                      rel-attribute value
-     * @param string $media                    Css media attribute value
-     * @param string $title                    Title of the link element
-     * @param string $compress                 TYPO3 compress flag
-     * @param string $forceOnTop               TYPO3 force-on-top flag
-     * @param string $allWrap                  TYPO3 allWrap configuration
-     * @param string $excludeFromConcatenation TYPO3 excl. from concat. flag
+     * Initialize arguments.
      */
-    public function render($file, $rel = 'stylesheet', $media = 'all', $title = '', $compress = true, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false)
+    public function initializeArguments()
+    {
+        $this->registerArgument('file', 'string', 'File reference');
+        $this->registerArgument('rel', 'string', 'rel-attribute value', false, 'stylesheet');
+        $this->registerArgument('media', 'string', 'Css media attribute value', false, 'all');
+        $this->registerArgument('title', 'string', 'Title of the link element', false, '');
+        $this->registerArgument('compress', 'bool', 'TYPO3 compress flag', false, true);
+        $this->registerArgument('forceOnTop', 'bool', 'TYPO3 force-on-top flag', false, false);
+        $this->registerArgument('allWrap', 'string', 'TYPO3 allWrap configuration', false, '');
+        $this->registerArgument('excludeFromConcatenation', 'bool', 'TYPO3 excl. from concat. flag', false, false);
+    }
+
+    /**
+     * Renders the view helper.
+     */
+    public function render()
     {
         $this->pageRenderer->addCssFile(
-            $file,
-            $rel,
-            $media,
-            $title,
-            $compress,
-            $forceOnTop,
-            $allWrap,
-            $excludeFromConcatenation
+            $this->arguments['file'],
+            $this->arguments['rel'],
+            $this->arguments['media'],
+            $this->arguments['title'],
+            $this->arguments['compress'],
+            $this->arguments['forceOnTop'],
+            $this->arguments['allWrap'],
+            $this->arguments['excludeFromConcatenation']
         );
 
         return;

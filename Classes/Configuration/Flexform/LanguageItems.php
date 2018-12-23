@@ -72,11 +72,12 @@ class LanguageItems
     public function injectObjectManager(ObjectManagerInterface $objectManager = null)
     {
         if (is_null($objectManager)) {
-            $objectManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Object\\ObjectManager');
+            $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
         }
 
         $this->objectManager = $objectManager;
     }
+
     /**
      * InjectCacheManager.
      *
@@ -85,7 +86,7 @@ class LanguageItems
     public function injectCacheManager(CacheManager $cacheManager = null)
     {
         if (is_null($cacheManager)) {
-            $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
+            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
         }
 
         $this->cacheManager = $cacheManager;
@@ -99,7 +100,7 @@ class LanguageItems
     public function injectHighlighterConfiguration(ConfigurationInterface $configuration = null)
     {
         if (is_null($configuration)) {
-            $configuration = $this->objectManager->get('TYPO3\\Beautyofcode\\Highlighter\\ConfigurationInterface');
+            $configuration = $this->objectManager->get(\TYPO3\Beautyofcode\Highlighter\ConfigurationInterface::class);
         }
 
         $this->highlighterConfiguration = $configuration;
@@ -174,23 +175,20 @@ class LanguageItems
      */
     private function getPageUidByRecordUid($recordUid)
     {
-        $recordPid = $this->getDatabaseConnection()->exec_SELECTgetSingleRow(
-            'pid',
-            'tt_content',
-            'uid = '.$recordUid
-        );
+        $queryBuilder = $this->getQueryBuilderForTable('tt_content');
+        $recordPid = $queryBuilder
+            ->select('pid')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'uid',
+                    $queryBuilder->createNamedParameter($recordUid, \PDO::PARAM_INT)
+                )
+            )
+            ->execute()
+            ->fetch();
 
         return (int) $recordPid['pid'];
-    }
-
-    /**
-     * Returns the global DatabaseConnection instance.
-     *
-     * @return \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    private function getDatabaseConnection()
-    {
-        return $GLOBALS['TYPO3_DB'];
     }
 
     /**
@@ -238,7 +236,7 @@ class LanguageItems
      */
     public function getSettingsService($pid = 0)
     {
-        return $this->objectManager->get('TYPO3\\Beautyofcode\\Service\\SettingsService', $pid);
+        return $this->objectManager->get(\TYPO3\Beautyofcode\Service\SettingsService::class, $pid);
     }
 
     /**
@@ -249,5 +247,12 @@ class LanguageItems
     protected function getCache()
     {
         return $this->cacheManager->getCache('cache_beautyofcode');
+    }
+
+    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable($table);
     }
 }

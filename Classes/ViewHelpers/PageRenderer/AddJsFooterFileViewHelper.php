@@ -15,6 +15,9 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
+
 /**
  * Adds javascript libraries to the page footer.
  *
@@ -24,51 +27,37 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
-     * TypoScriptFrontendController.
-     *
-     * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * Initialize arguments.
      */
-    protected $typoscriptFrontendController;
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-     */
-    public function initialize()
+    public function initializeArguments()
     {
-        $this->typoscriptFrontendController = $GLOBALS['TSFE'];
+        $this->registerArgument('file', 'string', 'File name');
+        $this->registerArgument('type', 'string', 'Content Type', false, 'text/javascript');
+        $this->registerArgument('compress', 'bool', 'TYPO3 compress flag', false, true);
+        $this->registerArgument('forceOnTop', 'bool', 'TYPO3 force-on-top flag', false, false);
+        $this->registerArgument('allWrap', 'string', 'TYPO3 allWrap configuration', false, '');
+        $this->registerArgument('excludeFromConcatenation', 'bool', 'TYPO3 excl. from concat. flag', false, false);
+        $this->registerArgument('splitChar', 'string', 'The char used to split the allWrap value', false, '|');
     }
 
     /**
      * Adds JS file to footer.
-     *
-     * @param string $file                     File name
-     * @param string $type                     Content Type
-     * @param bool   $compress                 TYPO3 compress flag
-     * @param bool   $forceOnTop               TYPO3 force-on-top flag
-     * @param string $allWrap                  TYPO3 allWrap configuration
-     * @param bool   $excludeFromConcatenation TYPO3 excl. from concat. flag
-     * @param string $splitChar                The char used to split the allWrap value
      */
-    public function render($file, $type = 'text/javascript', $compress = true, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false, $splitChar = '|')
+    public function render()
     {
-        if (!file_exists($file)) {
-            return;
+        if (file_exists($this->arguments['file'])) {
+            /** @var FilePathSanitizer $filePathSanitizer */
+            $filePathSanitizer = GeneralUtility::makeInstance(FilePathSanitizer::class);
+
+            $this->pageRenderer->addJsFooterFile(
+                $filePathSanitizer->sanitize($this->arguments['file']),
+                $this->arguments['type'],
+                $this->arguments['compress'],
+                $this->arguments['forceOnTop'],
+                $this->arguments['allWrap'],
+                $this->arguments['excludeFromConcatenation'],
+                $this->arguments['splitChar']
+            );
         }
-
-        $this->pageRenderer->addJsFooterFile(
-            $this->typoscriptFrontendController
-                ->tmpl
-                ->getFileName($file),
-            $type,
-            $compress,
-            $forceOnTop,
-            $allWrap,
-            $excludeFromConcatenation,
-            $splitChar
-        );
-
-        return;
     }
 }

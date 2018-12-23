@@ -15,22 +15,41 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+
 /**
  * MakeAbsoluteViewHelper.
  *
  * @author Felix Nagel <info@felixnagel.com>
  */
-class MakeAbsoluteViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class MakeAbsoluteViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
-     * Renders the view helper.
-     *
-     * @param string $url The url
-     *
-     * @return string
+     * Initialize arguments.
      */
-    public function render($url)
+    public function initializeArguments()
     {
+        $this->registerArgument('url', 'string', 'The url');
+    }
+
+    /**
+     * Renders the TypoScript object in the given TypoScript setup path.
+     *
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     *
+     * @return mixed
+     */
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $url = $arguments['url'];
         return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
     }
 }

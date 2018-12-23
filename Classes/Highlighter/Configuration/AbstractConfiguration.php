@@ -29,6 +29,10 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
      */
     protected $settings;
 
+    protected $failSafeBrushAliasMap = [];
+
+    protected $brushIdentifierAliasLabelMap = [];
+
     /**
      * Constructor.
      *
@@ -52,6 +56,7 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
             return $brushAlias;
         }
 
+        $failSafeBrushAlias = '';
         foreach ($this->failSafeBrushAliasMap as $foreignLibraryMap) {
             if (isset($foreignLibraryMap[$brushAlias])) {
                 $failSafeBrushAlias = $foreignLibraryMap[$brushAlias];

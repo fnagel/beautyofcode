@@ -25,11 +25,14 @@
   "license": "GP-2.0+",
   "require": {
     "php": ">=7.0,<7.3",
-    "typo3/cms-core": ">=8.7.0,<=9.5.99"
+    "typo3/cms-core": "^9.0"
   },
   "require-dev": {
     "typo3/testing-framework": "*",
     "fluidtypo3/development": "*"
+  },
+  "suggest": {
+    "typo3/cms-t3editor": "^9.5"
   },
   "autoload": {
     "psr-4": {
@@ -40,5 +43,15 @@
     "files": [
       "./class.ext_update.php"
     ]
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    }
   }
 }

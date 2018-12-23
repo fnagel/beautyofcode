@@ -15,6 +15,9 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
+
 /**
  * Adds javascript libraries to the page footer.
  *
@@ -23,51 +26,37 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterLibraryViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
-     * TypoScriptFrontendController.
-     *
-     * @var \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController
+     * Initialize arguments.
      */
-    protected $typoscriptFrontendController;
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper::initialize()
-     */
-    public function initialize()
+    public function initializeArguments()
     {
-        $this->typoscriptFrontendController = $GLOBALS['TSFE'];
+        $this->registerArgument('name', 'string', 'Name of the library');
+        $this->registerArgument('file', 'string', 'File reference');
+        $this->registerArgument('type', 'string', 'Type attribute of the script tag', false, 'text/javascript');
+        $this->registerArgument('compress', 'bool', 'TYPO3 compress flag', false, false);
+        $this->registerArgument('forceOnTop', 'bool', 'TYPO3 force-on-top flag', false, false);
+        $this->registerArgument('allWrap', 'string', 'TYPO3 allWrap configuration', false, '');
+        $this->registerArgument('excludeFromConcatenation', 'bool', 'TYPO3 excl. from concat. flag', false, false);
     }
 
     /**
      * Renders the view helper.
-     *
-     * @param string $name                     Name of the library
-     * @param string $file                     File reference
-     * @param string $type                     Type attribute of the script tag
-     * @param bool   $compress                 TYPO3 compress flag
-     * @param bool   $forceOnTop               TYPO3 force-on-top flag
-     * @param string $allWrap                  TYPO3 allWrap configuration
-     * @param bool   $excludeFromConcatenation TYPO3 excl. from concat. flag
      */
-    public function render($name, $file, $type = 'text/javascript', $compress = false, $forceOnTop = false, $allWrap = '', $excludeFromConcatenation = false)
+    public function render()
     {
-        if (!file_exists($file)) {
-            return;
+        if (file_exists($this->arguments['file'])) {
+            /** @var FilePathSanitizer $filePathSanitizer */
+            $filePathSanitizer = GeneralUtility::makeInstance(FilePathSanitizer::class);
+
+            $this->pageRenderer->addJsFooterLibrary(
+                $this->arguments['name'],
+                $filePathSanitizer->sanitize($this->arguments['file']),
+                $this->arguments['type'],
+                $this->arguments['compress'],
+                $this->arguments['forceOnTop'],
+                $this->arguments['allWrap'],
+                $this->arguments['excludeFromConcatenation']
+            );
         }
-
-        $this->pageRenderer->addJsFooterLibrary(
-            $name,
-            $this->typoscriptFrontendController
-                ->tmpl
-                ->getFileName($file),
-            $type,
-            $compress,
-            $forceOnTop,
-            $allWrap,
-            $excludeFromConcatenation
-        );
-
-        return;
     }
 }

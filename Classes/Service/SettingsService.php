@@ -17,10 +17,10 @@ namespace TYPO3\Beautyofcode\Service;
 
 use TYPO3\CMS\Core\TypoScript\TemplateService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Frontend\Page\PageRepository;
 
 /**
  * Provide a way to get the configuration just everywhere.
@@ -56,7 +56,6 @@ class SettingsService
 
     /**
      * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-     * @inject
      */
     protected $configurationManager;
 
@@ -64,7 +63,6 @@ class SettingsService
      * Legacy alias of \TYPO3\CMS\Extbase\Service\TypoScriptService
      *
      * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
-     * @inject
      */
     protected $typoScriptService;
 
@@ -83,6 +81,17 @@ class SettingsService
     public function __construct(int $pid)
     {
         $this->pid = $pid;
+    }
+
+    public function injectConfigurationManager(
+        \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+    ) {
+        $this->configurationManager = $configurationManager;
+    }
+
+    public function injectTypoScriptService(\TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService)
+    {
+        $this->typoScriptService = $typoScriptService;
     }
 
     /**
@@ -133,18 +142,18 @@ class SettingsService
      * Returns all TS settings.
      *
      * @param int $pid
+     *
      * @return array
      */
     protected function generateTypoScript($pid)
     {
-        /* @var $pageRepository PageRepository */
-        $pageRepository = GeneralUtility::makeInstance(PageRepository::class);
-        $rootLine = $pageRepository->getRootLine($pid);
+        /* @var $rootLineUtility RootlineUtility */
+        $rootLineUtility = GeneralUtility::makeInstance(RootlineUtility::class, $pid);
+        $rootLine = $rootLineUtility->get();
 
         /* @var $templateService TemplateService */
         $templateService = GeneralUtility::makeInstance(TemplateService::class);
-        $templateService->tt_track = 0;
-        $templateService->init();
+        $templateService->tt_track = false;
         $templateService->runThroughTemplates($rootLine);
         $templateService->generateConfig();
 

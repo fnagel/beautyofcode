@@ -163,7 +163,9 @@ pip-log.txt
 .DS_Store
 
 # composer
-vendor/**
+.Build/bin/**
+.Build/vendor/**
+.Build/Web/**
 node_modules
 composer.*
 !composer.json

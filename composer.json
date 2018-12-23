@@ -1,44 +1,54 @@
 {
-  "name": "typo3-ter/beautyofcode",
-  "type": "typo3-cms-extension",
-  "description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
-  "keywords": [
-    "TYPO3",
-    "extension",
-    "syntax highlighting",
-    "prism",
-    "syntaxhighlighter"
-  ],
-  "homepage": "https://github.com/fnagel/beautyofcode",
-  "authors": [
-    {
-      "name": "Felix Nagel",
-      "email": "info@felixnagel.com",
-      "role": "Project Leader, Developer"
-    },
-    {
-      "name": "Thomas Juhnke",
-      "email": "dev@van-tomas.de",
-      "role": "Project Co-Leader, Developer"
-    }
-  ],
-  "license": "GP-2.0+",
-  "require": {
-    "php": ">=5.4.0,<7.3",
-    "typo3/cms-core": "^7.3.1 || ^8.7"
-  },
-  "require-dev": {
-    "typo3/testing-framework": "*",
-    "fluidtypo3/development": "*"
-  },
-  "autoload": {
-    "psr-4": {
-      "TYPO3\\Beautyofcode\\": "Classes"
-    }
-  },
-  "autoload-dev": {
-    "files": [
-      "./class.ext_update.php"
-    ]
-  }
+	"name": "typo3-ter/beautyofcode",
+	"type": "typo3-cms-extension",
+	"description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
+	"keywords": [
+		"TYPO3",
+		"extension",
+		"syntax highlighting",
+		"prism",
+		"syntaxhighlighter"
+	],
+	"homepage": "https://github.com/fnagel/beautyofcode",
+	"authors": [
+		{
+			"name": "Felix Nagel",
+			"email": "info@felixnagel.com",
+			"role": "Project Leader, Developer"
+		},
+		{
+			"name": "Thomas Juhnke",
+			"email": "dev@van-tomas.de",
+			"role": "Project Co-Leader, Developer"
+		}
+	],
+	"license": "GP-2.0+",
+	"require": {
+		"php": ">=5.4.0,<7.3",
+		"typo3/cms-core": "^7.3.1 || ^8.7 || ^9.5"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "*",
+		"fluidtypo3/development": "*"
+	},
+	"autoload": {
+		"psr-4": {
+			"TYPO3\\Beautyofcode\\": "Classes"
+		}
+	},
+	"autoload-dev": {
+		"files": [
+			"./class.ext_update.php"
+		]
+	},
+	"config": {
+		"vendor-dir": ".Build/Web/vendor",
+		"bin-dir": ".Build/bin"
+	},
+	"extra": {
+		"typo3/cms": {
+			"cms-package-dir": "{$vendor-dir}/typo3/cms",
+			"web-dir": ".Build/Web"
+		}
+	}
 }

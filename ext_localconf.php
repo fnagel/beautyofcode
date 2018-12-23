@@ -1,8 +1,6 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
+defined('TYPO3_MODE') or die();
 
 call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
@@ -17,7 +15,7 @@ call_user_func(function ($packageKey) {
 
     // BE preview
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
-        'TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks';
+        \TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks::class;
 
     // Cache registration
     if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {
@@ -25,11 +23,11 @@ call_user_func(function ($packageKey) {
     }
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'] =
-            'TYPO3\\CMS\\Core\\Cache\\Backend\\TransientMemoryBackend';
+            \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend::class;
     }
     if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'])) {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'] =
-            'TYPO3\\CMS\\Core\\Cache\\Frontend\\VariableFrontend';
+            \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class;
     }
 
     // Dynamic changing of t3editor format

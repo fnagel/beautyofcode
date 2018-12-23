@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2011-08-25T17:54:43Z" product-name="beautyofcode">
+		<header />
+		<body>
+			<trans-unit id="extlabel">
+				<source>beautyOfCode</source>
+				<target>beautyOfCode</target>
+			</trans-unit>
+			<trans-unit id="extlabel.options">
+				<source>Options</source>
+				<target>Optionen</target>
+			</trans-unit>
+			<trans-unit id="yes">
+				<source>Yes</source>
+				<target>Ja</target>
+			</trans-unit>
+			<trans-unit id="no">
+				<source>No</source>
+				<target>Nein</target>
+			</trans-unit>
+			<trans-unit id="auto">
+				<source>Default</source>
+				<target>Standard</target>
+			</trans-unit>
+			<trans-unit id="label">
+				<source>Label</source>
+				<target>Beschriftung</target>
+			</trans-unit>
+			<trans-unit id="lang">
+				<source>Programming Language</source>
+				<target>Programmiersprache</target>
+			</trans-unit>
+			<trans-unit id="code">
+				<source>Sourcecode</source>
+				<target>Quellcode</target>
+			</trans-unit>
+			<trans-unit id="plain">
+				<source>Default (Plain text)</source>
+				<target>Standard (Plain Text)</target>
+			</trans-unit>
+			<trans-unit id="highlight">
+				<source>Highlight one or more lines (1,2,3,4-6...)</source>
+				<target>Markierung für bestimmte Zeilen (1,2,3,4-6...)</target>
+			</trans-unit>
+			<trans-unit id="gutter">
+				<source>Show gutter</source>
+				<target>Zeilennummerierung anzeigen</target>
+			</trans-unit>
+			<trans-unit id="collapse">
+				<source>Collapse code element</source>
+				<target>Quellcode Elemente einklappen</target>
+			</trans-unit>
+			<trans-unit id="cms_layout.no_code">
+				<source>Sourcecode field is empty</source>
+				<target>Quellcode Feld ist leer</target>
+			</trans-unit>
+			<trans-unit id="cms_layout.no_label">
+				<source>no title</source>
+				<target>kein Titel</target>
+			</trans-unit>
+			<trans-unit id="tt_content.list_type_pi1">
+				<source>Sourcecode (beautyOfCode)</source>
+				<target>Quellcode (beautyOfCode)</target>
+			</trans-unit>
+			<trans-unit id="wiz_description">
+				<source>This plugin provides state-of-the-art, feature rich syntax highlighting.</source>
+				<target>Dieses Plugin bietet umfangreiche Funktionen um Quellcode anzuzeigen.</target>
+			</trans-unit>
+			<trans-unit id="enable_t3editor">
+				<source>Enable t3editor: Use syntax editor with syntax highlighting in Backend (t3editor)</source>
+				<target>Benutze t3editor: Benutze Syntax Highlighting im Backend (t3editor)</target>
+			</trans-unit>
+			<trans-unit id="content_element.beautyofcode_contentrenderer">
+				<source>beautyofcode - Syntaxhighlighter</source>
+				<target>beautyofcode - Syntaxhighlighter</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

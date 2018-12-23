@@ -33,28 +33,11 @@
 class ext_update
 {
     /**
-     * TYPO3.CMS global DatabaseConnection.
-     *
-     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
-     */
-    protected $db;
-
-    /**
      * Amount of old plugins detected.
      *
      * @var int
      */
     protected $countOldPlugins;
-
-    /**
-     * Initializes the updater.
-     */
-    protected function initialize()
-    {
-        if (false === isset($this->db)) {
-            $this->db = $GLOBALS['TYPO3_DB'];
-        }
-    }
 
     /**
      * Checks if the update script must be run.
@@ -63,11 +46,7 @@ class ext_update
      */
     public function access()
     {
-        $this->initialize();
-
-        $hasOldPlugins = $this->hasInstanceOldPlugins();
-
-        return $hasOldPlugins;
+        return $this->hasInstanceOldPlugins();
     }
 
     /**
@@ -77,7 +56,18 @@ class ext_update
      */
     protected function hasInstanceOldPlugins()
     {
-        $this->countOldPlugins = $this->db->exec_SELECTcountRows('*', 'tt_content', 'list_type = "beautyofcode_contentrenderer"');
+        $queryBuilder = $this->getQueryBuilderForTable('tt_content');
+        $this->countOldPlugins = $queryBuilder
+            ->count('uid')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'list_type',
+                    $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
+                )
+            )
+            ->execute()
+            ->fetchColumn(0);
 
         return 0 < $this->countOldPlugins;
     }
@@ -89,16 +79,10 @@ class ext_update
      */
     public function main()
     {
-        $this->initialize();
-
-        $output = '';
+        $output = 'Nothing needs to be updated.';
 
         if ($this->hasInstanceOldPlugins()) {
-            $output .= $this->updateOldPlugins();
-        }
-
-        if ($output === '') {
-            $output = 'Nothing needs to be updated.';
+            $output = $this->updateOldPlugins();
         }
 
         return $output;
@@ -111,41 +95,68 @@ class ext_update
      */
     protected function updateOldPlugins()
     {
-        // switch from CType = 'list' to custom CE
-        $this->db->exec_UPDATEquery(
-            'tt_content',
-            'list_type = "beautyofcode_contentrenderer"',
-            [
-                'CType' => 'beautyofcode_contentrenderer',
-                'list_type' => '',
-            ]
-        );
+        // Switch from CType = 'list' to custom CE
+        $queryBuilder = $this->getQueryBuilderForTable('tt_content');
+        $queryBuilder
+            ->update('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'list_type',
+                    $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
+                )
+            )
+            ->set('CType', 'beautyofcode_contentrenderer')
+            ->set('list_type', '')
+            ->execute();
 
-        $contentElements = $this->db->exec_SELECTquery(
-            'uid, pi_flexform',
-            'tt_content',
-            'CType = "beautyofcode_contentrenderer" AND hidden = 0 AND deleted = 0'
-        );
+        $contentElements = $queryBuilder
+            ->select('uid', 'pi_flexform')
+            ->from('tt_content')
+            ->where(
+                $queryBuilder->expr()->eq(
+                    'CType',
+                    $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
+                )
+            )
+            ->execute();
 
-        while (($contentElement = $this->db->sql_fetch_assoc($contentElements))) {
+        while ($contentElement = $contentElements->fetch()) {
             $uid = (int) $contentElement['uid'];
             $flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
 
             try {
-                $codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath($flexformData, 'data/sDEF/lDEF/cCode/vDEF');
+                $codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath(
+                    $flexformData,
+                    'data/sDEF/lDEF/cCode/vDEF'
+                );
             } catch (\Exception $exc) {
                 continue;
             }
 
-            $this->db->exec_UPDATEquery(
-                'tt_content',
-                'uid = '.$uid,
-                [
-                    'bodytext' => $codeBlock,
-                ]
-            );
+            $queryBuilder = $this->getQueryBuilderForTable('tt_content');
+            $queryBuilder
+                ->update('tt_content')
+                ->where(
+                    $queryBuilder->expr()->eq(
+                        'uid',
+                        $queryBuilder->createNamedParameter($uid, \PDO::PARAM_INT)
+                    )
+                )
+                ->set('bodytext', $codeBlock)
+                ->execute();
         }
 
         return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
+    }
+
+    /**
+     * @param string $table
+     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     */
+    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    {
+        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        )->getQueryBuilderForTable($table);
     }
 }

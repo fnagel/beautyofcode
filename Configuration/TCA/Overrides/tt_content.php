@@ -24,20 +24,18 @@ $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem
     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
 ';
 
-$configuration = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode'];
-if (is_string($configuration)) {
-    $configuration = (array)@unserialize($configuration);
-} else {
+$configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['beautyofcode'];
+if (!is_array($configuration)) {
     $configuration = [];
 }
 
-if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1 &&
-    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')
+if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1
+    && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')
 ) {
     $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = [
         'bodytext' => [
             'config' => [
-                'format'     => 'mixed',
+                'format' => 'xml',
                 'renderType' => 't3editor',
             ],
         ],

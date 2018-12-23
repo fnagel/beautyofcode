@@ -1,5 +1,5 @@
 {
-	"name": "typo3-ter/beautyofcode",
+	"name": "evoweb/beautyofcode",
 	"type": "typo3-cms-extension",
 	"description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
 	"keywords": [
@@ -24,8 +24,9 @@
 	],
 	"license": "GP-2.0+",
 	"require": {
-		"php": ">=7.0.0,<7.3",
-		"typo3/cms-core": "^8.7 || ^9.5"
+		"php": ">=7.2,<7.3",
+		"typo3/cms-core": "^9.5",
+		"typo3/cms-t3editor": "^9.5"
 	},
 	"require-dev": {
 		"typo3/testing-framework": "*",
@@ -42,7 +43,7 @@
 		]
 	},
 	"config": {
-		"vendor-dir": ".Build/Web/vendor",
+		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin"
 	},
 	"extra": {

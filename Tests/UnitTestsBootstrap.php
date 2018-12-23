@@ -66,12 +66,12 @@ class UnitTestsBootstrap
     /**
      * Finishes the last steps of the Core Bootstrap.
      *
-     * @return UnitTestsBootstrap fluent interface
+     * @return void
      */
     protected function finishCoreBootstrap()
     {
         /** @var \Composer\Autoload\ClassLoader $autoloader */
-        $autoloader = require __DIR__ . '/../vendor/autoload.php';
+        $autoloader = require __DIR__ . '/../.Build/vendor/autoload.php';
         $autoloader->addPsr4('TYPO3\\CMS\\Core\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/core/Classes/');
         $autoloader->addPsr4('TYPO3\\CMS\\Core\\Tests\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/core/Tests/');
         $autoloader->addPsr4('TYPO3\\CMS\\Extbase\\', __DIR__ . '/../vendor/typo3/cms/typo3/sysext/extbase/Classes/');

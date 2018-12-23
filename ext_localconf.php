@@ -17,16 +17,17 @@ call_user_func(function ($packageKey) {
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
         \TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks::class;
 
+    $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
     // Cache registration
-    if (!is_array($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode'] = [];
+    if (!is_array($cacheConfigurations['cache_beautyofcode'])) {
+        $cacheConfigurations['cache_beautyofcode'] = [];
     }
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['backend'] =
+    if (!isset($cacheConfigurations['cache_beautyofcode']['backend'])) {
+        $cacheConfigurations['cache_beautyofcode']['backend'] =
             \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend::class;
     }
-    if (!isset($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'])) {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['cache_beautyofcode']['frontend'] =
+    if (!isset($cacheConfigurations['cache_beautyofcode']['frontend'])) {
+        $cacheConfigurations['cache_beautyofcode']['frontend'] =
             \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class;
     }
 

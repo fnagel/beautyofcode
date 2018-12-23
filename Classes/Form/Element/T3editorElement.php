@@ -15,6 +15,11 @@ namespace TYPO3\Beautyofcode\Form\Element;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Backend\Form\NodeFactory;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\T3editor\Mode;
+use TYPO3\CMS\T3editor\Registry\ModeRegistry;
+
 /**
  * t3editor FormEngine widget.
  *
@@ -23,30 +28,60 @@ namespace TYPO3\Beautyofcode\Form\Element;
 class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
 {
     /**
-     * Map ext:t3editor modes on boc brush aliases.
+     * Map ext:t3editor modes on beautyofcode brush aliases.
      *
      * @var array
      */
     protected $brushModeMap = [
-        'markup' => self::MODE_XML,
-        'css' => self::MODE_CSS,
-        'javascript' => self::MODE_JAVASCRIPT,
-        'php' => self::MODE_PHP,
-        'typoscript' => self::MODE_TYPOSCRIPT,
+        'markup' => 'xml',
+        'css' => 'css',
+        'javascript' => 'javascript',
+        'php' => 'php',
+        'typoscript' => 'typoscript',
     ];
+
+    protected $allowedModes = [
+        'xml',
+        'css',
+        'javascript',
+        'php',
+        'typoscript'
+    ];
+
+    // @todo decide on what to do with this.
+    // due to changes in T3editorElement::render both getMode and setMode are ignored
+    /**
+     * Container objects give $nodeFactory down to other containers.
+     *
+     * @param NodeFactory $nodeFactory
+     * @param array $data
+     */
+    public function __construct(NodeFactory $nodeFactory, array $data)
+    {
+        parent::__construct($nodeFactory, $data);
+
+        $modeInstance = GeneralUtility::makeInstance(
+            Mode::class,
+            'cm/mode/xml/xml'
+        )->setFormatCode('mixed');
+        $modeInstance->bindToFileExtensions(['htm', 'html']);
+        $modeInstance->setAsDefault();
+
+        $modeRegistry = ModeRegistry::getInstance();
+        $modeRegistry->register($modeInstance);
+    }
 
     /**
      * Sets the type of code to edit, use one of the predefined constants.
      *
      * @param string $mode Expects one of the predefined constants
      *
-     * @throws \InvalidArgumentException
+     * @return self
      */
     public function setMode($mode)
     {
-        $mode = $this->setModeDynamic($mode);
-
-        parent::setMode($mode);
+        $this->mode = $this->setModeDynamic($mode);
+        return $this;
     }
 
     /**
@@ -62,9 +97,11 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
             return $mode;
         }
 
-        $mode = self::MODE_MIXED;
+        $mode = 'mixed';
         // Get current flexform language value
-        $flexformLanguageKey = current($this->data['databaseRow']['pi_flexform']['data']['sDEF']['lDEF']['cLang']['vDEF']);
+        $flexformLanguageKey = current(
+            $this->data['databaseRow']['pi_flexform']['data']['sDEF']['lDEF']['cLang']['vDEF']
+        );
 
         if (empty($flexformLanguageKey)) {
             return $mode;
@@ -82,7 +119,7 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
     }
 
     /**
-     * Flags if the current element is a boc plugin.
+     * Flags if the current element is a beautyofcode plugin.
      *
      * @return bool
      */

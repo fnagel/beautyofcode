@@ -20,7 +20,7 @@ namespace TYPO3\Beautyofcode\Core\ViewHelper;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-abstract class AbstractPageRendererViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+abstract class AbstractPageRendererViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
     /**
      * PageRenderer.

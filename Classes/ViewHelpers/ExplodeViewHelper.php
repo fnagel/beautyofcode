@@ -15,26 +15,47 @@ namespace TYPO3\Beautyofcode\ViewHelpers;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+
 /**
  * Fluid view helper around GeneralUtility::trimExplode().
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExplodeViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
+class ExplodeViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
 {
+    use CompileWithContentArgumentAndRenderStatic;
+
     /**
-     * Renders the view helper.
-     *
-     * @param string $value             CSV list string
-     * @param string $delimiter         Delimiter, defaults to ,
-     * @param bool   $removeEmptyValues Flags if empty values should be removed
-     *
-     * @return array
+     * Initialize arguments.
      */
-    protected function render($value = null, $delimiter = ',', $removeEmptyValues = false)
+    public function initializeArguments()
     {
+        $this->registerArgument('value', 'string', 'CSV list string', false, null);
+        $this->registerArgument('delimiter', 'string', 'Delimiter, defaults to ,', false, ',');
+        $this->registerArgument('removeEmptyValues', 'bool', 'Flags if empty values should be removed', false, false);
+    }
+
+    /**
+     * Renders the TypoScript object in the given TypoScript setup path.
+     *
+     * @param array $arguments
+     * @param \Closure $renderChildrenClosure
+     * @param RenderingContextInterface $renderingContext
+     *
+     * @return mixed
+     */
+    public static function renderStatic(
+        array $arguments,
+        \Closure $renderChildrenClosure,
+        RenderingContextInterface $renderingContext
+    ) {
+        $value = $arguments['value'];
+        $delimiter = $arguments['delimiter'];
+        $removeEmptyValues = $arguments['removeEmptyValues'];
         if (true === is_null($value)) {
-            $value = $this->renderChildren();
+            $value = $renderChildrenClosure();
         }
 
         return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);

@@ -23,18 +23,25 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
 class AddJsFooterInlineCodeViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
-     * Renders the view helper.
-     *
-     * @param string $name       Name of the inline block
-     * @param bool   $compress   TYPO3 compress flag
-     * @param bool   $forceOnTop TYPO3 force-on-top flag
+     * Initialize arguments.
      */
-    public function render($name, $compress = true, $forceOnTop = false)
+    public function initializeArguments()
     {
-        $block = $this->renderChildren();
+        $this->registerArgument('name', 'string', 'Name of the library');
+        $this->registerArgument('compress', 'bool', 'TYPO3 compress flag', false, true);
+        $this->registerArgument('forceOnTop', 'bool', 'TYPO3 force-on-top flag', false, false);
+    }
 
-        $this->pageRenderer->addJsFooterInlineCode($name, $block, $compress, $forceOnTop);
-
-        return;
+    /**
+     * Renders the view helper.
+     */
+    public function render()
+    {
+        $this->pageRenderer->addJsFooterInlineCode(
+            $this->arguments['name'],
+            $this->renderChildren(),
+            $this->arguments['compress'],
+            $this->arguments['forceOnTop']
+        );
     }
 }

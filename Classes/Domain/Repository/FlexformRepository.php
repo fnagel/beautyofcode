@@ -25,7 +25,7 @@ class FlexformRepository
     /**
      * FlexFormService.
      *
-     * @var \TYPO3\CMS\Extbase\Service\FlexFormService
+     * @var \TYPO3\CMS\Core\Service\FlexFormService
      */
     protected $flexformService;
 
@@ -39,9 +39,9 @@ class FlexformRepository
     /**
      * Injects the flexform service and populates flexform values from `pi_flexform`.
      *
-     * @param \TYPO3\CMS\Extbase\Service\FlexFormService $flexformService FlexFormService
+     * @param \TYPO3\CMS\Core\Service\FlexFormService $flexformService FlexFormService
      */
-    public function injectFlexformService(\TYPO3\CMS\Extbase\Service\FlexFormService $flexformService)
+    public function injectFlexformService(\TYPO3\CMS\Core\Service\FlexFormService $flexformService)
     {
         $this->flexformService = $flexformService;
     }
@@ -76,7 +76,7 @@ class FlexformRepository
         $flexform = $this
             ->dataMapper
             ->map(
-                'TYPO3\\Beautyofcode\\Domain\\Model\\Flexform',
+                \TYPO3\Beautyofcode\Domain\Model\Flexform::class,
                 [$flexformValues] // nested array as ::map() expects multiple rows
             );
 
@@ -97,7 +97,9 @@ class FlexformRepository
         $flexformValues = [];
 
         foreach ($flexformValueArray as $propertyName => $propertyValue) {
-            $propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);
+            $propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored(
+                $propertyName
+            );
 
             $flexformValues[$propertyNameLowerCaseUnderscored] = $propertyValue;
         }

@@ -34,8 +34,9 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
      */
-    public function injectFlexformRepository(\TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository)
-    {
+    public function injectFlexformRepository(
+        \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
+    ) {
         $this->flexformRepository = $flexformRepository;
     }
 

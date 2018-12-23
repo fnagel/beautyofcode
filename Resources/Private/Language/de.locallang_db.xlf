@@ -75,6 +75,10 @@
 				<source>beautyofcode - Syntaxhighlighter</source>
 				<target>beautyofcode - Syntaxhighlighter</target>
 			</trans-unit>
+			<trans-unit id="file">
+				<source>URL / File</source>
+				<target>URL / Datei</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

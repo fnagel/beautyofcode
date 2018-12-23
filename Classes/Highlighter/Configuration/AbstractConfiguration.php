@@ -29,8 +29,24 @@ abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\
      */
     protected $settings;
 
+    /**
+     * Failsafe brush alias map.
+     *
+     * Fallback from one highlighter engine to another.
+     * Key Prism SH CSS class and value is SH CSS class.
+     *
+     * @var array
+     */
     protected $failSafeBrushAliasMap = [];
 
+    /**
+     * A CSS class/label map for the select box.
+     *
+     * Key is the brush string from TS Setup; Value is an array with the CSS
+     * class in key 0 and the label for the select box in key 1
+     *
+     * @var array
+     */
     protected $brushIdentifierAliasLabelMap = [];
 
     /**

@@ -9,6 +9,7 @@ return [
     'columns' => [
         'c_label' => ['config' => ['type' => 'input']],
         'c_lang' => ['config' => ['type' => 'input']],
+        'c_file' => ['config' => ['type' => 'input']],
         'c_highlight' => ['config' => ['type' => 'input']],
         'c_collapse' => ['config' => ['type' => 'input']],
         'c_gutter' => ['config' => ['type' => 'input']],

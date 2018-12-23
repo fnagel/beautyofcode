@@ -37,6 +37,28 @@
 							</config>
 						</TCEforms>
 					</cLang>
+					<cFile>
+						<TCEforms>
+							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:file</label>
+							<config>
+								<type>input</type>
+								<size>50</size>
+								<max>200</max>
+								<eval>trim</eval>
+								<wizards>
+									<link>
+										<type>popup</type>
+										<module>
+											<name>wizard_link</name>
+										</module>
+										<params>
+											<blindLinkOptions>folder,mail,page</blindLinkOptions>
+										</params>
+									</link>
+								</wizards>
+							</config>
+						</TCEforms>
+					</cFile>
 				</el>
 			</ROOT>
 		</sDEF>

@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
+namespace TYPO3\Beautyofcode\Tests\Functional\Utility;
 
 /***************************************************************
  * Copyright notice
@@ -26,8 +26,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Utility;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-
 /**
  * Tests the general utility class.
  *
@@ -36,8 +34,13 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  *
  * @link http://www.van-tomas.de/
  */
-class GeneralUtilityTest extends UnitTestCase
+class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
+    /**
+     * @var array
+     */
+    protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
+
     /**
      * @test
      */

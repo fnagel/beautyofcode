@@ -26,8 +26,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-
 /**
  * Tests the standalone asset path view helper.
  *
@@ -36,7 +34,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  *
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelperTest extends UnitTestCase
+class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * @test
@@ -45,11 +43,11 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
      */
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()
     {
-        $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
-        $sut->initializeArguments();
-        $sut->initialize();
-        $sut->render();
+        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
+        $viewHelper->initializeArguments();
+        $viewHelper->initialize();
+        $viewHelper->render();
     }
 
     /**
@@ -57,11 +55,11 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
      */
     public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet()
     {
-        $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts']);
-        $sut->initializeArguments();
-        $sut->initialize();
-        $path = $sut->render();
+        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts']);
+        $viewHelper->initializeArguments();
+        $viewHelper->initialize();
+        $path = $viewHelper->render();
 
         $this->assertEquals('http://alexgorbatchev.com/pub/sh/current/scripts/', $path);
     }
@@ -71,11 +69,11 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
      */
     public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet()
     {
-        $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'styles']);
-        $sut->initializeArguments();
-        $sut->initialize();
-        $path = $sut->render();
+        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'styles']);
+        $viewHelper->initializeArguments();
+        $viewHelper->initialize();
+        $path = $viewHelper->render();
 
         $this->assertEquals('http://alexgorbatchev.com/pub/sh/current/styles/', $path);
     }
@@ -85,12 +83,19 @@ class StandaloneAssetPathViewHelperTest extends UnitTestCase
      */
     public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet()
     {
-        $sut = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
-        $sut->setArguments(['baseUrl' => '/typo3conf/ext/beautyofcode/', 'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', 'type' => 'scripts']);
-        $sut->initializeArguments();
-        $sut->initialize();
-        $path = $sut->render();
+        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper->setArguments([
+            'baseUrl' => '/typo3conf/ext/beautyofcode/',
+            'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/',
+            'type' => 'scripts'
+        ]);
+        $viewHelper->initializeArguments();
+        $viewHelper->initialize();
+        $path = $viewHelper->render();
 
-        $this->assertEquals('/typo3conf/ext/beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/', $path);
+        $this->assertEquals(
+            '/typo3conf/ext/beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/',
+            $path
+        );
     }
 }

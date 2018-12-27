@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Unit;
+namespace TYPO3\Beautyofcode\Tests\Functional;
 
 /***************************************************************
  *  Copyright notice
@@ -28,8 +28,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-
 /**
  * Class short description.
  *
@@ -37,32 +35,36 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExtUpdateTest extends UnitTestCase
+class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
-    protected $backupGlobalsBlacklist = ['TYPO3_DB'];
+    /**
+     * @var array
+     */
+    protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
-     * @var \TYPO3\CMS\Core\Database\DatabaseConnection
+     * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected $db;
+    protected $queryBuilder;
 
     public function setUp()
     {
-        $this->db = $this->getMockBuilder('TYPO3\\CMS\\Core\\Database\\DatabaseConnection')
+        parent::setUp();
+        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
+        $connectionPool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        );
+        $this->queryBuilder = $this->getMockBuilder(\TYPO3\CMS\Core\Database\Query\QueryBuilder::class)
+            ->setConstructorArgs([$connectionPool->getConnectionForTable('tt_content')])
             ->getMock();
-
-        $GLOBALS['TYPO3_DB'] = $this->db;
     }
 
     /**
-     * (non-PHPdoc).
-     *
-     * @see PHPUnit_Framework_TestCase::tearDown()
+     * @see \PHPUnit_Framework_TestCase::tearDown()
      */
     public function tearDown()
     {
-        // tearing down TYPO3_DB global; otherwise causes serialization errors
-        $GLOBALS['TYPO3_DB'] = null;
+        unset($this->queryBuilder);
     }
 
     /**
@@ -79,7 +81,7 @@ class ExtUpdateTest extends UnitTestCase
 
     protected function assertOldPluginInstancesExist()
     {
-        $this->db
+        $this->queryBuilder
             ->expects($this->at(0))
             ->method('exec_SELECTcountRows')
             ->with(
@@ -97,7 +99,7 @@ class ExtUpdateTest extends UnitTestCase
     {
         $this->assertOldPluginInstancesExist();
 
-        $this->db
+        $this->queryBuilder
             ->expects($this->at(1))
             ->method('exec_UPDATEquery')
             ->with(

@@ -27,7 +27,6 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  ***************************************************************/
 
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Tests the flexform domain object.
@@ -37,7 +36,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  *
  * @link http://www.van-tomas.de/
  */
-class FlexformTest extends UnitTestCase
+class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
      * ConfigurationInterface.
@@ -49,21 +48,21 @@ class FlexformTest extends UnitTestCase
     /**
      * @var \TYPO3\Beautyofcode\Domain\Model\Flexform
      */
-    protected $sut;
+    protected $flexform;
 
     public function setUp()
     {
         $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
-        $this->sut = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
+        $this->flexform = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
 
-        $this->sut->injectHighlighterConfiguration($this->highlighterConfigurationMock);
+        $this->flexform->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 
-        $this->sut->setCLabel('The label');
-        $this->sut->setCLang('typoscript');
-        $this->sut->setCHighlight('1,2-3,8');
-        $this->sut->setCCollapse('1');
-        $this->sut->setCGutter('1');
+        $this->flexform->setCLabel('The label');
+        $this->flexform->setCLang('typoscript');
+        $this->flexform->setCHighlight('1,2-3,8');
+        $this->flexform->setCCollapse('1');
+        $this->flexform->setCGutter('1');
     }
 
     /**
@@ -71,11 +70,13 @@ class FlexformTest extends UnitTestCase
      */
     public function settingAnEmptyValueForSyntaxHighlighterWillSkipTheOutputForTheSetting()
     {
-        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+        $this->highlighterConfigurationMock
+            ->expects($this->once())
+            ->method('getClassAttributeString')->will($this->returnValue(''));
 
-        $this->sut->setCCollapse('');
+        $this->flexform->setCCollapse('');
 
-        $this->assertNotContains('collapse', $this->sut->getClassAttributeString());
+        $this->assertNotContains('collapse', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -83,11 +84,13 @@ class FlexformTest extends UnitTestCase
      */
     public function settingAutoValueForSyntaxHighlighterWillSkipTheOutputForTheSetting()
     {
-        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue(''));
+        $this->highlighterConfigurationMock
+            ->expects($this->once())
+            ->method('getClassAttributeString')->will($this->returnValue(''));
 
-        $this->sut->setCGutter('auto');
+        $this->flexform->setCGutter('auto');
 
-        $this->assertNotContains('gutter', $this->sut->getClassAttributeString());
+        $this->assertNotContains('gutter', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -95,9 +98,11 @@ class FlexformTest extends UnitTestCase
      */
     public function highlightSettingHasSpecialFormattingForSyntaxHighlighter()
     {
-        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
+        $this->highlighterConfigurationMock
+            ->expects($this->once())
+            ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
 
-        $this->assertContains('highlight: [', $this->sut->getClassAttributeString());
+        $this->assertContains('highlight: [', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -105,9 +110,11 @@ class FlexformTest extends UnitTestCase
      */
     public function highlightSettingWilllBeExpandedForSyntaxHighlighter()
     {
-        $this->highlighterConfigurationMock->expects($this->once())->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
+        $this->highlighterConfigurationMock
+            ->expects($this->once())
+            ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
 
-        $this->assertContains('highlight: [1,2,3,8]', $this->sut->getClassAttributeString());
+        $this->assertContains('highlight: [1,2,3,8]', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -119,7 +126,7 @@ class FlexformTest extends UnitTestCase
             ->expects($this->once())->method('getAutoloaderBrushMap')
             ->will($this->returnValue(['plain' => 'Plain']));
 
-        $brushes = $this->sut->getAutoloaderBrushMap();
+        $brushes = $this->flexform->getAutoloaderBrushMap();
 
         $this->assertArrayHasKey('plain', $brushes);
     }
@@ -133,7 +140,7 @@ class FlexformTest extends UnitTestCase
             ->expects($this->once())->method('getAutoloaderBrushMap')
             ->will($this->returnValue(['typoscript' => 'Typoscript', 'actionscript3' => 'AS3']));
 
-        $brushes = $this->sut->getAutoloaderBrushMap();
+        $brushes = $this->flexform->getAutoloaderBrushMap();
 
         $this->assertArrayHasKey('typoscript', $brushes);
         $this->assertArrayHasKey('actionscript3', $brushes);
@@ -144,9 +151,9 @@ class FlexformTest extends UnitTestCase
      */
     public function getIsGutterActiveReturnsFalseIfInstanceIsSetToZero()
     {
-        $this->sut->setCGutter('0');
+        $this->flexform->setCGutter('0');
 
-        $this->assertFalse($this->sut->getIsGutterActive());
+        $this->assertFalse($this->flexform->getIsGutterActive());
     }
 
     /**
@@ -154,9 +161,9 @@ class FlexformTest extends UnitTestCase
      */
     public function getIsGutterActiveReturnsTrueIfInstanceIsSetToOne()
     {
-        $this->sut->setCGutter('1');
+        $this->flexform->setCGutter('1');
 
-        $this->assertTrue($this->sut->getIsGutterActive());
+        $this->assertTrue($this->flexform->getIsGutterActive());
     }
 
     /**
@@ -164,10 +171,10 @@ class FlexformTest extends UnitTestCase
      */
     public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsFalsy()
     {
-        $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(['gutter' => '']);
+        $this->flexform->setCGutter('auto');
+        $this->flexform->setTyposcriptDefaults(['gutter' => '']);
 
-        $this->assertFalse($this->sut->getIsGutterActive());
+        $this->assertFalse($this->flexform->getIsGutterActive());
     }
 
     /**
@@ -175,10 +182,10 @@ class FlexformTest extends UnitTestCase
      */
     public function getIsGutterActiveReturnsFalseIfInstanceIsSetToAutoAndDefaultValueIsOff()
     {
-        $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(['gutter' => '0']);
+        $this->flexform->setCGutter('auto');
+        $this->flexform->setTyposcriptDefaults(['gutter' => '0']);
 
-        $this->assertFalse($this->sut->getIsGutterActive());
+        $this->assertFalse($this->flexform->getIsGutterActive());
     }
 
     /**
@@ -186,9 +193,9 @@ class FlexformTest extends UnitTestCase
      */
     public function getIsGutterActiveReturnsTrueIfInstanceIsSetToAutoAndDefaultValueIsOn()
     {
-        $this->sut->setCGutter('auto');
-        $this->sut->setTyposcriptDefaults(['gutter' => '1']);
+        $this->flexform->setCGutter('auto');
+        $this->flexform->setTyposcriptDefaults(['gutter' => '1']);
 
-        $this->assertTrue($this->sut->getIsGutterActive());
+        $this->assertTrue($this->flexform->getIsGutterActive());
     }
 }

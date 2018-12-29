@@ -29,8 +29,7 @@
 		"typo3/cms-t3editor": "^9.5"
 	},
 	"require-dev": {
-		"typo3/testing-framework": "*",
-		"fluidtypo3/development": "*"
+		"typo3/testing-framework": "~4.11.1"
 	},
 	"autoload": {
 		"psr-4": {

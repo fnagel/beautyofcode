@@ -58,18 +58,22 @@ class ext_update
     {
         $queryBuilder = $this->getQueryBuilderForTable('tt_content');
         $this->countOldPlugins = $queryBuilder
-            ->count('uid')
+            ->count('*')
             ->from('tt_content')
             ->where(
+                $queryBuilder->expr()->eq(
+                    'CType',
+                    $queryBuilder->createNamedParameter('list')
+                ),
                 $queryBuilder->expr()->eq(
                     'list_type',
                     $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
                 )
             )
             ->execute()
-            ->fetchColumn(0);
+            ->fetchColumn();
 
-        return 0 < $this->countOldPlugins;
+        return $this->countOldPlugins > 0;
     }
 
     /**
@@ -79,7 +83,7 @@ class ext_update
      */
     public function main()
     {
-        $output = 'Nothing needs to be updated.';
+        $output = '<p>Nothing needs to be updated.</p>';
 
         if ($this->hasInstanceOldPlugins()) {
             $output = $this->updateOldPlugins();
@@ -109,6 +113,7 @@ class ext_update
             ->set('list_type', '')
             ->execute();
 
+        $queryBuilder = $this->getQueryBuilderForTable('tt_content');
         $contentElements = $queryBuilder
             ->select('uid', 'pi_flexform')
             ->from('tt_content')

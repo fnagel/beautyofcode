@@ -28,7 +28,17 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * @var array
      */
+    protected $coreExtensionsToLoad = ['t3editor'];
+
+    /**
+     * @var array
+     */
     protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
+
+    /**
+     * @var bool
+     */
+    protected $resetSingletonInstances = true;
 
     /**
      * @var NodeFactory|\PHPUnit_Framework_MockObject_MockObject
@@ -54,6 +64,28 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
                     'nodeRegistry' => [],
                     'nodeResolver' => [],
                 ],
+                'IconFactory' => [
+                    'recordStatusMapping' => [
+                        'hidden' => 'overlay-hidden',
+                        'fe_group' => 'overlay-restricted',
+                        'starttime' => 'overlay-scheduled',
+                        'endtime' => 'overlay-endtime',
+                        'futureendtime' => 'overlay-scheduled',
+                        'readonly' => 'overlay-readonly',
+                        'deleted' => 'overlay-deleted',
+                        'missing' => 'overlay-missing',
+                        'translated' => 'overlay-translated',
+                        'protectedSection' => 'overlay-includes-subpages'
+                    ],
+                    'overlayPriorities' => [
+                        'hidden',
+                        'starttime',
+                        'endtime',
+                        'futureendtime',
+                        'protectedSection',
+                        'fe_group'
+                    ]
+                ]
             ],
         ];
 
@@ -65,8 +97,6 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement()
     {
-        $this->markTestSkipped('Skipped until fixed.');
-
         $data = [
             'tableName' => 'tt_content',
             'databaseRow' => [
@@ -85,11 +115,20 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
                     ],
                 ],
             ],
+            'parameterArray' => [
+                'fieldConf' => [
+                    'config' => []
+                ]
+            ],
         ];
 
         $t3EditorElement = new \TYPO3\Beautyofcode\Form\Element\T3editorElement($this->nodeFactoryMock, $data);
         $t3EditorElement->setMode('mixed');
 
-        // $this->assertSame('mixed', $t3EditorElement->getMode());
+        $classReflection = new \ReflectionClass($t3EditorElement);
+        $methodReflection = $classReflection->getMethod('getMode');
+        $methodReflection->setAccessible(true);
+
+        $this->assertSame('mixed', $methodReflection->invoke($t3EditorElement)->getFormatCode());
     }
 }

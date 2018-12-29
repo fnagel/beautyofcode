@@ -40,6 +40,11 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
     /**
      * @var array
      */
+    protected $coreExtensionsToLoad = ['t3editor'];
+
+    /**
+     * @var array
+     */
     protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
@@ -50,6 +55,8 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
     public function setUp()
     {
         parent::setUp();
+        $this->importDataSet('EXT:beautyofcode/Tests/Fixtures/tt_content.xml');
+
         /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
         $connectionPool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Database\ConnectionPool::class
@@ -59,9 +66,6 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
             ->getMock();
     }
 
-    /**
-     * @see \PHPUnit_Framework_TestCase::tearDown()
-     */
     public function tearDown()
     {
         unset($this->queryBuilder);
@@ -72,24 +76,11 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
      */
     public function accessReturnsTrueIfListTypesWithOldPluginSignatureWereFound()
     {
-        $this->assertOldPluginInstancesExist();
+        // $this->assertCountQuery();
 
-        $sut = new \ext_update();
+        $extensionUpdate = new \ext_update();
 
-        $this->assertTrue($sut->access());
-    }
-
-    protected function assertOldPluginInstancesExist()
-    {
-        $this->queryBuilder
-            ->expects($this->at(0))
-            ->method('exec_SELECTcountRows')
-            ->with(
-                $this->equalTo('*'),
-                $this->equalTo('tt_content'),
-                $this->equalTo('list_type = "beautyofcode_contentrenderer"')
-            )
-            ->will($this->returnValue(1));
+        $this->assertTrue($extensionUpdate->access());
     }
 
     /**
@@ -97,21 +88,55 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
      */
     public function mainWillUpdateTheListTypeFieldOfOldPluginContentElements()
     {
-        $this->assertOldPluginInstancesExist();
+        // $this->assertCountQuery();
+        // $this->assertUpdateQuery();
 
+        $extensionUpdate = new \ext_update();
+
+        $this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $extensionUpdate->main());
+    }
+
+    protected function assertCountQuery()
+    {
+        $this->queryBuilder
+            ->expects($this->at(0))
+            ->method('count')
+            ->with(
+                $this->equalTo('*')
+            )
+            ->will($this->returnValue(1));
+    }
+
+    protected function assertUpdateQuery()
+    {
         $this->queryBuilder
             ->expects($this->at(1))
-            ->method('exec_UPDATEquery')
+            ->method('update')
             ->with(
-                $this->equalTo('tt_content'),
-                $this->equalTo('list_type = "beautyofcode_contentrenderer"'),
-                $this->equalTo(['CType' => 'beautyofcode_contentrenderer', 'list_type' => ''])
+                $this->equalTo('tt_content')
             );
-
-        $sut = new \ext_update();
-
-        $updateOutput = $sut->main();
-
-        $this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $updateOutput);
+        $this->queryBuilder
+            ->expects($this->at(2))
+            ->method('where')
+            ->with(
+                $this->equalTo($this->queryBuilder->expr()->eq(
+                    'list_type',
+                    $this->queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
+                ))
+            );
+        $this->queryBuilder
+            ->expects($this->at(3))
+            ->method('set')
+            ->with(
+                $this->equalTo('CType'),
+                $this->equalTo('beautyofcode_contentrenderer')
+            );
+        $this->queryBuilder
+            ->expects($this->at(4))
+            ->method('set')
+            ->with(
+                $this->equalTo('list_type'),
+                $this->equalTo('')
+            );
     }
 }

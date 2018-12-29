@@ -39,6 +39,11 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
     /**
      * @var array
      */
+    protected $coreExtensionsToLoad = ['t3editor'];
+
+    /**
+     * @var array
+     */
     protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**

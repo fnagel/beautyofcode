@@ -28,8 +28,7 @@
     "typo3/cms-core": "^9.0"
   },
   "require-dev": {
-    "typo3/testing-framework": "*",
-    "fluidtypo3/development": "*"
+    "typo3/testing-framework": "~4.11.1"
   },
   "suggest": {
     "typo3/cms-t3editor": "^9.5"

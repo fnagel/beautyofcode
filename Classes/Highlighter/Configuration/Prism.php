@@ -52,8 +52,8 @@ class Prism extends AbstractConfiguration
      */
     protected $brushIdentifierAliasLabelMap = [
         'applescript' => ['applescript', 'AppleScript'],
-	'actionscript' => ['actionscript', 'Actionscript 3'],
-	'apacheconf' => ['apacheconf', 'Apache Config'],
+        'actionscript' => ['actionscript', 'Actionscript 3'],
+        'apacheconf' => ['apacheconf', 'Apache Config'],
         'bash' => ['bash', 'Bash / Shell'],
         'c' => ['c', 'C / C++'],
         'clike' => ['clike', 'C-Like'],

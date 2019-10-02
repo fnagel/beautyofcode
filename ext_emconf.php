@@ -10,7 +10,7 @@
  * writing. "version" and "dependencies" must not be touched!
  ***************************************************************/
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
     'title' => 'beautyOfCode Syntax Highlighter',
     'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism. t3editor enabled.',
     'category' => 'plugin',
@@ -27,20 +27,20 @@ $EM_CONF[$_EXTKEY] = array(
     'lockType' => '',
     'author' => 'Felix Nagel',
     'author_email' => 'info@felixnagel.com',
-    'constraints' => array(
-        'depends' => array(
+    'constraints' => [
+        'depends' => [
             'php' => '7.0.0-7.2.99',
             'typo3' => '8.7.0-9.5.99',
-        ),
-        'conflicts' => array(
-        ),
-        'suggests' => array(
+        ],
+        'conflicts' => [
+        ],
+        'suggests' => [
             't3editor' => '',
-        ),
-    ),
-    'autoload' => array(
-        'psr-4' => array(
+        ],
+    ],
+    'autoload' => [
+        'psr-4' => [
             'TYPO3\\Beautyofcode\\' => 'Classes',
-        ),
-    ),
-);
+        ],
+    ],
+];

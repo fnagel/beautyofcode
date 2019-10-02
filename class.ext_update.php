@@ -115,10 +115,10 @@ class ext_update
         $this->db->exec_UPDATEquery(
             'tt_content',
             'list_type = "beautyofcode_contentrenderer"',
-            array(
+            [
                 'CType' => 'beautyofcode_contentrenderer',
                 'list_type' => '',
-            )
+            ]
         );
 
         $contentElements = $this->db->exec_SELECTquery(
@@ -140,9 +140,9 @@ class ext_update
             $this->db->exec_UPDATEquery(
                 'tt_content',
                 'uid = '.$uid,
-                array(
+                [
                     'bodytext' => $codeBlock,
-                )
+                ]
             );
         }
 

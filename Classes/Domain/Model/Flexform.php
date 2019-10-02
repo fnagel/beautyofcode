@@ -71,7 +71,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
      *
      * @var array
      */
-    protected $typoscriptDefaults = array();
+    protected $typoscriptDefaults = [];
 
     /**
      * Language / brush fallback.
@@ -218,7 +218,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
      *
      * @param array $typoscriptDefaults TypoScript defaults
      */
-    public function setTyposcriptDefaults($typoscriptDefaults = array())
+    public function setTyposcriptDefaults($typoscriptDefaults = [])
     {
         $this->typoscriptDefaults = $typoscriptDefaults;
     }

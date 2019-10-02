@@ -77,7 +77,7 @@ class FlexformRepository
             ->dataMapper
             ->map(
                 'TYPO3\\Beautyofcode\\Domain\\Model\\Flexform',
-                array($flexformValues) // nested array as ::map() expects multiple rows
+                [$flexformValues] // nested array as ::map() expects multiple rows
             );
 
         return $flexform[0];
@@ -94,7 +94,7 @@ class FlexformRepository
      */
     protected function getDataMapperToTCACompatiblePropertyArray($flexformValueArray)
     {
-        $flexformValues = array();
+        $flexformValues = [];
 
         foreach ($flexformValueArray as $propertyName => $propertyValue) {
             $propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored($propertyName);

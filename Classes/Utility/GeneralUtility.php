@@ -45,11 +45,11 @@ class GeneralUtility
         }
 
         if ($isExtensionNotation || $isFileNotation) {
-	        if (version_compare(TYPO3_branch, '8.0', '>=')) {
-		        $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
-	        } else {
-		        $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, true, false);
-	        }
+            if (version_compare(TYPO3_branch, '8.0', '>=')) {
+                $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
+            } else {
+                $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir, true, false);
+            }
             $absolutePath = is_null($absolutePath) ? '' : substr($absolutePath, strlen(PATH_site));
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;

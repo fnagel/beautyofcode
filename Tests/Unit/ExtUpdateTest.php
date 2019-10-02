@@ -39,7 +39,7 @@ use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
  */
 class ExtUpdateTest extends UnitTestCase
 {
-    protected $backupGlobalsBlacklist = array('TYPO3_DB');
+    protected $backupGlobalsBlacklist = ['TYPO3_DB'];
 
     /**
      * @var \TYPO3\CMS\Core\Database\DatabaseConnection
@@ -103,7 +103,7 @@ class ExtUpdateTest extends UnitTestCase
             ->with(
                 $this->equalTo('tt_content'),
                 $this->equalTo('list_type = "beautyofcode_contentrenderer"'),
-                $this->equalTo(array('CType' => 'beautyofcode_contentrenderer', 'list_type' => ''))
+                $this->equalTo(['CType' => 'beautyofcode_contentrenderer', 'list_type' => ''])
             );
 
         $sut = new \ext_update();

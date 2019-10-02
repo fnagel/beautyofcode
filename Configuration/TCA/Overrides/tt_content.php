@@ -6,11 +6,11 @@ if (!defined('TYPO3_MODE')) {
 
 $packageKey = 'beautyofcode';
 
-$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = array(
+$GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
     'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
     'beautyofcode_contentrenderer',
     'content-special-html',
-);
+];
 
 $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
@@ -30,20 +30,20 @@ $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['beautyofcode'];
 if (is_string($configuration)) {
     $configuration = (array)@unserialize($configuration);
 } else {
-    $configuration = array();
+    $configuration = [];
 }
 
 if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1 &&
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')
 ) {
-    $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = array(
-        'bodytext' => array(
-            'config' => array(
+    $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = [
+        'bodytext' => [
+            'config' => [
                 'format'     => 'mixed',
                 'renderType' => 't3editor',
-            ),
-        ),
-    );
+            ],
+        ],
+    ];
 };
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';

@@ -67,7 +67,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      *
      * @var array
      */
-    protected $flexformData = array();
+    protected $flexformData = [];
 
     /**
      * @var string
@@ -150,7 +150,8 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      */
     protected function buildCodeLanguageHeader()
     {
-        return sprintf('<br /><br /><strong>%s</strong> (%s)<br />',
+        return sprintf(
+            '<br /><br /><strong>%s</strong> (%s)<br />',
             $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':code'),
             htmlspecialchars($this->flexformData['data']['sDEF']['lDEF']['cLang']['vDEF'])
         );
@@ -168,7 +169,8 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     {
         $code = $codeBlock;
 
-        $preview = sprintf('<em>%s</em>',
+        $preview = sprintf(
+            '<em>%s</em>',
             $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_code')
         );
 
@@ -185,7 +187,8 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
                 $uid,
                 $this->textareaHeight
             );
-            $preview .= sprintf('
+            $preview .= sprintf(
+                '
 				<script type="text/javascript">
 					var
 						ta_hidden%s = document.getElementById("ta_hidden%s"),

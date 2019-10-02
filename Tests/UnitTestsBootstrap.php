@@ -81,7 +81,7 @@ class UnitTestsBootstrap
 
         \FluidTYPO3\Development\Bootstrap::initialize(
             $autoloader,
-            array(
+            [
                 'fluid_template' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
                 'cache_core' => \FluidTYPO3\Development\Bootstrap::CACHE_PHP_NULL,
                 'cache_rootline' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
@@ -91,7 +91,7 @@ class UnitTestsBootstrap
                 'extbase_typo3dbbackend_tablecolumns' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
                 'extbase_typo3dbbackend_queries' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
                 'l10n' => \FluidTYPO3\Development\Bootstrap::CACHE_NULL,
-            )
+            ]
         );
     }
 }

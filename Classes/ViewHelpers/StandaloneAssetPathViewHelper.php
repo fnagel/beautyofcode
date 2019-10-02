@@ -41,7 +41,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\Abs
      *
      * @var array
      */
-    protected $validTypes = array('scripts', 'styles');
+    protected $validTypes = ['scripts', 'styles'];
 
     /**
      * InitializeArguments.

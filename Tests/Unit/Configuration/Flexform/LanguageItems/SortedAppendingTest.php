@@ -84,25 +84,25 @@ class SortedAppendingTest extends UnitTestCase
         $highlighterConfigurationMock
             ->expects($this->any())
             ->method('getBrushIdentifierAliasAndLabel')
-            ->will($this->returnValue(array('SQL / MySQL' => 'sql')));
+            ->will($this->returnValue(['SQL / MySQL' => 'sql']));
 
         $sut = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
         $sut->injectObjectManager($objectManagerMock);
         $sut->injectCacheManager($cacheManagerMock);
         $sut->injectHighlighterConfiguration($highlighterConfigurationMock);
 
-        $configFromFlexform = array(
-            'row' => array(
+        $configFromFlexform = [
+            'row' => [
                 'uid' => 1,
                 'pid' => 1,
-            ),
-            'items' => array(
-                array(
+            ],
+            'items' => [
+                [
                     'Plain', // TCEforms: label
                     'plain', // TCEforms: key
-                ),
-            ),
-        );
+                ],
+            ],
+        ];
 
         $newConfig = $sut->getConfiguredLanguages($configFromFlexform);
 

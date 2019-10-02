@@ -24,8 +24,8 @@
   ],
   "license": "GP-2.0+",
   "require": {
-    "php": ">=5.4.0,<7.3",
-    "typo3/cms-core": "^7.3.1 || ^8.7"
+    "php": ">=7.0,<7.3",
+    "typo3/cms-core": ">=8.7.0,<=9.5.99"
   },
   "require-dev": {
     "typo3/testing-framework": "*",

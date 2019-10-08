@@ -35,7 +35,7 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
     $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = [
         'bodytext' => [
             'config' => [
-                'format' => 'xml',
+                'format' => \TYPO3\Beautyofcode\Form\Element\T3editorElement::T3EDITOR_MODE_DEFAULT,
                 'renderType' => 't3editor',
             ],
         ],

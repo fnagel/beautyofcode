@@ -27,6 +27,8 @@ use TYPO3\CMS\T3editor\Registry\ModeRegistry;
  */
 class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
 {
+    const T3EDITOR_MODE_DEFAULT = 'xml';
+
     /**
      * Map ext:t3editor modes on beautyofcode brush aliases.
      *
@@ -49,30 +51,21 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
     ];
 
     /**
-     * Container objects give $nodeFactory down to other containers.
-     *
-     * @todo Decide on what to do with this. Due to changes in T3editorElement::render both getMode and setMode are ignored.
-     *
-     * @param NodeFactory $nodeFactory
-     * @param array $data
+     * @inheritDoc
      */
-    public function __construct(NodeFactory $nodeFactory, array $data)
+    public function render(): array
     {
-        parent::__construct($nodeFactory, $data);
+        $mode = $this->setModeDynamic($this->data['parameterArray']['fieldConf']['config']['format']);
+        $this->data['parameterArray']['fieldConf']['config']['format'] = $mode;
 
-        $modeInstance = GeneralUtility::makeInstance(
-            Mode::class,
-            'cm/mode/xml/xml'
-        )->setFormatCode('mixed');
-        $modeInstance->bindToFileExtensions(['htm', 'html']);
-        $modeInstance->setAsDefault();
-
-        $modeRegistry = ModeRegistry::getInstance();
-        $modeRegistry->register($modeInstance);
+        return parent::render();
     }
 
     /**
      * Sets the type of code to edit, use one of the predefined constants.
+     *
+     * @todo Remove as no longer existing in extended class.
+     * @deprecated
      *
      * @param string $mode Expects one of the predefined constants
      *
@@ -96,7 +89,9 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
             return $mode;
         }
 
-        $mode = 'mixed';
+        // Fallback
+        $mode = self::T3EDITOR_MODE_DEFAULT;
+
         // Get current flexform language value
         $flexformLanguageKey = current(
             $this->data['databaseRow']['pi_flexform']['data']['sDEF']['lDEF']['cLang']['vDEF']

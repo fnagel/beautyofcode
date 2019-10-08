@@ -58,6 +58,7 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     public function setUp()
     {
         parent::setUp();
+
         $GLOBALS['TYPO3_CONF_VARS'] = [
             'SYS' => [
                 'formEngine' => [
@@ -93,6 +94,9 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     }
 
     /**
+     * @todo Change this test as setMode does no longer exist.
+     * @todo Change this test as mode "mixed" does no longer exist.
+     *
      * ItLeavesModeUntouchedIfNotBeautyofcodeContentElement.
      */
     public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement()

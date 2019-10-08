@@ -99,19 +99,19 @@ Screenshots
 See highlighter project website for possible frontend look.
 
 
-.. figure:: ../Images/Screenshots/ContentElement.jpg
+.. figure:: ../Images/Screenshots/ContentElement.png
       :width: 500px
       :alt: Content element screenshot
 
       Content element
 
-.. figure:: ../Images/Screenshots/ContentElementTab2.jpg
+.. figure:: ../Images/Screenshots/ContentElementTab2.png
       :width: 500px
       :alt: Content element options tab screenshot
 
 	  Content element options tab
 
-.. figure:: ../Images/Screenshots/BackendLayout.jpg
+.. figure:: ../Images/Screenshots/BackendLayout.png
       :width: 500px
       :alt: Backend layout screenshot
 

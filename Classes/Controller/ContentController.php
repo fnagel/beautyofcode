@@ -49,30 +49,32 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     public function renderAction()
     {
         $contentElement = $this->configurationManager->getContentObject()->data;
-        $flexform = $this
-            ->flexformRepository
-            ->reconstituteByContentObject(
-                $this->configurationManager->getContentObject()
-            );
+        $flexform = $this->flexformRepository->reconstituteByContentObject(
+            $this->configurationManager->getContentObject()
+        );
         $flexform->setTyposcriptDefaults($this->settings['defaults']);
 
-        if (empty(trim($contentElement['bodytext']))) {
-            $file = $flexform->getCFile();
-            $linkService = GeneralUtility::makeInstance(LinkService::class);
-            $data = $linkService->resolveByStringRepresentation($file);
+        if (empty(trim($contentElement['bodytext'])) && !empty($flexform->getCFile())) {
             $content = '';
+
+            $linkService = GeneralUtility::makeInstance(LinkService::class);
+            $data = $linkService->resolveByStringRepresentation($flexform->getCFile());
+
             if ($data['type'] === 'url') {
                 $content = file_get_contents($data['url']);
+
                 if ($content === false) {
                     $content = '';
                 }
             } elseif ($data['type'] === 'file') {
                 /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
                 $fileObject = $data['file'];
+
                 if ($fileObject !== null) {
                     $content = $fileObject->getContents();
                 }
             }
+
             $contentElement['bodytext'] = $content;
         }
 

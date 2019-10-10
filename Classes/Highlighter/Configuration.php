@@ -16,8 +16,6 @@ namespace TYPO3\Beautyofcode\Highlighter;
  */
 
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Core\Utility\ArrayUtility;
 
 /**
  * Configuration.
@@ -48,6 +46,13 @@ class Configuration implements ConfigurationInterface
     protected $configuration;
 
     /**
+     * Page uid
+     *
+     * @var int
+     */
+    protected $pid = 0;
+
+    /**
      * InjectObjectManager.
      *
      * @param ObjectManagerInterface $objectManager ObjectManagerInterface
@@ -58,16 +63,11 @@ class Configuration implements ConfigurationInterface
     }
 
     /**
-     * InjectConfiguration.
-     *
-     * @param ConfigurationManagerInterface $configurationManager ConfigurationManagerInterface
+     * @param int $pid
      */
-    public function injectConfiguration(ConfigurationManagerInterface $configurationManager)
+    public function __construct($pid = 0)
     {
-        $configuration = $configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-        );
-        $this->settings = ArrayUtility::getValueByPath($configuration, 'plugin./tx_beautyofcode./settings.');
+        $this->pid = (int)$pid;
     }
 
     /**
@@ -75,6 +75,12 @@ class Configuration implements ConfigurationInterface
      */
     public function initializeObject()
     {
+        $settingsService = $this->objectManager->get(
+            \TYPO3\Beautyofcode\Service\SettingsService::class,
+            $this->pid
+        );
+        $this->settings = $settingsService->getTypoScriptSettings();
+
         $this->configuration = $this->objectManager->get(
             'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
             $this->settings

@@ -16,7 +16,6 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  */
 
 use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
-use TYPO3\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -40,13 +39,6 @@ class LanguageItems
      * @var \TYPO3\CMS\Core\Cache\CacheManager
      */
     protected $cacheManager;
-
-    /**
-     * SettingsService.
-     *
-     * @var SettingsService
-     */
-    protected $settingsService;
 
     /**
      * ConfigurationInterface.
@@ -100,20 +92,13 @@ class LanguageItems
     public function injectHighlighterConfiguration(ConfigurationInterface $configuration = null)
     {
         if (is_null($configuration)) {
-            $configuration = $this->objectManager->get(\TYPO3\Beautyofcode\Highlighter\ConfigurationInterface::class);
+            $configuration = $this->objectManager->get(
+                \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface::class,
+                $this->contentElementPid
+            );
         }
 
         $this->highlighterConfiguration = $configuration;
-    }
-
-    /**
-     * Initialize.
-     */
-    public function initialize()
-    {
-        $this->injectObjectManager($this->objectManager);
-        $this->injectCacheManager($this->cacheManager);
-        $this->injectHighlighterConfiguration($this->highlighterConfiguration);
     }
 
     /**
@@ -126,7 +111,8 @@ class LanguageItems
      */
     public function getConfiguredLanguages($config)
     {
-        $this->initialize();
+        $this->injectObjectManager($this->objectManager);
+        $this->injectCacheManager($this->cacheManager);
 
         if (($cachedFields = $this->getCache()->get('language-items')) !== false) {
             $config['items'] = $cachedFields;
@@ -141,6 +127,9 @@ class LanguageItems
             if ($this->contentElementPid === 0 && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {
                 $this->contentElementPid = $this->getPageUidByRecordUid($config['row']['uid']);
             }
+
+            // Inject configuration after determining the PID
+            $this->injectHighlighterConfiguration($this->highlighterConfiguration);
 
             $brushesArray = $this->getUniqueAndSortedBrushes();
 

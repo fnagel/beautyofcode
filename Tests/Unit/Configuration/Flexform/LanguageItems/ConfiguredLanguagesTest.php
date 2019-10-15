@@ -40,6 +40,8 @@ use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
  */
 class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
+    protected $resetSingletonInstances = true;
+
     /**
      * @var \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems
      */

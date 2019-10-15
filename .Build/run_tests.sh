@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
 
-echo "Running functional tests";
-
 IP="127.0.0.1";
-export PHP_IDE_CONFIG="serverName=www.beautyofcode.lan";
 export TYPO3_PATH_APP="${PWD}/Web/";
 export TYPO3_PATH_ROOT="${PWD}/Web/";
 
 export typo3DatabaseName="functional";
 export typo3DatabaseDriver="pdo_sqlite";
 
-/usr/bin/php \
+echo "";
+echo "";
+echo "### Running functional tests";
+
+php \
     -dxdebug.remote_enable=1 \
     -dxdebug.remote_mode=req \
     -dxdebug.remote_port=9000 \
@@ -21,9 +22,11 @@ export typo3DatabaseDriver="pdo_sqlite";
     -c ./Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml \
     ../Tests/Functional/
 
-echo "Running unit tests";
+echo "";
+echo "";
+echo "### Running unit tests";
 
-/usr/bin/php \
+php \
     -dxdebug.remote_enable=1 \
     -dxdebug.remote_mode=req \
     -dxdebug.remote_port=9000 \

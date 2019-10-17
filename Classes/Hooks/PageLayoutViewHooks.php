@@ -18,6 +18,7 @@ namespace TYPO3\Beautyofcode\Hooks;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -161,14 +162,12 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      * Builds a textarea code preview field.
      *
      * @param int    $uid       The uid of the content record
-     * @param string $codeBlock The code block
+     * @param string $code The code block
      *
      * @return string
      */
-    protected function buildCodePreview($uid, $codeBlock)
+    protected function buildCodePreview($uid, $code)
     {
-        $code = $codeBlock;
-
         $preview = sprintf(
             '<em>%s</em>',
             $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_code')
@@ -206,6 +205,27 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
                 $uid,
                 $uid
             );
+        } else {
+            $file = $this->flexformData['data']['sDEF']['lDEF']['cFile']['vDEF'];
+
+            if (strlen($file) > 0) {
+                $linkService = GeneralUtility::makeInstance(LinkService::class);
+                $data = $linkService->resolveByStringRepresentation($file);
+
+                if ($data['type'] === 'file') {
+                    /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
+                    $fileObject = $data['file'];
+
+                    if ($fileObject !== null) {
+                        $file = $fileObject->getPublicUrl();
+                    }
+                }
+
+                $preview = sprintf(
+                    '<em>%s</em>',
+                    $file
+                );
+            }
         }
 
         return $preview;

@@ -15,6 +15,7 @@ namespace TYPO3\Beautyofcode\Tests\Functional\Form\Element;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 
 /**
@@ -23,7 +24,7 @@ use TYPO3\CMS\Backend\Form\NodeFactory;
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  */
-class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class T3editorElementTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
     /**
      * @var array
@@ -36,21 +37,9 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
-     * @var bool
-     */
-    protected $resetSingletonInstances = true;
-
-    /**
      * @var NodeFactory|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $nodeFactoryMock;
-
-    /**
-     * T3editorElement.
-     *
-     * @var \TYPO3\Beautyofcode\Form\Element\T3editorElement
-     */
-    protected $t3EditorElement;
 
     /**
      * SetUp.
@@ -59,49 +48,15 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     {
         parent::setUp();
 
-        $GLOBALS['TYPO3_CONF_VARS'] = [
-            'SYS' => [
-                'formEngine' => [
-                    'nodeRegistry' => [],
-                    'nodeResolver' => [],
-                ],
-                'IconFactory' => [
-                    'recordStatusMapping' => [
-                        'hidden' => 'overlay-hidden',
-                        'fe_group' => 'overlay-restricted',
-                        'starttime' => 'overlay-scheduled',
-                        'endtime' => 'overlay-endtime',
-                        'futureendtime' => 'overlay-scheduled',
-                        'readonly' => 'overlay-readonly',
-                        'deleted' => 'overlay-deleted',
-                        'missing' => 'overlay-missing',
-                        'translated' => 'overlay-translated',
-                        'protectedSection' => 'overlay-includes-subpages'
-                    ],
-                    'overlayPriorities' => [
-                        'hidden',
-                        'starttime',
-                        'endtime',
-                        'futureendtime',
-                        'protectedSection',
-                        'fe_group'
-                    ]
-                ]
-            ],
-        ];
-
         $this->nodeFactoryMock = $this->getMockBuilder(NodeFactory::class)->getMock();
     }
 
     /**
-     * @todo Change this test as setMode does no longer exist.
-     * @todo Change this test as mode "mixed" does no longer exist.
-     *
-     * ItLeavesModeUntouchedIfNotBeautyofcodeContentElement.
+     * @return array
      */
-    public function testItLeavesModeUntouchedIfNotBeautyofcodeContentElement()
+    protected function getDefaultData()
     {
-        $data = [
+        return [
             'tableName' => 'tt_content',
             'databaseRow' => [
                 'CType' => ['text'],
@@ -121,18 +76,53 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ],
             'parameterArray' => [
                 'fieldConf' => [
-                    'config' => []
-                ]
+                    'config' => [],
+                ],
             ],
         ];
+    }
 
-        $t3EditorElement = new \TYPO3\Beautyofcode\Form\Element\T3editorElement($this->nodeFactoryMock, $data);
-        $t3EditorElement->setMode('mixed');
+    public function testItChangesConfigIfBeautyofcodeContentElement()
+    {
+        $data = $this->getDefaultData();
+        $data['databaseRow']['CType'] = ['beautyofcode_contentrenderer'];
+
+        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
 
         $classReflection = new \ReflectionClass($t3EditorElement);
-        $methodReflection = $classReflection->getMethod('getMode');
+        $methodReflection = $classReflection->getMethod('determineMode');
         $methodReflection->setAccessible(true);
 
-        $this->assertSame('mixed', $methodReflection->invoke($t3EditorElement)->getFormatCode());
+        $this->assertSame('php', $methodReflection->invoke($t3EditorElement));
+    }
+
+    public function testItLeavesConfigUntouchedIfNotBeautyofcodeContentElement()
+    {
+        $data = $this->getDefaultData();
+
+        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+
+        $classReflection = new \ReflectionClass($t3EditorElement);
+        $methodReflection = $classReflection->getMethod('determineMode');
+        $methodReflection->setAccessible(true);
+
+        $this->assertSame(T3editorElement::T3EDITOR_MODE_DEFAULT, $methodReflection->invoke($t3EditorElement));
+    }
+
+    public function testItLeavesTcaConfigUntouchedIfNotBeautyofcodeContentElement()
+    {
+        $this->markTestSkipped('Does not work due to wrong init of ModeRegistry::getInstance()->getDefaultMode()');
+
+        $data = $this->getDefaultData();
+        $data['parameterArray']['fieldConf']['config']['format'] = 'css';
+
+        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+        $t3EditorElement->render();
+
+        $classReflection = new \ReflectionClass($t3EditorElement);
+        $propertyReflection = $classReflection->getProperty('data');
+        $propertyReflection->setAccessible(true);
+
+        $this->assertSame('css', $propertyReflection->getValue($t3EditorElement)['parameterArray']['fieldConf']['config']['format']);
     }
 }

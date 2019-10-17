@@ -15,11 +15,6 @@ namespace TYPO3\Beautyofcode\Form\Element;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Backend\Form\NodeFactory;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\T3editor\Mode;
-use TYPO3\CMS\T3editor\Registry\ModeRegistry;
-
 /**
  * t3editor FormEngine widget.
  *
@@ -55,42 +50,28 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
      */
     public function render(): array
     {
-        $mode = $this->setModeDynamic($this->data['parameterArray']['fieldConf']['config']['format']);
-        $this->data['parameterArray']['fieldConf']['config']['format'] = $mode;
+        $mode = $this->determineMode();
+
+        if ($mode !== null) {
+            $this->data['parameterArray']['fieldConf']['config']['format'] = $mode;
+        }
 
         return parent::render();
     }
 
     /**
-     * Sets the type of code to edit, use one of the predefined constants.
-     *
-     * @todo Remove as no longer existing in extended class.
-     * @deprecated
-     *
-     * @param string $mode Expects one of the predefined constants
-     *
-     * @return void
-     */
-    public function setMode($mode)
-    {
-        $this->mode = $this->setModeDynamic($mode);
-    }
-
-    /**
      * Dynamic update of the t3editor format.
      *
-     * @param string $mode Expects one of the predefined constants
-     *
-     * @return string
+     * @return string|null
      */
-    protected function setModeDynamic($mode)
+    protected function determineMode()
     {
+        // Fallback
+        $mode = $this->data['parameterArray']['fieldConf']['config']['format'] ?: self::T3EDITOR_MODE_DEFAULT;
+
         if (!$this->isBeautyOfCodeElement()) {
             return $mode;
         }
-
-        // Fallback
-        $mode = self::T3EDITOR_MODE_DEFAULT;
 
         // Get current flexform language value
         $flexformLanguageKey = current(

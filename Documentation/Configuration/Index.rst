@@ -137,8 +137,7 @@ theme
 Define a theme (which is basically a CSS file). Following themes are avaiable:
 
 **SyntaxHighlighter:**
-Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3(which is dark minimal), MDUltra,
-Midnight, RDark.
+Default, Django, Eclipse, Emacs, FadeToGrey, FelixNagelv3 (which is dark minimal), MDUltra, Midnight, RDark.
 
 **Prism:**
 coy, okaidia, dark, funky, okaidia, solarizedlight, tomorrow, twilight.

@@ -10,7 +10,7 @@
 Known Problems
 ==============
 
-Please see FAQ and check http://forge.typo3.org/projects/extension-beautyofcode/issues
+Please see FAQ and check https://github.com/fnagel/beautyofcode/issues
 
 PHP5 and libxml module cause problems in some Installations. This is a server 
 side problem with an existing work around. See the FAQ of this manual.

@@ -56,6 +56,12 @@ Howto install JS vendors
 
       bower install
 
+4. Remove unneeded files:
+      - `qunit` folder
+      - `xregexp` folder
+      - all `*.min.js` files in `Resources/Public/Javascript/vendor/prism/components/`
+      - all untracked files in `Resources/Public/Javascript/vendor/prism/`
+
 Howto add BOM to all reStructuredText files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

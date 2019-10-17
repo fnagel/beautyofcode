@@ -10,4 +10,4 @@
 To-Do list
 ==========
 
-Please see http://forge.typo3.org/projects/extension-beautyofcode/issues
+Please see https://github.com/fnagel/beautyofcode/issues

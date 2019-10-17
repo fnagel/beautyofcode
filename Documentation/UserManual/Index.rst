@@ -22,7 +22,8 @@ These fields should be self explanatory.
 
 - Description (not necessary, if empty no description is displayed)
 - Programming language (available languages configured by your admin)
-- Code
+- URL / File (use a local file or external URL with sourcecode) OR
+- Sourcecode
 
 Tab: Options
 ------------

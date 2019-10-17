@@ -15,6 +15,18 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
 
 
+3.x to 4.0
+^^^^^^^^^^
+
+What you need to know:
+
+- Additional text area for URLs and reference files
+- Added support for TYPO3 9.x
+- Removed support for TYPO3 8.x
+- Removed support for PHP 5.x
+- Updated Prism to 1.17.1
+
+
 3.2 to 3.3
 ^^^^^^^^^^
 

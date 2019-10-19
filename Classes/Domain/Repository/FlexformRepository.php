@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Domain\Repository;
+namespace FelixNagel\Beautyofcode\Domain\Repository;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -61,7 +61,7 @@ class FlexformRepository
      *
      * @param \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject ContentObjectRenderer
      *
-     * @return \TYPO3\Beautyofcode\Domain\Model\Flexform
+     * @return \FelixNagel\Beautyofcode\Domain\Model\Flexform
      */
     public function reconstituteByContentObject(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject)
     {
@@ -76,7 +76,7 @@ class FlexformRepository
         $flexform = $this
             ->dataMapper
             ->map(
-                \TYPO3\Beautyofcode\Domain\Model\Flexform::class,
+                \FelixNagel\Beautyofcode\Domain\Model\Flexform::class,
                 [$flexformValues] // nested array as ::map() expects multiple rows
             );
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
+namespace FelixNagel\Beautyofcode\Tests\Unit\Domain;
 
 /***************************************************************
  * Copyright notice
@@ -26,7 +26,7 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Domain;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
  * Tests the flexform domain object.
@@ -46,7 +46,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     protected $highlighterConfigurationMock;
 
     /**
-     * @var \TYPO3\Beautyofcode\Domain\Model\Flexform
+     * @var \FelixNagel\Beautyofcode\Domain\Model\Flexform
      */
     protected $flexform;
 
@@ -54,7 +54,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     {
         $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
-        $this->flexform = new \TYPO3\Beautyofcode\Domain\Model\Flexform();
+        $this->flexform = new \FelixNagel\Beautyofcode\Domain\Model\Flexform();
 
         $this->flexform->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 

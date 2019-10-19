@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Domain\Model;
+namespace FelixNagel\Beautyofcode\Domain\Model;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,7 @@ namespace TYPO3\Beautyofcode\Domain\Model;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 
 /**
  * Domain model object for the flexform configuration of a plugin instance.
@@ -27,7 +27,7 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
     /**
      * ConfigurationInterface.
      *
-     * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
      */
     protected $highlighterConfiguration;
 

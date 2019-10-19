@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
+namespace FelixNagel\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
 
 /***************************************************************
  * Copyright notice
@@ -28,8 +28,8 @@ namespace TYPO3\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItems;
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-use TYPO3\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
-use TYPO3\Beautyofcode\Service\SettingsService;
+use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
+use FelixNagel\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 
@@ -43,7 +43,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
     protected $resetSingletonInstances = true;
 
     /**
-     * @var \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems
+     * @var \FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems
      */
     protected $languageItem;
 
@@ -102,7 +102,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
             ->method('getBrushIdentifierAliasAndLabel')
             ->will($this->returnValue(['SQL / MySQL' => 'sql']));
 
-        $this->languageItem = new \TYPO3\Beautyofcode\Configuration\Flexform\LanguageItems();
+        $this->languageItem = new \FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems();
         $this->languageItem->injectObjectManager($objectManagerMock);
         $this->languageItem->injectCacheManager($cacheManagerMock);
         $this->languageItem->injectHighlighterConfiguration($highlighterConfigurationMock);
@@ -137,7 +137,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
         $objectManagerMock
             ->expects($this->any())->method('get')
             ->with(
-                $this->equalTo(\TYPO3\Beautyofcode\Service\SettingsService::class),
+                $this->equalTo(\FelixNagel\Beautyofcode\Service\SettingsService::class),
                 $this->equalTo(1)
             )
             ->will($this->returnValue($settingsServiceMock));

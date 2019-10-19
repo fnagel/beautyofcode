@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Hooks;
+namespace FelixNagel\Beautyofcode\Hooks;
 
 /*
  * This file is part of the TYPO3 CMS project.

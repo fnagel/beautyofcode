@@ -4,7 +4,7 @@ defined('TYPO3_MODE') or die();
 
 call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'TYPO3.'.$packageKey,
+        'FelixNagel.'.$packageKey,
         'ContentRenderer',
         [
             'Content' => 'render',
@@ -15,7 +15,7 @@ call_user_func(function ($packageKey) {
 
     // BE preview
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
-        \TYPO3\Beautyofcode\Hooks\PageLayoutViewHooks::class;
+        \FelixNagel\Beautyofcode\Hooks\PageLayoutViewHooks::class;
 
     $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
     // Cache registration
@@ -35,6 +35,6 @@ call_user_func(function ($packageKey) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1491758504] = [
         'nodeName' => 't3editor',
         'priority' => '70',
-        'class' => \TYPO3\Beautyofcode\Form\Element\T3editorElement::class,
+        'class' => \FelixNagel\Beautyofcode\Form\Element\T3editorElement::class,
     ];
 }, $_EXTKEY);

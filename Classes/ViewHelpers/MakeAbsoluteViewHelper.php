@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\ViewHelpers;
+namespace FelixNagel\Beautyofcode\ViewHelpers;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -50,6 +50,6 @@ class MakeAbsoluteViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
         RenderingContextInterface $renderingContext
     ) {
         $url = $arguments['url'];
-        return \TYPO3\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
+        return \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
     }
 }

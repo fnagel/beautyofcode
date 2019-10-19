@@ -40,7 +40,7 @@ $EM_CONF[$_EXTKEY] = [
     ],
     'autoload' => [
         'psr-4' => [
-            'TYPO3\\Beautyofcode\\' => 'Classes',
+            'FelixNagel\\Beautyofcode\\' => 'Classes',
         ],
     ],
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Configuration\Flexform;
+namespace FelixNagel\Beautyofcode\Configuration\Flexform;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -15,7 +15,7 @@ namespace TYPO3\Beautyofcode\Configuration\Flexform;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\Beautyofcode\Highlighter\ConfigurationInterface;
+use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
@@ -43,7 +43,7 @@ class LanguageItems
     /**
      * ConfigurationInterface.
      *
-     * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
      */
     protected $highlighterConfiguration;
 
@@ -93,7 +93,7 @@ class LanguageItems
     {
         if (is_null($configuration)) {
             $configuration = $this->objectManager->get(
-                \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface::class,
+                \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface::class,
                 $this->contentElementPid
             );
         }
@@ -221,11 +221,11 @@ class LanguageItems
      *
      * @param int $pid PID of the page
      *
-     * @return \TYPO3\Beautyofcode\Service\SettingsService
+     * @return \FelixNagel\Beautyofcode\Service\SettingsService
      */
     public function getSettingsService($pid = 0)
     {
-        return $this->objectManager->get(\TYPO3\Beautyofcode\Service\SettingsService::class, $pid);
+        return $this->objectManager->get(\FelixNagel\Beautyofcode\Service\SettingsService::class, $pid);
     }
 
     /**

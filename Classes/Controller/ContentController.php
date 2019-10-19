@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Controller;
+namespace FelixNagel\Beautyofcode\Controller;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -28,17 +28,17 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * FlexformRepository.
      *
-     * @var \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository
+     * @var \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository
      */
     protected $flexformRepository;
 
     /**
      * InjectFlexformRepository.
      *
-     * @param \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
+     * @param \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
      */
     public function injectFlexformRepository(
-        \TYPO3\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
+        \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
     ) {
         $this->flexformRepository = $flexformRepository;
     }

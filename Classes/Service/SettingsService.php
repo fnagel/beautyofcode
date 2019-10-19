@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Service;
+namespace FelixNagel\Beautyofcode\Service;
 
 /*
  * This file is part of the TYPO3 CMS project.

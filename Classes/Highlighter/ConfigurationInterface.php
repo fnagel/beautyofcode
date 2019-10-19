@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Highlighter;
+namespace FelixNagel\Beautyofcode\Highlighter;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -68,9 +68,9 @@ interface ConfigurationInterface
     /**
      * GetClassAttributeString.
      *
-     * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     * @param \FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform Flexform
      *
      * @return string
      */
-    public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform);
+    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform);
 }

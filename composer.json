@@ -1,5 +1,5 @@
 {
-  "name": "typo3-ter/beautyofcode",
+  "name": "felixnagel/beautyofcode",
   "type": "typo3-cms-extension",
   "description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
   "keywords": [
@@ -37,12 +37,12 @@
   },
   "autoload": {
     "psr-4": {
-      "TYPO3\\Beautyofcode\\": "Classes"
+      "FelixNagel\\Beautyofcode\\": "Classes"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "TYPO3\\Beautyofcode\\Tests\\": "Tests/",
+      "FelixNagel\\Beautyofcode\\Tests\\": "Tests/",
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/Web/typo3/sysext/core/Tests/"
     },
     "files": [

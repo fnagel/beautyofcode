@@ -20,11 +20,21 @@ This guide does not covering extending via PHP (aka XCLASS or Hooks) – you nee
 
 What you need to know:
 
-- Additional text area for URLs and reference files
+- Additional input field for URLs or reference files
 - Added support for TYPO3 9.x
 - Removed support for TYPO3 8.x
 - Removed support for PHP 5.x
 - Updated Prism to 1.17.1
+- Changed namespace to `FelixNagel`
+- Extension is now available on Packagist
+
+How to upgrade
+""""""""""""""
+
+- Adjust your class auto loading or class overwrites to new namespace / composer package name (if needed for your setup)
+- Use "Clear all caches including PHP opcode cache" and "Dump Autoload Information" in the install tool (if needed for your setup)
+- Adjust VH namespace in your overwrite templates
+- Clear all caches
 
 
 3.2 to 3.3

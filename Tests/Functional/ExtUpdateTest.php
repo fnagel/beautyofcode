@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Functional;
+namespace FelixNagel\Beautyofcode\Tests\Functional;
 
 /***************************************************************
  *  Copyright notice

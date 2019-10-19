@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
+namespace FelixNagel\Beautyofcode\ViewHelpers\PageRenderer;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -20,7 +20,7 @@ namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class AddCssFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+class AddCssFileViewHelper extends \FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
      * Initialize arguments.

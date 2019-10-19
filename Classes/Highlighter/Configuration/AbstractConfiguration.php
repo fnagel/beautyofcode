@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Highlighter\Configuration;
+namespace FelixNagel\Beautyofcode\Highlighter\Configuration;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -20,7 +20,7 @@ namespace TYPO3\Beautyofcode\Highlighter\Configuration;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-abstract class AbstractConfiguration implements \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+abstract class AbstractConfiguration implements \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
 {
     /**
      * Settings aray.

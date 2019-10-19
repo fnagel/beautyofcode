@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Form\Element;
+namespace FelixNagel\Beautyofcode\Form\Element;
 
 /*
  * This file is part of the TYPO3 CMS project.

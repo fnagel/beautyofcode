@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\ViewHelpers\PageRenderer;
+namespace FelixNagel\Beautyofcode\ViewHelpers\PageRenderer;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -24,7 +24,7 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @author (c) 2014 Felix Nagel <info@felixnagel.com>
  */
-class AddJsFooterFileViewHelper extends \TYPO3\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+class AddJsFooterFileViewHelper extends \FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
 {
     /**
      * Initialize arguments.

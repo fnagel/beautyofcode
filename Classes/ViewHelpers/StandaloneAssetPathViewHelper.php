@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\ViewHelpers;
+namespace FelixNagel\Beautyofcode\ViewHelpers;
 
 /*
  * This file is part of the TYPO3 CMS project.

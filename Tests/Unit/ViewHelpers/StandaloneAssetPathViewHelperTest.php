@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Tests\Unit\ViewHelpers;
+namespace FelixNagel\Beautyofcode\Tests\Unit\ViewHelpers;
 
 /***************************************************************
  * Copyright notice
@@ -43,7 +43,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()
     {
-        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
@@ -55,7 +55,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet()
     {
-        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
@@ -69,7 +69,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet()
     {
-        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'styles']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
@@ -83,7 +83,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet()
     {
-        $viewHelper = new \TYPO3\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
         $viewHelper->setArguments([
             'baseUrl' => '/typo3conf/ext/beautyofcode/',
             'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/',

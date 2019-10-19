@@ -1,6 +1,6 @@
 <?php
 
-namespace TYPO3\Beautyofcode\Highlighter;
+namespace FelixNagel\Beautyofcode\Highlighter;
 
 /*
  * This file is part of the TYPO3 CMS project.
@@ -41,7 +41,7 @@ class Configuration implements ConfigurationInterface
     /**
      * ConfigurationInterface.
      *
-     * @var \TYPO3\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
      */
     protected $configuration;
 
@@ -76,13 +76,13 @@ class Configuration implements ConfigurationInterface
     public function initializeObject()
     {
         $settingsService = $this->objectManager->get(
-            \TYPO3\Beautyofcode\Service\SettingsService::class,
+            \FelixNagel\Beautyofcode\Service\SettingsService::class,
             $this->pid
         );
         $this->settings = $settingsService->getTypoScriptSettings();
 
         $this->configuration = $this->objectManager->get(
-            'TYPO3\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
+            'FelixNagel\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
             $this->settings
         );
     }
@@ -148,11 +148,11 @@ class Configuration implements ConfigurationInterface
     /**
      * GetClassAttributeString.
      *
-     * @param \TYPO3\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     * @param \FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform Flexform
      *
      * @return string
      */
-    public function getClassAttributeString(\TYPO3\Beautyofcode\Domain\Model\Flexform $flexform)
+    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform)
     {
         return $this->configuration->getClassAttributeString($flexform);
     }

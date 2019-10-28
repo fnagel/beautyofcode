@@ -18,6 +18,8 @@ This guide does not covering extending via PHP (aka XCLASS or Hooks) – you nee
 3.x to 4.0
 ^^^^^^^^^^
 
+_Thanks to Sebastian Fischer for all the work on this release!_
+
 What you need to know:
 
 - Additional input field for URLs or reference files

@@ -22,7 +22,7 @@
       "role": "Project Co-Leader, Developer"
     }
   ],
-  "license": "GP-2.0+",
+  "license": "GPL-2.0+",
   "require": {
     "php": ">=7.0,<7.3",
     "typo3/cms-core": "^9.0"

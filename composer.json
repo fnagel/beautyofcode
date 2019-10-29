@@ -9,7 +9,12 @@
     "prism",
     "syntaxhighlighter"
   ],
-  "homepage": "https://github.com/fnagel/beautyofcode",
+  "homepage": "https://extensions.typo3.org/extension/beautyofcode/",
+  "support": {
+    "issues": "https://github.com/fnagel/beautyofcode/issues",
+    "docs": "https://docs.typo3.org/typo3cms/extensions/beautyofcode/",
+    "source": "https://github.com/fnagel/beautyofcode"
+  },
   "authors": [
     {
       "name": "Felix Nagel",

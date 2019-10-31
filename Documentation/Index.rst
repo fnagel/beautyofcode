@@ -11,44 +11,42 @@
 beautyOfCode
 ============
 
-.. only:: html
+:Classification:
+  beautyofcode
 
-   :Classification:
-      beautyofcode
+:Version:
+  |release|
 
-   :Version:
-      |release|
+:Language:
+  en
 
-   :Language:
-      en
+:Description:
+  Manual covering TYPO3 extension beautyofcode
 
-   :Description:
-      Manual covering TYPO3 extension beautyofcode
+:Keywords:
+  syntax highlighting, jquery, javascript, prism, syntaxhighlighter
 
-   :Keywords:
-      syntax highlighting, jquery, javascript, prism, syntaxhighlighter
+:Copyright:
+  2019
 
-   :Copyright:
-      2019
+:Author:
+  Felix Nagel, Thomas Juhnke
 
-   :Author:
-      Felix Nagel, Thomas Juhnke
+:Email:
+  info@felixnagel.com, typo3@van-tomas.de
 
-   :Email:
-      info@felixnagel.com, typo3@van-tomas.de
+:License:
+  This document is published under the Open Content License
+  available from http://www.opencontent.org/opl.shtml
 
-   :License:
-      This document is published under the Open Content License
-      available from http://www.opencontent.org/opl.shtml
+:Rendered:
+  |today|
 
-   :Rendered:
-      |today|
-
-   The content of this document is related to TYPO3,
-   a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
+The content of this document is related to TYPO3,
+a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
 
 
-   **Table of Contents**
+**Table of Contents**
 
 .. toctree::
    :maxdepth: 5

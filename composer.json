@@ -1,7 +1,7 @@
 {
   "name": "felixnagel/beautyofcode",
   "type": "typo3-cms-extension",
-  "description": "Provides state-of-the-art syntax highlighting by using JavaScript.",
+  "description": "This TYPO3 CMS extension provides JavaScript based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism.",
   "keywords": [
     "TYPO3",
     "extension",

@@ -41,9 +41,9 @@ The newly added TypoScript brush is based upon a `user language for Notepad++
 
 Prism
 ^^^^^
-AppleScript, Actionscript 3, Bash, C, C-Like, Coffeescript, C++, C#, CSS, Diff, Erlang, Gherkin, Git, Go, Groovy, HTTP,
-Java, JavaScript, Less, Markdown, Markup (HTML/XML, etc.), PHP, Power-Shell, Python, Ruby, Sass, Scala, SCSS, SQL, Twig,
-TypoScript and Yaml.
+ActionScript 3, AppleScript, ApacheConf, Bash, C, C-Like, Coffeescript, C++, C#, CSS, Diff, Erlang, Gherkin, Git, Go,
+Groovy, HTTP, Java, JavaScript, Less, Markdown, Markup (HTML/XML, etc.), PHP, Power-Shell, Python, Ruby, Sass, Scala,
+SCSS, SQL, Twig, TypoScript and Yaml.
 
 .. _features:
 

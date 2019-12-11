@@ -37,4 +37,4 @@ call_user_func(function ($packageKey) {
         'priority' => '70',
         'class' => \FelixNagel\Beautyofcode\Form\Element\T3editorElement::class,
     ];
-}, $_EXTKEY);
+}, 'beautyofcode');

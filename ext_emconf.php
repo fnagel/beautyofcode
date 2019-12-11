@@ -17,7 +17,6 @@ $EM_CONF[$_EXTKEY] = [
     'version' => '4.0.1-dev',
     'state' => 'stable',
     'uploadfolder' => 0,
-    'createDirs' => '',
     'modify_tables' => '',
     'clearCacheOnLoad' => 0,
     'lockType' => '',

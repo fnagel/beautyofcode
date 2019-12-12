@@ -2,6 +2,8 @@
 
 namespace FelixNagel\Beautyofcode\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
+
 /**
  * This file is part of the "beautyofcode" Extension for TYPO3 CMS.
  *
@@ -19,8 +21,8 @@ class GeneralUtility
     /**
      * Resolves a path prefixed with FILE: and EXT:.
      *
-     * If the path can successfully be resolved to an internal (relative to PATH_site)
-     * path, the PATH_site part is removed and the resulting path is returned.
+     * If the path can successfully be resolved to an internal (relative to PATH_site / publicPath)
+     * path, the PATH_site / publicPath part is removed and the resulting path is returned.
      * If its an external path, the input parameter is returned unchanged.
      *
      * @param string $dir Path to directory
@@ -40,7 +42,9 @@ class GeneralUtility
 
         if ($isExtensionNotation || $isFileNotation) {
             $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
-            $absolutePath = is_null($absolutePath) ? '' : substr($absolutePath, strlen(PATH_site));
+            $absolutePath = is_null($absolutePath) ? '' : substr(
+                $absolutePath, strlen(Environment::getPublicPath() . '/')
+            );
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;
         }

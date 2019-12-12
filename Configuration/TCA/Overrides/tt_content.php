@@ -7,8 +7,9 @@ $packageKey = 'beautyofcode';
 $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
     'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
     'beautyofcode_contentrenderer',
-    'content-special-html',
+    'extensions-beautyofcode',
 ];
+$GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['beautyofcode_contentrenderer'] = 'extensions-beautyofcode';
 
 $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,

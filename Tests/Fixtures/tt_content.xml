@@ -4,9 +4,7 @@
         <uid>1</uid>
         <pid>1</pid>
         <t3ver_oid>0</t3ver_oid>
-        <t3ver_id>0</t3ver_id>
         <t3ver_wsid>0</t3ver_wsid>
-        <t3ver_label></t3ver_label>
         <t3ver_state>0</t3ver_state>
         <t3ver_stage>0</t3ver_stage>
         <t3ver_count>0</t3ver_count>
@@ -91,8 +89,6 @@
         <assets>0</assets>
         <header_position></header_position>
         <frame_class>default</frame_class>
-        <spaceBefore>0</spaceBefore>
-        <spaceAfter>0</spaceAfter>
         <space_before_class></space_before_class>
         <space_after_class></space_after_class>
         <l10n_source>0</l10n_source>

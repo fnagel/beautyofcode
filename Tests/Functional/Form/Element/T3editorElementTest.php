@@ -38,7 +38,7 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Functional\Functi
     /**
      * SetUp.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

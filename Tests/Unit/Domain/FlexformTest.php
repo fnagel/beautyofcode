@@ -33,7 +33,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $flexform;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
@@ -59,7 +59,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->flexform->setCCollapse('');
 
-        $this->assertNotContains('collapse', $this->flexform->getClassAttributeString());
+        $this->assertStringNotContainsString('collapse', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -73,7 +73,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $this->flexform->setCGutter('auto');
 
-        $this->assertNotContains('gutter', $this->flexform->getClassAttributeString());
+        $this->assertStringNotContainsString('gutter', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -85,7 +85,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ->expects($this->once())
             ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
 
-        $this->assertContains('highlight: [', $this->flexform->getClassAttributeString());
+        $this->assertStringContainsString('highlight: [', $this->flexform->getClassAttributeString());
     }
 
     /**
@@ -97,7 +97,7 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             ->expects($this->once())
             ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
 
-        $this->assertContains('highlight: [1,2,3,8]', $this->flexform->getClassAttributeString());
+        $this->assertStringContainsString('highlight: [1,2,3,8]', $this->flexform->getClassAttributeString());
     }
 
     /**

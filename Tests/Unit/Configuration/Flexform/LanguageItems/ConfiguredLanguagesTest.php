@@ -41,7 +41,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
         ],
     ];
 
-    public function setUp()
+    public function setUp(): void
     {
         /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
         $settingsServiceMock = $this->createMock(SettingsService::class);
@@ -58,7 +58,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
 
         $cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
         $cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend(
-            'cache_beautyofcode',
+            'beautyofcode',
             $cacheBackendMock
         );
         /** @var CacheManager|\PHPUnit_Framework_MockObject_MockObject $cacheManagerMock */

@@ -20,7 +20,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
 {
     /**
      * @test
-     * @expectedException \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     * @expectedException \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
      * @expectedExceptionMessage The type argument must be one of scripts, styles.
      */
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()

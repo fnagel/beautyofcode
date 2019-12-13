@@ -33,7 +33,7 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
      */
     protected $queryBuilder;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->importDataSet('EXT:beautyofcode/Tests/Fixtures/tt_content.xml');
@@ -47,7 +47,7 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
             ->getMock();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         unset($this->queryBuilder);
     }

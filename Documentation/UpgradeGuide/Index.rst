@@ -15,6 +15,22 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
 
 
+4.x to 4.1
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 10.2
+- New extension icon
+- Minor fixes and clean up
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
+
 3.x to 4.0
 ^^^^^^^^^^
 

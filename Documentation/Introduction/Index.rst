@@ -121,6 +121,6 @@ See highlighter project website for possible frontend look.
 .. _prism syntax highlighter: http://prismjs.com/
 .. _SyntaxhighlighterOnlineHelpBrushes: http://alexgorbatchev.com/wiki/SyntaxHighlighter:Brushes
 .. _TypoScriptUserLanguageNotepadPP: http://sourceforge.net/tracker/?func=detail&aid=2839067&group_id=95717&atid=612385
-.. _LiveDemo: http://FelixNagel.com/Blog/
-.. _LiveDemoContact: http://www.felixnagel.com/contact
+.. _LiveDemo: https://www.felixnagel.com/blog/
+.. _LiveDemoContact: https://www.felixnagel.com/contact/
 .. _LazyLoading: http://en.wikipedia.org/wiki/Lazy_loading

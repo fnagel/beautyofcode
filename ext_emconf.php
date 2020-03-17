@@ -14,7 +14,7 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'beautyOfCode Syntax Highlighter',
     'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism. t3editor enabled.',
     'category' => 'plugin',
-    'version' => '4.1.1-dev',
+    'version' => '4.1.1',
     'state' => 'stable',
     'uploadfolder' => 0,
     'modify_tables' => '',
@@ -25,7 +25,7 @@ $EM_CONF[$_EXTKEY] = [
     'constraints' => [
         'depends' => [
             'php' => '7.0.0-7.2.99',
-            'typo3' => '9.0.0-10.2.99',
+            'typo3' => '9.0.0-10.3.99',
         ],
         'conflicts' => [],
         'suggests' => [

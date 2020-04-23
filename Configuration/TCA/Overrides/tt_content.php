@@ -2,8 +2,6 @@
 
 defined('TYPO3_MODE') or die();
 
-$packageKey = 'beautyofcode';
-
 $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
     'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
     'beautyofcode_contentrenderer',
@@ -46,6 +44,6 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
 \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
     '*',
-    'FILE:EXT:' . $packageKey.  '/Configuration/Flexform/ContentRenderer.xml',
+    'FILE:EXT:beautyofcode/Configuration/Flexform/ContentRenderer.xml',
     'beautyofcode_contentrenderer'
 );

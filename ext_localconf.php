@@ -2,15 +2,20 @@
 
 defined('TYPO3_MODE') or die();
 
-call_user_func(function ($packageKey) {
+call_user_func(function () {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'FelixNagel.'.$packageKey,
+        'FelixNagel.beautyofcode',
         'ContentRenderer',
         [
             'Content' => 'render',
         ],
         [],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+    );
+
+    // Add TSconfig
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+        '@import "EXT:beautyofcode/Configuration/TSconfig/Page/ContentElementWizard.tsconfig"'
     );
 
     // BE preview
@@ -37,4 +42,4 @@ call_user_func(function ($packageKey) {
         'priority' => '70',
         'class' => \FelixNagel\Beautyofcode\Form\Element\T3editorElement::class,
     ];
-}, 'beautyofcode');
+});

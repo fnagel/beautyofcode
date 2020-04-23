@@ -1,0 +1,17 @@
+plugin.tx_beautyofcode.settings {
+
+    # cat=beautyofcode/enable/1; type=boolean; label=Template - Show label: If set to false the label within the template is hidden.
+    showLabel = 1
+
+    # cat=beautyofcode//1; type=string; label=Library implementation: do not change! Select the proper static template instead.
+    library = Prism
+
+    # cat=beautyofcode//2; type=string; label=Loaded programming languages: Define which programming languages should be available. Less is more: every brush is loaded a single js file. Note that some of these languages definitions depend on each other. CSV as stated in the documentation.
+    brushes = clike,javascript,csharp,php,markup-templating,markup
+
+    # cat=beautyofcode//3; type=string; label=Theme: One out of: coy, fark, funky, okaidia, tomorrow, twilight. Empty string for default theme.
+    theme =
+
+    # cat=beautyofcode//4; type=boolean; label=Gutter: Show or hide gutter. Helps user to recognize correct line with numbers.
+    defaults.gutter = 1
+}

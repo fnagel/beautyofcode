@@ -1,0 +1,25 @@
+plugin.tx_beautyofcode {
+    settings {
+        showLabel = {$plugin.tx_beautyofcode.settings.showLabel}
+
+        library = {$plugin.tx_beautyofcode.settings.library}
+
+        brushes = {$plugin.tx_beautyofcode.settings.brushes}
+        theme = {$plugin.tx_beautyofcode.settings.theme}
+
+        defaults {
+            gutter = {$plugin.tx_beautyofcode.settings.defaults.gutter}
+            # collapse is not available for Prism
+        }
+    }
+
+    view {
+        layoutRootPaths.0 = EXT:beautyofcode/Resources/Private/Layouts/
+        templateRootPaths.0 = EXT:beautyofcode/Resources/Private/Templates/
+        partialRootPaths.0 = EXT:beautyofcode/Resources/Private/Partials/
+    }
+
+    _CSS_DEFAULT_STYLE (
+        .tx_beautyofcode pre { overflow: auto; }
+    )
+}

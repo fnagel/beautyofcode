@@ -13,6 +13,10 @@ call_user_func(function ($packageKey) {
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
+    \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $packageKey . '/Configuration/TypoScript/pageTsConfig.ts">'
+    );
+
     // BE preview
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
         \FelixNagel\Beautyofcode\Hooks\PageLayoutViewHooks::class;

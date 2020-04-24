@@ -1,4 +1,4 @@
-﻿.. ==================================================
+﻿﻿.. ==================================================
 .. FOR YOUR INFORMATION
 .. --------------------------------------------------
 .. -*- coding: utf-8 -*- with BOM.
@@ -59,6 +59,7 @@ Features
 - Preview and t3editor support in BE
 - Use HTML templating
 - Different visual styles
+- Show sourcecode from a local file or an external URL
 
 \* unavailable if using prism
 

@@ -15,6 +15,25 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
 
 
+4.1 to 4.2
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 10.4 LTS
+- Fix TSconfig inclusion (thanks to @tritum and @tritumBj)
+- Rename TS and TSconfig files to newer file extensions
+- Move TSconfig file to correct folder
+- Minor fixes and clean up
+
+
+How to upgrade
+""""""""""""""
+
+-Adjust your TS / TSconfig file includes if needed
+- Clear all caches
+
+
 4.x to 4.1
 ^^^^^^^^^^
 

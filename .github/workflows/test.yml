@@ -1,0 +1,38 @@
+name: Run tests
+
+on:
+  push:
+    branches: [ github-actions ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-versions: [7.2, 7.3, 7.4]
+
+    name: PHP ${{ matrix.php-versions }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: intl, mbstring, sqlite
+
+      - name: Install composer dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run PHP lint
+        run: composer run-script test-php-lint
+
+      - name: Run PHP CS
+        run: composer run-script test-php-cs-fixer
+
+      - name: Run PHP MD
+        run: composer run-script test-php-md
+
+      - name: Run PHPUnit
+        run: composer run-script test-phpunit

@@ -43,7 +43,8 @@ class GeneralUtility
         if ($isExtensionNotation || $isFileNotation) {
             $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
             $absolutePath = is_null($absolutePath) ? '' : substr(
-                $absolutePath, strlen(Environment::getPublicPath() . '/')
+                $absolutePath,
+                strlen(Environment::getPublicPath() . '/')
             );
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;

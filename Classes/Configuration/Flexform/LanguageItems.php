@@ -99,6 +99,8 @@ class LanguageItems
      * This function is called from the flexform and
      * adds available programming languages to the select options.
      *
+     * @SuppressWarnings("CyclomaticComplexity")
+     *
      * @param array $config flexform data
      *
      * @return array

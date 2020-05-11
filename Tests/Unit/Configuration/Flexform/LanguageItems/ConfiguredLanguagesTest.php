@@ -29,7 +29,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
     protected $languageItem;
 
     protected $flexFormData = [
-        'row' => [
+        'flexParentDatabaseRow' => [
             'uid' => 1,
             'pid' => 1,
         ],

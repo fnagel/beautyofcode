@@ -116,8 +116,8 @@ class LanguageItems
             // make brushes list to flexform selectbox item array
             $optionList = [];
 
-            if (isset($config['row']['pid']) && is_numeric($config['row']['pid'])) {
-                $this->contentElementPid = (int) $config['row']['pid'];
+            if (isset($config['flexParentDatabaseRow']['pid']) && is_numeric($config['flexParentDatabaseRow']['pid'])) {
+                $this->contentElementPid = (int) $config['flexParentDatabaseRow']['pid'];
             }
 
             if ($this->contentElementPid === 0 && isset($config['row']['uid']) && is_numeric($config['row']['uid'])) {

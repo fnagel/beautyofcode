@@ -22,6 +22,15 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: intl, mbstring, pdo_sqlite
 
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-${{ hashFiles('composer.json') }}
+          restore-keys: |
+            php-${{ matrix.php-versions }}-typo3-${{ matrix.typo3-versions }}-composer-
+            php-${{ matrix.php-versions }}-typo3-
+
       - name: Install composer dependencies
         run: composer require typo3/minimal "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
 

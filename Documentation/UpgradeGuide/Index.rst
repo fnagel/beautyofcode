@@ -21,6 +21,8 @@ This guide does not covering extending via PHP (aka XCLASS or Hooks) – you nee
 What you need to know:
 
 - Added support for TYPO3 10.4 LTS
+- Support for PHP 7.3 and 7.4
+- Automated CGL and unit tests using Github Actions
 - Fix TSconfig inclusion (thanks to @tritum and @tritumBj)
 - Rename TS and TSconfig files to newer file extensions
 - Move TSconfig file to correct folder
@@ -30,7 +32,7 @@ What you need to know:
 How to upgrade
 """"""""""""""
 
--Adjust your TS / TSconfig file includes if needed
+- Adjust your TS / TSconfig file includes if needed
 - Clear all caches
 
 

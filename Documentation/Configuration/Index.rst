@@ -109,7 +109,7 @@ available. Less is more: every brush is lazy loaded a single js file.
 
 **SyntaxHighlighter:** Add a separated list out of: AS3, Bash, ColdFusion, Cpp,
 CSharp, Css, Delphi, Diff, Erlang, Groovy, Java, JavaFX, JScript, Perl, Php,
-PowerShell, Python, Ruby, Sass, Scala, Typoscript, Sql, Vb, Xml.
+PowerShell, Python, Ruby, Sass, Scala, Typoscript, Sql, Vb, Xml, Yaml.
 
 **Prism:** Add a separated list out of: actionscript, applescript, bash, c, clike,
 coffeescript, cpp, csharp, css, css-extras, diff, erlang, gherkin, git, go, groovy,

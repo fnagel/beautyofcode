@@ -70,12 +70,13 @@ class SyntaxHighlighter extends AbstractConfiguration
         'PowerShell' => ['powershell', 'Power-Shell'],
         'Python' => ['python', 'Python'],
         'Ruby' => ['ruby', 'Ruby on Rails'],
-        'Sass' => ['sass', 'Sass'],
+        'Sass' => ['sass', 'SASS / SCSS'],
         'Scala' => ['scala', 'Scala'],
         'Sql' => ['sql', 'SQL / MySQL'],
         'Typoscript' => ['typoscript', 'Typoscript'],
         'Vb' => ['vbnet', 'Virtual Basic / .Net'],
         'Xml' => ['xml', 'XML / XSLT / XHTML / HTML'],
+        'Yaml' => ['yaml', 'YAML'],
     ];
 
     /**

@@ -77,7 +77,7 @@ class Prism extends AbstractConfiguration
         'sql' => ['sql', 'SQL'],
         'twig' => ['twig', 'Twig'],
         'typoscript' => ['typoscript', 'TypoScript'],
-        'yaml' => ['yaml', 'Yaml'],
+        'yaml' => ['yaml', 'YAML'],
     ];
 
     /**

@@ -24,11 +24,11 @@ class FlexformRepository
     protected $flexformService;
 
     /**
-     * DataMapper.
+     * ObjectManager.
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper
+     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
      */
-    protected $dataMapper;
+    protected $objectManager;
 
     /**
      * Injects the flexform service and populates flexform values from `pi_flexform`.
@@ -41,14 +41,15 @@ class FlexformRepository
     }
 
     /**
-     * InjectDataMapper.
+     * InjectObjetManager.
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper DataMapper
+     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager ObjectManager
      */
-    public function injectDataMapper(\TYPO3\CMS\Extbase\Persistence\Generic\Mapper\DataMapper $dataMapper)
+    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
     {
-        $this->dataMapper = $dataMapper;
+        $this->objectManager = $objectManager;
     }
+
 
     /**
      * ReconstituteByContentObject.
@@ -63,18 +64,10 @@ class FlexformRepository
 
         $flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
-        $flexformValues = $this->getDataMapperToTCACompatiblePropertyArray($flexformValues);
-        // adds `identity` to the plugin configuration
-        $flexformValues['uid'] = $contentObject->data['uid'];
+        $flexform = $this->objectManager->getEmptyObject(\FelixNagel\Beautyofcode\Domain\Model\Flexform::class);
+        $flexform->initializeObject($flexformValues);
 
-        $flexform = $this
-            ->dataMapper
-            ->map(
-                \FelixNagel\Beautyofcode\Domain\Model\Flexform::class,
-                [$flexformValues] // nested array as ::map() expects multiple rows
-            );
-
-        return $flexform[0];
+        return $flexform;
     }
 
     /**

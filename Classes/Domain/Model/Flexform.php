@@ -82,6 +82,28 @@ class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
     protected $languageFallback = 'plain';
 
     /**
+     * Initialize object from the flexForm datas
+     *
+     * @param array $flexformValues parsed values
+     * sample :
+     * cLabel:""
+     * cLang:"cpp"
+     * cHighlight:""
+     * cCollapse:"auto"
+     * cGutter:"auto"
+     */
+    public function initializeObject(array $flexformValues = [])
+    {
+        $this->cLabel = $flexformValues['cLabel'] ?? $this->cLabel;
+        $this->cLang = $flexformValues['cLang'] ?? $this->cLang;
+        $this->cFile = $flexformValues['cFile'] ?? $this->cFile;
+        $this->cHighlight = $flexformValues['cHighlight'] ?? $this->cHighlight;
+        $this->cCollapse = $flexformValues['cCollapse'] ?? $this->cCollapse;
+        $this->cGutter = $flexformValues['cGutter'] ?? $this->cGutter;
+        $this->languageFallback = $flexformValues['languageFallback'] ?? $this->languageFallback;
+    }
+
+    /**
      * InjectHighlighterConfiguration.
      *
      * @param ConfigurationInterface $highlighterConfiguration ConfigurationInterface

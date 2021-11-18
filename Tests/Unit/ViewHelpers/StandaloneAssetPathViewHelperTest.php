@@ -20,11 +20,12 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
 {
     /**
      * @test
-     * @expectedException \TYPO3Fluid\Fluid\Core\ViewHelper\Exception
-     * @expectedExceptionMessage The type argument must be one of scripts, styles.
      */
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()
     {
+        $this->expectException(\TYPO3Fluid\Fluid\Core\ViewHelper\Exception::class);
+        $this->expectExceptionMessage('The type argument must be one of scripts, styles.');
+
         $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
         $viewHelper->initializeArguments();

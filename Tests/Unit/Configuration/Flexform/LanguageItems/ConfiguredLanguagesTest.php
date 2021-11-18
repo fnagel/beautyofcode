@@ -84,6 +84,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
             ->will($this->returnValue(['SQL / MySQL' => 'sql']));
 
         $this->languageItem = new \FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems();
+        // @extensionScannerIgnoreLine
         $this->languageItem->injectObjectManager($objectManagerMock);
         $this->languageItem->injectCacheManager($cacheManagerMock);
         $this->languageItem->injectHighlighterConfiguration($highlighterConfigurationMock);
@@ -123,6 +124,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
             )
             ->will($this->returnValue($settingsServiceMock));
 
+        // @extensionScannerIgnoreLine
         $this->languageItem->injectObjectManager($objectManagerMock);
 
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);

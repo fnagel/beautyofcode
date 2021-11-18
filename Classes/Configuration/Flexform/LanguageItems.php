@@ -107,6 +107,7 @@ class LanguageItems
      */
     public function getConfiguredLanguages($config)
     {
+        // @extensionScannerIgnoreLine
         $this->injectObjectManager($this->objectManager);
         $this->injectCacheManager($this->cacheManager);
 

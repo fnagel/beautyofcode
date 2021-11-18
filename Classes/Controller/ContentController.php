@@ -42,10 +42,10 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      */
     public function renderAction()
     {
-        $contentElement = $this->configurationManager->getContentObject()->data;
-        $flexform = $this->flexformRepository->reconstituteByContentObject(
-            $this->configurationManager->getContentObject()
-        );
+        // @extensionScannerIgnoreLine
+        $contentObject = $this->configurationManager->getContentObject();
+        $contentElement = $contentObject->data;
+        $flexform = $this->flexformRepository->reconstituteByContentObject($contentObject);
         $flexform->setTyposcriptDefaults($this->settings['defaults']);
 
         if (empty(trim($contentElement['bodytext'])) && !empty($flexform->getCFile())) {

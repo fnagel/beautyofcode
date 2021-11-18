@@ -69,6 +69,7 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
     {
         $extensionUpdate = new \ext_update();
 
+        // @extensionScannerIgnoreLine
         $this->assertEquals('<p>Updated plugin signature of 1 tt_content records.</p>', $extensionUpdate->main());
     }
 }

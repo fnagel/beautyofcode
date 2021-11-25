@@ -4,7 +4,7 @@ defined('TYPO3') || die();
 
 call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-        'FelixNagel.'.$packageKey,
+        $packageKey,
         'ContentRenderer',
         [
 			FelixNagel\Beautyofcode\Controller\ContentController::class => 'render',
@@ -23,16 +23,14 @@ call_user_func(function ($packageKey) {
 
     $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
     // Cache registration
-    if (!is_array($cacheConfigurations['cache_beautyofcode'])) {
-        $cacheConfigurations['cache_beautyofcode'] = [];
+    if (!array_key_exists($packageKey, $cacheConfigurations) || !is_array($cacheConfigurations[$packageKey])) {
+        $cacheConfigurations[$packageKey] = [];
     }
-    if (!isset($cacheConfigurations['cache_beautyofcode']['backend'])) {
-        $cacheConfigurations['cache_beautyofcode']['backend'] =
-            \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend::class;
+    if (!isset($cacheConfigurations[$packageKey]['backend'])) {
+        $cacheConfigurations[$packageKey]['backend'] = \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend::class;
     }
-    if (!isset($cacheConfigurations['cache_beautyofcode']['frontend'])) {
-        $cacheConfigurations['cache_beautyofcode']['frontend'] =
-            \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class;
+    if (!isset($cacheConfigurations[$packageKey]['frontend'])) {
+        $cacheConfigurations[$packageKey]['frontend'] = \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend::class;
     }
 
     // Dynamic changing of t3editor format

@@ -33,8 +33,8 @@ class GeneralUtility
     {
         $absolutePath = '';
 
-        $isExtensionNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'EXT:');
-        $isFileNotation = \TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($dir, 'FILE:');
+        $isExtensionNotation = str_starts_with($dir, 'EXT:');
+        $isFileNotation = str_starts_with($dir, 'FILE:');
 
         if ($isFileNotation) {
             $dir = substr($dir, 5);

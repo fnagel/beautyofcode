@@ -10,8 +10,8 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        php-versions: [7.2, 7.3, 7.4]
-        typo3-versions: [9.5, 10.4]
+        php-versions: [7.4, 8.0]
+        typo3-versions: [10.4, 11.5]
 
     name: PHP ${{ matrix.php-versions }} with TYPO3 ${{ matrix.typo3-versions }}
     steps:
@@ -41,7 +41,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install composer dependencies
-        run: composer require typo3/minimal "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
+        run: composer require typo3/cms-core "^${{ matrix.typo3-versions }}" --prefer-dist --no-progress --no-suggest
 
       - name: Run PHP lint
         run: composer run-script test-php-lint

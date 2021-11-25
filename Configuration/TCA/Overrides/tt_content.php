@@ -25,10 +25,9 @@ $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem
     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
 ';
 
-$configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['beautyofcode'];
-if (!is_array($configuration)) {
-    $configuration = [];
-}
+$configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+	\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+)->get('beautyofcode');
 
 if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1
     && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')

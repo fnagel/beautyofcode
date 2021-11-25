@@ -64,7 +64,7 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
     protected function determineMode()
     {
         // Fallback
-        $mode = $this->data['parameterArray']['fieldConf']['config']['format'] ?: self::T3EDITOR_MODE_DEFAULT;
+		$mode = $this->data['parameterArray']['fieldConf']['config']['format'] ?? self::T3EDITOR_MODE_DEFAULT;
 
         if (!$this->isBeautyOfCodeElement()) {
             return $mode;

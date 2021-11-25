@@ -9,6 +9,9 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use FelixNagel\Beautyofcode\Utility\GeneralUtility;
+
 /**
  * Tests the general utility class.
  *
@@ -16,7 +19,7 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Utility;
  *
  * @link http://www.van-tomas.de/
  */
-class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
+class GeneralUtilityTest extends FunctionalTestCase
 {
     /**
      * @var array
@@ -33,7 +36,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
      */
     public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile()
     {
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath(
+        $path = GeneralUtility::makeAbsolutePath(
             'EXT:beautyofcode/ext_emconf.php'
         );
 
@@ -46,7 +49,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
     public function prefixingWithFileReturnsPathSiteAbsolutePathToFile()
     {
         define('TYPO3_OS', !stristr(PHP_OS, 'darwin') && stristr(PHP_OS, 'win') ? 'WIN' : '');
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:fileadmin/test.js');
+        $path = GeneralUtility::makeAbsolutePath('FILE:fileadmin/test.js');
 
         $this->assertStringStartsWith('fileadmin/', $path);
     }
@@ -58,7 +61,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
     {
         $externalPath = 'http://www.example.org/test.js';
 
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($externalPath);
+        $path = GeneralUtility::makeAbsolutePath($externalPath);
 
         $this->assertEquals($externalPath, $path);
     }
@@ -68,7 +71,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
      */
     public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile()
     {
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
+        $path = GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
 
         $this->assertStringStartsWith('typo3conf/', $path);
     }
@@ -80,7 +83,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
     {
         $invalidPath = 'foo://bar.jpeg';
 
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidPath);
+        $path = GeneralUtility::makeAbsolutePath($invalidPath);
 
         $this->assertEquals($invalidPath, $path);
     }
@@ -92,7 +95,7 @@ class GeneralUtilityTest extends \TYPO3\TestingFramework\Core\Functional\Functio
     {
         $invalidExternalPath = 'FILE:http://example.org/test.js';
 
-        $path = \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($invalidExternalPath);
+        $path = GeneralUtility::makeAbsolutePath($invalidExternalPath);
 
         $this->assertEquals('', $path);
     }

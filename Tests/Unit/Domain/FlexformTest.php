@@ -10,6 +10,8 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\Domain;
  */
 
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
 
 /**
  * Tests the flexform domain object.
@@ -19,7 +21,7 @@ use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
  *
  * @link http://www.van-tomas.de/
  */
-class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class FlexformTest extends UnitTestCase
 {
     /**
      * ConfigurationInterface.
@@ -33,11 +35,11 @@ class FlexformTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected $flexform;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
-        $this->flexform = new \FelixNagel\Beautyofcode\Domain\Model\Flexform();
+        $this->flexform = new Flexform();
 
         $this->flexform->injectHighlighterConfiguration($this->highlighterConfigurationMock);
 

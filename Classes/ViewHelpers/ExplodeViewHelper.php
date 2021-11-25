@@ -11,13 +11,15 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Fluid view helper around GeneralUtility::trimExplode().
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExplodeViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+class ExplodeViewHelper extends AbstractViewHelper
 {
     use CompileWithContentArgumentAndRenderStatic;
 
@@ -48,10 +50,10 @@ class ExplodeViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHe
         $value = $arguments['value'];
         $delimiter = $arguments['delimiter'];
         $removeEmptyValues = $arguments['removeEmptyValues'];
-        if (true === is_null($value)) {
+        if (is_null($value)) {
             $value = $renderChildrenClosure();
         }
 
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);
+        return GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);
     }
 }

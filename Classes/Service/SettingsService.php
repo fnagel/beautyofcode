@@ -15,6 +15,8 @@ use TYPO3\CMS\Core\Utility\RootlineUtility;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
+use TYPO3\CMS\Core\Http\ApplicationType;
 
 /**
  * Provide a way to get the configuration just everywhere.
@@ -78,12 +80,12 @@ class SettingsService
     }
 
     public function injectConfigurationManager(
-        \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+        ConfigurationManagerInterface $configurationManager
     ) {
         $this->configurationManager = $configurationManager;
     }
 
-    public function injectTypoScriptService(\TYPO3\CMS\Core\TypoScript\TypoScriptService $typoScriptService)
+    public function injectTypoScriptService(TypoScriptService $typoScriptService)
     {
         $this->typoScriptService = $typoScriptService;
     }
@@ -98,7 +100,7 @@ class SettingsService
     public function getTypoScriptSettings()
     {
         if ($this->typoScriptSettings === null) {
-            if (TYPO3_MODE === 'FE') {
+            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
                 $this->typoScriptSettings = $this->configurationManager->getConfiguration(
                     ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                     $this->extensionName,

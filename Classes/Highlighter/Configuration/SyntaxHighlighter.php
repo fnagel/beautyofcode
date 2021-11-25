@@ -9,6 +9,9 @@ namespace FelixNagel\Beautyofcode\Highlighter\Configuration;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+
 /**
  * SyntaxHighlighter.
  *
@@ -89,7 +92,7 @@ class SyntaxHighlighter extends AbstractConfiguration
     {
         $brushes = [];
 
-        $configuredBrushes = \TYPO3\CMS\Core\Utility\GeneralUtility::trimExplode(
+        $configuredBrushes = GeneralUtility::trimExplode(
             ',',
             $this->settings['brushes']
         );
@@ -113,18 +116,18 @@ class SyntaxHighlighter extends AbstractConfiguration
      *
      * @return string
      */
-    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform)
+    public function getClassAttributeString(Flexform $flexform)
     {
         $configurationItems = [];
 
         $classAttributeConfigurationStack = [
-            'highlight' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
+            'highlight' => GeneralUtility::expandList($flexform->getCHighlight()),
             'gutter' => $flexform->getCGutter(),
             'collapse' => $flexform->getCCollapse(),
         ];
 
         foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-            if (true === in_array($configurationValue, ['', 'auto'])) {
+            if (in_array($configurationValue, ['', 'auto'])) {
                 continue;
             }
 

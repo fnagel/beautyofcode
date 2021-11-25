@@ -9,6 +9,12 @@ namespace FelixNagel\Beautyofcode\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Service\FlexFormService;
+use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * The repository for the plugin flexform domain model object.
  *
@@ -35,7 +41,7 @@ class FlexformRepository
      *
      * @param \TYPO3\CMS\Core\Service\FlexFormService $flexformService FlexFormService
      */
-    public function injectFlexformService(\TYPO3\CMS\Core\Service\FlexFormService $flexformService)
+    public function injectFlexformService(FlexFormService $flexformService)
     {
         $this->flexformService = $flexformService;
     }
@@ -45,7 +51,7 @@ class FlexformRepository
      *
      * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager ObjectManager
      */
-    public function injectObjectManager(\TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager)
+    public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
     }
@@ -58,13 +64,13 @@ class FlexformRepository
      *
      * @return \FelixNagel\Beautyofcode\Domain\Model\Flexform
      */
-    public function reconstituteByContentObject(\TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject)
+    public function reconstituteByContentObject(ContentObjectRenderer $contentObject)
     {
         $flexformString = $contentObject->data['pi_flexform'];
 
         $flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
-        $flexform = $this->objectManager->getEmptyObject(\FelixNagel\Beautyofcode\Domain\Model\Flexform::class);
+        $flexform = $this->objectManager->getEmptyObject(Flexform::class);
         $flexform->initializeObject($flexformValues);
 
         return $flexform;
@@ -84,7 +90,7 @@ class FlexformRepository
         $flexformValues = [];
 
         foreach ($flexformValueArray as $propertyName => $propertyValue) {
-            $propertyNameLowerCaseUnderscored = \TYPO3\CMS\Core\Utility\GeneralUtility::camelCaseToLowerCaseUnderscored(
+            $propertyNameLowerCaseUnderscored = GeneralUtility::camelCaseToLowerCaseUnderscored(
                 $propertyName
             );
 

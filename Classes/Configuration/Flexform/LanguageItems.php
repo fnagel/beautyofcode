@@ -13,6 +13,10 @@ use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
+use FelixNagel\Beautyofcode\Service\SettingsService;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * Function to add select options dynamically (loaded in flexform).
@@ -58,7 +62,7 @@ class LanguageItems
     public function injectObjectManager(ObjectManagerInterface $objectManager = null)
     {
         if (is_null($objectManager)) {
-            $objectManager = GeneralUtility::makeInstance(\TYPO3\CMS\Extbase\Object\ObjectManager::class);
+            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
         }
 
         $this->objectManager = $objectManager;
@@ -72,7 +76,7 @@ class LanguageItems
     public function injectCacheManager(CacheManager $cacheManager = null)
     {
         if (is_null($cacheManager)) {
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
         }
 
         $this->cacheManager = $cacheManager;
@@ -87,7 +91,7 @@ class LanguageItems
     {
         if (is_null($configuration)) {
             $configuration = $this->objectManager->get(
-                \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface::class,
+                ConfigurationInterface::class,
                 $this->contentElementPid
             );
         }
@@ -134,6 +138,7 @@ class LanguageItems
                 if (strtolower($brush) === 'plain') {
                     continue;
                 }
+                
                 // skip unknown brushes
                 if (!$this->highlighterConfiguration->hasBrushIdentifier($brush)) {
                     continue;
@@ -222,7 +227,7 @@ class LanguageItems
      */
     public function getSettingsService($pid = 0)
     {
-        return $this->objectManager->get(\FelixNagel\Beautyofcode\Service\SettingsService::class, $pid);
+        return $this->objectManager->get(SettingsService::class, $pid);
     }
 
     /**
@@ -235,10 +240,10 @@ class LanguageItems
         return $this->cacheManager->getCache('cache_beautyofcode');
     }
 
-    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        return GeneralUtility::makeInstance(
+            ConnectionPool::class
         )->getQueryBuilderForTable($table);
     }
 }

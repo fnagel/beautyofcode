@@ -1,13 +1,13 @@
 <?php
 
-defined('TYPO3_MODE') or die();
+defined('TYPO3') || die();
 
 call_user_func(function ($packageKey) {
     \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
         'FelixNagel.'.$packageKey,
         'ContentRenderer',
         [
-            'Content' => 'render',
+			FelixNagel\Beautyofcode\Controller\ContentController::class => 'render',
         ],
         [],
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT

@@ -9,12 +9,14 @@ namespace FelixNagel\Beautyofcode\ViewHelpers\PageRenderer;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper;
+
 /**
  * Adds a css file resources to the page.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class AddCssFileViewHelper extends \FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+class AddCssFileViewHelper extends AbstractPageRendererViewHelper
 {
     /**
      * Initialize arguments.

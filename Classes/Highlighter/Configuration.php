@@ -10,6 +10,8 @@ namespace FelixNagel\Beautyofcode\Highlighter;
  */
 
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use FelixNagel\Beautyofcode\Service\SettingsService;
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
 
 /**
  * Configuration.
@@ -30,7 +32,7 @@ class Configuration implements ConfigurationInterface
      *
      * @var array
      */
-    protected $settings;
+    protected $settings = [];
 
     /**
      * ConfigurationInterface.
@@ -70,7 +72,7 @@ class Configuration implements ConfigurationInterface
     public function initializeObject()
     {
         $settingsService = $this->objectManager->get(
-            \FelixNagel\Beautyofcode\Service\SettingsService::class,
+            SettingsService::class,
             $this->pid
         );
         $this->settings = $settingsService->getTypoScriptSettings();
@@ -146,7 +148,7 @@ class Configuration implements ConfigurationInterface
      *
      * @return string
      */
-    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform)
+    public function getClassAttributeString(Flexform $flexform)
     {
         return $this->configuration->getClassAttributeString($flexform);
     }

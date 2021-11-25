@@ -11,13 +11,15 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
 
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use FelixNagel\Beautyofcode\Utility\GeneralUtility;
 
 /**
  * MakeAbsoluteViewHelper.
  *
  * @author Felix Nagel <info@felixnagel.com>
  */
-class MakeAbsoluteViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+class MakeAbsoluteViewHelper extends AbstractViewHelper
 {
     use CompileWithContentArgumentAndRenderStatic;
 
@@ -44,6 +46,6 @@ class MakeAbsoluteViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractV
         RenderingContextInterface $renderingContext
     ) {
         $url = $arguments['url'];
-        return \FelixNagel\Beautyofcode\Utility\GeneralUtility::makeAbsolutePath($url);
+        return GeneralUtility::makeAbsolutePath($url);
     }
 }

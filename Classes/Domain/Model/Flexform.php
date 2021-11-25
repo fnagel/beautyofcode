@@ -10,13 +10,14 @@ namespace FelixNagel\Beautyofcode\Domain\Model;
  */
 
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
 
 /**
  * Domain model object for the flexform configuration of a plugin instance.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class Flexform extends \TYPO3\CMS\Extbase\DomainObject\AbstractValueObject
+class Flexform extends AbstractValueObject
 {
     /**
      * ConfigurationInterface.

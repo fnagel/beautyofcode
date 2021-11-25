@@ -9,26 +9,29 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+
 /**
  * VH for the standalone scripts/styles asset paths.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class StandaloneAssetPathViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper
+class StandaloneAssetPathViewHelper extends AbstractViewHelper
 {
     /**
      * Default base url.
      *
      * @var string
      */
-    const DEFAULT_BASE_URL = 'http://alexgorbatchev.com/';
+    public const DEFAULT_BASE_URL = 'http://alexgorbatchev.com/';
 
     /**
      * Default resource path prefix.
      *
      * @var string
      */
-    const DEFAULT_RESOURCE_PATH_PREFIX = 'pub/sh/current/';
+    public const DEFAULT_RESOURCE_PATH_PREFIX = 'pub/sh/current/';
 
     /**
      * Valid resource types.
@@ -70,7 +73,7 @@ class StandaloneAssetPathViewHelper extends \TYPO3Fluid\Fluid\Core\ViewHelper\Ab
         }
 
         if (!in_array($this->arguments['type'], $this->validTypes)) {
-            throw new \TYPO3Fluid\Fluid\Core\ViewHelper\Exception(
+            throw new Exception(
                 'The type argument must be one of ' . implode(', ', $this->validTypes) . '.',
                 1389366818
             );

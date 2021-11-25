@@ -13,13 +13,17 @@ use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
 use FelixNagel\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
+use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
+use FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems;
 
 /**
  * Tests the sorted appending of configured brushes to the list of flexform items.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class ConfiguredLanguagesTest extends UnitTestCase
 {
     protected $resetSingletonInstances = true;
 
@@ -41,7 +45,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
         ],
     ];
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
         $settingsServiceMock = $this->createMock(SettingsService::class);
@@ -56,8 +60,8 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
             )
             ->will($this->returnValue($settingsServiceMock));
 
-        $cacheBackendMock = new \TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend('Testing');
-        $cacheFrontendMock = new \TYPO3\CMS\Core\Cache\Frontend\VariableFrontend(
+        $cacheBackendMock = new TransientMemoryBackend('Testing');
+        $cacheFrontendMock = new VariableFrontend(
             'beautyofcode',
             $cacheBackendMock
         );
@@ -83,7 +87,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
             ->method('getBrushIdentifierAliasAndLabel')
             ->will($this->returnValue(['SQL / MySQL' => 'sql']));
 
-        $this->languageItem = new \FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems();
+        $this->languageItem = new LanguageItems();
         // @extensionScannerIgnoreLine
         $this->languageItem->injectObjectManager($objectManagerMock);
         $this->languageItem->injectCacheManager($cacheManagerMock);
@@ -98,7 +102,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
 
         $this->assertEquals('plain', $newConfig['items'][0][1]);
-        $this->assertEquals(1, count($newConfig['items']));
+        $this->assertEquals(1, is_array($newConfig['items']) || $newConfig['items'] instanceof \Countable ? count($newConfig['items']) : 0);
     }
 
     /**
@@ -119,7 +123,7 @@ class ConfiguredLanguagesTest extends \TYPO3\TestingFramework\Core\Unit\UnitTest
         $objectManagerMock
             ->expects($this->any())->method('get')
             ->with(
-                $this->equalTo(\FelixNagel\Beautyofcode\Service\SettingsService::class),
+                $this->equalTo(SettingsService::class),
                 $this->equalTo(1)
             )
             ->will($this->returnValue($settingsServiceMock));

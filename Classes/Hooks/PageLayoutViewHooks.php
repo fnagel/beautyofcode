@@ -27,35 +27,35 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      *
      * @var string
      */
-    const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf';
+    public const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf';
 
     /**
      * Maximum textarea lines.
      *
      * @var int
      */
-    const MAX_TEXTAREA_LINES = 15;
+    public const MAX_TEXTAREA_LINES = 15;
 
     /**
      * Maximum textarea height.
      *
      * @var int
      */
-    const MAX_TEXTAREA_HEIGHT = 150;
+    public const MAX_TEXTAREA_HEIGHT = 150;
 
     /**
      * Small textarea factor.
      *
      * @var int
      */
-    const SMALL_TEXTAREA_FACTOR = 20;
+    public const SMALL_TEXTAREA_FACTOR = 20;
 
     /**
      * Small textarea addition.
      *
      * @var int
      */
-    const SMALL_TEXTAREA_ADDITION = 5;
+    public const SMALL_TEXTAREA_ADDITION = 5;
 
     /**
      * Flexform data.
@@ -108,7 +108,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
         $label = $this->buildLabelHeader();
 
         if (empty($headerContent)) {
-            $editLink = BackendUtility::editOnClick('&edit[tt_content]['.(int) $uid.']=edit', $GLOBALS['BACK_PATH']);
+            $editLink = (new BackendUtility())->editOnClick('&edit[tt_content]['.(int) $uid.']=edit', $GLOBALS['BACK_PATH']);
             $headerContent = sprintf('<strong><a href="#" onclick="%s">%s</strong></a>', $editLink, $label);
         } else {
             $headerContent .= $label;

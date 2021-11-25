@@ -9,6 +9,10 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\ViewHelpers;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
+use TYPO3Fluid\Fluid\Core\ViewHelper\Exception;
+use FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper;
+
 /**
  * Tests the standalone asset path view helper.
  *
@@ -16,17 +20,17 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\ViewHelpers;
  *
  * @link http://www.van-tomas.de/
  */
-class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class StandaloneAssetPathViewHelperTest extends UnitTestCase
 {
     /**
      * @test
      */
     public function exceptionIsThrownDuringInitializationIfInvalidTypeIsSet()
     {
-        $this->expectException(\TYPO3Fluid\Fluid\Core\ViewHelper\Exception::class);
+        $this->expectException(Exception::class);
         $this->expectExceptionMessage('The type argument must be one of scripts, styles.');
 
-        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'foobar']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
@@ -38,10 +42,11 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheDefaultPathForScriptsIfNoBaseUrlAndNoScriptsResourcePathIsSet()
     {
-        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'scripts']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
+
         $path = $viewHelper->render();
 
         $this->assertEquals('http://alexgorbatchev.com/pub/sh/current/scripts/', $path);
@@ -52,10 +57,11 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheDefaultPathForStylesIfNoBaseUrlAndNoStylesResourcePathIsSet()
     {
-        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new StandaloneAssetPathViewHelper();
         $viewHelper->setArguments(['baseUrl' => '', 'resourcePath' => '', 'type' => 'styles']);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
+
         $path = $viewHelper->render();
 
         $this->assertEquals('http://alexgorbatchev.com/pub/sh/current/styles/', $path);
@@ -66,7 +72,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
      */
     public function returnsTheExpectedScriptResourcePathIfBaseUrlAndResourcePathAreSet()
     {
-        $viewHelper = new \FelixNagel\Beautyofcode\ViewHelpers\StandaloneAssetPathViewHelper();
+        $viewHelper = new StandaloneAssetPathViewHelper();
         $viewHelper->setArguments([
             'baseUrl' => '/typo3conf/ext/beautyofcode/',
             'resourcePath' => 'Resources/Public/Javascript/vendor/syntax_highlighter/v3/scripts/',
@@ -74,6 +80,7 @@ class StandaloneAssetPathViewHelperTest extends \TYPO3\TestingFramework\Core\Uni
         ]);
         $viewHelper->initializeArguments();
         $viewHelper->initialize();
+
         $path = $viewHelper->render();
 
         $this->assertEquals(

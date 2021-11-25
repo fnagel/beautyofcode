@@ -16,7 +16,10 @@ namespace FelixNagel\Beautyofcode\Form\Element;
  */
 class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
 {
-    const T3EDITOR_MODE_DEFAULT = 'xml';
+    /**
+     * @var string
+     */
+    public const T3EDITOR_MODE_DEFAULT = 'xml';
 
     /**
      * Map ext:t3editor modes on beautyofcode brush aliases.

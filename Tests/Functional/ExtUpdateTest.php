@@ -9,6 +9,11 @@ namespace FelixNagel\Beautyofcode\Tests\Functional;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+
 /**
  * Class short description.
  *
@@ -16,7 +21,7 @@ namespace FelixNagel\Beautyofcode\Tests\Functional;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
+class ExtUpdateTest extends FunctionalTestCase
 {
     /**
      * @var array
@@ -33,21 +38,21 @@ class ExtUpdateTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTe
      */
     protected $queryBuilder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->importDataSet('EXT:beautyofcode/Tests/Fixtures/tt_content.xml');
 
         /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
-        $connectionPool = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
+        $connectionPool = GeneralUtility::makeInstance(
+            ConnectionPool::class
         );
-        $this->queryBuilder = $this->getMockBuilder(\TYPO3\CMS\Core\Database\Query\QueryBuilder::class)
+        $this->queryBuilder = $this->getMockBuilder(QueryBuilder::class)
             ->setConstructorArgs([$connectionPool->getConnectionForTable('tt_content')])
             ->getMock();
     }
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         unset($this->queryBuilder);
     }

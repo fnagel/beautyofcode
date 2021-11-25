@@ -9,6 +9,8 @@ namespace FelixNagel\Beautyofcode\Controller;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
+use FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -17,7 +19,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class ContentController extends ActionController
 {
     /**
      * FlexformRepository.
@@ -32,7 +34,7 @@ class ContentController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * @param \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
      */
     public function injectFlexformRepository(
-        \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository
+        FlexformRepository $flexformRepository
     ) {
         $this->flexformRepository = $flexformRepository;
     }

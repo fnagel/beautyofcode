@@ -9,6 +9,8 @@ namespace FelixNagel\Beautyofcode\Highlighter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+
 /**
  * ConfigurationInterface.
  *
@@ -66,5 +68,5 @@ interface ConfigurationInterface
      *
      * @return string
      */
-    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform);
+    public function getClassAttributeString(Flexform $flexform);
 }

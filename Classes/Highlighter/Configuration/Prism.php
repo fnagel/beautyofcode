@@ -9,6 +9,9 @@ namespace FelixNagel\Beautyofcode\Highlighter\Configuration;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+
 /**
  * Prism.
  *
@@ -100,15 +103,15 @@ class Prism extends AbstractConfiguration
      *
      * @return string
      */
-    public function getClassAttributeString(\FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform)
+    public function getClassAttributeString(Flexform $flexform)
     {
         $configurationItems = [];
         $classAttributeConfigurationStack = [
-            'data-line' => \TYPO3\CMS\Core\Utility\GeneralUtility::expandList($flexform->getCHighlight()),
+            'data-line' => GeneralUtility::expandList($flexform->getCHighlight()),
         ];
 
         foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-            if (true === in_array($configurationValue, ['', 'auto'])) {
+            if (in_array($configurationValue, ['', 'auto'])) {
                 continue;
             }
 

@@ -11,6 +11,7 @@ namespace FelixNagel\Beautyofcode\ViewHelpers\PageRenderer;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
+use FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper;
 
 /**
  * Adds javascript libraries to the page footer.
@@ -18,7 +19,7 @@ use TYPO3\CMS\Frontend\Resource\FilePathSanitizer;
  * @author Thomas Juhnke <typo3@van-tomas.de>
  * @author (c) 2014 Felix Nagel <info@felixnagel.com>
  */
-class AddJsFooterFileViewHelper extends \FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+class AddJsFooterFileViewHelper extends AbstractPageRendererViewHelper
 {
     /**
      * Initialize arguments.

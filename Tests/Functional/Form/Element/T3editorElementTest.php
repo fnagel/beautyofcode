@@ -11,6 +11,7 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Form\Element;
 
 use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
+use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * T3editorElementTest.
@@ -18,7 +19,7 @@ use TYPO3\CMS\Backend\Form\NodeFactory;
  * @license http://www.gnu.org/licenses/gpl.html
  *          GNU General Public License, version 3 or later
  */
-class T3editorElementTest extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
+class T3editorElementTest extends FunctionalTestCase
 {
     /**
      * @var array
@@ -38,7 +39,7 @@ class T3editorElementTest extends \TYPO3\TestingFramework\Core\Functional\Functi
     /**
      * SetUp.
      */
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 

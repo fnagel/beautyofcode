@@ -9,12 +9,14 @@ namespace FelixNagel\Beautyofcode\ViewHelpers\PageRenderer;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper;
+
 /**
  * Adds javascript inline code to the page footer.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-class AddJsFooterInlineCodeViewHelper extends \FelixNagel\Beautyofcode\Core\ViewHelper\AbstractPageRendererViewHelper
+class AddJsFooterInlineCodeViewHelper extends AbstractPageRendererViewHelper
 {
     /**
      * Initialize arguments.

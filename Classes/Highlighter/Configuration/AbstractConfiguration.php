@@ -9,19 +9,20 @@ namespace FelixNagel\Beautyofcode\Highlighter\Configuration;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 /**
  * AbstractConfiguration.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
  */
-abstract class AbstractConfiguration implements \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
+abstract class AbstractConfiguration implements ConfigurationInterface
 {
     /**
      * Settings aray.
      *
      * @var array
      */
-    protected $settings;
+    protected $settings = [];
 
     /**
      * Failsafe brush alias map.

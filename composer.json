@@ -29,20 +29,20 @@
   ],
   "license": "GPL-2.0-or-later",
   "require": {
-    "php": ">=7.2,<7.5",
-    "typo3/cms-core": ">=9.0,<10.5"
+    "php": ">=7.2,<8.1",
+    "typo3/cms-core": ">=10.4.0,<=11.5.99"
   },
   "require-dev": {
-    "typo3/testing-framework": "~4.11.1 || ~6.1.0 ",
+    "typo3/testing-framework": "~4.11.1 || ~6.1.0",
     "ext-pdo_sqlite": "*",
-  	"typo3/cms-t3editor": "^9.5 || ^10",
+    "typo3/cms-t3editor": "^10 || ^11",
 	"squizlabs/php_codesniffer": "^3.5",
 	"friendsofphp/php-cs-fixer": "^2.16",
 	"phpmd/phpmd": "^2.8",
 	"php-parallel-lint/php-parallel-lint": "^0.4"
   },
   "suggest": {
-    "typo3/cms-t3editor": "^9.5 || ^10"
+    "typo3/cms-t3editor": "^10 || ^11"
   },
   "autoload": {
     "psr-4": {

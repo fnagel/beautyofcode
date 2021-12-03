@@ -9,7 +9,7 @@ namespace FelixNagel\Beautyofcode\Hooks;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
@@ -108,11 +108,27 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
         $label = $this->buildLabelHeader();
 
         if (empty($headerContent)) {
-            $editLink = (new BackendUtility())->editOnClick('&edit[tt_content]['.(int) $uid.']=edit', $GLOBALS['BACK_PATH']);
-            $headerContent = sprintf('<strong><a href="#" onclick="%s">%s</strong></a>', $editLink, $label);
+            $editLink = $this->getBackendUrl($uid);
+            $headerContent = sprintf('<strong><a href="%s">%s</strong></a>', $editLink, $label);
         } else {
             $headerContent .= $label;
         }
+    }
+
+    /**
+     * @param int $uid
+     * @param string $table
+     * @return string
+     */
+    protected function getBackendUrl($uid, $table = 'tt_content')
+    {
+        $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
+
+        return (string)$uriBuilder->buildUriFromRoute('record_edit', [
+            'edit' => [$table => [$uid => 'edit']],
+            'returnNewPageId' => 1,
+            'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
+        ]);
     }
 
     /**

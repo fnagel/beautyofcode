@@ -80,7 +80,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      */
     public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
     {
-        if ($row['CType'] == 'beautyofcode_contentrenderer') {
+        if ($row['CType'] === 'beautyofcode_contentrenderer') {
             $drawItem = false;
 
             $this->flexformData = GeneralUtility::xml2array($row['pi_flexform']);
@@ -237,7 +237,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     protected function calculateTextareaHeight($content, $unit = 'px')
     {
         $lines = preg_split("/(\n)/", $content);
-        $proxyLines = sizeof($lines);
+        $proxyLines = count($lines);
 
         if ($proxyLines > self::MAX_TEXTAREA_LINES) {
             $textareaHeight = self::MAX_TEXTAREA_HEIGHT;

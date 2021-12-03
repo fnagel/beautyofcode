@@ -77,6 +77,7 @@ class SyntaxHighlighter extends AbstractConfiguration
         'Vb' => ['vbnet', 'Virtual Basic / .Net'],
         'Xml' => ['xml', 'XML / XSLT / XHTML / HTML'],
         'Yaml' => ['yaml', 'YAML'],
+        'Plain' => ['plain', 'Plain'],
     ];
 
     /**

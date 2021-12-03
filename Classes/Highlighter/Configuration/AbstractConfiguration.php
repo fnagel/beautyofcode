@@ -10,6 +10,7 @@ namespace FelixNagel\Beautyofcode\Highlighter\Configuration;
  */
 
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
+
 /**
  * AbstractConfiguration.
  *

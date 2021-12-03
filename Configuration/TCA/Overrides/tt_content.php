@@ -26,7 +26,7 @@ $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem
 ';
 
 $configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-	\TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+    \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
 )->get('beautyofcode');
 
 if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1

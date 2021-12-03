@@ -1,6 +1,7 @@
 <?php
 
 namespace FelixNagel\Beautyofcode\Core\ViewHelper;
+
 /**
  * This file is part of the "beautyofcode" Extension for TYPO3 CMS.
  *

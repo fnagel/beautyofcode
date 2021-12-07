@@ -15,6 +15,23 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
 
 
+4.x to 5.0
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 10.5 LTS
+- Support for PHP 8.0
+- Removed support for TYPO3 9.x
+- Code clean up and code improvements
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
+
 4.2 to 4.3
 ^^^^^^^^^^
 

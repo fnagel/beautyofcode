@@ -12,7 +12,20 @@ Upgrade Guide
 
 
 If there's no upgrade guide, there' s no need to change anything.
-This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
+This guide does not covering extending via PHP – you need to check changes for yourself.
+
+
+5.0 to 5.1
+^^^^^^^^^^
+
+What you need to know:
+
+- Updated Prism to 1.25.0
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
 
 
 4.x to 5.0

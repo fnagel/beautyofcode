@@ -54,22 +54,23 @@ Howto install JS vendors
 
    .. code-block:: bash
 
-      bower install
+      node_modules/.bin/bower install
 
-4. Remove unneeded files:
+4. Remove unneeded files in `Resources/Public/Javascript/vendor`:
       - `qunit` folder
       - `xregexp` folder
-      - all `*.min.js` files in `Resources/Public/Javascript/vendor/prism/components/`
-      - all untracked files in `Resources/Public/Javascript/vendor/prism/`
+      - `prism/gulpfile.js` folder
+      - all `*.min.js` files in `prism/components/`
+      - all untracked files in `prism/`
 
 Howto add BOM to all reStructuredText files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-While editing the files in Eclipse, the BOM possibly gets removed, this script 
+While editing the files in Eclipse, the BOM possibly gets removed, this script
 will help you to re-add the UTF8 BOM again.
 
-Simply put that into the extension root directory, add executable rights (`chmod u+x ...`). 
-If you are still experiencing issues, just comment out the last line and execute the script 
+Simply put that into the extension root directory, add executable rights (`chmod u+x ...`).
+If you are still experiencing issues, just comment out the last line and execute the script
 multiple times until no output is displayed. Then uncomment the last line.
 
    .. code-block:: bash

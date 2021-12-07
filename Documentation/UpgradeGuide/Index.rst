@@ -15,6 +15,23 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP (aka XCLASS or Hooks) – you need to check changes for yourself.
 
 
+4.2 to 4.3
+^^^^^^^^^^
+
+What you need to know:
+
+- Add YAML support for SyntaxHighlighter
+- Removed support for PHP < 7.2
+- Code clean up and improvements
+- Bugfix for TCA issue when deleting a page
+- Minor bugfixes
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
 4.1 to 4.2
 ^^^^^^^^^^
 
@@ -27,7 +44,6 @@ What you need to know:
 - Rename TS and TSconfig files to newer file extensions
 - Move TSconfig file to correct folder
 - Minor fixes and clean up
-
 
 How to upgrade
 """"""""""""""

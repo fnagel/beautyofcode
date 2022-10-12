@@ -22,7 +22,7 @@ class Flexform extends AbstractValueObject
     /**
      * ConfigurationInterface.
      *
-     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var ConfigurationInterface
      */
     protected $highlighterConfiguration;
 

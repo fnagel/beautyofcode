@@ -31,7 +31,7 @@ class FlexformTest extends UnitTestCase
     protected $highlighterConfigurationMock;
 
     /**
-     * @var \FelixNagel\Beautyofcode\Domain\Model\Flexform
+     * @var Flexform
      */
     protected $flexform;
 

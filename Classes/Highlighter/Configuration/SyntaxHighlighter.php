@@ -100,7 +100,7 @@ class SyntaxHighlighter extends AbstractConfiguration
         $brushes['plain'] = 'shBrushPlain.js';
 
         foreach ($configuredBrushes as $brush) {
-            list($cssTag) = $this->brushIdentifierAliasLabelMap[$brush];
+            [$cssTag] = $this->brushIdentifierAliasLabelMap[$brush];
             $brushPath = 'shBrush'.$brush.'.js';
 
             $brushes[$cssTag] = $brushPath;
@@ -112,7 +112,7 @@ class SyntaxHighlighter extends AbstractConfiguration
     /**
      * GetClassAttributeString.
      *
-     * @param \FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     * @param Flexform $flexform Flexform
      *
      * @return string
      */

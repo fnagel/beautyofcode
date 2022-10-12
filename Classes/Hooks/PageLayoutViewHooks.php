@@ -8,7 +8,7 @@ namespace FelixNagel\Beautyofcode\Hooks;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Backend\View\PageLayoutView;
 use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
@@ -223,7 +223,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
                 $data = $linkService->resolveByStringRepresentation($file);
 
                 if ($data['type'] === 'file') {
-                    /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
+                    /** @var File $fileObject */
                     $fileObject = $data['file'];
 
                     if ($fileObject !== null) {
@@ -253,7 +253,7 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     protected function calculateTextareaHeight($content, $unit = 'px')
     {
         $lines = preg_split("/(\n)/", $content);
-        $proxyLines = count($lines);
+        $proxyLines = is_countable($lines) ? count($lines) : 0;
 
         if ($proxyLines > self::MAX_TEXTAREA_LINES) {
             $textareaHeight = self::MAX_TEXTAREA_HEIGHT;

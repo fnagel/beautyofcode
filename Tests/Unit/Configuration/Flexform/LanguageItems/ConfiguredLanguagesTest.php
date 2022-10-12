@@ -28,7 +28,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
     protected $resetSingletonInstances = true;
 
     /**
-     * @var \FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems
+     * @var LanguageItems
      */
     protected $languageItem;
 

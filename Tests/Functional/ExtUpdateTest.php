@@ -34,16 +34,15 @@ class ExtUpdateTest extends FunctionalTestCase
     protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
-     * @var \TYPO3\CMS\Core\Database\Query\QueryBuilder|\PHPUnit_Framework_MockObject_MockObject
+     * @var QueryBuilder|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $queryBuilder;
 
     protected function setUp(): void
     {
-        parent::setUp();
         $this->importDataSet('EXT:beautyofcode/Tests/Fixtures/tt_content.xml');
 
-        /** @var \TYPO3\CMS\Core\Database\ConnectionPool $connectionPool */
+        /** @var ConnectionPool $connectionPool */
         $connectionPool = GeneralUtility::makeInstance(
             ConnectionPool::class
         );

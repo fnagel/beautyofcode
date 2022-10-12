@@ -79,7 +79,7 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
             return $mode;
         }
 
-        if (array_search($flexformLanguageKey, $this->allowedModes) !== false) {
+        if (in_array($flexformLanguageKey, $this->allowedModes)) {
             return $flexformLanguageKey;
         }
 

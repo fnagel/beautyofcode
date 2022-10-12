@@ -22,14 +22,14 @@ abstract class AbstractPageRendererViewHelper extends AbstractViewHelper
     /**
      * PageRenderer.
      *
-     * @var \TYPO3\CMS\Core\Page\PageRenderer
+     * @var PageRenderer
      */
     protected $pageRenderer;
 
     /**
      * InjectPageRenderer.
      *
-     * @param \TYPO3\CMS\Core\Page\PageRenderer $pageRenderer PageRenderer
+     * @param PageRenderer $pageRenderer PageRenderer
      */
     public function injectPageRenderer(PageRenderer $pageRenderer)
     {

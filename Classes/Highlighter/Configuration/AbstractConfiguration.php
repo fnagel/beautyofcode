@@ -101,7 +101,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
     public function hasBrushAlias($brushAlias)
     {
         foreach ($this->brushIdentifierAliasLabelMap as $aliasLabelMap) {
-            list($alias) = $aliasLabelMap;
+            [$alias] = $aliasLabelMap;
             if ($alias === $brushAlias) {
                 return true;
             }

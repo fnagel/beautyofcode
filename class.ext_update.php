@@ -1,4 +1,5 @@
 <?php
+
 /***************************************************************
  * Copyright notice
  *
@@ -24,6 +25,11 @@
  *
  * This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\ArrayUtility;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 
 /**
  * Updates tt_content records.
@@ -114,8 +120,7 @@ class ext_update
             ->execute();
 
         $queryBuilder = $this->getQueryBuilderForTable('tt_content');
-        $contentElements = $queryBuilder
-            ->select('uid', 'pi_flexform')
+        $contentElements = $queryBuilder->select(['uid', 'pi_flexform'])
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->eq(
@@ -127,14 +132,14 @@ class ext_update
 
         while ($contentElement = $contentElements->fetch()) {
             $uid = (int) $contentElement['uid'];
-            $flexformData = \TYPO3\CMS\Core\Utility\GeneralUtility::xml2array($contentElement['pi_flexform']);
+            $flexformData = GeneralUtility::xml2array($contentElement['pi_flexform']);
 
             try {
-                $codeBlock = \TYPO3\CMS\Core\Utility\ArrayUtility::getValueByPath(
+                $codeBlock = ArrayUtility::getValueByPath(
                     $flexformData,
                     'data/sDEF/lDEF/cCode/vDEF'
                 );
-            } catch (\Exception $exc) {
+            } catch (\Exception $exception) {
                 continue;
             }
 
@@ -156,12 +161,10 @@ class ext_update
 
     /**
      * @param string $table
-     * @return \TYPO3\CMS\Core\Database\Query\QueryBuilder
+     * @return QueryBuilder
      */
-    protected function getQueryBuilderForTable(string $table): \TYPO3\CMS\Core\Database\Query\QueryBuilder
+    protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        return \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Database\ConnectionPool::class
-        )->getQueryBuilderForTable($table);
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
 }

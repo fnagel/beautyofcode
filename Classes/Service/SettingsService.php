@@ -51,14 +51,14 @@ class SettingsService
     protected $typoScriptSettings = null;
 
     /**
-     * @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
+     * @var ConfigurationManagerInterface
      */
     protected $configurationManager;
 
     /**
      * Legacy alias of \TYPO3\CMS\Extbase\Service\TypoScriptService
      *
-     * @var \TYPO3\CMS\Core\TypoScript\TypoScriptService
+     * @var TypoScriptService
      */
     protected $typoScriptService;
 

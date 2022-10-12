@@ -25,21 +25,21 @@ class FlexformRepository
     /**
      * FlexFormService.
      *
-     * @var \TYPO3\CMS\Core\Service\FlexFormService
+     * @var FlexFormService
      */
     protected $flexformService;
 
     /**
      * ObjectManager.
      *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
 
     /**
      * Injects the flexform service and populates flexform values from `pi_flexform`.
      *
-     * @param \TYPO3\CMS\Core\Service\FlexFormService $flexformService FlexFormService
+     * @param FlexFormService $flexformService FlexFormService
      */
     public function injectFlexformService(FlexFormService $flexformService)
     {
@@ -49,7 +49,7 @@ class FlexformRepository
     /**
      * InjectObjetManager.
      *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager ObjectManager
+     * @param ObjectManagerInterface $objectManager ObjectManager
      */
     public function injectObjectManager(ObjectManagerInterface $objectManager)
     {
@@ -60,9 +60,9 @@ class FlexformRepository
     /**
      * ReconstituteByContentObject.
      *
-     * @param \TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer $contentObject ContentObjectRenderer
+     * @param ContentObjectRenderer $contentObject ContentObjectRenderer
      *
-     * @return \FelixNagel\Beautyofcode\Domain\Model\Flexform
+     * @return Flexform
      */
     public function reconstituteByContentObject(ContentObjectRenderer $contentObject)
     {

@@ -8,7 +8,8 @@ namespace FelixNagel\Beautyofcode\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use Psr\Http\Message\ResponseInterface;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
@@ -24,14 +25,14 @@ class ContentController extends ActionController
     /**
      * FlexformRepository.
      *
-     * @var \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository
+     * @var FlexformRepository
      */
     protected $flexformRepository;
 
     /**
      * InjectFlexformRepository.
      *
-     * @param \FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository $flexformRepository FlexformRepository
+     * @param FlexformRepository $flexformRepository FlexformRepository
      */
     public function injectFlexformRepository(
         FlexformRepository $flexformRepository
@@ -63,7 +64,7 @@ class ContentController extends ActionController
                     $content = '';
                 }
             } elseif ($data['type'] === 'file') {
-                /** @var \TYPO3\CMS\Core\Resource\File $fileObject */
+                /** @var File $fileObject */
                 $fileObject = $data['file'];
 
                 if ($fileObject !== null) {

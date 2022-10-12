@@ -99,7 +99,7 @@ class Prism extends AbstractConfiguration
     /**
      * GetClassAttributeString.
      *
-     * @param \FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     * @param Flexform $flexform Flexform
      *
      * @return string
      */

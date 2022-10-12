@@ -8,7 +8,7 @@ namespace FelixNagel\Beautyofcode\Configuration\Flexform;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -29,19 +29,19 @@ class LanguageItems
     /**
      * ObjectManager.
      *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
 
     /**
-     * @var \TYPO3\CMS\Core\Cache\CacheManager
+     * @var CacheManager
      */
     protected $cacheManager;
 
     /**
      * ConfigurationInterface.
      *
-     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var ConfigurationInterface
      */
     protected $highlighterConfiguration;
 
@@ -57,7 +57,7 @@ class LanguageItems
     /**
      * InjectObjectManager.
      *
-     * @param \TYPO3\CMS\Extbase\Object\ObjectManagerInterface $objectManager ObjectManagerInterface
+     * @param ObjectManagerInterface $objectManager ObjectManagerInterface
      */
     public function injectObjectManager(ObjectManagerInterface $objectManager = null)
     {
@@ -71,7 +71,7 @@ class LanguageItems
     /**
      * InjectCacheManager.
      *
-     * @param \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+     * @param CacheManager $cacheManager
      */
     public function injectCacheManager(CacheManager $cacheManager = null)
     {
@@ -223,7 +223,7 @@ class LanguageItems
      *
      * @param int $pid PID of the page
      *
-     * @return \FelixNagel\Beautyofcode\Service\SettingsService
+     * @return SettingsService
      */
     public function getSettingsService($pid = 0)
     {
@@ -233,7 +233,7 @@ class LanguageItems
     /**
      * Get the constants cache.
      *
-     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+     * @return FrontendInterface
      */
     protected function getCache()
     {

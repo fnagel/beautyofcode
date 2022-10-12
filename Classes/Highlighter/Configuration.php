@@ -23,7 +23,7 @@ class Configuration implements ConfigurationInterface
     /**
      * ObjectManager.
      *
-     * @var \TYPO3\CMS\Extbase\Object\ObjectManagerInterface
+     * @var ObjectManagerInterface
      */
     protected $objectManager;
 
@@ -37,7 +37,7 @@ class Configuration implements ConfigurationInterface
     /**
      * ConfigurationInterface.
      *
-     * @var \FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface
+     * @var ConfigurationInterface
      */
     protected $configuration;
 
@@ -144,7 +144,7 @@ class Configuration implements ConfigurationInterface
     /**
      * GetClassAttributeString.
      *
-     * @param \FelixNagel\Beautyofcode\Domain\Model\Flexform $flexform Flexform
+     * @param Flexform $flexform Flexform
      *
      * @return string
      */

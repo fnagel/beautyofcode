@@ -20,7 +20,7 @@ $EM_CONF[$_EXTKEY] = [
     'author_email' => 'info@felixnagel.com',
     'constraints' => [
         'depends' => [
-			'php' => '7.2.0-8.0.99',
+			'php' => '7.4.0-8.1.99',
 			'typo3' => '10.4.0-11.5.99',
         ],
         'conflicts' => [],

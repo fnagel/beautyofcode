@@ -29,7 +29,7 @@
   ],
   "license": "GPL-2.0-or-later",
   "require": {
-    "php": ">=7.2,<8.1",
+    "php": ">=7.4,<8.2",
     "typo3/cms-core": ">=10.4.0,<=11.5.99"
   },
   "require-dev": {

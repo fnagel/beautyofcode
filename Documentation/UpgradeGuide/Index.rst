@@ -15,6 +15,21 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+5.1 to 5.2
+^^^^^^^^^^
+
+What you need to know:
+
+- Added PHP 8.1 support
+- Removed PHP < 7.4 support
+- Improved code quality / CGL
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
 5.0 to 5.1
 ^^^^^^^^^^
 
@@ -42,7 +57,6 @@ How to upgrade
 """"""""""""""
 
 - Clear all caches
-
 
 
 4.2 to 4.3

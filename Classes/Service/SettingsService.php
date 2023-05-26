@@ -71,8 +71,6 @@ class SettingsService
 
     /**
      * SettingsService constructor.
-     *
-     * @param int $pid
      */
     public function __construct(int $pid)
     {

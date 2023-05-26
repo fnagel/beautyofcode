@@ -58,10 +58,8 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
 
     /**
      * Dynamic update of the t3editor format.
-     *
-     * @return string|null
      */
-    protected function determineMode()
+    protected function determineMode(): ?string
     {
         // Fallback
         $mode = $this->data['parameterArray']['fieldConf']['config']['format'] ?? self::T3EDITOR_MODE_DEFAULT;

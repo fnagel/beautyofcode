@@ -118,9 +118,8 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
     /**
      * @param int $uid
      * @param string $table
-     * @return string
      */
-    protected function getBackendUrl($uid, $table = 'tt_content')
+    protected function getBackendUrl($uid, $table = 'tt_content'): string
     {
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
@@ -156,10 +155,8 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
 
     /**
      * Builds the code language header.
-     *
-     * @return string
      */
-    protected function buildCodeLanguageHeader()
+    protected function buildCodeLanguageHeader(): string
     {
         return sprintf(
             '<br /><br /><strong>%s</strong> (%s)<br />',

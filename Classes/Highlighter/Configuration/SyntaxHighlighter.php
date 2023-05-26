@@ -113,10 +113,8 @@ class SyntaxHighlighter extends AbstractConfiguration
      * GetClassAttributeString.
      *
      * @param Flexform $flexform Flexform
-     *
-     * @return string
      */
-    public function getClassAttributeString(Flexform $flexform)
+    public function getClassAttributeString(Flexform $flexform): string
     {
         $configurationItems = [];
 

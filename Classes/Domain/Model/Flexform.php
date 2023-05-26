@@ -226,10 +226,8 @@ class Flexform extends AbstractValueObject
 
     /**
      * GetIsGutterActive.
-     *
-     * @return bool
      */
-    public function getIsGutterActive()
+    public function getIsGutterActive(): bool
     {
         $isOffForInstance = '0' === $this->cGutter;
         $isOnForInstance = '1' === $this->cGutter;

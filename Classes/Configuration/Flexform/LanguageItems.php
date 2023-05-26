@@ -8,12 +8,11 @@ namespace FelixNagel\Beautyofcode\Configuration\Flexform;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use FelixNagel\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Database\Query\QueryBuilder;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -26,13 +25,6 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
  */
 class LanguageItems
 {
-    /**
-     * ObjectManager.
-     *
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
-
     /**
      * @var CacheManager
      */
@@ -55,23 +47,7 @@ class LanguageItems
     protected $contentElementPid = 0;
 
     /**
-     * InjectObjectManager.
-     *
-     * @param ObjectManagerInterface $objectManager ObjectManagerInterface
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager = null)
-    {
-        if (is_null($objectManager)) {
-            $objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        }
-
-        $this->objectManager = $objectManager;
-    }
-
-    /**
      * InjectCacheManager.
-     *
-     * @param CacheManager $cacheManager
      */
     public function injectCacheManager(CacheManager $cacheManager = null)
     {
@@ -84,13 +60,11 @@ class LanguageItems
 
     /**
      * Injects the highlighter configuration.
-     *
-     * @param ConfigurationInterface $configuration
      */
     public function injectHighlighterConfiguration(ConfigurationInterface $configuration = null)
     {
         if (is_null($configuration)) {
-            $configuration = $this->objectManager->get(
+            $configuration = GeneralUtility::makeInstance(
                 ConfigurationInterface::class,
                 $this->contentElementPid
             );
@@ -111,8 +85,6 @@ class LanguageItems
      */
     public function getConfiguredLanguages($config)
     {
-        // @extensionScannerIgnoreLine
-        $this->injectObjectManager($this->objectManager);
         $this->injectCacheManager($this->cacheManager);
 
         if (($cachedFields = $this->getCache()->get('language-items')) !== false) {
@@ -138,7 +110,7 @@ class LanguageItems
                 if (strtolower($brush) === 'plain') {
                     continue;
                 }
-                
+
                 // skip unknown brushes
                 if (!$this->highlighterConfiguration->hasBrushIdentifier($brush)) {
                     continue;
@@ -161,10 +133,8 @@ class LanguageItems
      * Returns the page uid by given record uid.
      *
      * @param int $recordUid Record uid
-     *
-     * @return int
      */
-    private function getPageUidByRecordUid($recordUid)
+    private function getPageUidByRecordUid($recordUid): int
     {
         $queryBuilder = $this->getQueryBuilderForTable('tt_content');
         $recordPid = $queryBuilder
@@ -172,12 +142,12 @@ class LanguageItems
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->eq(
-                    'uid',
+                'uid',
                     $queryBuilder->createNamedParameter($recordUid, \PDO::PARAM_INT)
                 )
             )
-            ->execute()
-            ->fetch();
+            ->executeQuery()
+            ->fetchAssociative();
 
         return (int) $recordPid['pid'];
     }
@@ -227,7 +197,7 @@ class LanguageItems
      */
     public function getSettingsService($pid = 0)
     {
-        return $this->objectManager->get(SettingsService::class, $pid);
+        return GeneralUtility::makeInstance(SettingsService::class, $pid);
     }
 
     /**
@@ -242,8 +212,6 @@ class LanguageItems
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
-        return GeneralUtility::makeInstance(
-            ConnectionPool::class
-        )->getQueryBuilderForTable($table);
+        return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);
     }
 }

@@ -59,8 +59,7 @@ class StandaloneAssetPathViewHelper extends AbstractViewHelper
     /**
      * Initialize.
      *
-     *
-     * @throws \TYPO3\CMS\Fluid\Core\ViewHelper\Exception
+     * @throws Exception
      */
     public function initialize()
     {
@@ -82,10 +81,8 @@ class StandaloneAssetPathViewHelper extends AbstractViewHelper
 
     /**
      * Renders the view helper.
-     *
-     * @return string
      */
-    public function render()
+    public function render(): string
     {
         return $this->arguments['baseUrl'] . $this->arguments['resourcePath'];
     }

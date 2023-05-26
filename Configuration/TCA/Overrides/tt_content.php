@@ -1,5 +1,10 @@
 <?php
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
+
 defined('TYPO3') || die();
 
 $packageKey = 'beautyofcode';
@@ -25,17 +30,15 @@ $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem
     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.extended
 ';
 
-$configuration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-    \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
-)->get('beautyofcode');
+$configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('beautyofcode');
 
 if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1
-    && \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::isLoaded('t3editor')
+    && ExtensionManagementUtility::isLoaded('t3editor')
 ) {
     $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = [
         'bodytext' => [
             'config' => [
-                'format' => \FelixNagel\Beautyofcode\Form\Element\T3editorElement::T3EDITOR_MODE_DEFAULT,
+                'format' => T3editorElement::T3EDITOR_MODE_DEFAULT,
                 'renderType' => 't3editor',
             ],
         ],
@@ -43,7 +46,7 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
 };
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
-\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPiFlexFormValue(
+ExtensionManagementUtility::addPiFlexFormValue(
     '*',
     'FILE:EXT:' . $packageKey.  '/Configuration/Flexform/ContentRenderer.xml',
     'beautyofcode_contentrenderer'

@@ -102,7 +102,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
 
         $this->assertEquals('plain', $newConfig['items'][0][1]);
-        $this->assertEquals(1, is_array($newConfig['items']) || $newConfig['items'] instanceof \Countable ? count($newConfig['items']) : 0);
+        $this->assertEquals(1, is_countable($newConfig['items']) ? count($newConfig['items']) : 0);
     }
 
     /**

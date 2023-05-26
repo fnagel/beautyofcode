@@ -76,8 +76,8 @@ class ext_update
                     $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
                 )
             )
-            ->execute()
-            ->fetchColumn();
+            ->executeQuery()
+            ->fetchOne();
 
         return $this->countOldPlugins > 0;
     }
@@ -100,10 +100,8 @@ class ext_update
 
     /**
      * Updates tt_content records by setting `list_type` to new plugin signature.
-     *
-     * @return string
      */
-    protected function updateOldPlugins()
+    protected function updateOldPlugins(): string
     {
         // Switch from CType = 'list' to custom CE
         $queryBuilder = $this->getQueryBuilderForTable('tt_content');
@@ -117,7 +115,7 @@ class ext_update
             )
             ->set('CType', 'beautyofcode_contentrenderer')
             ->set('list_type', '')
-            ->execute();
+            ->executeStatement();
 
         $queryBuilder = $this->getQueryBuilderForTable('tt_content');
         $contentElements = $queryBuilder->select(['uid', 'pi_flexform'])
@@ -128,9 +126,9 @@ class ext_update
                     $queryBuilder->createNamedParameter('beautyofcode_contentrenderer')
                 )
             )
-            ->execute();
+            ->executeQuery();
 
-        while ($contentElement = $contentElements->fetch()) {
+        while ($contentElement = $contentElements->fetchAssociative()) {
             $uid = (int) $contentElement['uid'];
             $flexformData = GeneralUtility::xml2array($contentElement['pi_flexform']);
 
@@ -153,16 +151,12 @@ class ext_update
                     )
                 )
                 ->set('bodytext', $codeBlock)
-                ->execute();
+                ->executeStatement();
         }
 
         return sprintf('<p>Updated plugin signature of %s tt_content records.</p>', $this->countOldPlugins);
     }
 
-    /**
-     * @param string $table
-     * @return QueryBuilder
-     */
     protected function getQueryBuilderForTable(string $table): QueryBuilder
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable($table);

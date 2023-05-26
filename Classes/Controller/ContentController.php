@@ -8,7 +8,7 @@ namespace FelixNagel\Beautyofcode\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
-
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository;
@@ -43,7 +43,7 @@ class ContentController extends ActionController
     /**
      * Render.
      */
-    public function renderAction()
+    public function renderAction(): ResponseInterface
     {
         // @extensionScannerIgnoreLine
         $contentObject = $this->configurationManager->getContentObject();
@@ -77,5 +77,7 @@ class ContentController extends ActionController
 
         $this->view->assign('ce', $contentElement);
         $this->view->assign('flexform', $flexform);
+
+        return $this->htmlResponse();
     }
 }

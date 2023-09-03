@@ -37,11 +37,9 @@ class FlexformTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
+        $this->highlighterConfigurationMock = $this->createMock();
 
-        $this->flexform = new Flexform();
-
-        $this->flexform->injectHighlighterConfiguration($this->highlighterConfigurationMock);
+        $this->flexform = new Flexform($this->highlighterConfigurationMock);
 
         $this->flexform->setCLabel('The label');
         $this->flexform->setCLang('typoscript');

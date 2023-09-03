@@ -43,7 +43,7 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
             ],
         ],
     ];
-};
+}
 
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
 ExtensionManagementUtility::addPiFlexFormValue(

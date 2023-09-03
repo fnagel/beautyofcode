@@ -82,6 +82,12 @@ class Flexform extends AbstractValueObject
      */
     protected $languageFallback = 'plain';
 
+    public function __construct(
+        ConfigurationInterface $highlighterConfiguration
+    ) {
+        $this->highlighterConfiguration = $highlighterConfiguration;
+    }
+
     /**
      * Initialize object from the flexForm datas
      *
@@ -96,16 +102,6 @@ class Flexform extends AbstractValueObject
         $this->cCollapse = $flexformValues['cCollapse'] ?? $this->cCollapse;
         $this->cGutter = $flexformValues['cGutter'] ?? $this->cGutter;
         $this->languageFallback = $flexformValues['languageFallback'] ?? $this->languageFallback;
-    }
-
-    /**
-     * InjectHighlighterConfiguration.
-     *
-     * @param ConfigurationInterface $highlighterConfiguration ConfigurationInterface
-     */
-    public function injectHighlighterConfiguration(ConfigurationInterface $highlighterConfiguration)
-    {
-        $this->highlighterConfiguration = $highlighterConfiguration;
     }
 
     /**

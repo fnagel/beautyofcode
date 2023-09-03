@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\Configuration\Flexform;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Highlighter\Configuration;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 use TYPO3\CMS\Core\Cache\CacheManager;
@@ -65,7 +66,7 @@ class LanguageItems
     {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(
-                ConfigurationInterface::class,
+                Configuration::class,
                 $this->contentElementPid
             );
         }
@@ -116,9 +117,12 @@ class LanguageItems
                     continue;
                 }
 
-                $optionList[$i] = array_reverse(
-                    $this->highlighterConfiguration->getBrushIdentifierAliasAndLabel($brush)
-                );
+                $brush = $this->highlighterConfiguration->getBrushIdentifierAliasAndLabel($brush);
+
+                $optionList[$i] = [
+                    'value' => $brush[0],
+                    'label' => $brush[1],
+                ];
             }
 
             $config['items'] = array_merge($config['items'], $optionList);
@@ -207,7 +211,7 @@ class LanguageItems
      */
     protected function getCache()
     {
-        return $this->cacheManager->getCache('cache_beautyofcode');
+        return $this->cacheManager->getCache('beautyofcode');
     }
 
     protected function getQueryBuilderForTable(string $table): QueryBuilder

@@ -9,9 +9,9 @@ namespace FelixNagel\Beautyofcode\Highlighter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use FelixNagel\Beautyofcode\Service\SettingsService;
 use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Configuration.
@@ -20,13 +20,6 @@ use FelixNagel\Beautyofcode\Domain\Model\Flexform;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * ObjectManager.
-     *
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
-
     /**
      * Settings array.
      *
@@ -49,21 +42,13 @@ class Configuration implements ConfigurationInterface
     protected $pid = 0;
 
     /**
-     * InjectObjectManager.
-     *
-     * @param ObjectManagerInterface $objectManager ObjectManagerInterface
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    /**
      * @param int $pid
      */
     public function __construct($pid = 0)
     {
         $this->pid = (int)$pid;
+
+        $this->initializeObject();
     }
 
     /**
@@ -71,13 +56,13 @@ class Configuration implements ConfigurationInterface
      */
     public function initializeObject()
     {
-        $settingsService = $this->objectManager->get(
+        $settingsService = GeneralUtility::makeInstance(
             SettingsService::class,
             $this->pid
         );
         $this->settings = $settingsService->getTypoScriptSettings();
 
-        $this->configuration = $this->objectManager->get(
+        $this->configuration = GeneralUtility::makeInstance(
             'FelixNagel\\Beautyofcode\\Highlighter\\Configuration\\'.$this->settings['library'],
             $this->settings
         );

@@ -28,9 +28,4 @@ $EM_CONF[$_EXTKEY] = [
             't3editor' => '',
         ],
     ],
-    'autoload' => [
-        'psr-4' => [
-            'FelixNagel\\Beautyofcode\\' => 'Classes',
-        ],
-    ],
 ];

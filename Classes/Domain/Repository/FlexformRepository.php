@@ -10,7 +10,6 @@ namespace FelixNagel\Beautyofcode\Domain\Repository;
  */
 
 use TYPO3\CMS\Core\Service\FlexFormService;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use FelixNagel\Beautyofcode\Domain\Model\Flexform;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -30,13 +29,6 @@ class FlexformRepository
     protected $flexformService;
 
     /**
-     * ObjectManager.
-     *
-     * @var ObjectManagerInterface
-     */
-    protected $objectManager;
-
-    /**
      * Injects the flexform service and populates flexform values from `pi_flexform`.
      *
      * @param FlexFormService $flexformService FlexFormService
@@ -45,17 +37,6 @@ class FlexformRepository
     {
         $this->flexformService = $flexformService;
     }
-
-    /**
-     * InjectObjetManager.
-     *
-     * @param ObjectManagerInterface $objectManager ObjectManager
-     */
-    public function injectObjectManager(ObjectManagerInterface $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
 
     /**
      * ReconstituteByContentObject.
@@ -70,7 +51,7 @@ class FlexformRepository
 
         $flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
-        $flexform = $this->objectManager->getEmptyObject(Flexform::class);
+        $flexform = GeneralUtility::makeInstance(Flexform::class);
         $flexform->initializeObject($flexformValues);
 
         return $flexform;

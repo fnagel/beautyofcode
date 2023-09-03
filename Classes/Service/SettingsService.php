@@ -44,48 +44,22 @@ class SettingsService
      */
     protected $extensionKey = 'tx_beautyofcode';
 
-
     /**
      * @var mixed
      */
     protected $typoScriptSettings = null;
 
     /**
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    /**
-     * Legacy alias of \TYPO3\CMS\Extbase\Service\TypoScriptService
-     *
-     * @var TypoScriptService
-     */
-    protected $typoScriptService;
-
-    /**
      * Page uid for TS generation in BE context
-     *
-     * @var int
      */
-    protected $pid = 0;
+    protected int $pid = 0;
 
     /**
      * SettingsService constructor.
      */
-    public function __construct(int $pid)
+    public function __construct(int $pid = 0)
     {
         $this->pid = $pid;
-    }
-
-    public function injectConfigurationManager(
-        ConfigurationManagerInterface $configurationManager
-    ) {
-        $this->configurationManager = $configurationManager;
-    }
-
-    public function injectTypoScriptService(TypoScriptService $typoScriptService)
-    {
-        $this->typoScriptService = $typoScriptService;
     }
 
     /**
@@ -99,7 +73,8 @@ class SettingsService
     {
         if ($this->typoScriptSettings === null) {
             if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-                $this->typoScriptSettings = $this->configurationManager->getConfiguration(
+                $configuration = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
+                $this->typoScriptSettings = $configuration->getConfiguration(
                     ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                     $this->extensionName,
                     $this->extensionKey
@@ -152,7 +127,7 @@ class SettingsService
         $templateService->generateConfig();
 
         if (!empty($templateService->setup['plugin.'][$this->extensionKey.'.'])) {
-            return $this->typoScriptService->convertTypoScriptArrayToPlainArray(
+            return GeneralUtility::makeInstance(TypoScriptService::class)->convertTypoScriptArrayToPlainArray(
                 $templateService->setup['plugin.'][$this->extensionKey.'.']
             );
         }

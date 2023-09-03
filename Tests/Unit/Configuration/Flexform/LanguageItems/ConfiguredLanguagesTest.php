@@ -11,6 +11,7 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItem
 
 use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
 use FelixNagel\Beautyofcode\Service\SettingsService;
+use FelixNagel\Beautyofcode\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
@@ -50,10 +51,10 @@ class ConfiguredLanguagesTest extends UnitTestCase
         /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
         $settingsServiceMock = $this->createMock(SettingsService::class);
 
-        /* @var $objectManagerMock ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $objectManagerMock = $this->createMock(ObjectManagerInterface::class);
+        /* @var $objectManagerMock GeneralUtility|\PHPUnit_Framework_MockObject_MockObject */
+        $objectManagerMock = $this->createMock(GeneralUtility::class);
         $objectManagerMock
-            ->expects($this->any())->method('get')
+            ->expects($this->any())->method('makeInstance')
             ->with(
                 $this->equalTo(SettingsService::class),
                 $this->equalTo(1)

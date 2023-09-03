@@ -14,6 +14,11 @@ services:
   FelixNagel\Beautyofcode\Domain\Model\Flexform:
     public: true
 
+  FelixNagel\Beautyofcode\Backend\EventListener\ContentElementPreviewListener:
+    tags:
+      - name: event.listener
+        identifier: 'beautyofcode/preview-rendering'
+
   # Interface implementations
   FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface:
     alias: FelixNagel\Beautyofcode\Highlighter\Configuration

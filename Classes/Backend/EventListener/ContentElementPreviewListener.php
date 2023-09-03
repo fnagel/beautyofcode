@@ -1,6 +1,6 @@
 <?php
 
-namespace FelixNagel\Beautyofcode\Hooks;
+namespace FelixNagel\Beautyofcode\Backend\EventListener;
 
 /**
  * This file is part of the "beautyofcode" Extension for TYPO3 CMS.
@@ -9,56 +9,54 @@ namespace FelixNagel\Beautyofcode\Hooks;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Backend\View\PageLayoutView;
-use TYPO3\CMS\Backend\View\PageLayoutViewDrawItemHookInterface;
+use TYPO3\CMS\Core\Domain\ConsumableString;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
+use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
 
 /**
- * Hook class for PageLayoutView hook `list_type_Info`.
+ * Backend preview
  *
  * @author Felix Nagel <info@felixnagel.com>
- *
- * @todo Remove this when TYPO3 v11 is no longer needed!
  */
-class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
+class ContentElementPreviewListener
 {
     /**
      * Reference to translation catalogue.
      *
      * @var string
      */
-    public const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf';
+    protected const TRANSLATION_CATALOGUE = 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf';
 
     /**
      * Maximum textarea lines.
      *
      * @var int
      */
-    public const MAX_TEXTAREA_LINES = 15;
+    protected const MAX_TEXTAREA_LINES = 15;
 
     /**
      * Maximum textarea height.
      *
      * @var int
      */
-    public const MAX_TEXTAREA_HEIGHT = 150;
+    protected const MAX_TEXTAREA_HEIGHT = 150;
 
     /**
      * Small textarea factor.
      *
      * @var int
      */
-    public const SMALL_TEXTAREA_FACTOR = 20;
+    protected const SMALL_TEXTAREA_FACTOR = 20;
 
     /**
      * Small textarea addition.
      *
      * @var int
      */
-    public const SMALL_TEXTAREA_ADDITION = 5;
+    protected const SMALL_TEXTAREA_ADDITION = 5;
 
     /**
      * Flexform data.
@@ -72,50 +70,43 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
      */
     protected $textareaHeight = '';
 
-    /**
-     * Preprocesses the preview rendering of a content element.
-     *
-     * @param PageLayoutView $parentObject  Calling parent object
-     * @param bool           $drawItem      Whether to draw the item using the default functionalities
-     * @param string         $headerContent Header content
-     * @param string         $itemContent   Item content
-     * @param array          $row           Record row of tt_content
-     */
-    public function preProcess(PageLayoutView &$parentObject, &$drawItem, &$headerContent, &$itemContent, array &$row)
+
+    public function __invoke(PageContentPreviewRenderingEvent $event): void
     {
-        if ($row['CType'] === 'beautyofcode_contentrenderer') {
-            $drawItem = false;
+        if ($event->getTable() !== 'tt_content') {
+            return;
+        }
 
-            $this->flexformData = GeneralUtility::xml2array($row['pi_flexform']);
+        if ($event->getRecord()['CType'] === 'beautyofcode_contentrenderer') {
+            $content = $this->getExtensionSummary($event->getRecord());
 
-            $uid = $row['uid'];
-
-            if (is_array($this->flexformData)) {
-                $this->buildHeaderContent($headerContent, $uid);
-
-                $itemContent = $this->buildCodeLanguageHeader();
-
-                $itemContent .= $this->buildCodePreview($uid, $row['bodytext']);
+            if ($content !== null) {
+                $event->setPreviewContent($content);
             }
         }
     }
 
+    public function getExtensionSummary(array $data = []): ?string
+    {
+        $this->flexformData = GeneralUtility::xml2array($data['pi_flexform']);
+        $uid = (int)$data['uid'];
+
+        if (is_array($this->flexformData)) {
+            return $this->buildHeaderContent($uid).$this->buildCodeLanguageHeader().$this->buildCodePreview($uid, $data['bodytext']);
+        }
+
+        return null;
+    }
+
     /**
      * Builds the header content
-     *
-     * @param string $headerContent
-     * @param int $uid
      */
-    protected function buildHeaderContent(&$headerContent, $uid)
+    protected function buildHeaderContent(int $uid): string
     {
         $label = $this->buildLabelHeader();
+        $editLink = $this->getBackendUrl($uid);
 
-        if (empty($headerContent)) {
-            $editLink = $this->getBackendUrl($uid);
-            $headerContent = sprintf('<strong><a href="%s">%s</strong></a>', $editLink, $label);
-        } else {
-            $headerContent .= $label;
-        }
+        return sprintf('<strong><a href="%s">%s</strong></a>', $editLink, $label);
     }
 
     /**
@@ -197,9 +188,14 @@ class PageLayoutViewHooks implements PageLayoutViewDrawItemHookInterface
                 $uid,
                 $this->textareaHeight
             );
+            $nonce = '';
+            $nonceAttribute = $GLOBALS['TYPO3_REQUEST']->getAttribute('nonce');
+            if ($nonceAttribute instanceof ConsumableString) {
+                $nonce = $nonceAttribute->consume();
+            }
             $preview .= sprintf(
                 '
-				<script type="text/javascript">
+				<script type="text/javascript" nonce="'.$nonce.'">
 					var
 						ta_hidden%s = document.getElementById("ta_hidden%s"),
 						ta%s = document.getElementById("ta%s");

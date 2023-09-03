@@ -1,12 +1,12 @@
 <?php
 
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 use FelixNagel\Beautyofcode\Controller\ContentController;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
 use FelixNagel\Beautyofcode\Hooks\PageLayoutViewHooks;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
-use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 defined('TYPO3') || die();
 
@@ -26,6 +26,7 @@ call_user_func(static function ($packageKey) {
     );
 
     // BE preview
+    // @todo Remove this when TYPO3 v11 is no longer needed!
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
         PageLayoutViewHooks::class;
 

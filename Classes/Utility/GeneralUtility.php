@@ -2,14 +2,14 @@
 
 namespace FelixNagel\Beautyofcode\Utility;
 
-use TYPO3\CMS\Core\Core\Environment;
-
 /**
  * This file is part of the "beautyofcode" Extension for TYPO3 CMS.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
  * Utility class for beautyofcode.
@@ -41,10 +41,8 @@ class GeneralUtility
         }
 
         if ($isExtensionNotation || $isFileNotation) {
-            $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
-            $absolutePath = is_null($absolutePath) ? '' : substr(
-                $absolutePath,
-                strlen(Environment::getPublicPath() . '/')
+            $absolutePath = PathUtility::getAbsoluteWebPath(
+                \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir)
             );
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;

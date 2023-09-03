@@ -3,25 +3,38 @@
 
 <f:if condition="{settings.theme}">
 	<f:then>
-		<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/themes/')}prism-{settings.theme}.css" />
+		<f:asset.css identifier="beautyofcode-prism-css-theme"
+								 href="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/themes/prism-{settings.theme}.css"/>
 	</f:then>
 	<f:else>
-		<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/themes/')}prism.css" />
+		<f:asset.css identifier="beautyofcode-prism-css"
+								 href="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/themes/prism.css"/>
 	</f:else>
 </f:if>
 <f:if condition="{settings.defaults.gutter}">
-	<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.css" />
+	<f:asset.css identifier="beautyofcode-prism-css-line-numbers"
+							 href="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/prism-line-numbers.css"/>
 </f:if>
-<boc:pageRenderer.addCssFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.css" />
+<f:asset.css identifier="beautyofcode-prism-css-line-highlight"
+						 href="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/prism-line-highlight.css"/>
 
 <f:render section="Main" />
 
-<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-core.js" />
+<f:asset.script identifier="beautyofcode-prism-js-core"
+								src="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/prism-core.js" />
 <f:if condition="{settings.defaults.gutter}">
-	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/')}prism-line-numbers.js" />
+	<f:asset.script identifier="beautyofcode-prism-js-line-numbers"
+									src="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-numbers/prism-line-numbers.js" />
 </f:if>
-<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/')}prism-line-highlight.js" />
+<f:asset.script identifier="beautyofcode-prism-js-highlight"
+								src="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/plugins/line-highlight/prism-line-highlight.js" />
 <f:for each="{boc:explode(value: settings.brushes)}" as="brush">
-	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}.js" />
-	<boc:pageRenderer.addJsFooterFile file="{boc:makeAbsolute(url: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/')}prism-{brush}-extras.js" />
+	<f:if condition="{boc:fileExists(file: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/prism-{brush}.js')}">
+		<f:asset.script identifier="beautyofcode-prism-js-brush-{brush}"
+										src="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/prism-{brush}.js" />
+	</f:if>
+	<f:if condition="{boc:fileExists(file: 'EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/prism-{brush}-extras.js')}">
+		<f:asset.script identifier="beautyofcode-prism-js-brush-{brush}-extra"
+										src="EXT:beautyofcode/Resources/Public/Javascript/vendor/prism/components/prism-{brush}-extras.js" />
+	</f:if>
 </f:for>

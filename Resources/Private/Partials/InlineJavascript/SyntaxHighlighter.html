@@ -48,7 +48,7 @@
 	<f:section name="Syntaxhighlighter">
 		SyntaxHighlighter.autoloader(
 		<f:for each="{brushes}" key="cssTag" as="brushResource" iteration="i">
-			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag}	/{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}{brushResource}'
+			{f:if(condition: '{i.index} > 0', then: ',')}'{cssTag}	{boc:standaloneAssetPath(baseUrl: '{boc:makeAbsolute(url: settings.baseUrl)}', resourcePath: settings.scripts, type: 'scripts')}{brushResource}'
 		</f:for>
 		);
 

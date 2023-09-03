@@ -15,6 +15,25 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+5.x to 6.0
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 12 LTS
+- Added PHP 8.2 support
+- Removed support for TYPO3 10.x
+- Support for composer installer v4 (/_assets folder)
+- Removed custom asset view helpers (now using core VHs instead)
+- Improved code quality / CGL
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+- Update your templates (if overridden)
+
+
 5.1 to 5.2
 ^^^^^^^^^^
 

@@ -23,13 +23,9 @@ class GeneralUtility
      *
      * If the path can successfully be resolved to an internal (relative to PATH_site / publicPath)
      * path, the PATH_site / publicPath part is removed and the resulting path is returned.
-     * If its an external path, the input parameter is returned unchanged.
-     *
-     * @param string $dir Path to directory
-     *
-     * @return string
+     * If it's an external path, the input parameter is returned unchanged.
      */
-    public static function makeAbsolutePath($dir)
+    public static function makeAbsolutePath(string $dir): string
     {
         $absolutePath = '';
 
@@ -41,9 +37,8 @@ class GeneralUtility
         }
 
         if ($isExtensionNotation || $isFileNotation) {
-            $absolutePath = PathUtility::getAbsoluteWebPath(
-                \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir)
-            );
+            $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
+            $absolutePath = empty($absolutePath) ? '' : PathUtility::getAbsoluteWebPath($absolutePath);
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;
         }

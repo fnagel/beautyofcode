@@ -54,10 +54,7 @@
     "psr-4": {
       "FelixNagel\\Beautyofcode\\Tests\\": "Tests/",
       "TYPO3\\CMS\\Core\\Tests\\": ".Build/Web/typo3/sysext/core/Tests/"
-    },
-    "files": [
-      "./class.ext_update.php"
-    ]
+    }
   },
   "config": {
     "vendor-dir": ".Build/Web/vendor",

@@ -15,7 +15,7 @@ call_user_func(static function ($packageKey) {
         $packageKey,
         'ContentRenderer',
         [
-			ContentController::class => 'render',
+            ContentController::class => 'render',
         ],
         [],
         ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT

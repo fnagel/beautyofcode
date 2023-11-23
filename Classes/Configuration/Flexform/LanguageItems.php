@@ -146,7 +146,7 @@ class LanguageItems
             ->from('tt_content')
             ->where(
                 $queryBuilder->expr()->eq(
-                'uid',
+                    'uid',
                     $queryBuilder->createNamedParameter($recordUid, \PDO::PARAM_INT)
                 )
             )

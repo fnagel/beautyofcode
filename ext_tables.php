@@ -9,7 +9,7 @@ defined('TYPO3') || die();
 // Add icons to registry
 $iconRegistry = GeneralUtility::makeInstance(IconRegistry::class);
 $iconRegistry->registerIcon(
-	'extensions-beautyofcode',
-	SvgIconProvider::class,
-	['source' => 'EXT:beautyofcode/Resources/Public/Icons/Extension.svg']
+    'extensions-beautyofcode',
+    SvgIconProvider::class,
+    ['source' => 'EXT:beautyofcode/Resources/Public/Icons/Extension.svg']
 );

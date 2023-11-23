@@ -26,7 +26,7 @@ class FlexformTest extends UnitTestCase
     /**
      * ConfigurationInterface.
      *
-     * @var ConfigurationInterface|\PHPUnit_Framework_MockObject_MockObject
+     * @var ConfigurationInterface
      */
     protected $highlighterConfigurationMock;
 
@@ -37,7 +37,7 @@ class FlexformTest extends UnitTestCase
 
     protected function setUp(): void
     {
-        $this->highlighterConfigurationMock = $this->createMock();
+        $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
         $this->flexform = new Flexform($this->highlighterConfigurationMock);
 
@@ -55,7 +55,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())
-            ->method('getClassAttributeString')->will($this->returnValue(''));
+            ->method('getClassAttributeString')->willReturn('');
 
         $this->flexform->setCCollapse('');
 
@@ -69,7 +69,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())
-            ->method('getClassAttributeString')->will($this->returnValue(''));
+            ->method('getClassAttributeString')->willReturn('');
 
         $this->flexform->setCGutter('auto');
 
@@ -83,7 +83,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())
-            ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3]'));
+            ->method('getClassAttributeString')->willReturn('highlight: [1,2,3]');
 
         $this->assertStringContainsString('highlight: [', $this->flexform->getClassAttributeString());
     }
@@ -95,7 +95,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())
-            ->method('getClassAttributeString')->will($this->returnValue('highlight: [1,2,3,8]'));
+            ->method('getClassAttributeString')->willReturn('highlight: [1,2,3,8]');
 
         $this->assertStringContainsString('highlight: [1,2,3,8]', $this->flexform->getClassAttributeString());
     }
@@ -107,7 +107,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())->method('getAutoloaderBrushMap')
-            ->will($this->returnValue(['plain' => 'Plain']));
+            ->willReturn(['plain' => 'Plain']);
 
         $brushes = $this->flexform->getAutoloaderBrushMap();
 
@@ -121,7 +121,7 @@ class FlexformTest extends UnitTestCase
     {
         $this->highlighterConfigurationMock
             ->expects($this->once())->method('getAutoloaderBrushMap')
-            ->will($this->returnValue(['typoscript' => 'Typoscript', 'actionscript3' => 'AS3']));
+            ->willReturn(['typoscript' => 'Typoscript', 'actionscript3' => 'AS3']);
 
         $brushes = $this->flexform->getAutoloaderBrushMap();
 

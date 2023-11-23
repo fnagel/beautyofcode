@@ -21,15 +21,9 @@ use FelixNagel\Beautyofcode\Utility\GeneralUtility;
  */
 class GeneralUtilityTest extends FunctionalTestCase
 {
-    /**
-     * @var array
-     */
-    protected $coreExtensionsToLoad = ['t3editor'];
+    protected array $coreExtensionsToLoad = ['t3editor'];
 
-    /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
+    protected array $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
      * @test

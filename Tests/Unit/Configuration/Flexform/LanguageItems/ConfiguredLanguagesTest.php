@@ -11,9 +11,8 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItem
 
 use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
 use FelixNagel\Beautyofcode\Service\SettingsService;
-use FelixNagel\Beautyofcode\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Extbase\Object\ObjectManagerInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -26,55 +25,42 @@ use FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems;
  */
 class ConfiguredLanguagesTest extends UnitTestCase
 {
-    protected $resetSingletonInstances = true;
+    protected bool $resetSingletonInstances = true;
 
     /**
      * @var LanguageItems
      */
     protected $languageItem;
 
-    protected $flexFormData = [
+    protected array $flexFormData = [
         'flexParentDatabaseRow' => [
             'uid' => 1,
             'pid' => 1,
         ],
         'items' => [
             [
-                'Plain', // TCEforms: label
-                'plain', // TCEforms: key
+                'label' => 'Plain',
+                'value' => 'plain',
             ],
         ],
     ];
 
     protected function setUp(): void
     {
-        /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
-        $settingsServiceMock = $this->createMock(SettingsService::class);
-
-        /* @var $objectManagerMock GeneralUtility|\PHPUnit_Framework_MockObject_MockObject */
-        $objectManagerMock = $this->createMock(GeneralUtility::class);
-        $objectManagerMock
-            ->expects($this->any())->method('makeInstance')
-            ->with(
-                $this->equalTo(SettingsService::class),
-                $this->equalTo(1)
-            )
-            ->will($this->returnValue($settingsServiceMock));
-
         $cacheBackendMock = new TransientMemoryBackend('Testing');
         $cacheFrontendMock = new VariableFrontend(
             'beautyofcode',
             $cacheBackendMock
         );
-        /** @var CacheManager|\PHPUnit_Framework_MockObject_MockObject $cacheManagerMock */
+        /** @var CacheManager $cacheManagerMock */
         $cacheManagerMock = $this->createMock(CacheManager::class);
         $cacheManagerMock
             ->expects($this->any())
             ->method('getCache')
-            ->with($this->equalTo('cache_beautyofcode'))
+            ->with($this->equalTo('beautyofcode'))
             ->willReturn($cacheFrontendMock);
 
-        /* @var $highlighterConfigurationMock SyntaxHighlighter|\PHPUnit_Framework_MockObject_MockObject */
+        /* @var $highlighterConfigurationMock SyntaxHighlighter */
         $highlighterConfigurationMock = $this
             ->getMockBuilder(SyntaxHighlighter::class)
             ->disableOriginalConstructor()
@@ -82,15 +68,13 @@ class ConfiguredLanguagesTest extends UnitTestCase
         $highlighterConfigurationMock
             ->expects($this->any())
             ->method('hasBrushIdentifier')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
         $highlighterConfigurationMock
             ->expects($this->any())
             ->method('getBrushIdentifierAliasAndLabel')
-            ->will($this->returnValue(['SQL / MySQL' => 'sql']));
+            ->willReturn(['sql', 'SQL / MySQL']);
 
         $this->languageItem = new LanguageItems();
-        // @extensionScannerIgnoreLine
-        $this->languageItem->injectObjectManager($objectManagerMock);
         $this->languageItem->injectCacheManager($cacheManagerMock);
         $this->languageItem->injectHighlighterConfiguration($highlighterConfigurationMock);
     }
@@ -100,9 +84,13 @@ class ConfiguredLanguagesTest extends UnitTestCase
      */
     public function configuredBrushesAreUniquelyAddedToTheReturnValue()
     {
+        /* @var $settingsServiceMock SettingsService */
+        $settingsServiceMock = $this->createMock(SettingsService::class);
+        GeneralUtility::addInstance(SettingsService::class, $settingsServiceMock);
+
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
 
-        $this->assertEquals('plain', $newConfig['items'][0][1]);
+        $this->assertEquals('plain', $newConfig['items'][0]['value']);
         $this->assertEquals(1, is_countable($newConfig['items']) ? count($newConfig['items']) : 0);
     }
 
@@ -111,7 +99,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
      */
     public function configuredBrushesAreAppendedSortedToTheReturnValue()
     {
-        /* @var $settingsServiceMock SettingsService|\PHPUnit_Framework_MockObject_MockObject */
+        /* @var $settingsServiceMock SettingsService */
         $settingsServiceMock = $this->createMock(SettingsService::class);
         $settingsServiceMock
             ->expects($this->once())
@@ -119,21 +107,10 @@ class ConfiguredLanguagesTest extends UnitTestCase
             ->with($this->equalTo('brushes'))
             ->willReturn('Sql, Python, Php');
 
-        /* @var $objectManagerMock ObjectManagerInterface|\PHPUnit_Framework_MockObject_MockObject */
-        $objectManagerMock = $this->createMock(ObjectManagerInterface::class);
-        $objectManagerMock
-            ->expects($this->any())->method('get')
-            ->with(
-                $this->equalTo(SettingsService::class),
-                $this->equalTo(1)
-            )
-            ->will($this->returnValue($settingsServiceMock));
-
-        // @extensionScannerIgnoreLine
-        $this->languageItem->injectObjectManager($objectManagerMock);
+        GeneralUtility::addInstance(SettingsService::class, $settingsServiceMock);
 
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
 
-        $this->assertEquals('plain', $newConfig['items'][0][1]);
+        $this->assertEquals('plain', $newConfig['items'][0]['value']);
     }
 }

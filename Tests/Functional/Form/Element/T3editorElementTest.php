@@ -21,18 +21,12 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class T3editorElementTest extends FunctionalTestCase
 {
-    /**
-     * @var array
-     */
-    protected $coreExtensionsToLoad = ['t3editor'];
+    protected array $coreExtensionsToLoad = ['t3editor'];
+
+    protected array $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
     /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
-
-    /**
-     * @var NodeFactory|\PHPUnit_Framework_MockObject_MockObject
+     * @var NodeFactory
      */
     protected $nodeFactoryMock;
 

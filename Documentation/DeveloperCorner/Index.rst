@@ -94,7 +94,7 @@ Run unit tests
 
    .. code-block:: bash
 
-      cd web/typo3conf/ext/beautyofcode
+      cd packages/beautyofcode
 
       composer install
 

@@ -7,6 +7,9 @@ export TYPO3_PATH_ROOT="${PWD}/Web/";
 export typo3DatabaseName="functional";
 export typo3DatabaseDriver="pdo_sqlite";
 
+# Show warnings: --display-warnings
+# Run specific test: --filter configuredBrushesAreAppendedSortedToTheReturnValue
+
 echo "";
 echo "";
 echo "### Running functional tests";

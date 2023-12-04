@@ -25,13 +25,15 @@ What you need to know:
 - Removed support for TYPO3 10.x
 - Support for composer installer v4 (/_assets folder)
 - Removed custom asset view helpers (now using core VHs instead)
+- Removed obsolete ext_update class
+- Replaced BE preview hook
 - Improved code quality / CGL
 
 How to upgrade
 """"""""""""""
 
-- Clear all caches
 - Update your templates (if overridden)
+- Clear all caches
 
 
 5.1 to 5.2

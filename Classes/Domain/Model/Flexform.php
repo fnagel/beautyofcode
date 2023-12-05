@@ -19,72 +19,50 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
  */
 class Flexform extends AbstractValueObject
 {
-    /**
-     * ConfigurationInterface.
-     *
-     * @var ConfigurationInterface
-     */
-    protected $highlighterConfiguration;
+    protected ConfigurationInterface $highlighterConfiguration;
 
     /**
      * Code label.
-     *
-     * @var string
      */
-    protected $cLabel;
+    protected string $cLabel = '';
 
     /**
      * Code language / brush.
-     *
-     * @var string
      */
-    protected $cLang;
+    protected string $cLang = '';
 
     /**
-     * Code URL / File
-     *
-     * @var string
+     * Code URL / File.
      */
-    protected $cFile;
+    protected string $cFile = '';
 
     /**
      * Code highlight lines.
-     *
-     * @var string
      */
-    protected $cHighlight;
+    protected string $cHighlight = '';
 
     /**
      * Code block collapse flag.
-     *
-     * @var string
      */
-    protected $cCollapse;
+    protected string $cCollapse = '';
 
     /**
      * Code block show gutter flag.
-     *
-     * @var string
      */
-    protected $cGutter;
+    protected string $cGutter = '';
 
     /**
      * Default settings from settings.defaults.
-     *
-     * @var array
      */
-    protected $typoscriptDefaults = [];
+    protected array $typoscriptDefaults = [];
 
     /**
      * Language / brush fallback.
-     *
-     * @var string
      */
-    protected $languageFallback = 'plain';
+    protected string $languageFallback = 'plain';
 
-    public function __construct(
-        ConfigurationInterface $highlighterConfiguration
-    ) {
+    public function __construct(ConfigurationInterface $highlighterConfiguration)
+    {
         $this->highlighterConfiguration = $highlighterConfiguration;
     }
 
@@ -93,7 +71,7 @@ class Flexform extends AbstractValueObject
      *
      * @param array $flexformValues Parsed flexform values
      */
-    public function initializeObject(array $flexformValues = [])
+    public function initializeObject(array $flexformValues = []): void
     {
         $this->cLabel = $flexformValues['cLabel'] ?? $this->cLabel;
         $this->cLang = $flexformValues['cLang'] ?? $this->cLang;
@@ -104,125 +82,75 @@ class Flexform extends AbstractValueObject
         $this->languageFallback = $flexformValues['languageFallback'] ?? $this->languageFallback;
     }
 
-    /**
-     * SetCLabel.
-     *
-     * @param string $cLabel The label
-     */
-    public function setCLabel($cLabel)
+    public function setCLabel(string $cLabel): void
     {
         $this->cLabel = $cLabel;
     }
 
-    /**
-     * GetCLabel.
-     *
-     * @return string
-     */
-    public function getCLabel()
+    public function getCLabel(): string
     {
         return $this->cLabel;
     }
 
     /**
-     * SetCLang.
-     *
      * @param string $cLang The language / brush
      */
-    public function setCLang($cLang)
+    public function setCLang(string $cLang): void
     {
         $this->cLang = $cLang;
     }
 
-    /**
-     * GetCLang.
-     *
-     * @return string
-     */
-    public function getCLang()
+    public function getCLang(): string
     {
         return $this->cLang;
     }
 
-    /**
-     * @param string $cFile
-     */
-    public function setCFile($cFile)
+    public function setCFile(string $cFile): void
     {
         $this->cFile = $cFile;
     }
 
-    /**
-     * @return string
-     */
-    public function getCFile()
+    public function getCFile(): string
     {
         return $this->cFile;
     }
 
     /**
-     * SetCHihglight.
-     *
      * @param string $cHighlight The highlight-lines configuration string
      */
-    public function setCHighlight($cHighlight)
+    public function setCHighlight(string $cHighlight): void
     {
         $this->cHighlight = $cHighlight;
     }
 
-    /**
-     * GetCHighlight.
-     *
-     * @return string
-     */
-    public function getCHighlight()
+    public function getCHighlight(): string
     {
         return $this->cHighlight;
     }
 
     /**
-     * SetCCollapse.
-     *
      * @param string $cCollapse The code block collapse flag
      */
-    public function setCCollapse($cCollapse)
+    public function setCCollapse(string $cCollapse): void
     {
         $this->cCollapse = $cCollapse;
     }
 
-    /**
-     * GetCCollapse.
-     *
-     * @return string
-     */
-    public function getCCollapse()
+    public function getCCollapse(): string
     {
         return $this->cCollapse;
     }
 
-    /**
-     * SetCGutter.
-     *
-     * @param string $cGutter The code block show gutter flag
-     */
-    public function setCGutter($cGutter)
+    public function setCGutter(string $cGutter): void
     {
         $this->cGutter = $cGutter;
     }
 
-    /**
-     * GetCGutter.
-     *
-     * @return string
-     */
-    public function getCGutter()
+    public function getCGutter(): string
     {
         return $this->cGutter;
     }
 
-    /**
-     * GetIsGutterActive.
-     */
     public function getIsGutterActive(): bool
     {
         $isOffForInstance = '0' === $this->cGutter;
@@ -241,44 +169,27 @@ class Flexform extends AbstractValueObject
         return false;
     }
 
-    /**
-     * SetTyposcriptDefaults.
-     *
-     * @param array $typoscriptDefaults TypoScript defaults
-     */
-    public function setTyposcriptDefaults($typoscriptDefaults = [])
+    public function setTyposcriptDefaults(array $typoscriptDefaults = []): void
     {
         $this->typoscriptDefaults = $typoscriptDefaults;
     }
 
-    /**
-     * GetLanguage.
-     *
-     * @return string
-     */
-    public function getLanguage()
+    public function getLanguage(): string
     {
-        $language = $this->cLang ? $this->cLang : $this->languageFallback;
+        $language = $this->cLang ?: $this->languageFallback;
 
         return $this->highlighterConfiguration->getFailSafeBrushAlias($language);
     }
 
-    /**
-     * GetClassAttributeString.
-     *
-     * @return string
-     */
-    public function getClassAttributeString()
+    public function getClassAttributeString(): string
     {
         return $this->highlighterConfiguration->getClassAttributeString($this);
     }
 
     /**
      * Returns an array of brush CSS name + ressource file name.
-     *
-     * @return array
      */
-    public function getAutoloaderBrushMap()
+    public function getAutoloaderBrushMap(): array
     {
         return $this->highlighterConfiguration->getAutoloaderBrushMap();
     }

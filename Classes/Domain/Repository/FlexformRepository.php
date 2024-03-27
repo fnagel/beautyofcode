@@ -47,10 +47,12 @@ class FlexformRepository
      */
     public function reconstituteByContentObject(ContentObjectRenderer $contentObject)
     {
+        // @extensionScannerIgnoreLine
         $flexformString = $contentObject->data['pi_flexform'];
 
         $flexformValues = $this->flexformService->convertFlexFormContentToArray($flexformString);
 
+        /* @var $flexform Flexform */
         $flexform = GeneralUtility::makeInstance(Flexform::class);
         $flexform->initializeObject($flexformValues);
 

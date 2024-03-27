@@ -45,8 +45,7 @@ class ContentController extends ActionController
      */
     public function renderAction(): ResponseInterface
     {
-        // @extensionScannerIgnoreLine
-        $contentObject = $this->configurationManager->getContentObject();
+        $contentObject = $this->request->getAttribute('currentContentObject');
         $contentElement = $contentObject->data;
         $flexform = $this->flexformRepository->reconstituteByContentObject($contentObject);
         $flexform->setTyposcriptDefaults($this->settings['defaults']);

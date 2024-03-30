@@ -25,11 +25,6 @@ call_user_func(static function ($packageKey) {
         '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . $packageKey . '/Configuration/TSconfig/page.tsconfig">'
     );
 
-    // BE preview
-    // @todo Remove this when TYPO3 v11 is no longer needed!
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['cms/layout/class.tx_cms_layout.php']['tt_content_drawItem'][] =
-        PageLayoutViewHooks::class;
-
     $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
     // Cache registration
     if (!array_key_exists($packageKey, $cacheConfigurations) || !is_array($cacheConfigurations[$packageKey])) {

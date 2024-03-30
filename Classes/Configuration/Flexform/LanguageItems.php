@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\Configuration\Flexform;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Doctrine\DBAL\ParameterType;
 use FelixNagel\Beautyofcode\Highlighter\Configuration;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
@@ -147,7 +148,7 @@ class LanguageItems
             ->where(
                 $queryBuilder->expr()->eq(
                     'uid',
-                    $queryBuilder->createNamedParameter($recordUid, \PDO::PARAM_INT)
+                    $queryBuilder->createNamedParameter($recordUid, ParameterType::INTEGER)
                 )
             )
             ->executeQuery()

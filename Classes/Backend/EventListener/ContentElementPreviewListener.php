@@ -88,6 +88,10 @@ class ContentElementPreviewListener
 
     public function getExtensionSummary(array $data = []): ?string
     {
+        if ($data['pi_flexform'] === null) {
+            return null;
+        }
+
         $this->flexformData = GeneralUtility::xml2array($data['pi_flexform']);
         $uid = (int)$data['uid'];
 

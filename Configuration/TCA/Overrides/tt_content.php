@@ -32,14 +32,12 @@ $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem
 
 $configuration = GeneralUtility::makeInstance(ExtensionConfiguration::class)->get('beautyofcode');
 
-if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1
-    && ExtensionManagementUtility::isLoaded('t3editor')
-) {
+if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'] == 1) {
     $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides'] = [
         'bodytext' => [
             'config' => [
                 'format' => T3editorElement::T3EDITOR_MODE_DEFAULT,
-                'renderType' => 't3editor',
+                'renderType' => 'codeEditor',
             ],
         ],
     ];

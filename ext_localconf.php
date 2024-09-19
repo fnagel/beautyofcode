@@ -39,9 +39,9 @@ call_user_func(static function ($packageKey) {
         $cacheConfigurations[$packageKey]['frontend'] = VariableFrontend::class;
     }
 
-    // Dynamic changing of t3editor format
+    // Dynamic changing of code editor format
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1491758504] = [
-        'nodeName' => 't3editor',
+        'nodeName' => 'codeEditor',
         'priority' => '70',
         'class' => T3editorElement::class,
     ];

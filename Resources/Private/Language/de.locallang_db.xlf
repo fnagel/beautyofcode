@@ -68,8 +68,8 @@
 				<target>Dieses Plugin bietet umfangreiche Funktionen um Quellcode anzuzeigen.</target>
 			</trans-unit>
 			<trans-unit id="enable_t3editor">
-				<source>Enable t3editor: Use syntax editor with syntax highlighting in Backend (t3editor)</source>
-				<target>Benutze t3editor: Benutze Syntax Highlighting im Backend (t3editor)</target>
+				<source>Enable code editor: Use editor with syntax highlighting in Backend (former EXT:t3editor)</source>
+				<target>Benutze code editor: Benutze Syntax Highlighting im Backend (ehenmals EXT:t3editor)</target>
 			</trans-unit>
 			<trans-unit id="content_element.beautyofcode_contentrenderer">
 				<source>beautyofcode - Syntaxhighlighter</source>

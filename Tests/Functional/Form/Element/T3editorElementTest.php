@@ -21,7 +21,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
  */
 class T3editorElementTest extends FunctionalTestCase
 {
-    protected array $coreExtensionsToLoad = ['t3editor'];
+    protected array $coreExtensionsToLoad = ['backend'];
 
     protected array $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 

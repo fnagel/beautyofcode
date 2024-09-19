@@ -52,7 +52,7 @@
 				<source>This plugin provides state-of-the-art, feature rich syntax highlighting.</source>
 			</trans-unit>
 			<trans-unit id="enable_t3editor">
-				<source>Enable t3editor: Use syntax editor with syntax highlighting in Backend (t3editor)</source>
+				<source>Enable code editor: Use editor with syntax highlighting in Backend (former EXT:t3editor)</source>
 			</trans-unit>
 			<trans-unit id="content_element.beautyofcode_contentrenderer">
 				<source>beautyofcode - Syntaxhighlighter</source>

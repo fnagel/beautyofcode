@@ -10,11 +10,13 @@ namespace FelixNagel\Beautyofcode\Form\Element;
  */
 
 /**
- * t3editor FormEngine widget.
+ * Code editor FormEngine widget.
+ *
+ * See https://docs.typo3.org/m/typo3/reference-coreapi/main/en-us/ApiOverview/CodeEditor/Index.html
  *
  * @author Felix Nagel <info@felixnagel.com>
  */
-class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
+class T3editorElement extends \TYPO3\CMS\Backend\Form\Element\CodeEditorElement
 {
     /**
      * @var string
@@ -22,24 +24,24 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
     public const T3EDITOR_MODE_DEFAULT = 'xml';
 
     /**
-     * Map ext:t3editor modes on beautyofcode brush aliases.
-     *
-     * @var array
+     * Map code editor modes on our brush aliases.
      */
-    protected $brushModeMap = [
+    protected array $brushModeMap = [
         'markup' => 'xml',
         'css' => 'css',
         'javascript' => 'javascript',
         'php' => 'php',
         'typoscript' => 'typoscript',
+        'sql' => 'sql',
     ];
 
-    protected $allowedModes = [
+    protected array $allowedModes = [
         'xml',
         'css',
         'javascript',
         'php',
-        'typoscript'
+        'typoscript',
+        'sql',
     ];
 
     /**
@@ -57,7 +59,7 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
     }
 
     /**
-     * Dynamic update of the t3editor format.
+     * Dynamic update of the code editor format.
      */
     protected function determineMode(): ?string
     {
@@ -90,14 +92,10 @@ class T3editorElement extends \TYPO3\CMS\T3editor\Form\Element\T3editorElement
 
     /**
      * Flags if the current element is a beautyofcode plugin.
-     *
-     * @return bool
      */
-    protected function isBeautyOfCodeElement()
+    protected function isBeautyOfCodeElement(): bool
     {
-        return
-            $this->data['tableName'] === 'tt_content' &&
-            current($this->data['databaseRow']['CType']) === 'beautyofcode_contentrenderer'
-        ;
+        return $this->data['tableName'] === 'tt_content' &&
+            current($this->data['databaseRow']['CType']) === 'beautyofcode_contentrenderer';
     }
 }

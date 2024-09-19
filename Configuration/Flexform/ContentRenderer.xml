@@ -1,134 +1,118 @@
 <?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
 <T3DataStructure>
-	<meta>
-		<langDisable>1</langDisable>
-	</meta>
-	<sheets>
-		<sDEF>
-			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel</sheetTitle>
-				</TCEforms>
-				<type>array</type>
-				<el>
-					<cLabel>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
-							<config>
-								<type>input</type>
-								<size>50</size>
-								<max>200</max>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
-					</cLabel>
-					<cLang>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
-										<numIndex index="1">plain</numIndex>
-									</numIndex>
-								</items>
-								<itemsProcFunc>FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
-							</config>
-						</TCEforms>
-					</cLang>
-					<cFile>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:file</label>
-							<config>
-								<type>input</type>
-								<size>50</size>
-								<max>200</max>
-								<eval>trim</eval>
-								<wizards>
-									<link>
-										<type>popup</type>
-										<module>
-											<name>wizard_link</name>
-										</module>
-										<params>
-											<blindLinkOptions>folder,mail,page</blindLinkOptions>
-										</params>
-									</link>
-								</wizards>
-							</config>
-						</TCEforms>
-					</cFile>
-				</el>
-			</ROOT>
-		</sDEF>
-		<sOPTIONS>
-			<ROOT>
-				<TCEforms>
-					<sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel.options</sheetTitle>
-				</TCEforms>
-				<type>array</type>
-				<el>
-					<cHighlight>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
-							<config>
-								<type>input</type>
-								<size>50</size>
-								<max>100</max>
-								<eval>trim</eval>
-							</config>
-						</TCEforms>
-					</cHighlight>
-					<cCollapse>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
-										<numIndex index="1">auto</numIndex>
-									</numIndex>
-									<numIndex index="1">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-									<numIndex index="2">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-								</items>
-							</config>
-						</TCEforms>
-					</cCollapse>
-					<cGutter>
-						<TCEforms>
-							<label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
-							<config>
-								<type>select</type>
-								<renderType>selectSingle</renderType>
-								<items>
-									<numIndex index="0">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
-										<numIndex index="1">auto</numIndex>
-									</numIndex>
-									<numIndex index="1">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
-										<numIndex index="1">1</numIndex>
-									</numIndex>
-									<numIndex index="2">
-										<numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
-										<numIndex index="1">0</numIndex>
-									</numIndex>
-								</items>
-							</config>
-						</TCEforms>
-					</cGutter>
-				</el>
-			</ROOT>
-		</sOPTIONS>
-	</sheets>
+    <meta>
+        <langDisable>1</langDisable>
+    </meta>
+    <sheets>
+        <sDEF>
+            <ROOT>
+                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel</sheetTitle>
+                <type>array</type>
+                <el>
+                    <cLabel>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
+                        <config>
+                            <type>input</type>
+                            <size>50</size>
+                            <max>200</max>
+                            <eval>trim</eval>
+                        </config>
+                    </cLabel>
+                    <cLang>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</numIndex>
+                                    <numIndex index="1">plain</numIndex>
+                                </numIndex>
+                            </items>
+                            <itemsProcFunc>FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems->getConfiguredLanguages</itemsProcFunc>
+                        </config>
+                    </cLang>
+                    <cFile>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:file</label>
+                        <config>
+                            <type>input</type>
+                            <size>50</size>
+                            <max>200</max>
+                            <eval>trim</eval>
+                            <wizards>
+                                <link>
+                                    <type>popup</type>
+                                    <module>
+                                        <name>wizard_link</name>
+                                    </module>
+                                    <params>
+                                        <blindLinkOptions>folder,mail,page</blindLinkOptions>
+                                    </params>
+                                </link>
+                            </wizards>
+                        </config>
+                    </cFile>
+                </el>
+            </ROOT>
+        </sDEF>
+        <sOPTIONS>
+            <ROOT>
+                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel.options</sheetTitle>
+                <type>array</type>
+                <el>
+                    <cHighlight>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
+                        <config>
+                            <type>input</type>
+                            <size>50</size>
+                            <max>100</max>
+                            <eval>trim</eval>
+                        </config>
+                    </cHighlight>
+                    <cCollapse>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
+                                    <numIndex index="1">auto</numIndex>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
+                                    <numIndex index="1">1</numIndex>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
+                                    <numIndex index="1">0</numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </cCollapse>
+                    <cGutter>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
+                        <config>
+                            <type>select</type>
+                            <renderType>selectSingle</renderType>
+                            <items>
+                                <numIndex index="0">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</numIndex>
+                                    <numIndex index="1">auto</numIndex>
+                                </numIndex>
+                                <numIndex index="1">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</numIndex>
+                                    <numIndex index="1">1</numIndex>
+                                </numIndex>
+                                <numIndex index="2">
+                                    <numIndex index="0">LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</numIndex>
+                                    <numIndex index="1">0</numIndex>
+                                </numIndex>
+                            </items>
+                        </config>
+                    </cGutter>
+                </el>
+            </ROOT>
+        </sOPTIONS>
+    </sheets>
 </T3DataStructure>

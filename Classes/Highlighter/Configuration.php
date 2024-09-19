@@ -56,10 +56,7 @@ class Configuration implements ConfigurationInterface
      */
     public function initializeObject()
     {
-        $settingsService = GeneralUtility::makeInstance(
-            SettingsService::class,
-            $this->pid
-        );
+        $settingsService = SettingsService::create($this->pid);
         $this->settings = $settingsService->getTypoScriptSettings();
 
         $this->configuration = GeneralUtility::makeInstance(

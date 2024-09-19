@@ -200,9 +200,9 @@ class LanguageItems
      *
      * @return SettingsService
      */
-    public function getSettingsService($pid = 0)
+    public function getSettingsService(int $pid = 0)
     {
-        return GeneralUtility::makeInstance(SettingsService::class, $pid);
+        return SettingsService::create($pid);
     }
 
     /**

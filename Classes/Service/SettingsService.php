@@ -10,17 +10,13 @@ namespace FelixNagel\Beautyofcode\Service;
  */
 
 use Psr\Http\Message\ServerRequestInterface;
-use TYPO3\CMS\Core\Context\Context;
-use TYPO3\CMS\Core\Routing\PageArguments;
-use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Configuration\Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Http\ApplicationType;
-use TYPO3\CMS\Frontend\Authentication\FrontendUserAuthentication;
-use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 
 /**
  * Provide a way to get the configuration just everywhere.
@@ -54,9 +50,23 @@ class SettingsService
     /**
      * SettingsService constructor.
      */
-    public function __construct(int $pid = 0)
+    public function __construct(
+        protected readonly ConfigurationManagerInterface $configurationManager,
+        protected readonly TypoScriptService $typoScriptService,
+        protected readonly BackendConfigurationManager $backendConfigurationManager,
+    ) {
+    }
+
+    public function setPid(int $pid): self
     {
         $this->pid = $pid;
+
+        return $this;
+    }
+
+    public static function create(int $pid = 0): self
+    {
+        return GeneralUtility::makeInstance(SettingsService::class)->setPid($pid);
     }
 
     /**
@@ -66,8 +76,7 @@ class SettingsService
     {
         if ($this->typoScriptSettings === null) {
             if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
-                $configuration = GeneralUtility::makeInstance(ConfigurationManagerInterface::class);
-                $this->typoScriptSettings = $configuration->getConfiguration(
+                $this->typoScriptSettings = $this->configurationManager->getConfiguration(
                     ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                     $this->extensionName,
                     $this->extensionKey
@@ -76,8 +85,9 @@ class SettingsService
                 $setup = $this->generateTypoScript($this->pid, $GLOBALS['TYPO3_REQUEST']);
 
                 if (!empty($setup['plugin.'][$this->extensionKey.'.']['settings.'])) {
-                    $this->typoScriptSettings = GeneralUtility::makeInstance(TypoScriptService::class)
-                        ->convertTypoScriptArrayToPlainArray($setup['plugin.'][$this->extensionKey.'.']['settings.']);
+                    $this->typoScriptSettings = $this->typoScriptService ->convertTypoScriptArrayToPlainArray(
+                        $setup['plugin.'][$this->extensionKey.'.']['settings.']
+                    );
                 }
             }
         }
@@ -105,27 +115,12 @@ class SettingsService
 
     /**
      * Returns all global settings.
-     *
-     * Taken from \TYPO3\CMS\Redirects\Service\RedirectService::bootFrontendController
      */
     protected function generateTypoScript(int $pid, ServerRequestInterface $request): array
     {
-        $siteFinder = GeneralUtility::makeInstance(SiteFinder::class);
-        $site = $siteFinder->getSiteByPageId($pid);
-
-        $controller = GeneralUtility::makeInstance(
-            TypoScriptFrontendController::class,
-            GeneralUtility::makeInstance(Context::class),
-            $site,
-            $site->getDefaultLanguage(),
-            new PageArguments($site->getRootPageId(), '0', []),
-            GeneralUtility::makeInstance(FrontendUserAuthentication::class)
-        );
-
-        // @extensionScannerIgnoreLine
-        $controller->id = $pid;
-        $controller->determineId($request);
-
-        return $controller->getFromCache($request)->getAttribute('frontend.typoscript')->getSetupArray();
+        // @todo Seems this does not consider disabled template records, unsure why
+        return $this->backendConfigurationManager->getTypoScriptSetup($request->withQueryParams([
+            'id' => $pid,
+        ]));
     }
 }

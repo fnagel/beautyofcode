@@ -10,11 +10,8 @@ jobs:
     strategy:
       max-parallel: 2
       matrix:
-        php-versions: [8.1, 8.2, 8.3]
-        typo3-versions: [12.4, 13.0]
-        exclude:
-          - typo3-versions: 13.0
-            php-versions: 8.1
+        php-versions: [8.2, 8.3]
+        typo3-versions: [13.3]
 
     name: PHP ${{ matrix.php-versions }} with TYPO3 ${{ matrix.typo3-versions }}
     steps:

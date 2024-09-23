@@ -19,8 +19,6 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractValueObject;
  */
 class Flexform extends AbstractValueObject
 {
-    protected ConfigurationInterface $highlighterConfiguration;
-
     /**
      * Code label.
      */
@@ -61,9 +59,8 @@ class Flexform extends AbstractValueObject
      */
     protected string $languageFallback = 'plain';
 
-    public function __construct(ConfigurationInterface $highlighterConfiguration)
+    public function __construct(protected ConfigurationInterface $highlighterConfiguration)
     {
-        $this->highlighterConfiguration = $highlighterConfiguration;
     }
 
     /**

@@ -197,6 +197,7 @@ class ContentElementPreviewListener
             if ($nonceAttribute instanceof ConsumableString) {
                 $nonce = $nonceAttribute->consume();
             }
+            
             $preview .= sprintf(
                 '
 				<script type="text/javascript" nonce="'.$nonce.'">

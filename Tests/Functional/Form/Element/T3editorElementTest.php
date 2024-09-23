@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Form\Element;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use ReflectionClass;
 use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
@@ -78,7 +79,7 @@ class T3editorElementTest extends FunctionalTestCase
 
         $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
 
-        $classReflection = new \ReflectionClass($t3EditorElement);
+        $classReflection = new ReflectionClass($t3EditorElement);
         $methodReflection = $classReflection->getMethod('determineMode');
         $methodReflection->setAccessible(true);
 
@@ -91,7 +92,7 @@ class T3editorElementTest extends FunctionalTestCase
 
         $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
 
-        $classReflection = new \ReflectionClass($t3EditorElement);
+        $classReflection = new ReflectionClass($t3EditorElement);
         $methodReflection = $classReflection->getMethod('determineMode');
         $methodReflection->setAccessible(true);
 
@@ -108,7 +109,7 @@ class T3editorElementTest extends FunctionalTestCase
         $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
         $t3EditorElement->render();
 
-        $classReflection = new \ReflectionClass($t3EditorElement);
+        $classReflection = new ReflectionClass($t3EditorElement);
         $propertyReflection = $classReflection->getProperty('data');
         $propertyReflection->setAccessible(true);
 

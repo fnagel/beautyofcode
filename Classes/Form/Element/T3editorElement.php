@@ -2,6 +2,8 @@
 
 namespace FelixNagel\Beautyofcode\Form\Element;
 
+use TYPO3\CMS\Backend\Form\Element\CodeEditorElement;
+
 /**
  * This file is part of the "beautyofcode" Extension for TYPO3 CMS.
  *
@@ -16,7 +18,7 @@ namespace FelixNagel\Beautyofcode\Form\Element;
  *
  * @author Felix Nagel <info@felixnagel.com>
  */
-class T3editorElement extends \TYPO3\CMS\Backend\Form\Element\CodeEditorElement
+class T3editorElement extends CodeEditorElement
 {
     /**
      * @var string

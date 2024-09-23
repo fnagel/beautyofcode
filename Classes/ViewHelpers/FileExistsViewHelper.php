@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Closure;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
@@ -34,7 +35,7 @@ class FileExistsViewHelper extends AbstractViewHelper
 
     public static function renderStatic(
         array $arguments,
-        \Closure $renderChildrenClosure,
+        Closure $renderChildrenClosure,
         RenderingContextInterface $renderingContext
     ) {
         return file_exists(Environment::getPublicPath().GeneralUtility::makeAbsolutePath($arguments['file']));

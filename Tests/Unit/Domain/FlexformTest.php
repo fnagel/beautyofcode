@@ -17,8 +17,6 @@ use FelixNagel\Beautyofcode\Domain\Model\Flexform;
  * Tests the flexform domain object.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
  * @link http://www.van-tomas.de/
  */
 class FlexformTest extends UnitTestCase
@@ -37,6 +35,8 @@ class FlexformTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->highlighterConfigurationMock = $this->createMock(ConfigurationInterface::class);
 
         $this->flexform = new Flexform($this->highlighterConfigurationMock);

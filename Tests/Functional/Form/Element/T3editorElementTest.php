@@ -16,9 +16,6 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 /**
  * T3editorElementTest.
- *
- * @license http://www.gnu.org/licenses/gpl.html
- *          GNU General Public License, version 3 or later
  */
 class T3editorElementTest extends FunctionalTestCase
 {
@@ -77,11 +74,10 @@ class T3editorElementTest extends FunctionalTestCase
         $data = $this->getDefaultData();
         $data['databaseRow']['CType'] = ['beautyofcode_contentrenderer'];
 
-        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+        $t3EditorElement = $this->getT3editorElementObject($data);
 
         $classReflection = new ReflectionClass($t3EditorElement);
         $methodReflection = $classReflection->getMethod('determineMode');
-        $methodReflection->setAccessible(true);
 
         $this->assertSame('php', $methodReflection->invoke($t3EditorElement));
     }
@@ -90,11 +86,10 @@ class T3editorElementTest extends FunctionalTestCase
     {
         $data = $this->getDefaultData();
 
-        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+        $t3EditorElement = $this->getT3editorElementObject($data);
 
         $classReflection = new ReflectionClass($t3EditorElement);
         $methodReflection = $classReflection->getMethod('determineMode');
-        $methodReflection->setAccessible(true);
 
         $this->assertSame(T3editorElement::T3EDITOR_MODE_DEFAULT, $methodReflection->invoke($t3EditorElement));
     }
@@ -106,7 +101,7 @@ class T3editorElementTest extends FunctionalTestCase
         $data = $this->getDefaultData();
         $data['parameterArray']['fieldConf']['config']['format'] = 'css';
 
-        $t3EditorElement = new T3editorElement($this->nodeFactoryMock, $data);
+        $t3EditorElement = $this->getT3editorElementObject($data);
         $t3EditorElement->render();
 
         $classReflection = new ReflectionClass($t3EditorElement);
@@ -114,5 +109,14 @@ class T3editorElementTest extends FunctionalTestCase
         $propertyReflection->setAccessible(true);
 
         $this->assertSame('css', $propertyReflection->getValue($t3EditorElement)['parameterArray']['fieldConf']['config']['format']);
+    }
+
+    protected function getT3editorElementObject(array $data): T3editorElement
+    {
+        $t3EditorElement = new T3editorElement();
+        $t3EditorElement->injectNodeFactory($this->nodeFactoryMock);
+        $t3EditorElement->setData($data);
+
+        return $t3EditorElement;
     }
 }

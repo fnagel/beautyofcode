@@ -47,6 +47,8 @@ class ConfiguredLanguagesTest extends UnitTestCase
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $cacheBackendMock = new TransientMemoryBackend('Testing');
         $cacheFrontendMock = new VariableFrontend(
             'beautyofcode',
@@ -106,7 +108,6 @@ class ConfiguredLanguagesTest extends UnitTestCase
             ->method('getTypoScriptByPath')
             ->with($this->equalTo('brushes'))
             ->willReturn('Sql, Python, Php');
-
         GeneralUtility::addInstance(SettingsService::class, $settingsServiceMock);
 
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);

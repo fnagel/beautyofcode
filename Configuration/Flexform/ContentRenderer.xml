@@ -6,11 +6,11 @@
     <sheets>
         <sDEF>
             <ROOT>
-                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel</sheetTitle>
+                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:extlabel</sheetTitle>
                 <type>array</type>
                 <el>
                     <cLabel>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:label</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:label</label>
                         <config>
                             <type>input</type>
                             <size>50</size>
@@ -19,14 +19,14 @@
                         </config>
                     </cLabel>
                     <cLang>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:lang</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:lang</label>
                         <config>
                             <type>select</type>
                             <renderType>selectSingle</renderType>
 
                             <items>
                                 <numIndex index="0">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:plain</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:plain</label>
                                     <value>plain</value>
                                 </numIndex>
                             </items>
@@ -34,7 +34,7 @@
                         </config>
                     </cLang>
                     <cFile>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:file</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:file</label>
                         <config>
                             <type>input</type>
                             <size>50</size>
@@ -58,11 +58,11 @@
         </sDEF>
         <sOPTIONS>
             <ROOT>
-                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:extlabel.options</sheetTitle>
+                <sheetTitle>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:extlabel.options</sheetTitle>
                 <type>array</type>
                 <el>
                     <cHighlight>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:highlight</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:highlight</label>
                         <config>
                             <type>input</type>
                             <size>50</size>
@@ -71,42 +71,42 @@
                         </config>
                     </cHighlight>
                     <cCollapse>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:collapse</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:collapse</label>
                         <config>
                             <type>select</type>
                             <renderType>selectSingle</renderType>
                             <items>
                                 <numIndex index="0">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:auto</label>
                                     <value>auto</value>
                                 </numIndex>
                                 <numIndex index="1">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:yes</label>
                                     <value>1</value>
                                 </numIndex>
                                 <numIndex index="2">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:no</label>
                                     <value>0</value>
                                 </numIndex>
                             </items>
                         </config>
                     </cCollapse>
                     <cGutter>
-                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:gutter</label>
+                        <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:gutter</label>
                         <config>
                             <type>select</type>
                             <renderType>selectSingle</renderType>
                             <items>
                                 <numIndex index="0">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:auto</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:auto</label>
                                     <value>auto</value>
                                 </numIndex>
                                 <numIndex index="1">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:yes</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:yes</label>
                                     <value>1</value>
                                 </numIndex>
                                 <numIndex index="2">
-                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:no</label>
+                                    <label>LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:no</label>
                                     <value>0</value>
                                 </numIndex>
                             </items>

@@ -10,9 +10,11 @@ defined('TYPO3') || die();
 $packageKey = 'beautyofcode';
 
 $GLOBALS['TCA']['tt_content']['columns']['CType']['config']['items'][] = [
-    'label' => 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:content_element.beautyofcode_contentrenderer',
+    'label' => 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:tt_content.list_type_pi1',
+    'description' => 'LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:wiz_description',
     'value' => 'beautyofcode_contentrenderer',
     'icon' => 'extensions-beautyofcode',
+    'group' => 'plugins',
 ];
 $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['beautyofcode_contentrenderer'] = 'extensions-beautyofcode';
 

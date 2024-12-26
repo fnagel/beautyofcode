@@ -12,7 +12,6 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItem
 use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
 use FelixNagel\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
@@ -27,10 +26,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
 {
     protected bool $resetSingletonInstances = true;
 
-    /**
-     * @var LanguageItems
-     */
-    protected $languageItem;
+    protected LanguageItems $languageItem;
 
     protected array $flexFormData = [
         'flexParentDatabaseRow' => [
@@ -84,34 +80,20 @@ class ConfiguredLanguagesTest extends UnitTestCase
     /**
      * @test
      */
-    public function configuredBrushesAreUniquelyAddedToTheReturnValue()
-    {
-        /* @var $settingsServiceMock SettingsService */
-        $settingsServiceMock = $this->createMock(SettingsService::class);
-        GeneralUtility::addInstance(SettingsService::class, $settingsServiceMock);
-
-        $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
-
-        $this->assertEquals('plain', $newConfig['items'][0]['value']);
-        $this->assertEquals(1, is_countable($newConfig['items']) ? count($newConfig['items']) : 0);
-    }
-
-    /**
-     * @test
-     */
-    public function configuredBrushesAreAppendedSortedToTheReturnValue()
+    public function configuredBrushes()
     {
         /* @var $settingsServiceMock SettingsService */
         $settingsServiceMock = $this->createMock(SettingsService::class);
         $settingsServiceMock
-            ->expects($this->once())
             ->method('getTypoScriptByPath')
             ->with($this->equalTo('brushes'))
-            ->willReturn('Sql, Python, Php');
-        GeneralUtility::addInstance(SettingsService::class, $settingsServiceMock);
+            ->willReturn('Sql');
+        $this->languageItem->injectSettingsService($settingsServiceMock);
 
         $newConfig = $this->languageItem->getConfiguredLanguages($this->flexFormData);
 
+        $this->assertEquals(2, is_countable($newConfig['items']) ? count($newConfig['items']) : 0);
         $this->assertEquals('plain', $newConfig['items'][0]['value']);
+        $this->assertEquals('sql', $newConfig['items'][1]['value']);
     }
 }

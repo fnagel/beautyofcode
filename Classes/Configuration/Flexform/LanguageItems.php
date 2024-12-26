@@ -39,6 +39,8 @@ class LanguageItems
      */
     protected $highlighterConfiguration;
 
+    protected ?SettingsService $settingsService = null;
+
     /**
      * Page uid (PID) for TypoScript generation.
      *
@@ -66,13 +68,19 @@ class LanguageItems
     public function injectHighlighterConfiguration(ConfigurationInterface $configuration = null)
     {
         if (is_null($configuration)) {
-            $configuration = GeneralUtility::makeInstance(
-                Configuration::class,
-                $this->contentElementPid
-            );
+            $configuration = GeneralUtility::makeInstance(Configuration::class, $this->contentElementPid);
         }
 
         $this->highlighterConfiguration = $configuration;
+    }
+
+    public function injectSettingsService(SettingsService $settingsService = null): void
+    {
+        if (is_null($settingsService)) {
+            $settingsService = SettingsService::create($this->contentElementPid);
+        }
+
+        $this->settingsService = $settingsService;
     }
 
     /**
@@ -82,10 +90,8 @@ class LanguageItems
      * @SuppressWarnings("CyclomaticComplexity")
      *
      * @param array $config flexform data
-     *
-     * @return array
      */
-    public function getConfiguredLanguages($config)
+    public function getConfiguredLanguages(array $config): array
     {
         $this->injectCacheManager($this->cacheManager);
 
@@ -103,6 +109,7 @@ class LanguageItems
                 $this->contentElementPid = $this->getPageUidByRecordUid($config['row']['uid']);
             }
 
+            $this->injectSettingsService($this->settingsService);
             // Inject configuration after determining the PID
             $this->injectHighlighterConfiguration($this->highlighterConfiguration);
 
@@ -159,10 +166,8 @@ class LanguageItems
 
     /**
      * Returns unique and sorted brushes.
-     *
-     * @return array
      */
-    protected function getUniqueAndSortedBrushes()
+    protected function getUniqueAndSortedBrushes(): array
     {
         $brushesArray = GeneralUtility::trimExplode(',', $this->getBrushesConfig(), true);
 
@@ -185,32 +190,24 @@ class LanguageItems
 
     /**
      * Get brushes TS config per page.
-     *
-     * @return string
      */
-    protected function getBrushesConfig()
+    protected function getBrushesConfig(): string
     {
-        return $this->getSettingsService($this->contentElementPid)->getTypoScriptByPath('brushes');
+        return $this->getSettingsService()->getTypoScriptByPath('brushes');
     }
 
     /**
      * Get the settings service.
-     *
-     * @param int $pid PID of the page
-     *
-     * @return SettingsService
      */
-    public function getSettingsService(int $pid = 0)
+    public function getSettingsService(): SettingsService
     {
-        return SettingsService::create($pid);
+        return $this->settingsService;
     }
 
     /**
      * Get the constants cache.
-     *
-     * @return FrontendInterface
      */
-    protected function getCache()
+    protected function getCache(): FrontendInterface
     {
         return $this->cacheManager->getCache('beautyofcode');
     }

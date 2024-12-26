@@ -66,7 +66,7 @@ class SettingsService
 
     public static function create(int $pid = 0): self
     {
-        return GeneralUtility::makeInstance(SettingsService::class)->setPid($pid);
+        return GeneralUtility::makeInstance(static::class)->setPid($pid);
     }
 
     /**

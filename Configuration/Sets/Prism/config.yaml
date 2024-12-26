@@ -1,0 +1,4 @@
+name: felixnagel/beautyofcode-prism
+label: 'Beauty of Code: Prism'
+dependencies:
+  - felixnagel/beautyofcode

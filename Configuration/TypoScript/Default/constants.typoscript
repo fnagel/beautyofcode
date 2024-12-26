@@ -1,0 +1,15 @@
+plugin.tx_beautyofcode {
+    settings {
+        # cat=beautyofcode/enable/1; type=boolean; label=Template - Show label: If set to false the label within the template is hidden.
+        showLabel = 1
+    }
+
+    view {
+        # cat=beautyofcode/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:beautyofcode/Resources/Private/Templates/
+        # cat=beautyofcode/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:beautyofcode/Resources/Private/Partials/
+        # cat=beautyofcode/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:beautyofcode/Resources/Private/Layouts/
+    }
+}

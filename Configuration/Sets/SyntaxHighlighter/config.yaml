@@ -1,0 +1,4 @@
+name: felixnagel/beautyofcode-syntax-highlighter
+label: 'Beauty of Code: SyntaxHighlighter'
+dependencies:
+  - felixnagel/beautyofcode

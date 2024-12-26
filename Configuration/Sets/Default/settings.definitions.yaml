@@ -1,0 +1,25 @@
+categories:
+  beautyOfCode:
+    label: 'Beauty of Code'
+  beautyOfCode.templates:
+    label: 'Templates'
+    parent: beautyOfCode
+
+settings:
+  plugin.beautyofcode.view.templateRootPath:
+    label: 'Path to template root (FE)'
+    default: 'EXT:beautyofcode/Resources/Private/Templates/'
+    type: string
+    category: beautyOfCode.templates
+
+  plugin.beautyofcode.view.partialRootPath:
+    label: 'Path to template partials (FE)'
+    default: 'EXT:beautyofcode/Resources/Private/Partials/'
+    type: string
+    category: beautyOfCode.templates
+
+  plugin.beautyofcode.view.layoutRootPath:
+    label: 'Path to template layouts (FE)'
+    default: 'EXT:beautyofcode/Resources/Private/Layouts/'
+    type: string
+    category: beautyOfCode.templates

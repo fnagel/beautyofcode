@@ -15,6 +15,24 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+6.x to 7.0
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 13 LTS
+- Added PHP 8.3 support
+- Removed support for TYPO3 11.x and 12.x
+- Support for site sets
+- Lots of fixed deprecations
+- Improved code quality / CGL
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
 5.x to 6.0
 ^^^^^^^^^^
 

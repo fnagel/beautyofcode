@@ -78,10 +78,7 @@ SyntaxHighlighter
 SyntaxHighlighter 3.0 by Alex Gorbatchev, which does the actually 
 highlighting, is the nicest syntax highlighter I've seen so far and it's also 
 used by Freshbooks, ASP .Net Forums, wordpress.com, Aptana, Mozilla Developer 
-Center, SitePoint and Yahoo Developer Network. It is coded in native 
-JavaScript and is under active development.
-
-Please see http://alexgorbatchev.com/wiki/SyntaxHighlighter for more information.
+Center, SitePoint and Yahoo Developer Network.
 
 Prism
 -----

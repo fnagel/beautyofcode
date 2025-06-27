@@ -5,7 +5,7 @@ plugin.tx_beautyofcode {
         # cat=beautyofcode//1; type=string; label=Library implementation: do not change! Select the proper static template instead.
         library = SyntaxHighlighter
 
-        # cat=beautyofcode/file/1; type=string; label=Base URL: Enter path to the resources directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/). Leave empty to use online repository.
+        # cat=beautyofcode/file/1; type=string; label=Base URL: Enter path to the resources directory by using EXT: or FILE: or absolute path http://your.domain.de/.../res/).
         baseUrl = EXT:beautyofcode/Resources/Public/Javascript/vendor/syntax_highlighter/
 
         # cat=beautyofcode/file/2; type=string; label=Relative path to scripts: Enter relative path to baseUrl. Leave empty or default when using online repository.

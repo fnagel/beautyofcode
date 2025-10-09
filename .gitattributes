@@ -1,0 +1,10 @@
+* text=auto
+
+/.Build export-ignore
+/.github export-ignore
+/Tests/ export-ignore
+/.bowerrc export-ignore
+/.gitattributes export-ignore
+/.php-cs-fixer.dist.php export-ignore
+/bower.json export-ignore
+/rector.php export-ignore

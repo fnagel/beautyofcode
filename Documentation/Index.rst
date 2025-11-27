@@ -27,7 +27,7 @@ beautyOfCode
   syntax highlighting, jquery, javascript, prism, syntaxhighlighter
 
 :Copyright:
-  2024
+  2025
 
 :Author:
   Felix Nagel, Thomas Juhnke
@@ -62,4 +62,3 @@ a GNU/GPL CMS/Framework available from `www.typo3.org <http://www.typo3.org/>`_.
    KnownProblems/Index
    ToDoList/Index
    ChangeLog/Index
-   Targets

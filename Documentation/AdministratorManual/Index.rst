@@ -74,9 +74,9 @@ _Please note: this issue is no longer relevant in version 3.x_
 
 Add this line in your localconf.php in typo3conf directory.
 
-   .. code-block:: php
+.. code-block:: php
 
-      $TYPO3_CONF_VARS['BE']['flexformForceCDATA']  = '1';
+   $TYPO3_CONF_VARS['BE']['flexformForceCDATA']  = '1';
 
 This fix is non breaking and works only for new added elements. Older flexform
 values should / could be fixed manually. This is a recommended default setting
@@ -88,7 +88,7 @@ http://bugs.typo3.org/view.php?id=9359
 
 **Mailingslist Post**:
 
-`[TYPO3-dev] A ticking ticking timebomb with libxml update to 2.7.1? <libxmlbug_>`_
+`[TYPO3-dev] A ticking ticking timebomb with libxml update to 2.7.1? <libxmlbug>`__
 
 I don't like my users to overwrite my default TS configuration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -101,10 +101,10 @@ http://typo3.org/extensions/repository/view/sp_betterflex/current/
 
 Install the extension and add these lines to your TSconfig:
 
-   .. code-block:: ts
+.. code-block:: ts
 
-      TCEFORM.tt_content.beautyofcode_cGutter.disabled = 1
-      TCEFORM.tt_content.beautyofcode_cCollapse.disabled = 1
+   TCEFORM.tt_content.beautyofcode_cGutter.disabled = 1
+   TCEFORM.tt_content.beautyofcode_cCollapse.disabled = 1
 
 .. _libxmlbug: http://lists.netfielders.de/pipermail/typo3-dev/2009-August/036436.html
 
@@ -191,7 +191,7 @@ Problems with line numbering and line highlighting in Prism
 
 There was a bug in Prism which prevented proper line numbering and line highlighting.
 This issue should be fixed in beautyofcode v 3.0.0 as we updated PrimsJS.
-For more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue_>`_.
+For more information please head over to the `corresponding github issue entry <PrismLineNumberingIssue>`__.
 To ensure proper functionality, you **must** provide the `markup` brush after
 the `php` Prism component/brush (like in the default configuration).
 

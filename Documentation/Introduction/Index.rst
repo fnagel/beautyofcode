@@ -18,7 +18,7 @@ What does it do?
 
 This plugin provides state-of-the-art syntax highlighting by using JavaScript
 by using  SyntaxHighlighting 3.x by Alex Gorbatchev or the `prism syntax
-highlighter`_ written by Lea Verou.
+highlighter`__ written by Lea Verou.
 
 Use the constant editor or TS to define needed programming languages. These
 will be available in the FE plugin which needs to be added as a generic FE
@@ -37,7 +37,7 @@ Python, Ruby on Rails, Sass, Scala, SQL, Typoscript, MySQL, Virtual Basic, .Net,
 XSLT, XHTML and HTML.
 
 The newly added TypoScript brush is based upon a `user language for Notepad++
-<TypoScriptUserLanguageNotepadPP_>`_.
+<TypoScriptUserLanguageNotepadPP>`__.
 
 Prism
 ^^^^^
@@ -68,9 +68,9 @@ Features
 Live Demo
 ---------
 
-`ext:beautyofcode Live Demo <LiveDemo_>`_
+`ext:beautyofcode Live Demo <LiveDemo>`__
 
-*Please help me to add more sites here:* `contact me <LiveDemoContact_>`_!
+*Please help me to add more sites here:* `contact me <LiveDemoContact>`__!
 
 SyntaxHighlighter
 -----------------
@@ -90,7 +90,7 @@ Prism is a lightweight, extensible syntax highlighter, built with modern web
 standards in mind. It's a spin-off from Dabblet and is tested there daily by
 thousands.
 
-See `http://prismjs.com/ <prism syntax highlighter_>`_ for more information.
+See `http://prismjs.com/ <prism syntax highlighter>`__ for more information.
 
 .. _screenshots:
 
@@ -103,18 +103,21 @@ See highlighter project website for possible frontend look.
 .. figure:: ../Images/Screenshots/ContentElement.png
       :width: 500px
       :alt: Content element screenshot
+      :class: with-shadow
 
       Content element
 
 .. figure:: ../Images/Screenshots/ContentElementTab2.png
       :width: 500px
       :alt: Content element options tab screenshot
+      :class: with-shadow
 
 	  Content element options tab
 
 .. figure:: ../Images/Screenshots/BackendLayout.png
       :width: 500px
       :alt: Backend layout screenshot
+      :class: with-shadow
 
       Backend layout
 
@@ -122,6 +125,6 @@ See highlighter project website for possible frontend look.
 .. _prism syntax highlighter: http://prismjs.com/
 .. _SyntaxhighlighterOnlineHelpBrushes: https://github.com/syntaxhighlighter/syntaxhighlighter/wiki/Brushes-and-Themes
 .. _TypoScriptUserLanguageNotepadPP: http://sourceforge.net/tracker/?func=detail&aid=2839067&group_id=95717&atid=612385
-.. _LiveDemo: https://www.felixnagel.com/blog/
+.. _LiveDemo: https://www.felixnagel.com/blog/permalink/175/
 .. _LiveDemoContact: https://www.felixnagel.com/contact/
 .. _LazyLoading: http://en.wikipedia.org/wiki/Lazy_loading

@@ -9,9 +9,6 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Closure;
-use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
-use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -22,8 +19,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExplodeViewHelper extends AbstractViewHelper
 {
-    use CompileWithContentArgumentAndRenderStatic;
-
     /**
      * Initialize arguments.
      */
@@ -34,25 +29,14 @@ class ExplodeViewHelper extends AbstractViewHelper
         $this->registerArgument('removeEmptyValues', 'bool', 'Flags if empty values should be removed', false, false);
     }
 
-    /**
-     * Renders the TypoScript object in the given TypoScript setup path.
-     *
-     * @param array $arguments
-     * @param Closure $renderChildrenClosure
-     * @param RenderingContextInterface $renderingContext
-     *
-     * @return mixed
-     */
-    public static function renderStatic(
-        array $arguments,
-        Closure $renderChildrenClosure,
-        RenderingContextInterface $renderingContext
-    ) {
-        $value = $arguments['value'];
-        $delimiter = $arguments['delimiter'];
-        $removeEmptyValues = $arguments['removeEmptyValues'];
+    public function render()
+    {
+        $value = $this->arguments['value'];
+        $delimiter = $this->arguments['delimiter'];
+        $removeEmptyValues = $this->arguments['removeEmptyValues'];
+
         if (is_null($value)) {
-            $value = $renderChildrenClosure();
+            $value = $this->renderChildren();
         }
 
         return GeneralUtility::trimExplode($delimiter, $value, $removeEmptyValues);

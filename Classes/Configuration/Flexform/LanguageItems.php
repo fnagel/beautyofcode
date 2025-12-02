@@ -53,7 +53,7 @@ class LanguageItems
     /**
      * InjectCacheManager.
      */
-    public function injectCacheManager(CacheManager $cacheManager = null)
+    public function injectCacheManager(?CacheManager $cacheManager = null)
     {
         if (is_null($cacheManager)) {
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
@@ -65,7 +65,7 @@ class LanguageItems
     /**
      * Injects the highlighter configuration.
      */
-    public function injectHighlighterConfiguration(ConfigurationInterface $configuration = null)
+    public function injectHighlighterConfiguration(?ConfigurationInterface $configuration = null)
     {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(Configuration::class, $this->contentElementPid);
@@ -74,7 +74,7 @@ class LanguageItems
         $this->highlighterConfiguration = $configuration;
     }
 
-    public function injectSettingsService(SettingsService $settingsService = null): void
+    public function injectSettingsService(?SettingsService $settingsService = null): void
     {
         if (is_null($settingsService)) {
             $settingsService = SettingsService::create($this->contentElementPid);

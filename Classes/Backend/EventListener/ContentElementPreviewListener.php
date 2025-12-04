@@ -56,7 +56,7 @@ class ContentElementPreviewListener
      *
      * @var int
      */
-    protected const SMALL_TEXTAREA_ADDITION = 5;
+    protected const SMALL_TEXTAREA_ADDITION = 10;
 
     /**
      * Flexform data.
@@ -187,7 +187,7 @@ class ContentElementPreviewListener
                 chr(10).htmlspecialchars($code)
             );
             $preview .= sprintf(
-                '<textarea id="ta%s" style="height: %s; width: 98%%; padding: 1%%; margin: 0;"
+                '<textarea id="ta%s" class="form-control" style="height: %s;"
                           wrap="off" readonly="readonly"></textarea>',
                 $uid,
                 $this->textareaHeight

@@ -21,7 +21,7 @@ $GLOBALS['TCA']['tt_content']['ctrl']['typeicon_classes']['beautyofcode_contentr
 $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['showitem'] = '
     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xml:palette.general;general,
     --palette--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:palette.header;header,
-    --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.plugin,
+    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:plugin,
         pi_flexform,
         bodytext;LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xlf:code,
     --div--;LLL:EXT:frontend/Resources/Private/Language/locallang_ttc.xlf:tabs.appearance,

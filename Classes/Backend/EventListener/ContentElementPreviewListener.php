@@ -10,9 +10,9 @@ namespace FelixNagel\Beautyofcode\Backend\EventListener;
  */
 
 use TYPO3\CMS\Backend\Routing\UriBuilder;
-use TYPO3\CMS\Core\Domain\ConsumableString;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Security\ContentSecurityPolicy\ConsumableNonce;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\View\Event\PageContentPreviewRenderingEvent;
 
@@ -194,10 +194,10 @@ class ContentElementPreviewListener
             );
             $nonce = '';
             $nonceAttribute = $GLOBALS['TYPO3_REQUEST']->getAttribute('nonce');
-            if ($nonceAttribute instanceof ConsumableString) {
+            if ($nonceAttribute instanceof ConsumableNonce) {
                 $nonce = $nonceAttribute->consume();
             }
-            
+
             $preview .= sprintf(
                 '
 				<script type="text/javascript" nonce="'.$nonce.'">

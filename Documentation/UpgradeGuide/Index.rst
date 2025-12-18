@@ -15,6 +15,24 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+7.0 to 7.2
+^^^^^^^^^^
+
+What you need to know:
+
+- Added PHP 8.4 support
+- Fixed BE preview in TYPO3 v13 when CSP is enabled
+- Deprecation free (in TYPO3 v13)
+- Migrated docs to PHP rendering
+- Minor fixes and improvements
+- Improved code quality / CGL
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
 6.x to 7.0
 ^^^^^^^^^^
 

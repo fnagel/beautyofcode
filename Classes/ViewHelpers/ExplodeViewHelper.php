@@ -22,7 +22,7 @@ class ExplodeViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('value', 'string', 'CSV list string', false, null);
         $this->registerArgument('delimiter', 'string', 'Delimiter, defaults to ,', false, ',');

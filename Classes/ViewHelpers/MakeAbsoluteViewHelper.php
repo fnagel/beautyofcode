@@ -22,7 +22,7 @@ class MakeAbsoluteViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('url', 'string', 'The url');
     }

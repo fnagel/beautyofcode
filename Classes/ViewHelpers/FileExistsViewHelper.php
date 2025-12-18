@@ -23,7 +23,7 @@ class FileExistsViewHelper extends AbstractViewHelper
     /**
      * Initialize arguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('file', 'string', 'Path to the file');
     }

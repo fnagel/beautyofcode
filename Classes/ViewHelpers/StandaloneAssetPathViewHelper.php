@@ -43,7 +43,7 @@ class StandaloneAssetPathViewHelper extends AbstractViewHelper
     /**
      * InitializeArguments.
      */
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('baseUrl', 'string', 'baseUrl of the assets path', false, self::DEFAULT_BASE_URL);
         $this->registerArgument(
@@ -61,7 +61,7 @@ class StandaloneAssetPathViewHelper extends AbstractViewHelper
      *
      * @throws Exception
      */
-    public function initialize()
+    public function initialize(): void
     {
         if (trim($this->arguments['baseUrl']) === '') {
             $this->arguments['baseUrl'] = self::DEFAULT_BASE_URL;

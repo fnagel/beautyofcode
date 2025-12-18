@@ -77,8 +77,8 @@ class ContentElementPreviewListener
             return;
         }
 
-        if ($event->getRecord()['CType'] === 'beautyofcode_contentrenderer') {
-            $content = $this->getExtensionSummary($event->getRecord());
+        if ($event->getRecordType() === 'beautyofcode_contentrenderer') {
+            $content = $this->getExtensionSummary($event->getRecord()->getRawRecord()->toArray());
 
             if ($content !== null) {
                 $event->setPreviewContent($content);

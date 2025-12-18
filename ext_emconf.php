@@ -14,14 +14,14 @@ $EM_CONF[$_EXTKEY] = [
     'title' => 'beautyOfCode Syntax Highlighter',
     'description' => 'This plugin provides Java-Script based, state-of-the-art, feature rich syntax highlighting by using SyntaxHighlighter or Prism. t3editor enabled.',
     'category' => 'plugin',
-    'version' => '7.0.3-dev',
+    'version' => '8.0.0-dev',
     'state' => 'stable',
     'author' => 'Felix Nagel',
     'author_email' => 'info@felixnagel.com',
     'constraints' => [
         'depends' => [
             'php' => '8.2.0-8.4.99',
-            'typo3' => '13.4.0-13.4.99',
+            'typo3' => '14.0.0-14.0.99',
         ],
         'conflicts' => [],
         'suggests' => [],

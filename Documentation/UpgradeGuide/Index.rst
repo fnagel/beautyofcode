@@ -15,6 +15,22 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+7.x to 8.0
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 14
+- Remove support for TYPO3 13.x
+- Fix some deprecations
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
+
 7.0 to 7.2
 ^^^^^^^^^^
 

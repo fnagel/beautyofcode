@@ -45,7 +45,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
     {
         parent::setUp();
 
-        $cacheBackendMock = new TransientMemoryBackend('Testing');
+        $cacheBackendMock = new TransientMemoryBackend();
         $cacheFrontendMock = new VariableFrontend(
             'beautyofcode',
             $cacheBackendMock

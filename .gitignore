@@ -3,9 +3,9 @@ Thumbs.db
 .DS_Store
 
 # Vendors
-node_modules
-bower_components
-vendor
+./node_modules
+./bower_components
+./vendor
 
 # Ignore generated documentation (TYPO3)
 *GENERATED*

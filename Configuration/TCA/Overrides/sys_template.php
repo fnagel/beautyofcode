@@ -10,11 +10,11 @@ call_user_func(static function () {
     ExtensionManagementUtility::addStaticFile(
         $packageKey,
         'Configuration/TypoScript/SyntaxHighlighter/',
-        'beautyOfCode (SyntaxHighlighter)'
+        'Beauty of Code: SyntaxHighlighter (deprecated)'
     );
     ExtensionManagementUtility::addStaticFile(
         $packageKey,
         'Configuration/TypoScript/Prism/',
-        'beautyOfCode (Prism)'
+        'Beauty of Code: Prism (recommended)'
     );
 });

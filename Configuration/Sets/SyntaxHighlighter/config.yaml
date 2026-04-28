@@ -1,4 +1,4 @@
 name: felixnagel/beautyofcode-syntax-highlighter
-label: 'Beauty of Code: SyntaxHighlighter'
+label: 'Beauty of Code: SyntaxHighlighter (deprecated)'
 dependencies:
   - felixnagel/beautyofcode

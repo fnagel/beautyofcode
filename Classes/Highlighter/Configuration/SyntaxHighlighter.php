@@ -16,6 +16,7 @@ use FelixNagel\Beautyofcode\Domain\Model\Flexform;
  * SyntaxHighlighter.
  *
  * @author Thomas Juhnke <typo3@van-tomas.de>
+ * @deprecated https://github.com/fnagel/beautyofcode/issues/26
  */
 class SyntaxHighlighter extends AbstractConfiguration
 {

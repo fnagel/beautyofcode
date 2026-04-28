@@ -16,9 +16,10 @@ Introduction
 What does it do?
 ----------------
 
-This plugin provides state-of-the-art syntax highlighting by using JavaScript
-by using  SyntaxHighlighting 3.x by Alex Gorbatchev or the `prism syntax
-highlighter`__ written by Lea Verou.
+This plugin provides state-of-the-art syntax highlighting by using JavaScript plugins:
+
+* `PrismSyntaxHighlighter`__ written by Lea Verou
+* SyntaxHighlighting 3 written by Alex Gorbatchev
 
 Use the constant editor or TS to define needed programming languages. These
 will be available in the FE plugin which needs to be added as a generic FE
@@ -79,7 +80,7 @@ SyntaxHighlighter 3.0 by Alex Gorbatchev, which does the actually
 highlighting, is the nicest syntax highlighter I've seen so far and it's also
 used by Freshbooks, ASP .Net Forums, wordpress.com, Aptana, Mozilla Developer
 Center, SitePoint and Yahoo Developer Network. It is coded in native
-JavaScript and is no longer under active development.
+JavaScript but sadly it is no longer under active development.
 
 Please see https://github.com/syntaxhighlighter/syntaxhighlighter for more information.
 
@@ -90,7 +91,7 @@ Prism is a lightweight, extensible syntax highlighter, built with modern web
 standards in mind. It's a spin-off from Dabblet and is tested there daily by
 thousands.
 
-See `http://prismjs.com/ <prism syntax highlighter>`__ for more information.
+See `http://prismjs.com/ <PrismSyntaxHighlighter>`__ for more information.
 
 .. _screenshots:
 
@@ -122,7 +123,7 @@ See highlighter project website for possible frontend look.
       Backend layout
 
 
-.. _prism syntax highlighter: http://prismjs.com/
+.. _PrismSyntaxHighlighter: http://prismjs.com/
 .. _SyntaxhighlighterOnlineHelpBrushes: https://github.com/syntaxhighlighter/syntaxhighlighter/wiki/Brushes-and-Themes
 .. _TypoScriptUserLanguageNotepadPP: http://sourceforge.net/tracker/?func=detail&aid=2839067&group_id=95717&atid=612385
 .. _LiveDemo: https://www.felixnagel.com/blog/permalink/175/

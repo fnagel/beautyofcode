@@ -75,7 +75,10 @@ class SettingsService
     public function getTypoScriptSettings(): array
     {
         if ($this->typoScriptSettings === null) {
-            if (ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isFrontend()) {
+            if (ApplicationType::fromRequest($this->getRequest())->isFrontend() &&
+                // Check if the frontend.typoscript object has been initialized (needed if page is cached)
+                $this->getRequest()->getAttribute('frontend.typoscript')->hasSetup()
+            ) {
                 $this->typoScriptSettings = $this->configurationManager->getConfiguration(
                     ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
                     $this->extensionName,
@@ -100,26 +103,28 @@ class SettingsService
     }
 
     /**
-     * Returns the settings at path $path, which is separated by ".",
-     * e.g. "pages.uid".
+     * Returns the settings at path $path, which is separated by ".",e.g. "pages.uid".
      * "pages.uid" would return $this->settings['pages']['uid'].
      *
      * If the path is invalid or no entry is found, false is returned.
-     *
-     * @return mixed
      */
-    public function getTypoScriptByPath(string $path)
+    public function getTypoScriptByPath(string $path): mixed
     {
         return ObjectAccess::getPropertyPath($this->getTypoScriptSettings(), $path);
+    }
+
+    protected function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 
     /**
      * Returns all global settings.
      */
-    protected function generateTypoScript(int $pid, ServerRequestInterface $request): array
+    protected function generateTypoScript(int $pid): array
     {
         // @todo Seems this does not consider disabled template records, unsure why
-        return $this->backendConfigurationManager->getTypoScriptSetup($request->withQueryParams([
+        return $this->backendConfigurationManager->getTypoScriptSetup($this->getRequest()->withQueryParams([
             'id' => $pid,
         ]));
     }

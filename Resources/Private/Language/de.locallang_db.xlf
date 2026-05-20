@@ -71,6 +71,10 @@
 				<source>Enable code editor: Use editor with syntax highlighting in Backend (former EXT:t3editor)</source>
 				<target>Benutze code editor: Benutze Syntax Highlighting im Backend (ehenmals EXT:t3editor)</target>
 			</trans-unit>
+			<trans-unit id="enable_csp">
+				<source>Enable CSP mutation: Mutate CSP so the Syntaxhighlighter library works when frontend.enforceContentSecurityPolicy is enabled</source>
+				<target>CSP-Mutation aktivieren: Ändert die CSP, damit die Syntaxhighlighter-Bibliothek funktioniert, wenn frontend.enforceContentSecurityPolicy aktiviert ist</target>
+			</trans-unit>
 			<trans-unit id="content_element.beautyofcode_contentrenderer">
 				<source>beautyofcode - Syntaxhighlighter</source>
 				<target>beautyofcode - Syntaxhighlighter</target>

@@ -1,2 +1,5 @@
 	# cat=basic; type=boolean; label=LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:enable_t3editor
 enable_t3editor = 1
+
+	# cat=basic; type=boolean; label=LLL:EXT:beautyofcode/Resources/Private/Language/locallang_db.xml:enable_csp
+enable_csp = 1

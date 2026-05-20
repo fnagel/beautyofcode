@@ -54,6 +54,9 @@
 			<trans-unit id="enable_t3editor">
 				<source>Enable code editor: Use editor with syntax highlighting in Backend (former EXT:t3editor)</source>
 			</trans-unit>
+			<trans-unit id="enable_csp">
+				<source>Enable CSP mutation: Mutate CSP so the Syntaxhighlighter library works when frontend.enforceContentSecurityPolicy is enabled</source>
+			</trans-unit>
 			<trans-unit id="content_element.beautyofcode_contentrenderer">
 				<source>beautyofcode - Syntaxhighlighter</source>
 			</trans-unit>

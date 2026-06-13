@@ -15,6 +15,26 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+8.0 to 8.1
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for TYPO3 14.3 LTS
+- Updated PrismJS library to v1.30.0
+- Deprecate SyntaxHighlighter library (as no longer maintained)
+- Added automatic CSP configuration needed for SyntaxHighlighter (enabled by default)
+   - Needed when `frontend.enforceContentSecurityPolicy` is enabled
+   - Disable it in the extension configuration if using Prism library
+
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
+
 7.x to 8.0
 ^^^^^^^^^^
 

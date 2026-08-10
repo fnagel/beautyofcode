@@ -8,12 +8,14 @@ namespace FelixNagel\Beautyofcode\Controller;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use FelixNagel\Beautyofcode\Domain\Repository\FlexformRepository;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * The frontend plugin controller for the syntaxhighlighter.
@@ -22,29 +24,14 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ContentController extends ActionController
 {
-    /**
-     * FlexformRepository.
-     *
-     * @var FlexformRepository
-     */
-    protected $flexformRepository;
-
-    /**
-     * InjectFlexformRepository.
-     *
-     * @param FlexformRepository $flexformRepository FlexformRepository
-     */
-    public function injectFlexformRepository(
-        FlexformRepository $flexformRepository
+    public function __construct(
+        protected FlexformRepository $flexformRepository,
     ) {
-        $this->flexformRepository = $flexformRepository;
     }
 
-    /**
-     * Render.
-     */
     public function renderAction(): ResponseInterface
     {
+        /* @var $contentObject ContentObjectRenderer */
         $contentObject = $this->request->getAttribute('currentContentObject');
         // @extensionScannerIgnoreLine
         $contentElement = $contentObject->data;
@@ -75,8 +62,10 @@ class ContentController extends ActionController
             $contentElement['bodytext'] = $content;
         }
 
-        $this->view->assign('ce', $contentElement);
-        $this->view->assign('flexform', $flexform);
+        $this->view->assignMultiple([
+            'ce' => $contentElement,
+            'flexform' => $flexform,
+        ]);
 
         return $this->htmlResponse();
     }

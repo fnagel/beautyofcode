@@ -10,7 +10,7 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Utility;
  */
 
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use FelixNagel\Beautyofcode\Utility\GeneralUtility;
+use FelixNagel\Beautyofcode\Utility\FrontendUtility;
 
 /**
  * Tests the general utility class.
@@ -19,7 +19,7 @@ use FelixNagel\Beautyofcode\Utility\GeneralUtility;
  *
  * @link http://www.van-tomas.de/
  */
-class GeneralUtilityTest extends FunctionalTestCase
+class FrontendUtilityTest extends FunctionalTestCase
 {
     protected array $coreExtensionsToLoad = ['backend'];
 
@@ -30,7 +30,7 @@ class GeneralUtilityTest extends FunctionalTestCase
      */
     public function prefixingWithExtReturnsPathSiteAbsolutePathToExtensionFile()
     {
-        $path = GeneralUtility::makeAbsolutePath(
+        $path = FrontendUtility::makeAbsolutePath(
             'EXT:beautyofcode/ext_emconf.php'
         );
 
@@ -43,7 +43,7 @@ class GeneralUtilityTest extends FunctionalTestCase
     public function prefixingWithFileReturnsPathSiteAbsolutePathToFile()
     {
         define('TYPO3_OS', !stristr(PHP_OS, 'darwin') && stristr(PHP_OS, 'win') ? 'WIN' : '');
-        $path = GeneralUtility::makeAbsolutePath('FILE:fileadmin/test.js');
+        $path = FrontendUtility::makeAbsolutePath('FILE:fileadmin/test.js');
 
         $this->assertStringStartsWith('fileadmin/', $path);
     }
@@ -55,7 +55,7 @@ class GeneralUtilityTest extends FunctionalTestCase
     {
         $externalPath = 'http://www.example.org/test.js';
 
-        $path = GeneralUtility::makeAbsolutePath($externalPath);
+        $path = FrontendUtility::makeAbsolutePath($externalPath);
 
         $this->assertEquals($externalPath, $path);
     }
@@ -65,7 +65,7 @@ class GeneralUtilityTest extends FunctionalTestCase
      */
     public function passingInCombinedFileAndExtNotationWillReturnPathSiteAbsolutePathToExtensionFile()
     {
-        $path = GeneralUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
+        $path = FrontendUtility::makeAbsolutePath('FILE:EXT:beautyofcode/ext_localconf.php');
 
         $this->assertStringStartsWith('typo3conf/', $path);
     }
@@ -77,7 +77,7 @@ class GeneralUtilityTest extends FunctionalTestCase
     {
         $invalidPath = 'foo://bar.jpeg';
 
-        $path = GeneralUtility::makeAbsolutePath($invalidPath);
+        $path = FrontendUtility::makeAbsolutePath($invalidPath);
 
         $this->assertEquals($invalidPath, $path);
     }
@@ -89,7 +89,7 @@ class GeneralUtilityTest extends FunctionalTestCase
     {
         $invalidExternalPath = 'FILE:http://example.org/test.js';
 
-        $path = GeneralUtility::makeAbsolutePath($invalidExternalPath);
+        $path = FrontendUtility::makeAbsolutePath($invalidExternalPath);
 
         $this->assertEquals('', $path);
     }

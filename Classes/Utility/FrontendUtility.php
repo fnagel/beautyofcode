@@ -9,6 +9,8 @@ namespace FelixNagel\Beautyofcode\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Utility\PathUtility;
 
 /**
@@ -16,7 +18,7 @@ use TYPO3\CMS\Core\Utility\PathUtility;
  *
  * @author Felix Nagel <info@felixnagel.com>
  */
-class GeneralUtility
+class FrontendUtility
 {
     /**
      * Resolves a path prefixed with FILE: and EXT:.
@@ -44,5 +46,15 @@ class GeneralUtility
         }
 
         return $absolutePath;
+    }
+
+    public static function getNormalizedParams(): NormalizedParams
+    {
+        return static::getRequest()->getAttribute('normalizedParams');
+    }
+
+    protected static function getRequest(): ServerRequestInterface
+    {
+        return $GLOBALS['TYPO3_REQUEST'];
     }
 }

@@ -10,7 +10,7 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
  */
 
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use FelixNagel\Beautyofcode\Utility\GeneralUtility;
+use FelixNagel\Beautyofcode\Utility\FrontendUtility;
 
 /**
  * MakeAbsoluteViewHelper.
@@ -30,6 +30,6 @@ class MakeAbsoluteViewHelper extends AbstractViewHelper
     public function render()
     {
         $url = $this->arguments['url'];
-        return GeneralUtility::makeAbsolutePath($url);
+        return FrontendUtility::makeAbsolutePath($url);
     }
 }

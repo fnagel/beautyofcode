@@ -11,7 +11,7 @@ namespace FelixNagel\Beautyofcode\ViewHelpers;
 
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
-use FelixNagel\Beautyofcode\Utility\GeneralUtility;
+use FelixNagel\Beautyofcode\Utility\FrontendUtility;
 
 /**
  * FileExistsViewHelper.
@@ -30,6 +30,6 @@ class FileExistsViewHelper extends AbstractViewHelper
 
     public function render()
     {
-        return file_exists(Environment::getPublicPath().GeneralUtility::makeAbsolutePath($this->arguments['file']));
+        return file_exists(Environment::getPublicPath().FrontendUtility::makeAbsolutePath($this->arguments['file']));
     }
 }

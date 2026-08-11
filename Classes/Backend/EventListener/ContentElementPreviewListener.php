@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\Backend\EventListener;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Utility\FrontendUtility;
 use TYPO3\CMS\Backend\Routing\UriBuilder;
 use TYPO3\CMS\Core\LinkHandling\LinkService;
 use TYPO3\CMS\Core\Resource\File;
@@ -124,7 +125,8 @@ class ContentElementPreviewListener
         return (string)$uriBuilder->buildUriFromRoute('record_edit', [
             'edit' => [$table => [$uid => 'edit']],
             'returnNewPageId' => 1,
-            'returnUrl' => GeneralUtility::getIndpEnv('REQUEST_URI'),
+            // @extensionScannerIgnoreLine
+            'returnUrl' => FrontendUtility::getNormalizedParams()->getRequestUri(),
         ]);
     }
 

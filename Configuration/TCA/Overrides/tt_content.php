@@ -2,7 +2,6 @@
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
 
 defined('TYPO3') || die();
@@ -45,9 +44,7 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
     ];
 }
 
+// Add flexform
 $GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
-ExtensionManagementUtility::addPiFlexFormValue(
-    '*',
-    'FILE:EXT:' . $packageKey.  '/Configuration/Flexform/ContentRenderer.xml',
-    'beautyofcode_contentrenderer'
-);
+$GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides']['pi_flexform']['config']['ds'] =
+    'FILE:EXT:' . $packageKey.  '/Configuration/Flexform/ContentRenderer.xml';

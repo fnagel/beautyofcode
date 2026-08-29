@@ -25,10 +25,8 @@ class SyntaxHighlighter extends AbstractConfiguration
      *
      * Fallback from one highlighter engine to another.
      * Key Prism SH CSS class and value is SH CSS class.
-     *
-     * @var array
      */
-    protected $failSafeBrushAliasMap = [
+    protected array $failSafeBrushAliasMap = [
         'Prism' => [
             'actionscript' => 'actionscript3',
             'c' => 'cpp',
@@ -51,10 +49,8 @@ class SyntaxHighlighter extends AbstractConfiguration
      *
      * Key is the brush string from TS Setup; Value is an array with the CSS
      * class in key 0 and the label for the select box in key 1
-     *
-     * @var array
      */
-    protected $brushIdentifierAliasLabelMap = [
+    protected array $brushIdentifierAliasLabelMap = [
         'AppleScript' => ['applescript', 'AppleScript'],
         'AS3' => ['actionscript3', 'Actionscript 3'],
         'Bash' => ['bash', 'Bash / Shell'],
@@ -84,12 +80,7 @@ class SyntaxHighlighter extends AbstractConfiguration
         'Plain' => ['plain', 'Plain'],
     ];
 
-    /**
-     * GetAutoloaderBrushMap.
-     *
-     * @return array
-     */
-    public function getAutoloaderBrushMap()
+    public function getAutoloaderBrushMap(): array
     {
         $brushes = [];
 
@@ -110,11 +101,6 @@ class SyntaxHighlighter extends AbstractConfiguration
         return $brushes;
     }
 
-    /**
-     * GetClassAttributeString.
-     *
-     * @param Flexform $flexform Flexform
-     */
     public function getClassAttributeString(Flexform $flexform): string
     {
         $configurationItems = [];
@@ -135,7 +121,7 @@ class SyntaxHighlighter extends AbstractConfiguration
                 $value = sprintf('[%s]', $configurationValue);
             } else {
                 $key = $configurationKey;
-                $value = var_export((boolean) $configurationValue, true);
+                $value = var_export((bool) $configurationValue, true);
             }
 
             $configurationItems[] = sprintf('%s: %s', $key, $value);

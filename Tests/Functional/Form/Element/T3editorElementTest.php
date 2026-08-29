@@ -23,10 +23,7 @@ class T3editorElementTest extends FunctionalTestCase
 
     protected array $testExtensionsToLoad = ['typo3conf/ext/beautyofcode'];
 
-    /**
-     * @var NodeFactory
-     */
-    protected $nodeFactoryMock;
+    protected NodeFactory $nodeFactoryMock;
 
     /**
      * SetUp.

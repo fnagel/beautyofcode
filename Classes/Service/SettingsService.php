@@ -10,20 +10,19 @@ namespace FelixNagel\Beautyofcode\Service;
  */
 
 use Psr\Http\Message\ServerRequestInterface;
+use TYPO3\CMS\Core\Http\ApplicationType;
+use TYPO3\CMS\Core\TypoScript\TypoScriptService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Configuration\BackendConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Configuration\Exception;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
-use TYPO3\CMS\Core\TypoScript\TypoScriptService;
-use TYPO3\CMS\Core\Http\ApplicationType;
 
 /**
  * Provide a way to get the configuration just everywhere.
  *
  * @author (c) 2010 Sebastian Schreiber <me@schreibersebastian.de >
  * @author (c) 2010 Georg Ringer <typo3@ringerge.org>
- * @author (c) 2013-2024 Felix Nagel <info@felixnagel.com>
+ * @author (c) 2013-2026 Felix Nagel <info@felixnagel.com>
  */
 class SettingsService
 {
@@ -96,7 +95,7 @@ class SettingsService
         }
 
         if ($this->typoScriptSettings === null) {
-            throw new Exception('No TypoScript settings for EXT:'.$this->extensionName.' available.');
+            throw new \Exception('No TypoScript settings for EXT:'.$this->extensionName.' available.');
         }
 
         return $this->typoScriptSettings;

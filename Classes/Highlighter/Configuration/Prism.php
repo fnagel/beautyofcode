@@ -24,10 +24,8 @@ class Prism extends AbstractConfiguration
      *
      * Fallback from one highlighter engine to another.
      * Key is SH CSS class and value is Prism CSS class.
-     *
-     * @var array
      */
-    protected $failSafeBrushAliasMap = [
+    protected array $failSafeBrushAliasMap = [
         'SyntaxHighlighter' => [
             'actionscript3' => 'actionscript',
             'coldfusion' => 'markup',
@@ -44,10 +42,8 @@ class Prism extends AbstractConfiguration
      *
      * Key is the brush string from TS Setup; Value is an array with the CSS
      * class in key 0 and the label for the select box in key 1
-     *
-     * @var array
      */
-    protected $brushIdentifierAliasLabelMap = [
+    protected array $brushIdentifierAliasLabelMap = [
         'actionscript' => ['actionscript', 'Actionscript 3'],
         'apacheconf' => ['apacheconf', 'Apache Config'],
         'applescript' => ['applescript', 'AppleScript'],
@@ -88,10 +84,8 @@ class Prism extends AbstractConfiguration
      *
      * The Prism highlighter doesn't have any autoloader, but as this method
      * needs to be implemented, it returns an empty array.
-     *
-     * @return array
      */
-    public function getAutoloaderBrushMap()
+    public function getAutoloaderBrushMap(): array
     {
         return [];
     }

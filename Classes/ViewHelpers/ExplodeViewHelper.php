@@ -29,7 +29,7 @@ class ExplodeViewHelper extends AbstractViewHelper
         $this->registerArgument('removeEmptyValues', 'bool', 'Flags if empty values should be removed', false, false);
     }
 
-    public function render()
+    public function render(): array
     {
         $value = $this->arguments['value'];
         $delimiter = $this->arguments['delimiter'];

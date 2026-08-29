@@ -19,31 +19,25 @@ use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
     /**
-     * Settings aray.
-     *
-     * @var array
+     * Settings array.
      */
-    protected $settings = [];
+    protected array $settings = [];
 
     /**
      * Failsafe brush alias map.
      *
      * Fallback from one highlighter engine to another.
      * Key Prism SH CSS class and value is SH CSS class.
-     *
-     * @var array
      */
-    protected $failSafeBrushAliasMap = [];
+    protected array $failSafeBrushAliasMap = [];
 
     /**
      * A CSS class/label map for the select box.
      *
      * Key is the brush string from TS Setup; Value is an array with the CSS
      * class in key 0 and the label for the select box in key 1
-     *
-     * @var array
      */
-    protected $brushIdentifierAliasLabelMap = [];
+    protected array $brushIdentifierAliasLabelMap = [];
 
     /**
      * Constructor.
@@ -55,14 +49,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         $this->settings = $settings;
     }
 
-    /**
-     * GetFailSafeBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return string
-     */
-    public function getFailSafeBrushAlias($brushAlias)
+    public function getFailSafeBrushAlias(string $brushAlias): string
     {
         if ($this->hasBrushAlias($brushAlias)) {
             return $brushAlias;
@@ -79,26 +66,12 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return $failSafeBrushAlias;
     }
 
-    /**
-     * HasBrushIdentifier.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return bool
-     */
-    public function hasBrushIdentifier($brushIdentifier)
+    public function hasBrushIdentifier(string $brushIdentifier): bool
     {
         return isset($this->brushIdentifierAliasLabelMap[$brushIdentifier]);
     }
 
-    /**
-     * HasBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return bool
-     */
-    public function hasBrushAlias($brushAlias)
+    public function hasBrushAlias(string $brushAlias): bool
     {
         foreach ($this->brushIdentifierAliasLabelMap as $aliasLabelMap) {
             [$alias] = $aliasLabelMap;
@@ -110,14 +83,7 @@ abstract class AbstractConfiguration implements ConfigurationInterface
         return false;
     }
 
-    /**
-     * GetBrushIdentifierAliasAndLabel.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return array
-     */
-    public function getBrushIdentifierAliasAndLabel($brushIdentifier)
+    public function getBrushIdentifierAliasAndLabel(string $brushIdentifier): array
     {
         return $this->brushIdentifierAliasLabelMap[$brushIdentifier];
     }

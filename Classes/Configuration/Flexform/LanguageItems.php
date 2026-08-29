@@ -27,17 +27,9 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
  */
 class LanguageItems
 {
-    /**
-     * @var CacheManager
-     */
-    protected $cacheManager;
+    protected CacheManager $cacheManager;
 
-    /**
-     * ConfigurationInterface.
-     *
-     * @var ConfigurationInterface
-     */
-    protected $highlighterConfiguration;
+    protected ConfigurationInterface $highlighterConfiguration;
 
     protected ?SettingsService $settingsService = null;
 
@@ -45,15 +37,10 @@ class LanguageItems
      * Page uid (PID) for TypoScript generation.
      *
      * Fallback to root PID (0)
-     *
-     * @var int
      */
-    protected $contentElementPid = 0;
+    protected int $contentElementPid = 0;
 
-    /**
-     * InjectCacheManager.
-     */
-    public function injectCacheManager(?CacheManager $cacheManager = null)
+    public function injectCacheManager(?CacheManager $cacheManager = null): void
     {
         if (is_null($cacheManager)) {
             $cacheManager = GeneralUtility::makeInstance(CacheManager::class);
@@ -65,7 +52,7 @@ class LanguageItems
     /**
      * Injects the highlighter configuration.
      */
-    public function injectHighlighterConfiguration(?ConfigurationInterface $configuration = null)
+    public function injectHighlighterConfiguration(?ConfigurationInterface $configuration = null): void
     {
         if (is_null($configuration)) {
             $configuration = GeneralUtility::makeInstance(Configuration::class, $this->contentElementPid);

@@ -21,17 +21,9 @@ use FelixNagel\Beautyofcode\Domain\Model\Flexform;
  */
 class FlexformTest extends UnitTestCase
 {
-    /**
-     * ConfigurationInterface.
-     *
-     * @var ConfigurationInterface
-     */
-    protected $highlighterConfigurationMock;
+    protected ConfigurationInterface $highlighterConfigurationMock;
 
-    /**
-     * @var Flexform
-     */
-    protected $flexform;
+    protected Flexform $flexform;
 
     protected function setUp(): void
     {

@@ -35,10 +35,8 @@ class StandaloneAssetPathViewHelper extends AbstractViewHelper
 
     /**
      * Valid resource types.
-     *
-     * @var array
      */
-    protected $validTypes = ['scripts', 'styles'];
+    protected array $validTypes = ['scripts', 'styles'];
 
     /**
      * InitializeArguments.

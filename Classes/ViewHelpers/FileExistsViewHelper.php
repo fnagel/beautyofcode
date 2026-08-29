@@ -28,7 +28,7 @@ class FileExistsViewHelper extends AbstractViewHelper
         $this->registerArgument('file', 'string', 'Path to the file');
     }
 
-    public function render()
+    public function render(): bool
     {
         return file_exists(Environment::getPublicPath().FrontendUtility::makeAbsolutePath($this->arguments['file']));
     }

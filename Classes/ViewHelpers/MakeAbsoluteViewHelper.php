@@ -27,7 +27,7 @@ class MakeAbsoluteViewHelper extends AbstractViewHelper
         $this->registerArgument('url', 'string', 'The url');
     }
 
-    public function render()
+    public function render(): string
     {
         $url = $this->arguments['url'];
         return FrontendUtility::makeAbsolutePath($url);

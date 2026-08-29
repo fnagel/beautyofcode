@@ -19,18 +19,8 @@ use TYPO3\CMS\Core\Page\PageRenderer;
  */
 abstract class AbstractPageRendererViewHelper extends AbstractViewHelper
 {
-    /**
-     * PageRenderer.
-     *
-     * @var PageRenderer
-     */
-    protected $pageRenderer;
+    protected PageRenderer $pageRenderer;
 
-    /**
-     * InjectPageRenderer.
-     *
-     * @param PageRenderer $pageRenderer PageRenderer
-     */
     public function injectPageRenderer(PageRenderer $pageRenderer)
     {
         $this->pageRenderer = $pageRenderer;

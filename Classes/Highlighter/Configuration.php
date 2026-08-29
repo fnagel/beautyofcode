@@ -20,33 +20,18 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * Settings array.
-     *
-     * @var array
-     */
-    protected $settings = [];
+    protected array $settings = [];
 
-    /**
-     * ConfigurationInterface.
-     *
-     * @var ConfigurationInterface
-     */
-    protected $configuration;
+    protected ConfigurationInterface $configuration;
 
     /**
      * Page uid
-     *
-     * @var int
      */
-    protected $pid = 0;
+    protected int $pid = 0;
 
-    /**
-     * @param int $pid
-     */
-    public function __construct($pid = 0)
+    public function __construct(int $pid = 0)
     {
-        $this->pid = (int)$pid;
+        $this->pid = $pid;
 
         $this->initializeObject();
     }
@@ -65,72 +50,32 @@ class Configuration implements ConfigurationInterface
         );
     }
 
-    /**
-     * GetFailSafeBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return string
-     */
-    public function getFailSafeBrushAlias($brushAlias)
+    public function getFailSafeBrushAlias(string $brushAlias): string
     {
         return $this->configuration->getFailSafeBrushAlias($brushAlias);
     }
 
-    /**
-     * HasBrushIdentifier.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return bool
-     */
-    public function hasBrushIdentifier($brushIdentifier)
+    public function hasBrushIdentifier(string $brushIdentifier): bool
     {
         return $this->configuration->hasBrushIdentifier($brushIdentifier);
     }
 
-    /**
-     * HasBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return bool
-     */
-    public function hasBrushAlias($brushAlias)
+    public function hasBrushAlias(string $brushAlias): bool
     {
         return $this->configuration->hasBrushAlias($brushAlias);
     }
 
-    /**
-     * GetBrushIdentifierAliasAndLabel.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return array
-     */
-    public function getBrushIdentifierAliasAndLabel($brushIdentifier)
+    public function getBrushIdentifierAliasAndLabel(string $brushIdentifier): array
     {
         return $this->configuration->getBrushIdentifierAliasAndLabel($brushIdentifier);
     }
 
-    /**
-     * GetAutoloaderBrushMap.
-     *
-     * @return array
-     */
-    public function getAutoloaderBrushMap()
+    public function getAutoloaderBrushMap(): array
     {
         return $this->configuration->getAutoloaderBrushMap();
     }
 
-    /**
-     * GetClassAttributeString.
-     *
-     * @param Flexform $flexform Flexform
-     *
-     * @return string
-     */
-    public function getClassAttributeString(Flexform $flexform)
+    public function getClassAttributeString(Flexform $flexform): string
     {
         return $this->configuration->getClassAttributeString($flexform);
     }

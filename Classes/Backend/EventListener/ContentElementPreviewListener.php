@@ -59,17 +59,9 @@ class ContentElementPreviewListener
      */
     protected const SMALL_TEXTAREA_ADDITION = 10;
 
-    /**
-     * Flexform data.
-     *
-     * @var array
-     */
-    protected $flexformData = [];
+    protected array $flexformData = [];
 
-    /**
-     * @var string
-     */
-    protected $textareaHeight = '';
+    protected string $textareaHeight = '';
 
 
     public function __invoke(PageContentPreviewRenderingEvent $event): void
@@ -114,11 +106,7 @@ class ContentElementPreviewListener
         return sprintf('<strong><a href="%s">%s</strong></a>', $editLink, $label);
     }
 
-    /**
-     * @param int $uid
-     * @param string $table
-     */
-    protected function getBackendUrl($uid, $table = 'tt_content'): string
+    protected function getBackendUrl(int $uid, string $table = 'tt_content'): string
     {
         $uriBuilder = GeneralUtility::makeInstance(UriBuilder::class);
 
@@ -134,10 +122,8 @@ class ContentElementPreviewListener
      * Builds a header by reading the label field.
      *
      * Falls back to "no label" from l10n catalogue
-     *
-     * @return string
      */
-    protected function buildLabelHeader()
+    protected function buildLabelHeader(): string
     {
         $header = sprintf(
             '<em>%s</em>',
@@ -168,12 +154,10 @@ class ContentElementPreviewListener
     /**
      * Builds a textarea code preview field.
      *
-     * @param int    $uid       The uid of the content record
+     * @param int    $uid  The uid of the content record
      * @param string $code The code block
-     *
-     * @return string
      */
-    protected function buildCodePreview($uid, $code)
+    protected function buildCodePreview(int $uid, string $code): string
     {
         $preview = sprintf(
             '<em>%s</em>',
@@ -253,7 +237,7 @@ class ContentElementPreviewListener
      * @param string $content The content
      * @param string $unit    CSS unit
      */
-    protected function calculateTextareaHeight($content, $unit = 'px')
+    protected function calculateTextareaHeight(string $content, string $unit = 'px'): void
     {
         $lines = preg_split("/(\n)/", $content);
         $proxyLines = is_countable($lines) ? count($lines) : 0;

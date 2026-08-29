@@ -21,12 +21,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FlexformRepository
 {
-    /**
-     * FlexFormService.
-     *
-     * @var FlexFormService
-     */
-    protected $flexformService;
+    protected FlexFormService $flexformService;
 
     /**
      * Injects the flexform service and populates flexform values from `pi_flexform`.
@@ -38,14 +33,7 @@ class FlexformRepository
         $this->flexformService = $flexformService;
     }
 
-    /**
-     * ReconstituteByContentObject.
-     *
-     * @param ContentObjectRenderer $contentObject ContentObjectRenderer
-     *
-     * @return Flexform
-     */
-    public function reconstituteByContentObject(ContentObjectRenderer $contentObject)
+    public function reconstituteByContentObject(ContentObjectRenderer $contentObject): Flexform
     {
         // @extensionScannerIgnoreLine
         $flexformString = $contentObject->data['pi_flexform'];
@@ -63,12 +51,8 @@ class FlexformRepository
      * Returns a DataMapper-to-TCA compatible property array out of flexform values.
      *
      * Basically, this transforms CamelCased property names into camel_cased ones.
-     *
-     * @param array $flexformValueArray Flexform value array
-     *
-     * @return array
      */
-    protected function getDataMapperToTCACompatiblePropertyArray($flexformValueArray)
+    protected function getDataMapperToTCACompatiblePropertyArray(array $flexformValueArray): array
     {
         $flexformValues = [];
 

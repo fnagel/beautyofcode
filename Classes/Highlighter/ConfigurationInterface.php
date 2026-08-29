@@ -18,55 +18,15 @@ use FelixNagel\Beautyofcode\Domain\Model\Flexform;
  */
 interface ConfigurationInterface
 {
-    /**
-     * GetFailSafeBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return string
-     */
-    public function getFailSafeBrushAlias($brushAlias);
+    public function getFailSafeBrushAlias(string $brushAlias): string;
 
-    /**
-     * HasBrushIdentifier.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return bool
-     */
-    public function hasBrushIdentifier($brushIdentifier);
+    public function hasBrushIdentifier(string $brushIdentifier): bool;
 
-    /**
-     * HasBrushAlias.
-     *
-     * @param string $brushAlias Brush alias
-     *
-     * @return bool
-     */
-    public function hasBrushAlias($brushAlias);
+    public function hasBrushAlias(string $brushAlias): bool;
 
-    /**
-     * GetBrushIdentifierAliasAndLabel.
-     *
-     * @param string $brushIdentifier Brush identifier
-     *
-     * @return array
-     */
-    public function getBrushIdentifierAliasAndLabel($brushIdentifier);
+    public function getBrushIdentifierAliasAndLabel(string $brushIdentifier): array;
 
-    /**
-     * GetAutoloaderBrushMap.
-     *
-     * @return array
-     */
-    public function getAutoloaderBrushMap();
+    public function getAutoloaderBrushMap(): array;
 
-    /**
-     * GetClassAttributeString.
-     *
-     * @param Flexform $flexform Flexform
-     *
-     * @return string
-     */
-    public function getClassAttributeString(Flexform $flexform);
+    public function getClassAttributeString(Flexform $flexform): string;
 }

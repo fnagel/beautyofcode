@@ -19,7 +19,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->sets([
         SetList::CODING_STYLE,
         SetList::CODE_QUALITY,
-        LevelSetList::UP_TO_PHP_82,
+        LevelSetList::UP_TO_PHP_85,
 
         Typo3LevelSetList::UP_TO_TYPO3_12,
         Typo3SetList::TYPO3_13,

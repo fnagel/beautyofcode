@@ -42,6 +42,9 @@
 	"phpmd/phpmd": "^2.14",
 	"php-parallel-lint/php-parallel-lint": "^1.3"
   },
+  "suggest": {
+    "lochmueller/index": "This extension supports search indexing (database indexing) based on the index package."
+  },
   "autoload": {
     "psr-4": {
       "FelixNagel\\Beautyofcode\\": "Classes"

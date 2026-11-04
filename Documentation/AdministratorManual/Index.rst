@@ -35,6 +35,18 @@ enable_t3editor option.
 FAQ
 ---
 
+Does it work together with EXT:index and EXT:seal?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Yes! This extension ships a content type for the database indexing of
+`EXT:index <https://github.com/lochmueller/index>`__ (package name `lochmueller/index`), which is used by search
+extensions like `EXT:seal <https://github.com/lochmueller/seal>`__. It is registered automatically when EXT:index is
+installed.
+
+The header and the code of the content element are indexed. Code loaded from a file or URL is not indexed.
+
+When using the frontend or HTTP indexing no integration is needed, as the rendered page is indexed.
+
 Which version to choose?
 ^^^^^^^^^^^^^^^^^^^^^^^^
 

@@ -74,9 +74,10 @@ class SettingsService
     public function getTypoScriptSettings(): array
     {
         if ($this->typoScriptSettings === null) {
-            if (ApplicationType::fromRequest($this->getRequest())->isFrontend() &&
+            if (($request = $this->getRequest()) !== null &&
+                ApplicationType::fromRequest($request)->isFrontend() &&
                 // Check if the frontend.typoscript object has been initialized (needed if page is cached)
-                $this->getRequest()->getAttribute('frontend.typoscript')->hasSetup()
+                $request->getAttribute('frontend.typoscript')->hasSetup()
             ) {
                 $this->typoScriptSettings = $this->configurationManager->getConfiguration(
                     ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS,
@@ -84,7 +85,7 @@ class SettingsService
                     $this->extensionKey
                 );
             } else {
-                $setup = $this->generateTypoScript($this->pid, $GLOBALS['TYPO3_REQUEST']);
+                $setup = $this->generateTypoScript($this->pid);
 
                 if (!empty($setup['plugin.'][$this->extensionKey.'.']['settings.'])) {
                     $this->typoScriptSettings = $this->typoScriptService ->convertTypoScriptArrayToPlainArray(
@@ -112,9 +113,9 @@ class SettingsService
         return ObjectAccess::getPropertyPath($this->getTypoScriptSettings(), $path);
     }
 
-    protected function getRequest(): ServerRequestInterface
+    protected function getRequest(): ?ServerRequestInterface
     {
-        return $GLOBALS['TYPO3_REQUEST'];
+        return $GLOBALS['TYPO3_REQUEST'] ?? null;
     }
 
     /**

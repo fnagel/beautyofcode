@@ -103,7 +103,7 @@ class Prism extends AbstractConfiguration
         ];
 
         foreach ($classAttributeConfigurationStack as $configurationKey => $configurationValue) {
-            if (in_array($configurationValue, ['', 'auto'])) {
+            if (in_array($configurationValue, ['', 'auto'], true)) {
                 continue;
             }
 

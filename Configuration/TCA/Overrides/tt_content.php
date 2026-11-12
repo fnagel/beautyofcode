@@ -1,5 +1,6 @@
 <?php
 
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
@@ -45,6 +46,6 @@ if (isset($configuration['enable_t3editor']) && $configuration['enable_t3editor'
 }
 
 // Add flexform
-$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist']['beautyofcode_contentrenderer'] = 'pi_flexform';
+ExtensionManagementUtility::addToAllTCAtypes('tt_content', '--div--;Configuration,pi_flexform,', 'beautyofcode_contentrenderer', 'after:subheader');
 $GLOBALS['TCA']['tt_content']['types']['beautyofcode_contentrenderer']['columnsOverrides']['pi_flexform']['config']['ds'] =
     'FILE:EXT:' . $packageKey.  '/Configuration/Flexform/ContentRenderer.xml';

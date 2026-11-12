@@ -9,8 +9,8 @@ namespace FelixNagel\Beautyofcode\Highlighter;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use FelixNagel\Beautyofcode\Service\SettingsService;
 use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+use FelixNagel\Beautyofcode\Service\SettingsService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -24,15 +24,8 @@ class Configuration implements ConfigurationInterface
 
     protected ConfigurationInterface $configuration;
 
-    /**
-     * Page uid
-     */
-    protected int $pid = 0;
-
-    public function __construct(int $pid = 0)
+    public function __construct(protected int $pid = 0)
     {
-        $this->pid = $pid;
-
         $this->initializeObject();
     }
 

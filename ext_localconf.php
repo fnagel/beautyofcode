@@ -15,8 +15,7 @@ call_user_func(static function ($packageKey) {
         [
             ContentController::class => 'render',
         ],
-        [],
-        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
+        []
     );
 
     $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];
@@ -25,13 +24,9 @@ call_user_func(static function ($packageKey) {
         $cacheConfigurations[$packageKey] = [];
     }
 
-    if (!isset($cacheConfigurations[$packageKey]['backend'])) {
-        $cacheConfigurations[$packageKey]['backend'] = TransientMemoryBackend::class;
-    }
+    $cacheConfigurations[$packageKey]['backend'] ??= TransientMemoryBackend::class;
 
-    if (!isset($cacheConfigurations[$packageKey]['frontend'])) {
-        $cacheConfigurations[$packageKey]['frontend'] = VariableFrontend::class;
-    }
+    $cacheConfigurations[$packageKey]['frontend'] ??= VariableFrontend::class;
 
     // Dynamic changing of code editor format
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry'][1491758504] = [

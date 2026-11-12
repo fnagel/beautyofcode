@@ -91,7 +91,7 @@ class T3editorElementTest extends FunctionalTestCase
         $this->assertSame(T3editorElement::T3EDITOR_MODE_DEFAULT, $methodReflection->invoke($t3EditorElement));
     }
 
-    public function testItLeavesTcaConfigUntouchedIfNotBeautyofcodeContentElement()
+    public function testItLeavesTcaConfigUntouchedIfNotBeautyofcodeContentElement(): never
     {
         $this->markTestSkipped('Does not work due to wrong init of ModeRegistry::getInstance()->getDefaultMode()');
 
@@ -103,7 +103,6 @@ class T3editorElementTest extends FunctionalTestCase
 
         $classReflection = new ReflectionClass($t3EditorElement);
         $propertyReflection = $classReflection->getProperty('data');
-        $propertyReflection->setAccessible(true);
 
         $this->assertSame('css', $propertyReflection->getValue($t3EditorElement)['parameterArray']['fieldConf']['config']['format']);
     }

@@ -19,11 +19,6 @@ use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
 abstract class AbstractConfiguration implements ConfigurationInterface
 {
     /**
-     * Settings array.
-     */
-    protected array $settings = [];
-
-    /**
      * Failsafe brush alias map.
      *
      * Fallback from one highlighter engine to another.
@@ -44,9 +39,8 @@ abstract class AbstractConfiguration implements ConfigurationInterface
      *
      * @param array $settings Settings
      */
-    public function __construct(array $settings)
+    public function __construct(protected array $settings)
     {
-        $this->settings = $settings;
     }
 
     public function getFailSafeBrushAlias(string $brushAlias): string

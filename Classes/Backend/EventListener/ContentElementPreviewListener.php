@@ -132,7 +132,7 @@ class ContentElementPreviewListener
 
         $label = $this->flexformData['data']['sDEF']['lDEF']['cLabel']['vDEF'];
 
-        if (strlen(trim($label)) > 0) {
+        if (trim($label) !== '') {
             $header = htmlspecialchars($label);
         }
 
@@ -164,7 +164,7 @@ class ContentElementPreviewListener
             $GLOBALS['LANG']->sL(self::TRANSLATION_CATALOGUE.':cms_layout.no_code')
         );
 
-        if (strlen($code) > 0) {
+        if ($code !== '') {
             $this->calculateTextareaHeight($code);
 
             $preview = sprintf(
@@ -205,7 +205,7 @@ class ContentElementPreviewListener
         } else {
             $file = $this->flexformData['data']['sDEF']['lDEF']['cFile']['vDEF'];
 
-            if (strlen($file) > 0) {
+            if ((string) $file !== '') {
                 $linkService = GeneralUtility::makeInstance(LinkService::class);
                 $data = $linkService->resolveByStringRepresentation($file);
 

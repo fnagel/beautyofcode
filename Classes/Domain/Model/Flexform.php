@@ -154,12 +154,14 @@ class Flexform extends AbstractValueObject
         $isOnForInstance = '1' === $this->cGutter;
         $useDefault = 'auto' === $this->cGutter;
         $isDefaultSet = isset($this->typoscriptDefaults['gutter']);
-
         if ($isOffForInstance) {
             return false;
-        } elseif ($isOnForInstance) {
+        }
+        if ($isOnForInstance) {
             return true;
-        } elseif ($useDefault && $isDefaultSet) {
+        }
+
+        if ($useDefault && $isDefaultSet) {
             return (bool) $this->typoscriptDefaults['gutter'];
         }
 

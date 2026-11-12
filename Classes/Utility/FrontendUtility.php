@@ -9,6 +9,7 @@ namespace FelixNagel\Beautyofcode\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Http\NormalizedParams;
 use TYPO3\CMS\Core\Utility\PathUtility;
@@ -39,7 +40,7 @@ class FrontendUtility
         }
 
         if ($isExtensionNotation || $isFileNotation) {
-            $absolutePath = \TYPO3\CMS\Core\Utility\GeneralUtility::getFileAbsFileName($dir);
+            $absolutePath = GeneralUtility::getFileAbsFileName($dir);
             $absolutePath = empty($absolutePath) ? '' : PathUtility::getAbsoluteWebPath($absolutePath);
         } elseif (false !== parse_url($dir)) {
             $absolutePath = $dir;

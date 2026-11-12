@@ -2,14 +2,21 @@
 
 declare(strict_types=1);
 
+use Rector\CodeQuality\Rector\FuncCall\SimplifyRegexPatternRector;
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\CodeQuality\Rector\If_\ExplicitBoolCompareRector;
-use Rector\ValueObject\PhpVersion;
+use Rector\CodingStyle\Rector\Catch_\CatchExceptionNameMatchingTypeRector;
+use Rector\CodingStyle\Rector\FuncCall\CountArrayToEmptyArrayComparisonRector;
+use Rector\Config\RectorConfig;
+use Rector\Php74\Rector\If_\IfToNullCoalescingAssignRector;
 use Rector\Php80\Rector\Catch_\RemoveUnusedVariableInCatchRector;
 use Rector\Php81\Rector\FuncCall\NullToStrictStringFuncCallArgRector;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\Set\ValueObject\SetList;
-use Rector\Config\RectorConfig;
 use Rector\Strict\Rector\Empty_\DisallowedEmptyRuleFixerRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\DeclareStrictTypesRector;
+use Rector\TypeDeclaration\Rector\StmtsAwareInterface\SafeDeclareStrictTypesRector;
+use Rector\ValueObject\PhpVersion;
 use Ssch\TYPO3Rector\Configuration\Typo3Option;
 use Ssch\TYPO3Rector\Set\Typo3LevelSetList;
 use Ssch\TYPO3Rector\Set\Typo3SetList;
@@ -21,18 +28,26 @@ return static function (RectorConfig $rectorConfig): void {
         SetList::CODE_QUALITY,
         LevelSetList::UP_TO_PHP_85,
 
-        Typo3LevelSetList::UP_TO_TYPO3_12,
-        Typo3SetList::TYPO3_13,
+        Typo3LevelSetList::UP_TO_TYPO3_14,
+        Typo3SetList::TYPO3_14,
     ]);
 
     // Define your target version which you want to support
     $rectorConfig->phpVersion(PhpVersion::PHP_82);
 
+    $rectorConfig->importShortClasses(false);
     $rectorConfig->skip([
+        IfToNullCoalescingAssignRector::class,
+        ExplicitBoolCompareRector::class,
+        SimplifyRegexPatternRector::class,
+        RemoveUnusedVariableInCatchRector::class,
+        CountArrayToEmptyArrayComparisonRector::class,
+        CatchExceptionNameMatchingTypeRector::class,
+        FlipTypeControlToUseExclusiveTypeRector::class,
         NullToStrictStringFuncCallArgRector::class,
         DisallowedEmptyRuleFixerRector::class,
-        RemoveUnusedVariableInCatchRector::class,
-        ExplicitBoolCompareRector::class,
+        DeclareStrictTypesRector::class,
+        SafeDeclareStrictTypesRector::class,
     ]);
 
     // If you only want to process one/some TYPO3 extension(s), you can specify its path(s) here.

@@ -11,13 +11,13 @@ namespace FelixNagel\Beautyofcode\Configuration\Flexform;
 
 use Doctrine\DBAL\ParameterType;
 use FelixNagel\Beautyofcode\Highlighter\Configuration;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use FelixNagel\Beautyofcode\Highlighter\ConfigurationInterface;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use FelixNagel\Beautyofcode\Service\SettingsService;
-use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Database\Query\QueryBuilder;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Function to add select options dynamically (loaded in flexform).
@@ -27,9 +27,9 @@ use TYPO3\CMS\Core\Database\ConnectionPool;
  */
 class LanguageItems
 {
-    protected CacheManager $cacheManager;
+    protected ?CacheManager $cacheManager = null;
 
-    protected ConfigurationInterface $highlighterConfiguration;
+    protected ?ConfigurationInterface $highlighterConfiguration = null;
 
     protected ?SettingsService $settingsService = null;
 

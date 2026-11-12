@@ -9,10 +9,10 @@ namespace FelixNagel\Beautyofcode\Domain\Repository;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Service\FlexFormService;
-use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 use FelixNagel\Beautyofcode\Domain\Model\Flexform;
+use TYPO3\CMS\Core\Configuration\FlexForm\FlexFormTools;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Frontend\ContentObject\ContentObjectRenderer;
 
 /**
  * The repository for the plugin flexform domain model object.
@@ -21,14 +21,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class FlexformRepository
 {
-    protected FlexFormService $flexformService;
+    protected FlexFormTools $flexformService;
 
-    /**
-     * Injects the flexform service and populates flexform values from `pi_flexform`.
-     *
-     * @param FlexFormService $flexformService FlexFormService
-     */
-    public function injectFlexformService(FlexFormService $flexformService)
+    public function injectFlexformService(FlexFormTools $flexformService)
     {
         $this->flexformService = $flexformService;
     }

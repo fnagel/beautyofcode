@@ -15,7 +15,8 @@ call_user_func(static function ($packageKey) {
         [
             ContentController::class => 'render',
         ],
-        []
+        [],
+        ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
     );
 
     $cacheConfigurations = &$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations'];

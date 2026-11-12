@@ -9,8 +9,8 @@ namespace FelixNagel\Beautyofcode\Tests\Functional\Form\Element;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use ReflectionClass;
 use FelixNagel\Beautyofcode\Form\Element\T3editorElement;
+use ReflectionClass;
 use TYPO3\CMS\Backend\Form\NodeFactory;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
@@ -96,6 +96,7 @@ class T3editorElementTest extends FunctionalTestCase
         $this->markTestSkipped('Does not work due to wrong init of ModeRegistry::getInstance()->getDefaultMode()');
 
         $data = $this->getDefaultData();
+        // @extensionScannerIgnoreLine
         $data['parameterArray']['fieldConf']['config']['format'] = 'css';
 
         $t3EditorElement = $this->getT3editorElementObject($data);
@@ -104,6 +105,7 @@ class T3editorElementTest extends FunctionalTestCase
         $classReflection = new ReflectionClass($t3EditorElement);
         $propertyReflection = $classReflection->getProperty('data');
 
+        // @extensionScannerIgnoreLine
         $this->assertSame('css', $propertyReflection->getValue($t3EditorElement)['parameterArray']['fieldConf']['config']['format']);
     }
 

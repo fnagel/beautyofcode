@@ -9,13 +9,13 @@ namespace FelixNagel\Beautyofcode\Tests\Unit\Configuration\Flexform\LanguageItem
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems;
 use FelixNagel\Beautyofcode\Highlighter\Configuration\SyntaxHighlighter;
 use FelixNagel\Beautyofcode\Service\SettingsService;
-use TYPO3\CMS\Core\Cache\CacheManager;
-use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
-use FelixNagel\Beautyofcode\Configuration\Flexform\LanguageItems;
+use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
 
 /**
  * Tests the sorted appending of configured brushes to the list of flexform items.
@@ -52,6 +52,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
         );
         /** @var CacheManager $cacheManagerMock */
         $cacheManagerMock = $this->createMock(CacheManager::class);
+        // @extensionScannerIgnoreLine
         $cacheManagerMock
             ->expects($this->any())
             ->method('getCache')
@@ -84,6 +85,7 @@ class ConfiguredLanguagesTest extends UnitTestCase
     {
         /* @var $settingsServiceMock SettingsService */
         $settingsServiceMock = $this->createMock(SettingsService::class);
+        // @extensionScannerIgnoreLine
         $settingsServiceMock
             ->method('getTypoScriptByPath')
             ->with($this->equalTo('brushes'))

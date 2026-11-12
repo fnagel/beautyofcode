@@ -21,6 +21,7 @@ class EventListener
 
     public function __invoke(PolicyMutatedEvent $event): void
     {
+        // @extensionScannerIgnoreLine
         if ($event->scope->type->isBackend()) {
             return;
         }

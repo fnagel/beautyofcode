@@ -41,6 +41,7 @@ class CodeContentType implements ContentTypeInterface
 
         $code = trim((string)$record->get('bodytext'));
         if ($code !== '') {
+            // @extensionScannerIgnoreLine
             $dto->content .= '<pre><code>' . htmlspecialchars($code) . '</code></pre>';
         }
     }

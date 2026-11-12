@@ -54,6 +54,7 @@ class T3editorElement extends CodeEditorElement
         $mode = $this->determineMode();
 
         if ($mode !== null) {
+            // @extensionScannerIgnoreLine
             $this->data['parameterArray']['fieldConf']['config']['format'] = $mode;
         }
 
@@ -66,6 +67,7 @@ class T3editorElement extends CodeEditorElement
     protected function determineMode(): ?string
     {
         // Fallback
+        // @extensionScannerIgnoreLine
         $mode = $this->data['parameterArray']['fieldConf']['config']['format'] ?? self::T3EDITOR_MODE_DEFAULT;
 
         if (!$this->isBeautyOfCodeElement()) {

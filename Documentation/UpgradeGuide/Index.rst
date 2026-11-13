@@ -15,6 +15,25 @@ If there's no upgrade guide, there' s no need to change anything.
 This guide does not covering extending via PHP – you need to check changes for yourself.
 
 
+8.1 to 8.2
+^^^^^^^^^^
+
+What you need to know:
+
+- Added support for PHP 8.5
+- Added support for EXT:index (search indexing extension)
+- Deprecation free (in TYPO3 v14)
+- Minor fixes and improvements
+- Improved code quality / CGL
+
+
+How to upgrade
+""""""""""""""
+
+- Clear all caches
+
+
+
 8.0 to 8.1
 ^^^^^^^^^^
 

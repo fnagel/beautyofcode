@@ -67,7 +67,7 @@
   "extra": {
     "typo3/cms": {
       "extension-key": "beautyofcode",
-	  "version": "8.2.1",
+	  "version": "8.2.2+dev",
 	  "Package": {
 	    "providesPackages": {}
 	  },
